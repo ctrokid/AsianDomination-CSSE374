@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="13.3">
-  <zoom_level>8</zoom_level>
+  <zoom_level>6</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>720</x>
-      <y>792</y>
-      <w>152</w>
-      <h>136</h>
+      <x>324</x>
+      <y>738</y>
+      <w>114</w>
+      <h>132</h>
     </coordinates>
     <panel_attributes>ClassField
 --
@@ -20,16 +20,17 @@
 +getAccessLevel(): String
 +getSignature(): String
 +getType(): String
++accept(IVisitor v): void
 --</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>496</x>
-      <y>792</y>
-      <w>200</w>
-      <h>144</h>
+      <x>156</x>
+      <y>738</y>
+      <w>162</w>
+      <h>132</h>
     </coordinates>
     <panel_attributes>ClassDeclaration
 --
@@ -42,30 +43,32 @@
 +getType(): String
 +getSuperType(): String
 +getInterfaces(): Collection&lt;String&gt;
++accept(IVisitor v): void
 --</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>704</x>
-      <y>376</y>
-      <w>192</w>
-      <h>80</h>
+      <x>312</x>
+      <y>426</y>
+      <w>144</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 ITargetClassPart
 --
++accept(IVisitor v): void
 --</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>776</x>
-      <y>672</y>
-      <w>24</w>
-      <h>136</h>
+      <x>366</x>
+      <y>648</y>
+      <w>18</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
@@ -73,10 +76,10 @@ ITargetClassPart
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>896</x>
-      <y>792</y>
-      <w>160</w>
-      <h>128</h>
+      <x>456</x>
+      <y>738</y>
+      <w>120</w>
+      <h>132</h>
     </coordinates>
     <panel_attributes>ClassMethod
 --
@@ -87,16 +90,17 @@ ITargetClassPart
 +getSignature(): String
 +getName(): String
 +getAccessLevel(): String
++accept(IVisitor v): void
 --</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>496</x>
-      <y>552</y>
-      <w>192</w>
-      <h>128</h>
+      <x>156</x>
+      <y>558</y>
+      <w>144</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 IClassDeclaration
@@ -112,10 +116,10 @@ IClassDeclaration
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>320</x>
-      <y>336</y>
-      <w>224</w>
-      <h>64</h>
+      <x>24</x>
+      <y>396</y>
+      <w>168</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 ITargetClass
@@ -127,10 +131,10 @@ ITargetClass
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>320</x>
-      <y>432</y>
-      <w>232</w>
-      <h>80</h>
+      <x>24</x>
+      <y>468</y>
+      <w>174</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>TargetClass
 --
@@ -144,10 +148,10 @@ ITargetClass
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>424</x>
-      <y>392</y>
-      <w>24</w>
-      <h>56</h>
+      <x>102</x>
+      <y>438</y>
+      <w>18</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
@@ -155,10 +159,10 @@ ITargetClass
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>720</x>
-      <y>552</y>
-      <w>136</w>
-      <h>128</h>
+      <x>324</x>
+      <y>558</y>
+      <w>102</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 IClassField
@@ -174,10 +178,10 @@ IClassField
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>576</x>
-      <y>672</y>
-      <w>24</w>
-      <h>136</h>
+      <x>216</x>
+      <y>648</y>
+      <w>18</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
@@ -185,10 +189,10 @@ IClassField
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>928</x>
-      <y>552</y>
-      <w>136</w>
-      <h>128</h>
+      <x>480</x>
+      <y>558</y>
+      <w>102</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 IClassMethod
@@ -202,10 +206,10 @@ IClassMethod
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>984</x>
-      <y>672</y>
-      <w>24</w>
-      <h>136</h>
+      <x>522</x>
+      <y>648</y>
+      <w>18</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
@@ -213,10 +217,10 @@ IClassMethod
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>496</x>
-      <y>216</y>
-      <w>224</w>
-      <h>64</h>
+      <x>156</x>
+      <y>306</y>
+      <w>168</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 ITraverser
@@ -228,32 +232,32 @@ ITraverser
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
-      <y>272</y>
-      <w>208</w>
-      <h>120</h>
+      <x>234</x>
+      <y>348</y>
+      <w>156</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;50.0;240.0;50.0;240.0;130.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>424</x>
-      <y>304</y>
-      <w>200</w>
-      <h>48</h>
+      <x>102</x>
+      <y>372</y>
+      <w>150</w>
+      <h>36</h>
     </coordinates>
-    <panel_attributes>lt=.</panel_attributes>
+    <panel_attributes>lt=-</panel_attributes>
     <additional_attributes>230.0;10.0;10.0;10.0;10.0;40.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>792</x>
-      <y>448</y>
-      <w>24</w>
-      <h>120</h>
+      <x>378</x>
+      <y>480</y>
+      <w>18</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
@@ -261,10 +265,10 @@ ITraverser
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>592</x>
-      <y>496</y>
-      <w>224</w>
-      <h>72</h>
+      <x>228</x>
+      <y>516</y>
+      <w>168</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
     <additional_attributes>260.0;10.0;10.0;10.0;10.0;70.0</additional_attributes>
@@ -272,10 +276,10 @@ ITraverser
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>792</x>
-      <y>496</y>
-      <w>208</w>
-      <h>72</h>
+      <x>378</x>
+      <y>516</y>
+      <w>156</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
     <additional_attributes>10.0;10.0;240.0;10.0;240.0;70.0</additional_attributes>
@@ -283,10 +287,10 @@ ITraverser
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>952</x>
-      <y>120</y>
-      <w>392</w>
-      <h>200</h>
+      <x>222</x>
+      <y>138</y>
+      <w>294</w>
+      <h>150</h>
     </coordinates>
     <panel_attributes>/ClassVisitor/
 --
@@ -307,10 +311,10 @@ ITraverser
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1064</x>
-      <y>392</y>
-      <w>168</w>
-      <h>112</h>
+      <x>582</x>
+      <y>462</y>
+      <w>126</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>TargetClassOutputStream
 --
@@ -325,12 +329,68 @@ ITraverser
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1136</x>
-      <y>312</y>
-      <w>24</w>
-      <h>96</h>
+      <x>636</x>
+      <y>426</y>
+      <w>18</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>576</x>
+      <y>216</y>
+      <w>132</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+IVisitor
+--
++visit(ITargetClass c): void
++visit(IClassDeclaration c): void
++visit(IClassMethod c): void
++visit(IClassField c): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>714</x>
+      <y>318</y>
+      <w>60</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>For each different type,
+there are pre-visit, post-visit, and visit methods</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>576</x>
+      <y>342</y>
+      <w>132</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>/VisitorAdapter/
+--
++visit(ITargetClass c): void
++visit(IClassDeclaration c): void
++visit(IClassMethod c): void
++visit(IClassField c): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>636</x>
+      <y>300</y>
+      <w>18</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
   </element>
 </diagram>
