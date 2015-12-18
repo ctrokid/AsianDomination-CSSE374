@@ -5,10 +5,12 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
+import api.ITargetClass;
+import impl.TargetClass;
+
 public class DesignParser {
 	public static final String[] CLASSES = {
-			"puzzle.Creator",
-			"headfirst.observer.swing.SwingObserverExample"
+			"puzzle.Creator"
 	};
 	
 	/**
@@ -21,27 +23,34 @@ public class DesignParser {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		for (String className : CLASSES) {
-			System.out.println("==================");
+		ITargetClass[] targetClasses = new TargetClass[CLASSES.length];
+		
+		for (int i = 0; i < CLASSES.length; i++) {
+			targetClasses[i] = new TargetClass();
 			
 			// ASM's ClassReader does the heavy lifting of parsing the compiled
 			// Java class
-			ClassReader reader = new ClassReader(className);
+			ClassReader reader = new ClassReader(CLASSES[i]);
 			
 			// make class declaration visitor to get superclass and interfaces
-			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5);
+			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, targetClasses[i]);
 			
 			// DECORATE declaration visitor with field visitor
-			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor);
+			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor, targetClasses[i]);
 			
 			// DECORATE field visitor with method visitor
-			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor);
+			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, targetClasses[i]);
 			
 			// TODO: add more DECORATORS here in later milestones to accomplish
 			// specific tasks
 			// Tell the Reader to use our (heavily decorated) ClassVisitor to
 			// visit the class
 			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
+			
+			// TODO: write the TargetClass to a dot file
+			//class.accept(dotOut);
 		}
+		
+		System.out.println("Design Parser Completed..");
 	}
 }

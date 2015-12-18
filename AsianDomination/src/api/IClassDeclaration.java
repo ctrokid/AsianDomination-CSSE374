@@ -1,7 +1,5 @@
 package api;
 
-import java.util.Collection;
-
 public interface IClassDeclaration extends ITargetClassPart {
 	public String getName();
 
@@ -9,5 +7,5 @@ public interface IClassDeclaration extends ITargetClassPart {
 
 	public String getSuperType();
 
-	public Collection<String> getInterfaces();
+	public String[] getInterfaces();
 }

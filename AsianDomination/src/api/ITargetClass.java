@@ -2,6 +2,11 @@ package api;
 
 import java.util.Collection;
 
-public interface ITargetClass {
-	public Collection<ITargetClassPart> getParts();
+import visitor.ITraverser;
+
+public interface ITargetClass extends ITraverser {
+	public Collection<IClassField> getFieldParts();
+	public Collection<IClassMethod> getMethodParts();
+	public IClassDeclaration getDeclaration();
+	public void addPart(ITargetClassPart part);
 }
