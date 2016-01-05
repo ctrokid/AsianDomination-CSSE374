@@ -1,0 +1,44 @@
+digraph G {
+node [
+	fontname = "Sans"
+	fontsize = 8
+	shape = "record"
+]
+
+IClassDeclaration[
+	label = "{IClassDeclaration||+ getName() : string\l+ getType() : string\l+ getSuperType() : string\l+ getInterfaces() : string[]\l}"
+]
+
+IClassField[
+	label = "{IClassField||+ getName() : string\l+ getAccessLevel() : string\l+ getSignature() : string\l+ getType() : string\l}"
+]
+
+IClassMethod[
+	label = "{IClassMethod||+ getSignature() : string\l+ getName() : string\l+ getAccessLevel() : string\l+ getReturnType() : string\l}"
+]
+
+ITargetClass[
+	label = "{ITargetClass||+ getFieldParts() : collection\l+ getMethodParts() : collection\l+ getDeclaration() : iclassdeclaration\l+ addPart() : void\l}"
+]
+
+ITargetClassPart[
+	label = "{ITargetClassPart||+ accept() : void\l}"
+]
+
+edge [
+	arrowhead = "empty"
+]
+
+
+edge [
+	arrowhead = "empty"
+	style = "dashed"
+]
+
+IClassDeclaration -> ITargetClassPart
+IClassField -> ITargetClassPart
+IClassMethod -> ITargetClassPart
+ITargetClass -> ITraverser
+ITargetClassPart -> ITraverser
+
+}

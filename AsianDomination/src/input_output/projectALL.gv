@@ -1,0 +1,86 @@
+digraph G {
+node [
+	fontname = "Sans"
+	fontsize = 8
+	shape = "record"
+]
+
+IClassDeclaration[
+	label = "{IClassDeclaration||+ getName() : string\l+ getType() : string\l+ getSuperType() : string\l+ getInterfaces() : string[]\l}"
+]
+
+IClassField[
+	label = "{IClassField||+ getName() : string\l+ getAccessLevel() : string\l+ getSignature() : string\l+ getType() : string\l}"
+]
+
+IClassMethod[
+	label = "{IClassMethod||+ getSignature() : string\l+ getName() : string\l+ getAccessLevel() : string\l+ getReturnType() : string\l}"
+]
+
+ITargetClass[
+	label = "{ITargetClass||+ getFieldParts() : collection\l+ getMethodParts() : collection\l+ getDeclaration() : iclassdeclaration\l+ addPart() : void\l}"
+]
+
+ITargetClassPart[
+	label = "{ITargetClassPart||+ accept() : void\l}"
+]
+
+ClassDeclaration[
+	label = "{ClassDeclaration|- _name : string\l- _type : string\l- _superType : string\l- _interfaces : string[]\l|+ getName() : string\l+ getType() : string\l+ getSuperType() : string\l+ getInterfaces() : string[]\l+ accept() : void\l}"
+]
+
+ClassField[
+	label = "{ClassField|- _name : string\l- _accessLevel : string\l- _signature : string\l- _type : string\l|+ getName() : string\l+ getAccessLevel() : string\l+ getSignature() : string\l+ getType() : string\l+ accept() : void\l}"
+]
+
+ClassMethod[
+	label = "{ClassMethod|- _signature : string\l- _name : string\l- _accessLevel : string\l- _returnType : string\l|+ getSignature() : string\l+ getName() : string\l+ getAccessLevel() : string\l+ getReturnType() : string\l+ accept() : void\l}"
+]
+
+TargetClass[
+	label = "{TargetClass|- fieldParts : collection\l- methodParts : collection\l- declarationPart : iclassdeclaration\l|+ getFieldParts() : collection\l+ getMethodParts() : collection\l+ getDeclaration() : iclassdeclaration\l+ addPart() : void\l+ accept() : void\l}"
+]
+
+DotClassUtils[
+	label = "{DotClassUtils|- $SWITCH_TABLE$visitor$DotClassUtils$RelationshipType : int[]\l|+ CreateRelationshipEdge() : string\l+ CreateFontNode() : string\l $SWITCH_TABLE$visitor$DotClassUtils$RelationshipType() : int[]\l}"
+]
+
+ITraverser[
+	label = "{ITraverser||+ accept() : void\l}"
+]
+
+IVisitor[
+	label = "{IVisitor||+ preVisit() : void\l+ visit() : void\l+ postVisit() : void\l+ preVisit() : void\l+ visit() : void\l+ postVisit() : void\l+ preVisit() : void\l+ visit() : void\l+ postVisit() : void\l+ preVisit() : void\l+ visit() : void\l+ postVisit() : void\l+ visitCollection() : void\l}"
+]
+
+TargetClassOutputStream[
+	label = "{TargetClassOutputStream|- out : outputstream\l|- write() : void\l+ prepareDotFile() : void\l+ endDotFile() : void\l+ preVisit() : void\l+ postVisit() : void\l+ visit() : void\l+ visit() : void\l+ postVisit() : void\l+ visitCollection() : void\l}"
+]
+
+VisitorAdapter[
+	label = "{VisitorAdapter||+ visitCollection() : void\l+ preVisit() : void\l+ visit() : void\l+ postVisit() : void\l+ preVisit() : void\l+ visit() : void\l+ postVisit() : void\l+ preVisit() : void\l+ visit() : void\l+ postVisit() : void\l+ preVisit() : void\l+ visit() : void\l+ postVisit() : void\l}"
+]
+
+edge [
+	arrowhead = "empty"
+]
+
+TargetClassOutputStream -> VisitorAdapter
+
+edge [
+	arrowhead = "empty"
+	style = "dashed"
+]
+
+IClassDeclaration -> ITargetClassPart
+IClassField -> ITargetClassPart
+IClassMethod -> ITargetClassPart
+ITargetClass -> ITraverser
+ITargetClassPart -> ITraverser
+ClassDeclaration -> IClassDeclaration
+ClassField -> IClassField
+ClassMethod -> IClassMethod
+TargetClass -> ITargetClass
+VisitorAdapter -> IVisitor
+
+}

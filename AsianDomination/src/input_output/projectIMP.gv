@@ -1,0 +1,39 @@
+digraph G {
+node [
+	fontname = "Sans"
+	fontsize = 8
+	shape = "record"
+]
+
+ClassDeclaration[
+	label = "{ClassDeclaration|- _name : string\l- _type : string\l- _superType : string\l- _interfaces : string[]\l|+ getName() : string\l+ getType() : string\l+ getSuperType() : string\l+ getInterfaces() : string[]\l+ accept() : void\l}"
+]
+
+ClassField[
+	label = "{ClassField|- _name : string\l- _accessLevel : string\l- _signature : string\l- _type : string\l|+ getName() : string\l+ getAccessLevel() : string\l+ getSignature() : string\l+ getType() : string\l+ accept() : void\l}"
+]
+
+ClassMethod[
+	label = "{ClassMethod|- _signature : string\l- _name : string\l- _accessLevel : string\l- _returnType : string\l|+ getSignature() : string\l+ getName() : string\l+ getAccessLevel() : string\l+ getReturnType() : string\l+ accept() : void\l}"
+]
+
+TargetClass[
+	label = "{TargetClass|- fieldParts : collection\l- methodParts : collection\l- declarationPart : iclassdeclaration\l|+ getFieldParts() : collection\l+ getMethodParts() : collection\l+ getDeclaration() : iclassdeclaration\l+ addPart() : void\l+ accept() : void\l}"
+]
+
+edge [
+	arrowhead = "empty"
+]
+
+
+edge [
+	arrowhead = "empty"
+	style = "dashed"
+]
+
+ClassDeclaration -> IClassDeclaration
+ClassField -> IClassField
+ClassMethod -> IClassMethod
+TargetClass -> ITargetClass
+
+}
