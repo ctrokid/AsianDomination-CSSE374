@@ -1,0 +1,66 @@
+digraph G {
+node [
+	fontname = "Sans"
+	fontsize = 8
+	shape = "record"
+]
+
+AppLauncher[
+	label = "{AppLauncher|- watcher : watchservice\l- dir : path\l- stop : boolean\l- processes : list\l- extensionsToLaunchers : hashmap\l- handlers : collection\l|+ run() : void\l# clearEverything() : void\l+ stopGracefully() : void\l+ isRunning() : boolean\l+ getApplicationsCount() : int\l+ registerHandler() : void\l+ removeHandler() : void\l+ fireEvent() : void\l# notifyHandlers() : void\l+ main() : void\l}"
+]
+
+BrowserLauncher[
+	label = "{BrowserLauncher||+ getLaunchCommand() : string\l}"
+]
+
+IApplicationLauncher[
+	label = "{IApplicationLauncher||+ registerHandler() : void\l+ removeHandler() : void\l+ fireEvent() : void\l}"
+]
+
+IHandler[
+	label = "{IHandler||+ handleDirectoryEvent() : void\l}"
+]
+
+ILaunchable[
+	label = "{ILaunchable||+ getLaunchCommand() : string\l}"
+]
+
+Launcher[
+	label = "{Launcher|- launcher : ilaunchable\l- extension : string\l|+ setLauncher() : void\l+ getLaunchCommand() : string\l- setExtension() : void\l+ getExtension() : string\l}"
+]
+
+ModifiedFileHandler[
+	label = "{ModifiedFileHandler||+ handleDirectoryEvent() : void\l}"
+]
+
+NewFileHandler[
+	label = "{NewFileHandler||+ handleDirectoryEvent() : void\l}"
+]
+
+NotepadLauncher[
+	label = "{NotepadLauncher||+ getLaunchCommand() : string\l}"
+]
+
+PDFLauncher[
+	label = "{PDFLauncher||+ getLaunchCommand() : string\l}"
+]
+
+edge [
+	arrowhead = "empty"
+]
+
+AppLauncher -> Thread
+
+edge [
+	arrowhead = "empty"
+	style = "dashed"
+]
+
+AppLauncher -> IApplicationLauncher
+BrowserLauncher -> ILaunchable
+ModifiedFileHandler -> IHandler
+NewFileHandler -> IHandler
+NotepadLauncher -> ILaunchable
+PDFLauncher -> ILaunchable
+
+}
