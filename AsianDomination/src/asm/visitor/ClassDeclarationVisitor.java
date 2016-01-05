@@ -17,7 +17,7 @@ public class ClassDeclarationVisitor extends ClassVisitor {
 	@Override
 	public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
 		_targetClass.addPart(new ClassDeclaration(name, signature, superName, interfaces));
-		// FIXME: ??? super come before or after addPart??
+		
 		super.visit(version, access, name, signature, superName, interfaces);
 	}
 }
