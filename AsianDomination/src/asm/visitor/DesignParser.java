@@ -21,15 +21,26 @@ public class DesignParser {
 //			"testClasses.Cat",
 //			"testClasses.ISoundable"
 			"problem.AppLauncher",
-			"problem.BrowserLauncher",
-			"problem.IApplicationLauncher",
-			"problem.IHandler",
-			"problem.ILaunchable",
-			"problem.Launcher",
-			"problem.ModifiedFileHandler",
-			"problem.NewFileHandler",
-			"problem.NotepadLauncher",
-			"problem.PDFLauncher"
+			"problem.ContentObserver",
+			"problem.Driver",
+			"problem.EventMonitor",
+			"problem.HtmlFileHandler",
+			"problem.IAppLauncher",
+			"problem.IEventMonitor",
+			"problem.IFileHandler",
+			"problem.IObserver",
+			"problem.NameObserver",
+			"problem.PdfFileHandler",
+			"problem.TxtFileHandler"
+//			"problem.BrowserLauncher",
+//			"problem.IApplicationLauncher",
+//			"problem.IHandler",
+//			"problem.ILaunchable",
+//			"problem.Launcher",
+//			"problem.ModifiedFileHandler",
+//			"problem.NewFileHandler",
+//			"problem.NotepadLauncher",
+//			"problem.PDFLauncher"
 	};
 	
 	/**
