@@ -65,7 +65,8 @@ public class TargetClassOutputStream extends VisitorAdapter {
 	@Override
 	public void visit(IClassMethod c) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(c.getAccessLevel() + " " + c.getName() + "() : ");
+		sb.append(c.getAccessLevel() + " " + c.getName());
+		sb.append("(" + c.getSignature() + ") : ");
 		sb.append(c.getReturnType() + "\\l");
 		
 		this.write(sb.toString());

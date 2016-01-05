@@ -31,6 +31,7 @@ public class AsmClassUtils {
 		
 		for (int i = 0; i < args.length; i++) {
 			String arg = args[i].getClassName();
+			arg = arg.substring(arg.lastIndexOf(".") + 1);
 			sb.append(arg);
 			
 			if (i != args.length - 1) {
