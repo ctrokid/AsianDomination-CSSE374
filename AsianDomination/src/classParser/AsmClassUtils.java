@@ -1,19 +1,18 @@
 package classParser;
-
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
-public class DotClassUtils {
+public class AsmClassUtils {
 	public static String GetAccessLevel(int access) {
 		String level = "";
 		if ((access & Opcodes.ACC_PUBLIC) != 0) {
-			level = "public";
+			level = "+";
 		} else if ((access & Opcodes.ACC_PROTECTED) != 0) {
-			level = "protected";
+			level = "#";
 		} else if ((access & Opcodes.ACC_PRIVATE) != 0) {
-			level = "private";
+			level = "-";
 		} else {
-			level = "default";
+			level = "";
 		}
 
 		return level;
@@ -21,8 +20,9 @@ public class DotClassUtils {
 	
 	public static String GetReturnType(String desc) {
 		String returnType = Type.getReturnType(desc).getClassName();
-
-		return returnType;
+		returnType = returnType.substring(returnType.lastIndexOf('.') + 1);
+		
+		return returnType.toLowerCase();
 	}
 
 	public static String GetArguments(String desc) {

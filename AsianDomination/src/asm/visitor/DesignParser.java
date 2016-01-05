@@ -1,16 +1,35 @@
 package asm.visitor;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
 import api.ITargetClass;
+import asm.visitor.LaunchDot.DotExtension;
 import impl.TargetClass;
+import visitor.IVisitor;
+import visitor.TargetClassOutputStream;
 
 public class DesignParser {
 	public static final String[] CLASSES = {
-			"puzzle.Creator"
+//			"testClasses.Animal",
+//			"testClasses.Dog",
+//			"testClasses.Cat",
+//			"testClasses.ISoundable"
+			"problem.AppLauncher",
+			"problem.BrowserLauncher",
+			"problem.IApplicationLauncher",
+			"problem.IHandler",
+			"problem.ILaunchable",
+			"problem.Launcher",
+			"problem.ModifiedFileHandler",
+			"problem.NewFileHandler",
+			"problem.NotepadLauncher",
+			"problem.PDFLauncher"
 	};
 	
 	/**
@@ -24,6 +43,12 @@ public class DesignParser {
 	 */
 	public static void main(String[] args) throws IOException {
 		ITargetClass[] targetClasses = new TargetClass[CLASSES.length];
+		String asmOutputPath = "input_output/lab1-3.gv";
+		String dotOutputPath = "input_output/lab1-3";
+		
+		OutputStream out = new FileOutputStream(asmOutputPath);
+		IVisitor dotOut = new TargetClassOutputStream(out);
+		((TargetClassOutputStream) dotOut).prepareDotFile("Sans", "8");
 		
 		for (int i = 0; i < CLASSES.length; i++) {
 			targetClasses[i] = new TargetClass();
@@ -32,13 +57,8 @@ public class DesignParser {
 			// Java class
 			ClassReader reader = new ClassReader(CLASSES[i]);
 			
-			// make class declaration visitor to get superclass and interfaces
 			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, targetClasses[i]);
-			
-			// DECORATE declaration visitor with field visitor
 			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor, targetClasses[i]);
-			
-			// DECORATE field visitor with method visitor
 			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, targetClasses[i]);
 			
 			// TODO: add more DECORATORS here in later milestones to accomplish
@@ -47,10 +67,15 @@ public class DesignParser {
 			// visit the class
 			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
 			
-			// TODO: write the TargetClass to a dot file
-			//class.accept(dotOut);
+			// All TargetClass instances are populated with data
+			// This should print out each class with the internal representation
+			targetClasses[i].accept(dotOut);
 		}
+
+		// This does the relationship printing
+		dotOut.visitCollection(targetClasses);
 		
-		System.out.println("Design Parser Completed..");
+		((TargetClassOutputStream) dotOut).endDotFile();
+		LaunchDot.RunGvedit(asmOutputPath, dotOutputPath, DotExtension.PDF);
 	}
 }

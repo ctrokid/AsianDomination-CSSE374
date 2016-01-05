@@ -9,8 +9,6 @@ public class ClassField implements IClassField {
 	private String _signature;
 	private String _type;
 	
-	
-	
 	public ClassField(String name, String accessLevel, String signature, String type) {
 		_name = name;
 		_accessLevel = accessLevel;

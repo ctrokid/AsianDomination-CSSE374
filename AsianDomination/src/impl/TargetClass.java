@@ -2,6 +2,7 @@ package impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import visitor.IVisitor;
 import api.IClassDeclaration;
@@ -45,15 +46,33 @@ public class TargetClass implements ITargetClass {
 		} else if (part instanceof IClassMethod) {
 			methodParts.add((IClassMethod) part);
 		} else {
-			// DO SOMETHING??
-			// Throw error??
-			return;
+			// FIXME: Throw error later
+			System.err.println("Fix me, you errored.");
 		}
 	}
 
 	@Override
 	public void accept(IVisitor v) {
-		v.visit(this);
+		v.preVisit(this);
+		
+		declarationPart.accept(v);
+		
+		IClassField lastField = null;
+		for (Iterator<IClassField> fieldIter = fieldParts.iterator(); fieldIter.hasNext();) {
+			lastField = fieldIter.next();
+			lastField.accept(v);
+		}
+		
+		// Need to print separation
+		// so we call postVisit on ONE field
+		// doesn't matter which field it is, this should be safe
+		v.postVisit(lastField);
+		
+		for (IClassMethod method : methodParts) {
+			method.accept(v);
+		}
+		
+		v.postVisit(this);
 	}
 
 }

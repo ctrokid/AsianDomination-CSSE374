@@ -7,6 +7,6 @@ public interface IClassMethod extends ITargetClassPart {
 
 	public String getAccessLevel();
 	
-	public String getArguments();
+	public String getReturnType();
 
 }

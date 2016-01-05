@@ -13,12 +13,16 @@ public class ClassDeclaration implements IClassDeclaration {
 		_name = name;
 		_type = type;
 		_superType = superType;
-		_interfaces = interfaces;
+
+		_interfaces = new String[interfaces.length];
+		for (int i = 0; i < interfaces.length; i++) {
+			_interfaces[i] = interfaces[i].substring(interfaces[i].lastIndexOf("/") + 1);
+		}
 	}
 
 	@Override
 	public String getName() {
-		return _name;
+		return _name.substring(_name.lastIndexOf("/") + 1);
 	}
 
 	@Override
@@ -28,7 +32,7 @@ public class ClassDeclaration implements IClassDeclaration {
 
 	@Override
 	public String getSuperType() {
-		return _superType;
+		return _superType.substring(_superType.lastIndexOf("/") + 1);
 	}
 
 	@Override

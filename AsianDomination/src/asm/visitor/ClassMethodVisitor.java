@@ -4,7 +4,7 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 
 import api.ITargetClass;
-import classParser.DotClassUtils;
+import classParser.AsmClassUtils;
 import impl.ClassMethod;
 
 public class ClassMethodVisitor extends ClassVisitor {
@@ -24,9 +24,9 @@ public class ClassMethodVisitor extends ClassVisitor {
 	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
 
-		String accessLevel = DotClassUtils.GetAccessLevel(access);
-		String returnType = DotClassUtils.GetReturnType(desc);
-		String args = DotClassUtils.GetArguments(desc);
+		String accessLevel = AsmClassUtils.GetAccessLevel(access);
+		String returnType = AsmClassUtils.GetReturnType(desc);
+		String args = AsmClassUtils.GetArguments(desc);
 
 		_targetClass.addPart(new ClassMethod(name, returnType, accessLevel, args));
 
