@@ -55,5 +55,23 @@ public class Milestone1IntegrationTest {
 		
 		String written = bytesOut.toString();
 		assertTrue(written.contains("SubAge -> Age"));
+		assertTrue(written.contains("SubAge||- getSomething() : double\\l"));
+		assertTrue(written.contains("Age|- age : int\\l|+ getAge() : int\\l"));
+	}
+	
+	@Test
+	public void testTwoClassesWithInterface() {
+		ITargetClass clazz1 = new TargetClass();
+		
+		IClassDeclaration decl = new ClassDeclaration("Age", "", "object", new String[] { "IRunnable" });
+		
+		clazz1.addPart(decl);
+		
+		clazz1.accept(outStreamVisitor);
+		
+		outStreamVisitor.visitCollection(new ITargetClass[] {clazz1});
+		
+		String written = bytesOut.toString();
+		assertTrue(written.contains("Age -> IRunnable"));
 	}
 }
