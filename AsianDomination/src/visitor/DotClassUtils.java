@@ -1,9 +1,11 @@
 package visitor;
 
 public class DotClassUtils {
-	static enum RelationshipType {
+	public static enum RelationshipType {
 		INHERITANCE,
-		IMPLEMENTATION
+		IMPLEMENTATION,
+		ASSOCIATION,
+		USES
 	}
 	
 	public static String CreateRelationshipEdge(RelationshipType type) {
@@ -18,6 +20,14 @@ public class DotClassUtils {
 			case IMPLEMENTATION:
 				sb.append("arrowhead = \"empty\"\n\t");
 				sb.append("style = \"dashed\"\n");
+				break;
+			case ASSOCIATION:
+				sb.append("arrowhead = \"vee\"\n");
+				break;
+			case USES:
+				sb.append("arrowhead = \"vee\"\n");
+				sb.append("style = \"dashed\"\n");
+				break;
 			default:
 				break;
 		}

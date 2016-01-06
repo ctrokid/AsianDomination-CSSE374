@@ -4,6 +4,7 @@ import api.IClassDeclaration;
 import api.IClassField;
 import api.IClassMethod;
 import api.ITargetClass;
+import impl.RelationshipManager;
 
 public interface IVisitor {
 	public void preVisit(ITargetClass c);
@@ -24,4 +25,5 @@ public interface IVisitor {
 	public void postVisit(IClassMethod m);
 
 	public void visitCollection(ITargetClass[] targetClasses);
+	public void visit(RelationshipManager relationshipManager);
 }

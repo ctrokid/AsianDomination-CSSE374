@@ -3,15 +3,18 @@ package asm.visitor;
 
 import org.objectweb.asm.ClassVisitor;
 
+import api.IRelationshipManager;
 import api.ITargetClass;
 import impl.ClassDeclaration;
 
 public class ClassDeclarationVisitor extends ClassVisitor {
 	protected ITargetClass _targetClass;
+	protected IRelationshipManager _relationshipManager;
 	
-	public ClassDeclarationVisitor(int api, ITargetClass targetClass) {
+	public ClassDeclarationVisitor(int api, ITargetClass targetClass, IRelationshipManager relationshipManager) {
 		super(api);
 		_targetClass = targetClass;
+		_relationshipManager = relationshipManager;
 	}
 
 	@Override

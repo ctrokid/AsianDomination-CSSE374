@@ -15,6 +15,7 @@ public class TargetClass implements ITargetClass {
 	private Collection<IClassField> fieldParts;
 	private Collection<IClassMethod> methodParts;
 	private IClassDeclaration declarationPart;
+	// TODO: Think we need association and uses in here
 	
 	public TargetClass() {
 		fieldParts = new ArrayList<IClassField>();
@@ -54,8 +55,6 @@ public class TargetClass implements ITargetClass {
 	@Override
 	public void accept(IVisitor v) {
 		v.preVisit(this);
-		
-		declarationPart.accept(v);
 		
 		IClassField lastField = null;
 		for (Iterator<IClassField> fieldIter = fieldParts.iterator(); fieldIter.hasNext();) {

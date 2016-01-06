@@ -8,8 +8,10 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
+import api.IRelationshipManager;
 import api.ITargetClass;
 import asm.visitor.LaunchDot.DotExtension;
+import impl.RelationshipManager;
 import impl.TargetClass;
 import visitor.IVisitor;
 import visitor.TargetClassOutputStream;
@@ -20,27 +22,27 @@ public class DesignParser {
 //			"testClasses.Dog",
 //			"testClasses.Cat",
 //			"testClasses.ISoundable"
-			"problem.AppLauncher",
-			"problem.ContentObserver",
-			"problem.Driver",
-			"problem.EventMonitor",
-			"problem.HtmlFileHandler",
-			"problem.IAppLauncher",
-			"problem.IEventMonitor",
-			"problem.IFileHandler",
-			"problem.IObserver",
-			"problem.NameObserver",
-			"problem.PdfFileHandler",
-			"problem.TxtFileHandler"
+//			"problem.AppLauncher",
+//			"problem.ContentObserver",
+//			"problem.Driver",
+//			"problem.EventMonitor",
+//			"problem.HtmlFileHandler",
+//			"problem.IAppLauncher",
+//			"problem.IEventMonitor",
+//			"problem.IFileHandler",
+//			"problem.IObserver",
+//			"problem.NameObserver",
+//			"problem.PdfFileHandler",
+//			"problem.TxtFileHandler"
 //			"problem.BrowserLauncher",
 //			"problem.IApplicationLauncher",
 //			"problem.IHandler",
-//			"problem.ILaunchable",
-//			"problem.Launcher",
+			"problem.ILaunchable",
+			"problem.Launcher",
 //			"problem.ModifiedFileHandler",
-//			"problem.NewFileHandler",
-//			"problem.NotepadLauncher",
-//			"problem.PDFLauncher"
+			"problem.NewFileHandler",
+			"problem.NotepadLauncher",
+			"problem.PDFLauncher"
 	};
 	
 	/**
@@ -54,6 +56,8 @@ public class DesignParser {
 	 */
 	public static void main(String[] args) throws IOException {
 		ITargetClass[] targetClasses = new TargetClass[CLASSES.length];
+		IRelationshipManager relationshipManager = new RelationshipManager();
+		
 		String asmOutputPath = "input_output/lab1-3.gv";
 		String dotOutputPath = "input_output/lab1-3";
 		
@@ -68,9 +72,9 @@ public class DesignParser {
 			// Java class
 			ClassReader reader = new ClassReader(CLASSES[i]);
 			
-			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, targetClasses[i]);
-			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor, targetClasses[i]);
-			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, targetClasses[i]);
+			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, targetClasses[i], relationshipManager);
+			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor, targetClasses[i], relationshipManager);
+			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, targetClasses[i], relationshipManager);
 			
 			// TODO: add more DECORATORS here in later milestones to accomplish
 			// specific tasks
