@@ -3,8 +3,8 @@ package visitor;
 import api.IClassDeclaration;
 import api.IClassField;
 import api.IClassMethod;
+import api.IRelationshipManager;
 import api.ITargetClass;
-import impl.RelationshipManager;
 
 public interface IVisitor {
 	public void preVisit(ITargetClass c);
@@ -24,5 +24,5 @@ public interface IVisitor {
 	public void visit(IClassMethod m);
 	public void postVisit(IClassMethod m);
 
-	public void visit(RelationshipManager relationshipManager);
+	public void visit(IRelationshipManager relationshipManager);
 }

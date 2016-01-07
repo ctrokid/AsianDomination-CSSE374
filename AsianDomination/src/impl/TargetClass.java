@@ -15,7 +15,6 @@ public class TargetClass implements ITargetClass {
 	private Collection<IClassField> fieldParts;
 	private Collection<IClassMethod> methodParts;
 	private IClassDeclaration declarationPart;
-	// TODO: Think we need association and uses in here
 	
 	public TargetClass() {
 		fieldParts = new ArrayList<IClassField>();

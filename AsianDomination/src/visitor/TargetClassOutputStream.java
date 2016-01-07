@@ -8,8 +8,8 @@ import Utils.DotClassUtils;
 import Utils.DotClassUtils.RelationshipType;
 import api.IClassField;
 import api.IClassMethod;
+import api.IRelationshipManager;
 import api.ITargetClass;
-import impl.RelationshipManager;
 
 public class TargetClassOutputStream extends VisitorAdapter {
 	private OutputStream out;
@@ -82,7 +82,7 @@ public class TargetClassOutputStream extends VisitorAdapter {
 	}
 
 	@Override
-	public void visit(RelationshipManager relationshipManager) {
+	public void visit(IRelationshipManager relationshipManager) {
 		for (RelationshipType edgeType : RelationshipType.values()) {
 			Collection<String> relationships = relationshipManager.getRelationshipEdges(edgeType);
 			
