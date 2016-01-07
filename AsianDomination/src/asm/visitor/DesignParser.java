@@ -33,7 +33,6 @@ public class DesignParser {
 		"headfirst.factory.pizzaaf.ThickCrustDough",
 		"headfirst.factory.pizzaaf.ThinCrustDough",
 		"headfirst.factory.pizzafm.NYPizzaStore",
-		"headfirst.factory.pizzafm.Pizza",
 	};
 	
 	/**

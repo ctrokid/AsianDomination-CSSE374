@@ -1,0 +1,113 @@
+digraph G {
+node [
+	fontname = "Sans"
+	fontsize = 8
+	shape = "record"
+]
+
+Cheese[
+	label = "{Cheese||+ toString() : String\l}"
+]
+
+ChicagoPizzaIngredientFactory[
+	label = "{ChicagoPizzaIngredientFactory||+ createDough() : Dough\l+ createSauce() : Sauce\l+ createCheese() : Cheese\l+ createVeggies() : Veggies[]\l+ createPepperoni() : Pepperoni\l+ createClam() : Clams\l}"
+]
+
+Clams[
+	label = "{Clams||+ toString() : String\l}"
+]
+
+FreshClams[
+	label = "{FreshClams||+ toString() : String\l}"
+]
+
+FrozenClams[
+	label = "{FrozenClams||+ toString() : String\l}"
+]
+
+MarinaraSauce[
+	label = "{MarinaraSauce||+ toString() : String\l}"
+]
+
+MozzarellaCheese[
+	label = "{MozzarellaCheese||+ toString() : String\l}"
+]
+
+NYPizzaIngredientFactory[
+	label = "{NYPizzaIngredientFactory||+ createDough() : Dough\l+ createSauce() : Sauce\l+ createCheese() : Cheese\l+ createVeggies() : Veggies[]\l+ createPepperoni() : Pepperoni\l+ createClam() : Clams\l}"
+]
+
+PizzaIngredientFactory[
+	label = "{PizzaIngredientFactory||+ createDough() : Dough\l+ createSauce() : Sauce\l+ createCheese() : Cheese\l+ createVeggies() : Veggies[]\l+ createPepperoni() : Pepperoni\l+ createClam() : Clams\l}"
+]
+
+PlumTomatoSauce[
+	label = "{PlumTomatoSauce||+ toString() : String\l}"
+]
+
+ReggianoCheese[
+	label = "{ReggianoCheese||+ toString() : String\l}"
+]
+
+Sauce[
+	label = "{Sauce||+ toString() : String\l}"
+]
+
+ThickCrustDough[
+	label = "{ThickCrustDough||+ toString() : String\l}"
+]
+
+ThinCrustDough[
+	label = "{ThinCrustDough||+ toString() : String\l}"
+]
+
+NYPizzaStore[
+	label = "{NYPizzaStore|| createPizza(String) : Pizza\l}"
+]
+
+
+edge [
+	arrowhead = "empty"
+	style = "dashed"
+]
+
+ChicagoPizzaIngredientFactory -> PizzaIngredientFactory
+FreshClams -> Clams
+FrozenClams -> Clams
+MarinaraSauce -> Sauce
+MozzarellaCheese -> Cheese
+NYPizzaIngredientFactory -> PizzaIngredientFactory
+PlumTomatoSauce -> Sauce
+ReggianoCheese -> Cheese
+
+edge [
+	arrowhead = "vee"
+	style = "solid"
+]
+
+ChicagoPizzaIngredientFactory -> ThickCrustDough
+ChicagoPizzaIngredientFactory -> PlumTomatoSauce
+ChicagoPizzaIngredientFactory -> MozzarellaCheese
+ChicagoPizzaIngredientFactory -> FrozenClams
+NYPizzaIngredientFactory -> ThinCrustDough
+NYPizzaIngredientFactory -> MarinaraSauce
+NYPizzaIngredientFactory -> ReggianoCheese
+NYPizzaIngredientFactory -> FreshClams
+
+edge [
+	arrowhead = "vee"
+	style = "dashed"
+]
+
+ChicagoPizzaIngredientFactory -> Sauce
+ChicagoPizzaIngredientFactory -> Cheese
+ChicagoPizzaIngredientFactory -> Clams
+NYPizzaIngredientFactory -> Sauce
+NYPizzaIngredientFactory -> Cheese
+NYPizzaIngredientFactory -> Clams
+PizzaIngredientFactory -> Sauce
+PizzaIngredientFactory -> Cheese
+PizzaIngredientFactory -> Clams
+
+
+}
