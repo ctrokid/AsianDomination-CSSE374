@@ -49,16 +49,22 @@ public class AsmClassUtils {
 	public static String parseSignature(String signature) {
 		StringBuilder sb = new StringBuilder();
 		String[] tokens = signature.split(";");
-		
+
 		sb.append("\\<");
-		for (int i = 0; i < tokens.length-1; i++) {
+		
+		// FIXME: Collection inside of a collection is not working right now.
+		int size = 1;
+		if (tokens.length >= 3)
+			size = 2;
+		
+		for (int i = 0; i < size; i++) {
 			sb.append(GetStringStrippedByCharacter(tokens[i], '/'));
 			
-			if (i != tokens.length - 2)
+			if (i != size - 1)
 				sb.append(',');
 		}
 		sb.append("\\>");
 		
-		return sb.toString();
+		return sb.toString().replaceAll("\\$", ".");
 	}
 }
