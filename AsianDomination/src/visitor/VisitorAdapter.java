@@ -8,11 +8,6 @@ import api.ITargetClass;
 public abstract class VisitorAdapter implements IVisitor {
 
 	@Override
-	public void visitCollection(ITargetClass[] targetClasses) {
-
-	}
-
-	@Override
 	public void preVisit(ITargetClass c) {
 
 	}

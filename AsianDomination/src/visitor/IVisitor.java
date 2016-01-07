@@ -24,6 +24,5 @@ public interface IVisitor {
 	public void visit(IClassMethod m);
 	public void postVisit(IClassMethod m);
 
-	public void visitCollection(ITargetClass[] targetClasses);
 	public void visit(RelationshipManager relationshipManager);
 }

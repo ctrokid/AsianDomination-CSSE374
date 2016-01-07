@@ -2,6 +2,7 @@ package visitor;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Collection;
 
 import api.IClassField;
 import api.IClassMethod;
@@ -80,40 +81,17 @@ public class TargetClassOutputStream extends VisitorAdapter {
 	}
 
 	@Override
-	public void visitCollection(ITargetClass[] classes) {
-		// inheritance first
-		// edge with empty head
-		this.write(DotClassUtils.CreateRelationshipEdge(DotClassUtils.RelationshipType.INHERITANCE));
-		for (ITargetClass clazz : classes) {
-			String base = clazz.getDeclaration().getName();
-			String superType = clazz.getDeclaration().getSuperType();
-
-			if (!superType.toLowerCase().equals("object"))
-				this.write(base + " -> " + superType + "\n");
-		}
-
-		this.write("\n");
-
-		// implements
-		// edge, dotted with empty head
-		this.write(DotClassUtils.CreateRelationshipEdge(DotClassUtils.RelationshipType.IMPLEMENTATION));
-		for (ITargetClass clazz : classes) {
-			String base = clazz.getDeclaration().getName();
-			String[] interfaces = clazz.getDeclaration().getInterfaces();
-
-			for (String iface : interfaces) {
-				this.write(base + " -> " + iface + "\n");
-			}
-		}
-	}
-
-	@Override
 	public void visit(RelationshipManager relationshipManager) {
 		for (RelationshipType edgeType : RelationshipType.values()) {
-			//write arrow heads here
-			for (String edge : relationshipManager.getRelationshipEdges(edgeType)) {
-				this.write(edge);
+			Collection<String> relationships = relationshipManager.getRelationshipEdges(edgeType);
+			
+			if (relationships.size() > 0)
+				this.write(DotClassUtils.CreateRelationshipEdge(edgeType));
+			
+			for (String edge : relationships) {
+				this.write(edge + "\n");
 			}
+			this.write("\n");
 		}
 	}
 

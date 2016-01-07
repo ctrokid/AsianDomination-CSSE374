@@ -29,9 +29,14 @@ public class ClassFieldVisitor extends ClassVisitor {
 		FieldVisitor toDecorate = super.visitField(access, name, desc, signature, value);
 		String returnType = AsmClassUtils.GetReturnType(desc);
 		String accessLevel = AsmClassUtils.GetAccessLevel(access);
-
-		//if not a default type
-		_relationshipManager.addRelationshipEdge(_targetClass.getDeclaration().getName(), returnType, RelationshipType.ASSOCIATION);
+		
+		if (signature != null) {
+			signature = AsmClassUtils.parseSignature(signature);
+			_relationshipManager.addRelationshipEdge(_targetClass.getDeclaration().getName(), signature.substring(2, signature.length()-2), RelationshipType.ASSOCIATION);
+		}
+		else
+			_relationshipManager.addRelationshipEdge(_targetClass.getDeclaration().getName(), returnType, RelationshipType.ASSOCIATION);
+		
 		_targetClass.addPart(new ClassField(name, accessLevel, signature, returnType));
 		
 		return toDecorate;

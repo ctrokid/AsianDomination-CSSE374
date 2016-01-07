@@ -15,17 +15,19 @@ public class DotClassUtils {
 		
 		switch (type) {
 			case INHERITANCE:
-				sb.append("arrowhead = \"empty\"\n");
+				sb.append("arrowhead = \"empty\"\n\t");
+				sb.append("style = \"solid\"\n");
 				break;
 			case IMPLEMENTATION:
 				sb.append("arrowhead = \"empty\"\n\t");
 				sb.append("style = \"dashed\"\n");
 				break;
 			case ASSOCIATION:
-				sb.append("arrowhead = \"vee\"\n");
+				sb.append("arrowhead = \"vee\"\n\t");
+				sb.append("style = \"solid\"\n");
 				break;
 			case USES:
-				sb.append("arrowhead = \"vee\"\n");
+				sb.append("arrowhead = \"vee\"\n\t");
 				sb.append("style = \"dashed\"\n");
 				break;
 			default:

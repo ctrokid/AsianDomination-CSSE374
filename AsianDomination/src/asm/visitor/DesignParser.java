@@ -18,31 +18,21 @@ import visitor.TargetClassOutputStream;
 
 public class DesignParser {
 	public static final String[] CLASSES = {
-//			"testClasses.Animal",
-//			"testClasses.Dog",
-//			"testClasses.Cat",
-//			"testClasses.ISoundable"
-//			"problem.AppLauncher",
-//			"problem.ContentObserver",
-//			"problem.Driver",
-//			"problem.EventMonitor",
-//			"problem.HtmlFileHandler",
-//			"problem.IAppLauncher",
-//			"problem.IEventMonitor",
-//			"problem.IFileHandler",
-//			"problem.IObserver",
-//			"problem.NameObserver",
-//			"problem.PdfFileHandler",
-//			"problem.TxtFileHandler"
-//			"problem.BrowserLauncher",
-//			"problem.IApplicationLauncher",
-//			"problem.IHandler",
-			"problem.ILaunchable",
-			"problem.Launcher",
-//			"problem.ModifiedFileHandler",
-			"problem.NewFileHandler",
-			"problem.NotepadLauncher",
-			"problem.PDFLauncher"
+		"headfirst.factory.pizzaaf.BlackOlives",
+		"headfirst.factory.pizzaaf.Cheese",
+		"headfirst.factory.pizzaaf.CheesePizza",
+		"headfirst.factory.pizzaaf.ChicagoPizzaIngredientFactory",
+		"headfirst.factory.pizzaaf.ChicagoPizzaStore",
+		"headfirst.factory.pizzaaf.ClamPizza",
+		"headfirst.factory.pizzaaf.Clams",
+		"headfirst.factory.pizzaaf.Dough",
+		"headfirst.factory.pizzaaf.Eggplant",
+		"headfirst.factory.pizzaaf.FreshClams",
+		"headfirst.factory.pizzaaf.FrozenClams",
+		"headfirst.factory.pizzaaf.Garlic",
+		"headfirst.factory.pizzaaf.MarinaraSauce",
+		"headfirst.factory.pizzaaf.MozzarellaCheese",
+		"headfirst.factory.pizzaaf.Mushroom"
 	};
 	
 	/**
@@ -56,10 +46,10 @@ public class DesignParser {
 	 */
 	public static void main(String[] args) throws IOException {
 		ITargetClass[] targetClasses = new TargetClass[CLASSES.length];
-		IRelationshipManager relationshipManager = new RelationshipManager();
+		IRelationshipManager relationshipManager = new RelationshipManager(CLASSES);
 		
-		String asmOutputPath = "input_output/lab1-3.gv";
-		String dotOutputPath = "input_output/lab1-3";
+		String asmOutputPath = "input_output/lab1-3NEW.gv";
+		String dotOutputPath = "input_output/lab1-3NEW";
 		
 		OutputStream out = new FileOutputStream(asmOutputPath);
 		IVisitor dotOut = new TargetClassOutputStream(out);
@@ -88,7 +78,9 @@ public class DesignParser {
 		}
 
 		// This does the relationship printing
-		dotOut.visitCollection(targetClasses);
+		//TODO: implement this
+		relationshipManager.accept(dotOut);
+		//dotOut.visitCollection(targetClasses);
 		
 		((TargetClassOutputStream) dotOut).endDotFile();
 		LaunchDot.RunGvedit(asmOutputPath, dotOutputPath, DotExtension.PDF);

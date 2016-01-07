@@ -8,6 +8,7 @@ import api.IRelationshipManager;
 import api.ITargetClass;
 import classParser.AsmClassUtils;
 import impl.ClassMethod;
+import visitor.DotClassUtils.RelationshipType;
 
 public class ClassMethodVisitor extends ClassVisitor {
 	private ITargetClass _targetClass;
@@ -28,14 +29,18 @@ public class ClassMethodVisitor extends ClassVisitor {
 	@Override
 	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
-		MethodVisitor decorated = new MethodAssociationVisitor(Opcodes.ASM5, toDecorate, _relationshipManager, name);
 		
 		String accessLevel = AsmClassUtils.GetAccessLevel(access);
 		String type = AsmClassUtils.GetReturnType(desc);
 		String arguments = AsmClassUtils.GetArguments(desc);
 
-		if (!name.equals("<init>"))
+		MethodVisitor decorated = new MethodAssociationVisitor(Opcodes.ASM5, toDecorate, _relationshipManager, _targetClass.getDeclaration().getName(), arguments);
+		
+		if (!name.contains("<")) {
 			_targetClass.addPart(new ClassMethod(name, arguments, accessLevel, type));
+			_relationshipManager.addRelationshipEdge(_targetClass.getDeclaration().getName(), type, RelationshipType.USES);
+		}
+
 		return decorated;
 	}
 }

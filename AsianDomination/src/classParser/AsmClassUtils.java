@@ -22,7 +22,7 @@ public class AsmClassUtils {
 		String returnType = Type.getReturnType(desc).getClassName();
 		returnType = returnType.substring(returnType.lastIndexOf('.') + 1);
 		
-		return returnType.toLowerCase();
+		return returnType;
 	}
 
 	public static String GetArguments(String desc) {
@@ -38,6 +38,26 @@ public class AsmClassUtils {
 				sb.append(", ");
 			}
 		}
+
+		return sb.toString();
+	}
+	
+	public static String GetStringStrippedByCharacter(String str, char character) {
+		return str.substring(str.lastIndexOf(character) + 1);
+	}
+
+	public static String parseSignature(String signature) {
+		StringBuilder sb = new StringBuilder();
+		String[] tokens = signature.split(";");
+		
+		sb.append("\\<");
+		for (int i = 0; i < tokens.length-1; i++) {
+			sb.append(GetStringStrippedByCharacter(tokens[i], '/'));
+			
+			if (i != tokens.length - 2)
+				sb.append(',');
+		}
+		sb.append("\\>");
 		
 		return sb.toString();
 	}
