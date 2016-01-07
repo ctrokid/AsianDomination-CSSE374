@@ -1,0 +1,236 @@
+digraph G {
+node [
+	fontname = "Sans"
+	fontsize = 8
+	shape = "record"
+]
+
+IClassDeclaration[
+	label = "{IClassDeclaration||+ getName() : String\l+ getType() : String\l+ getSuperType() : String\l+ getInterfaces() : String[]\l}"
+]
+
+IClassField[
+	label = "{IClassField||+ getName() : String\l+ getAccessLevel() : String\l+ getSignature() : String\l+ getType() : String\l}"
+]
+
+IClassMethod[
+	label = "{IClassMethod||+ getSignature() : String\l+ getName() : String\l+ getAccessLevel() : String\l+ getReturnType() : String\l}"
+]
+
+IRelationshipManager[
+	label = "{IRelationshipManager||+ addRelationshipEdge(String, String, DotClassUtils$RelationshipType) : void\l+ getRelationshipEdges(DotClassUtils$RelationshipType) : Collection\l}"
+]
+
+ITargetClass[
+	label = "{ITargetClass||+ getFieldParts() : Collection\l+ getMethodParts() : Collection\l+ getDeclaration() : IClassDeclaration\l+ addPart(ITargetClassPart) : void\l}"
+]
+
+ITargetClassPart[
+	label = "{ITargetClassPart||+ accept(IVisitor) : void\l}"
+]
+
+ClassDeclarationVisitor[
+	label = "{ClassDeclarationVisitor|# _targetClass : ITargetClass\l# _relationshipManager : IRelationshipManager\l|+ visit(int, int, String, String, String, String[]) : void\l}"
+]
+
+ClassFieldVisitor[
+	label = "{ClassFieldVisitor|- _targetClass : ITargetClass\l- _relationshipManager : IRelationshipManager\l|+ visitField(int, String, String, String, Object) : FieldVisitor\l}"
+]
+
+ClassMethodVisitor[
+	label = "{ClassMethodVisitor|- _targetClass : ITargetClass\l- _relationshipManager : IRelationshipManager\l|+ visitMethod(int, String, String, String, String[]) : MethodVisitor\l}"
+]
+
+DesignParser[
+	label = "{DesignParser|- sourceDir : String\l+ CLASSES : String[]\l|+ main(String[]) : void\l}"
+]
+
+FirstASM[
+	label = "{FirstASM|+ myField : String\l|+ main(String[]) : void\l}"
+]
+
+MethodAssociationVisitor[
+	label = "{MethodAssociationVisitor|- _relationshipManager : IRelationshipManager\l- _className : String\l- _arguments : String\l|+ visitFieldInsn(int, String, String, String) : void\l+ visitMethodInsn(int, String, String, String, boolean) : void\l+ visitVarInsn(int, int) : void\l}"
+]
+
+ClassDeclaration[
+	label = "{ClassDeclaration|- _name : String\l- _type : String\l- _superType : String\l- _interfaces : String[]\l|+ getName() : String\l+ getType() : String\l+ getSuperType() : String\l+ getInterfaces() : String[]\l+ accept(IVisitor) : void\l}"
+]
+
+ClassField[
+	label = "{ClassField|- _name : String\l- _accessLevel : String\l- _signature : String\l- _type : String\l|+ getName() : String\l+ getAccessLevel() : String\l+ getSignature() : String\l+ getType() : String\l+ accept(IVisitor) : void\l}"
+]
+
+ClassMethod[
+	label = "{ClassMethod|- _signature : String\l- _name : String\l- _accessLevel : String\l- _returnType : String\l|+ getSignature() : String\l+ getName() : String\l+ getAccessLevel() : String\l+ getReturnType() : String\l+ accept(IVisitor) : void\l}"
+]
+
+RelationshipManager[
+	label = "{RelationshipManager|- relationships : HashMap\<DotClassUtils$RelationshipType,String,>\>\l- classList : Collection\<String\>\l|+ accept(IVisitor) : void\l+ addRelationshipEdge(String, String, DotClassUtils$RelationshipType) : void\l+ getRelationshipEdges(DotClassUtils$RelationshipType) : Collection\l}"
+]
+
+TargetClass[
+	label = "{TargetClass|- fieldParts : Collection\<IClassField\>\l- methodParts : Collection\<IClassMethod\>\l- declarationPart : IClassDeclaration\l|+ getFieldParts() : Collection\l+ getMethodParts() : Collection\l+ getDeclaration() : IClassDeclaration\l+ addPart(ITargetClassPart) : void\l+ accept(IVisitor) : void\l}"
+]
+
+MethodTest[
+	label = "{MethodTest|- outStreamVisitor : IVisitor\l- bytesOut : OutputStream\l|+ setUp() : void\l+ classMethodsTest1() : void\l+ classMethodsTest2() : void\l+ classMethodsTest3() : void\l}"
+]
+
+Milestone1IntegrationTest[
+	label = "{Milestone1IntegrationTest|- outStreamVisitor : IVisitor\l- bytesOut : OutputStream\l- relationshipManager : IRelationshipManager\l|+ setUp() : void\l+ testTwoClassesWithInheritance() : void\l+ testTwoClassesWithInterface() : void\l}"
+]
+
+TestClassField[
+	label = "{TestClassField|- outStreamVisitor : IVisitor\l- bytesOut : OutputStream\l|+ setUp() : void\l+ testFieldOutputStreamOne() : void\l+ testFieldOutputStreamTwo() : void\l+ testFieldOutputStreamThree() : void\l}"
+]
+
+AsmClassUtils[
+	label = "{AsmClassUtils||+ GetAccessLevel(int) : String\l+ GetReturnType(String) : String\l+ GetArguments(String) : String\l+ GetStringStrippedByCharacter(String, char) : String\l+ parseSignature(String) : String\l}"
+]
+
+DotClassUtils[
+	label = "{DotClassUtils|- $SWITCH_TABLE$Utils$DotClassUtils$RelationshipType : int[]\l|+ CreateRelationshipEdge(DotClassUtils$RelationshipType) : String\l+ CreateFontNode(String, String) : String\l $SWITCH_TABLE$Utils$DotClassUtils$RelationshipType() : int[]\l}"
+]
+
+LaunchDot[
+	label = "{LaunchDot||+ RunGvedit(String, String, LaunchDot$DotExtension) : void\l}"
+]
+
+PackageInspector[
+	label = "{PackageInspector||+ toArrayHelper(String, File) : ArrayList\l+ getClasses(String, File) : String[]\l+ isJavaClass(String) : Boolean\l}"
+]
+
+ITraverser[
+	label = "{ITraverser||+ accept(IVisitor) : void\l}"
+]
+
+IVisitor[
+	label = "{IVisitor||+ preVisit(ITargetClass) : void\l+ visit(ITargetClass) : void\l+ postVisit(ITargetClass) : void\l+ preVisit(IClassField) : void\l+ visit(IClassField) : void\l+ postVisit(IClassField) : void\l+ preVisit(IClassDeclaration) : void\l+ visit(IClassDeclaration) : void\l+ postVisit(IClassDeclaration) : void\l+ preVisit(IClassMethod) : void\l+ visit(IClassMethod) : void\l+ postVisit(IClassMethod) : void\l+ visit(RelationshipManager) : void\l}"
+]
+
+TargetClassOutputStream[
+	label = "{TargetClassOutputStream|- out : OutputStream\l|- write(String) : void\l+ prepareDotFile(String, String) : void\l+ endDotFile() : void\l+ preVisit(ITargetClass) : void\l+ postVisit(ITargetClass) : void\l+ visit(IClassField) : void\l+ visit(IClassMethod) : void\l+ postVisit(IClassField) : void\l+ visit(RelationshipManager) : void\l}"
+]
+
+VisitorAdapter[
+	label = "{VisitorAdapter||+ preVisit(ITargetClass) : void\l+ visit(ITargetClass) : void\l+ postVisit(ITargetClass) : void\l+ preVisit(IClassField) : void\l+ visit(IClassField) : void\l+ postVisit(IClassField) : void\l+ preVisit(IClassDeclaration) : void\l+ visit(IClassDeclaration) : void\l+ postVisit(IClassDeclaration) : void\l+ preVisit(IClassMethod) : void\l+ visit(IClassMethod) : void\l+ postVisit(IClassMethod) : void\l}"
+]
+
+edge [
+	arrowhead = "empty"
+	style = "solid"
+]
+
+TargetClassOutputStream -> VisitorAdapter
+
+edge [
+	arrowhead = "empty"
+	style = "dashed"
+]
+
+IClassDeclaration -> ITargetClassPart
+IClassField -> ITargetClassPart
+IClassMethod -> ITargetClassPart
+IRelationshipManager -> ITargetClassPart
+ITargetClass -> ITraverser
+ITargetClassPart -> ITraverser
+ClassDeclaration -> IClassDeclaration
+ClassField -> IClassField
+ClassMethod -> IClassMethod
+RelationshipManager -> IRelationshipManager
+TargetClass -> ITargetClass
+VisitorAdapter -> IVisitor
+
+edge [
+	arrowhead = "vee"
+	style = "solid"
+]
+
+ClassDeclarationVisitor -> ITargetClass
+ClassDeclarationVisitor -> IRelationshipManager
+ClassDeclarationVisitor -> ClassDeclaration
+ClassDeclarationVisitor -> IClassDeclaration
+ClassFieldVisitor -> ITargetClass
+ClassFieldVisitor -> IRelationshipManager
+ClassFieldVisitor -> AsmClassUtils
+ClassFieldVisitor -> IClassDeclaration
+ClassFieldVisitor -> ClassField
+ClassMethodVisitor -> ITargetClass
+ClassMethodVisitor -> IRelationshipManager
+ClassMethodVisitor -> AsmClassUtils
+ClassMethodVisitor -> IClassDeclaration
+ClassMethodVisitor -> MethodAssociationVisitor
+ClassMethodVisitor -> ClassMethod
+DesignParser -> PackageInspector
+DesignParser -> RelationshipManager
+DesignParser -> TargetClassOutputStream
+DesignParser -> TargetClass
+DesignParser -> ClassDeclarationVisitor
+DesignParser -> ClassFieldVisitor
+DesignParser -> ClassMethodVisitor
+DesignParser -> ITargetClass
+DesignParser -> IRelationshipManager
+DesignParser -> LaunchDot
+MethodAssociationVisitor -> IRelationshipManager
+ClassDeclaration -> AsmClassUtils
+ClassDeclaration -> IVisitor
+ClassField -> IVisitor
+ClassMethod -> IVisitor
+RelationshipManager -> AsmClassUtils
+RelationshipManager -> IVisitor
+TargetClass -> IClassField
+TargetClass -> IClassMethod
+TargetClass -> IClassDeclaration
+TargetClass -> IVisitor
+MethodTest -> IVisitor
+MethodTest -> TargetClassOutputStream
+MethodTest -> ClassMethod
+Milestone1IntegrationTest -> IVisitor
+Milestone1IntegrationTest -> IRelationshipManager
+Milestone1IntegrationTest -> TargetClassOutputStream
+Milestone1IntegrationTest -> TargetClass
+Milestone1IntegrationTest -> ClassDeclaration
+Milestone1IntegrationTest -> ClassField
+Milestone1IntegrationTest -> ClassMethod
+Milestone1IntegrationTest -> ITargetClass
+Milestone1IntegrationTest -> RelationshipManager
+TestClassField -> IVisitor
+TestClassField -> TargetClassOutputStream
+TestClassField -> ClassField
+TestClassField -> IClassField
+TargetClassOutputStream -> VisitorAdapter
+TargetClassOutputStream -> DotClassUtils
+TargetClassOutputStream -> ITargetClass
+TargetClassOutputStream -> IClassDeclaration
+TargetClassOutputStream -> IClassField
+TargetClassOutputStream -> IClassMethod
+TargetClassOutputStream -> RelationshipManager
+
+edge [
+	arrowhead = "vee"
+	style = "dashed"
+]
+
+ITargetClass -> IClassDeclaration
+ClassDeclarationVisitor -> ITargetClass
+ClassDeclarationVisitor -> IRelationshipManager
+ClassFieldVisitor -> ITargetClass
+ClassFieldVisitor -> IRelationshipManager
+ClassMethodVisitor -> ITargetClass
+ClassMethodVisitor -> IRelationshipManager
+MethodAssociationVisitor -> IRelationshipManager
+ClassDeclaration -> IVisitor
+ClassField -> IVisitor
+ClassMethod -> IVisitor
+RelationshipManager -> IVisitor
+TargetClass -> IClassDeclaration
+TargetClass -> ITargetClassPart
+TargetClass -> IVisitor
+TargetClassOutputStream -> ITargetClass
+TargetClassOutputStream -> IClassField
+TargetClassOutputStream -> IClassMethod
+TargetClassOutputStream -> RelationshipManager
+
+
+}
