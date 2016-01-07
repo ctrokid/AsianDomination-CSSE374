@@ -34,7 +34,7 @@ public class RelationshipManager implements IRelationshipManager {
 	@Override
 	public void addRelationshipEdge(String subClass, String superClass, RelationshipType edgeType) {
 		superClass = AsmClassUtils.GetStringStrippedByCharacter(superClass, '/');
-		if (classList.contains(superClass)) {
+		if (!subClass.equals(superClass) && classList.contains(superClass)) {
 			String edge = subClass + " -> " + superClass;
 			
 			if (!relationships.get(edgeType).contains(edge))

@@ -18,21 +18,22 @@ import visitor.TargetClassOutputStream;
 
 public class DesignParser {
 	public static final String[] CLASSES = {
-		"headfirst.factory.pizzaaf.BlackOlives",
 		"headfirst.factory.pizzaaf.Cheese",
-		"headfirst.factory.pizzaaf.CheesePizza",
 		"headfirst.factory.pizzaaf.ChicagoPizzaIngredientFactory",
-		"headfirst.factory.pizzaaf.ChicagoPizzaStore",
-		"headfirst.factory.pizzaaf.ClamPizza",
 		"headfirst.factory.pizzaaf.Clams",
-		"headfirst.factory.pizzaaf.Dough",
-		"headfirst.factory.pizzaaf.Eggplant",
 		"headfirst.factory.pizzaaf.FreshClams",
 		"headfirst.factory.pizzaaf.FrozenClams",
-		"headfirst.factory.pizzaaf.Garlic",
 		"headfirst.factory.pizzaaf.MarinaraSauce",
 		"headfirst.factory.pizzaaf.MozzarellaCheese",
-		"headfirst.factory.pizzaaf.Mushroom"
+		"headfirst.factory.pizzaaf.NYPizzaIngredientFactory",
+		"headfirst.factory.pizzaaf.PizzaIngredientFactory",
+		"headfirst.factory.pizzaaf.PlumTomatoSauce",
+		"headfirst.factory.pizzaaf.ReggianoCheese",
+		"headfirst.factory.pizzaaf.Sauce",
+		"headfirst.factory.pizzaaf.ThickCrustDough",
+		"headfirst.factory.pizzaaf.ThinCrustDough",
+		"headfirst.factory.pizzafm.NYPizzaStore",
+		"headfirst.factory.pizzafm.Pizza",
 	};
 	
 	/**
@@ -78,9 +79,7 @@ public class DesignParser {
 		}
 
 		// This does the relationship printing
-		//TODO: implement this
 		relationshipManager.accept(dotOut);
-		//dotOut.visitCollection(targetClasses);
 		
 		((TargetClassOutputStream) dotOut).endDotFile();
 		LaunchDot.RunGvedit(asmOutputPath, dotOutputPath, DotExtension.PDF);
