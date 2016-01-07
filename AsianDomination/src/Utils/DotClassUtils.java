@@ -1,4 +1,4 @@
-package visitor;
+package Utils;
 
 public class DotClassUtils {
 	public static enum RelationshipType {

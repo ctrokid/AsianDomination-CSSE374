@@ -2,8 +2,8 @@ package asm.visitor;
 
 import org.objectweb.asm.MethodVisitor;
 
+import Utils.DotClassUtils.RelationshipType;
 import api.IRelationshipManager;
-import visitor.DotClassUtils.RelationshipType;
 
 public class MethodAssociationVisitor extends MethodVisitor {
 	private IRelationshipManager _relationshipManager;

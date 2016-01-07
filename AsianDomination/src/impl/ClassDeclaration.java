@@ -1,7 +1,7 @@
 package impl;
 
+import Utils.AsmClassUtils;
 import api.IClassDeclaration;
-import classParser.AsmClassUtils;
 import visitor.IVisitor;
 
 public class ClassDeclaration implements IClassDeclaration {

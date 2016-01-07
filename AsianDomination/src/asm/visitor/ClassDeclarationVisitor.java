@@ -3,10 +3,10 @@ package asm.visitor;
 
 import org.objectweb.asm.ClassVisitor;
 
+import Utils.DotClassUtils.RelationshipType;
 import api.IRelationshipManager;
 import api.ITargetClass;
 import impl.ClassDeclaration;
-import visitor.DotClassUtils.RelationshipType;
 
 public class ClassDeclarationVisitor extends ClassVisitor {
 	protected ITargetClass _targetClass;

@@ -4,11 +4,11 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+import Utils.AsmClassUtils;
+import Utils.DotClassUtils.RelationshipType;
 import api.IRelationshipManager;
 import api.ITargetClass;
-import classParser.AsmClassUtils;
 import impl.ClassMethod;
-import visitor.DotClassUtils.RelationshipType;
 
 public class ClassMethodVisitor extends ClassVisitor {
 	private ITargetClass _targetClass;

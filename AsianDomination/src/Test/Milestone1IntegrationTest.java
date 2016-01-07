@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import org.junit.Before;
 import org.junit.Test;
 
+import Utils.DotClassUtils.RelationshipType;
 import api.IClassDeclaration;
 import api.IClassField;
 import api.IClassMethod;
@@ -20,7 +21,6 @@ import impl.RelationshipManager;
 import impl.TargetClass;
 import visitor.IVisitor;
 import visitor.TargetClassOutputStream;
-import visitor.DotClassUtils.RelationshipType;
 
 public class Milestone1IntegrationTest {
 	private IVisitor outStreamVisitor;
