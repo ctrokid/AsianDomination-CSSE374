@@ -11,7 +11,7 @@ import impl.ClassMethod;
 import visitor.IVisitor;
 import visitor.TargetClassOutputStream;
 
-public class MethodTest {
+public class TestClassMethod {
 	private IVisitor outStreamVisitor;
 	private OutputStream bytesOut;
 

@@ -22,7 +22,7 @@ import impl.TargetClass;
 import visitor.IVisitor;
 import visitor.TargetClassOutputStream;
 
-public class Milestone1IntegrationTest {
+public class MilestoneIntegrationTest {
 	private IVisitor outStreamVisitor;
 	private OutputStream bytesOut;
 	private IRelationshipManager relationshipManager;
