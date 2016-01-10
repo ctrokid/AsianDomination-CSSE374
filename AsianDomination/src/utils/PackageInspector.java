@@ -9,7 +9,11 @@ public class PackageInspector {
 	private static ArrayList<String> toArrayHelper(String sourceDir, File dir) {
 		ArrayList<String> classList = new ArrayList<String>();
 		for (String name : dir.list()) {
+			if(name.contains("Test")){
+				continue;
+			}
 			if(isJavaClass(name)){
+				//TODO FIXME: this is weird a weird fix, maybe there is another way to remove previous patterns
 				int index = dir.getPath().lastIndexOf(sourceDir)+sourceDir.length();
 				classList.add(dir.getPath().substring(index).replace("\\", ".").substring(1)+"."+name.replaceAll(".java", ""));
 				continue;
