@@ -92,7 +92,13 @@ public class UMLOutputStream extends VisitorAdapter {
 				this.write(DotClassUtils.CreateRelationshipEdge(edgeType));
 			
 			for (String edge : relationships) {
-				if(edgeType.equals(RelationshipType.USES)&&!hasAssociation(edge, relationshipManager)){
+				if(edgeType.equals(RelationshipType.USES)){
+					if(!hasAssociation(edge, relationshipManager)){
+						this.write(edge + "\n");
+					} else {
+						continue;
+					}
+				} else {
 					this.write(edge + "\n");
 				}
 			}
