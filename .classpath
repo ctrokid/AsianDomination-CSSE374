@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="AsianDomination/src"/>
+	<classpathentry kind="src" path="AsianDomination/test"/>
 	<classpathentry kind="lib" path="AsianDomination/lib/asm-all-5.0.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Lab1-3"/>

@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 public class DotClassUtils {
 	public static enum RelationshipType {

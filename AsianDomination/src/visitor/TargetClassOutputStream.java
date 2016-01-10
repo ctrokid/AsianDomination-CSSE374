@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
 
-import Utils.DotClassUtils;
-import Utils.DotClassUtils.RelationshipType;
 import api.IClassField;
 import api.IClassMethod;
 import api.IRelationshipManager;
 import api.ITargetClass;
+import utils.DotClassUtils;
+import utils.DotClassUtils.RelationshipType;
 
 public class TargetClassOutputStream extends VisitorAdapter {
 	private OutputStream out;

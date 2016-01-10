@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class PackageInspector {
 //	Sample sourceDir = "C:\\Users\\yangr\\git\\AsianDomination-CSSE374\\AsianDomination\\src";
 	
-	public static ArrayList<String> toArrayHelper(String sourceDir, File dir) {
+	private static ArrayList<String> toArrayHelper(String sourceDir, File dir) {
 		ArrayList<String> classList = new ArrayList<String>();
 		for (String name : dir.list()) {
 			if(isJavaClass(name)){
@@ -28,7 +28,7 @@ public class PackageInspector {
 		return newArray;
 	}
 	
-	public static Boolean isJavaClass(String name) {
+	private static Boolean isJavaClass(String name) {
 		return name.endsWith(".java");
 	}
 }

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import Utils.AsmClassUtils;
-import Utils.DotClassUtils.RelationshipType;
 import api.IRelationshipManager;
+import utils.AsmClassUtils;
+import utils.DotClassUtils.RelationshipType;
 import visitor.IVisitor;
 
 public class RelationshipManager implements IRelationshipManager {

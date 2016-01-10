@@ -2,7 +2,7 @@ package api;
 
 import java.util.Collection;
 
-import Utils.DotClassUtils.RelationshipType;
+import utils.DotClassUtils.RelationshipType;
 
 public interface IRelationshipManager extends ITargetClassPart {
 	public void addRelationshipEdge(String subClass, String superClass, RelationshipType edgeType);

@@ -1,4 +1,4 @@
-package Test;
+package integrationTests;
 
 import static org.junit.Assert.*;
 
@@ -8,7 +8,6 @@ import java.io.OutputStream;
 import org.junit.Before;
 import org.junit.Test;
 
-import Utils.DotClassUtils.RelationshipType;
 import api.IClassDeclaration;
 import api.IClassField;
 import api.IClassMethod;
@@ -19,6 +18,7 @@ import impl.ClassField;
 import impl.ClassMethod;
 import impl.RelationshipManager;
 import impl.TargetClass;
+import utils.DotClassUtils.RelationshipType;
 import visitor.IVisitor;
 import visitor.TargetClassOutputStream;
 

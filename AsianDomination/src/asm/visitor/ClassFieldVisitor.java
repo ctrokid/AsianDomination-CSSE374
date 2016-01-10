@@ -3,11 +3,11 @@ package asm.visitor;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 
-import Utils.AsmClassUtils;
-import Utils.DotClassUtils.RelationshipType;
 import api.IRelationshipManager;
 import api.ITargetClass;
 import impl.ClassField;
+import utils.AsmClassUtils;
+import utils.DotClassUtils.RelationshipType;
 
 public class ClassFieldVisitor extends ClassVisitor {
 	private ITargetClass _targetClass;

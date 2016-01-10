@@ -9,19 +9,19 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
-import Utils.LaunchDot;
-import Utils.LaunchDot.DotExtension;
-import Utils.PackageInspector;
 import api.IRelationshipManager;
 import api.ITargetClass;
 import impl.RelationshipManager;
 import impl.TargetClass;
+import utils.LaunchDot;
+import utils.PackageInspector;
+import utils.LaunchDot.DotExtension;
 import visitor.IVisitor;
 import visitor.TargetClassOutputStream;
 
 public class DesignParser {
 	private static String sourceDir = "C:\\Users\\trowbrct\\Desktop\\CSSE374\\AsianDomination-CSSE374\\AsianDomination\\src";
-	public static final String[] CLASSES =PackageInspector.getClasses(sourceDir, new File(sourceDir));
+	public static final String[] CLASSES = PackageInspector.getClasses(sourceDir, new File(sourceDir));
 //		{
 //		"headfirst.factory.pizzaaf.Cheese",
 //		"headfirst.factory.pizzaaf.ChicagoPizzaIngredientFactory",

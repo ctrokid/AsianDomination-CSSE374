@@ -1,6 +1,5 @@
 package impl;
 
-import Utils.AsmClassUtils;
 import api.IClassDeclaration;
 import visitor.IVisitor;
 
@@ -11,14 +10,10 @@ public class ClassDeclaration implements IClassDeclaration {
 	private String[] _interfaces;
 	
 	public ClassDeclaration(String name, String type, String superType, String[] interfaces) {
-		_name = AsmClassUtils.GetStringStrippedByCharacter(name, '/');
+		_name = name;
 		_type = type;
-		_superType = AsmClassUtils.GetStringStrippedByCharacter(superType, '/');
-
-		_interfaces = new String[interfaces.length];
-		for (int i = 0; i < interfaces.length; i++) {
-			_interfaces[i] = AsmClassUtils.GetStringStrippedByCharacter(interfaces[i], '/');
-		}
+		_superType = superType;
+		_interfaces = interfaces;
 	}
 
 	@Override

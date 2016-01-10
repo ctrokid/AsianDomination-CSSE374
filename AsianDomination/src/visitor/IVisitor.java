@@ -10,7 +10,6 @@ public interface IVisitor {
 	public void preVisit(ITargetClass c);
 	public void visit(ITargetClass c);
 	public void postVisit(ITargetClass c);
-
 	
 	public void preVisit(IClassField f);
 	public void visit(IClassField f);

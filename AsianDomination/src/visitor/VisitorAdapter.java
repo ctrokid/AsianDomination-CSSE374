@@ -3,6 +3,7 @@ package visitor;
 import api.IClassDeclaration;
 import api.IClassField;
 import api.IClassMethod;
+import api.IRelationshipManager;
 import api.ITargetClass;
 
 public abstract class VisitorAdapter implements IVisitor {
@@ -65,6 +66,11 @@ public abstract class VisitorAdapter implements IVisitor {
 	@Override
 	public void postVisit(IClassMethod m) {
 
+	}
+	
+	@Override
+	public void visit(IRelationshipManager m) {
+		
 	}
 
 }
