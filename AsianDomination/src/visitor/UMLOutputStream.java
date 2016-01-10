@@ -1,5 +1,7 @@
 package visitor;
 
+import impl.RelationshipManager;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
@@ -90,10 +92,19 @@ public class UMLOutputStream extends VisitorAdapter {
 				this.write(DotClassUtils.CreateRelationshipEdge(edgeType));
 			
 			for (String edge : relationships) {
-				this.write(edge + "\n");
+				if(edgeType.equals(RelationshipType.USES)&&!hasAssociation(edge, relationshipManager)){
+					this.write(edge + "\n");
+				}
 			}
 			this.write("\n");
 		}
+	}
+	
+	private boolean hasAssociation(String checker, IRelationshipManager relationshipManager){
+		if(relationshipManager.getRelationshipEdges(RelationshipType.ASSOCIATION).contains(checker)){
+			return true;
+		}
+		return false;
 	}
 
 }
