@@ -11,7 +11,7 @@ import org.junit.Test;
 import api.IClassField;
 import impl.ClassField;
 import visitor.IVisitor;
-import visitor.TargetClassOutputStream;
+import visitor.UMLOutputStream;
 
 public class TestClassField {
 	private IVisitor outStreamVisitor;
@@ -20,7 +20,7 @@ public class TestClassField {
 	@Before
 	public void setUp() {
 		bytesOut = new ByteArrayOutputStream();
-		outStreamVisitor = new TargetClassOutputStream(bytesOut);
+		outStreamVisitor = new UMLOutputStream(bytesOut);
 	}
 	
 	@Test

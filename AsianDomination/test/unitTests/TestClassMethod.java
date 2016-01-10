@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import impl.ClassMethod;
 import visitor.IVisitor;
-import visitor.TargetClassOutputStream;
+import visitor.UMLOutputStream;
 
 public class TestClassMethod {
 	private IVisitor outStreamVisitor;
@@ -18,7 +18,7 @@ public class TestClassMethod {
 	@Before
 	public final void setUp() {
 		bytesOut = new ByteArrayOutputStream();
-		outStreamVisitor = new TargetClassOutputStream(bytesOut);
+		outStreamVisitor = new UMLOutputStream(bytesOut);
 	}
 
 	@Test

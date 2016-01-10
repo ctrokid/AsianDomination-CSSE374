@@ -11,10 +11,10 @@ import api.ITargetClass;
 import utils.DotClassUtils;
 import utils.DotClassUtils.RelationshipType;
 
-public class TargetClassOutputStream extends VisitorAdapter {
+public class UMLOutputStream extends VisitorAdapter {
 	private OutputStream out;
 
-	public TargetClassOutputStream(OutputStream out) {
+	public UMLOutputStream(OutputStream out) {
 		this.out = out;
 	}
 

@@ -17,7 +17,7 @@ import utils.LaunchDot;
 import utils.PackageInspector;
 import utils.LaunchDot.DotExtension;
 import visitor.IVisitor;
-import visitor.TargetClassOutputStream;
+import visitor.UMLOutputStream;
 
 public class DesignParser {
 	private static String sourceDir = "C:\\Users\\trowbrct\\Desktop\\CSSE374\\AsianDomination-CSSE374\\AsianDomination\\src";
@@ -57,8 +57,8 @@ public class DesignParser {
 		String dotOutputPath = "input_output/lab1-3NEW";
 		
 		OutputStream out = new FileOutputStream(asmOutputPath);
-		IVisitor dotOut = new TargetClassOutputStream(out);
-		((TargetClassOutputStream) dotOut).prepareDotFile("Sans", "8");
+		IVisitor dotOut = new UMLOutputStream(out);
+		((UMLOutputStream) dotOut).prepareDotFile("Sans", "8");
 		
 		for (int i = 0; i < CLASSES.length; i++) {
 			targetClasses[i] = new TargetClass();
@@ -85,7 +85,7 @@ public class DesignParser {
 		// This does the relationship printing
 		relationshipManager.accept(dotOut);
 		
-		((TargetClassOutputStream) dotOut).endDotFile();
+		((UMLOutputStream) dotOut).endDotFile();
 		LaunchDot.RunGvedit(asmOutputPath, dotOutputPath, DotExtension.PDF);
 	}
 }

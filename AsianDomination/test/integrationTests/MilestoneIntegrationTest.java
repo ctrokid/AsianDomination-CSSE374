@@ -20,7 +20,7 @@ import impl.RelationshipManager;
 import impl.TargetClass;
 import utils.DotClassUtils.RelationshipType;
 import visitor.IVisitor;
-import visitor.TargetClassOutputStream;
+import visitor.UMLOutputStream;
 
 public class MilestoneIntegrationTest {
 	private IVisitor outStreamVisitor;
@@ -30,7 +30,7 @@ public class MilestoneIntegrationTest {
 	@Before
 	public void setUp() {
 		bytesOut = new ByteArrayOutputStream();
-		outStreamVisitor = new TargetClassOutputStream(bytesOut);
+		outStreamVisitor = new UMLOutputStream(bytesOut);
 	}
 	
 	@Test
