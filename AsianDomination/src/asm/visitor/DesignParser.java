@@ -13,16 +13,16 @@ import api.IRelationshipManager;
 import api.ITargetClass;
 import impl.RelationshipManager;
 import impl.TargetClass;
-import utils.LaunchDot;
+import utils.LaunchDiagramGenerator;
 import utils.PackageInspector;
-import utils.LaunchDot.DotExtension;
+import utils.LaunchDiagramGenerator.DiagramFileExtension;
 import visitor.IVisitor;
 import visitor.UMLOutputStream;
 
 public class DesignParser {
 	private static String sourceDir = "C:\\Users\\trowbrct\\Desktop\\CSSE374\\AsianDomination-CSSE374\\AsianDomination\\src";
 	public static final String[] CLASSES = PackageInspector.getClasses(sourceDir, new File(sourceDir));
-//		{
+		{
 //		"headfirst.factory.pizzaaf.Cheese",
 //		"headfirst.factory.pizzaaf.ChicagoPizzaIngredientFactory",
 //		"headfirst.factory.pizzaaf.Clams",
@@ -38,8 +38,8 @@ public class DesignParser {
 //		"headfirst.factory.pizzaaf.ThickCrustDough",
 //		"headfirst.factory.pizzaaf.ThinCrustDough",
 //		"headfirst.factory.pizzafm.NYPizzaStore",
-//	};
-//	
+	};
+	
 	/**
 	 * Reads in a list of Java Classes and reverse engineers their design.
 	 *
@@ -50,11 +50,13 @@ public class DesignParser {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
+		//IProjectModel model = new ProjectModel(CLASSES, IRelationshipManager);
+		//model.parseAndCreateDiagram();
 		ITargetClass[] targetClasses = new TargetClass[CLASSES.length];
 		IRelationshipManager relationshipManager = new RelationshipManager(CLASSES);
 		
-		String asmOutputPath = "input_output/lab1-3NEW.gv";
-		String dotOutputPath = "input_output/lab1-3NEW";
+		String asmOutputPath = "input_output/factoryTest.gv";
+		String dotOutputPath = "input_output/factoryTest";
 		
 		OutputStream out = new FileOutputStream(asmOutputPath);
 		IVisitor dotOut = new UMLOutputStream(out);
@@ -86,6 +88,6 @@ public class DesignParser {
 		relationshipManager.accept(dotOut);
 		
 		((UMLOutputStream) dotOut).endDotFile();
-		LaunchDot.RunGvedit(asmOutputPath, dotOutputPath, DotExtension.PDF);
+		LaunchDiagramGenerator.RunGVEdit(asmOutputPath, dotOutputPath, DiagramFileExtension.PDF);
 	}
 }

@@ -1,0 +1,12 @@
+digraph G {
+node [
+	fontname = "Sans"
+	fontsize = 8
+	shape = "record"
+]
+
+Test[
+	label = "{Test||+ getStudents() : Collection\l}"
+]
+
+}

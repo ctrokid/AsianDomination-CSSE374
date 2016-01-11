@@ -1,0 +1,5 @@
+projectModel:ProjectModel[a]
+output:SequenceDiagramOutputStream[a]
+/clazz:TargetClass[a]
+
+projectModel:output.preVisit

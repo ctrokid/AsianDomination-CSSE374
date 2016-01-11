@@ -63,7 +63,7 @@ public class UMLOutputStream extends VisitorAdapter {
 	public void visit(IClassField c) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(c.getAccessLevel() + " " + c.getName() + " : ");
-		sb.append(c.getType() + "\\l");
+		sb.append(c.getType() + c.getSignature() + "\\l");
 
 		this.write(sb.toString());
 	}
@@ -95,8 +95,6 @@ public class UMLOutputStream extends VisitorAdapter {
 				if(edgeType.equals(RelationshipType.USES)){
 					if(!hasAssociation(edge, relationshipManager)){
 						this.write(edge + "\n");
-					} else {
-						continue;
 					}
 				} else {
 					this.write(edge + "\n");

@@ -33,9 +33,6 @@ public class ClassField implements IClassField {
 
 	@Override
 	public String getType() {
-		if (_signature != null)
-			return _type + _signature;
-		else
 			return _type;
 	}
 
