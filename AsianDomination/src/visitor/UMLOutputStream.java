@@ -15,8 +15,16 @@ public class UMLOutputStream extends VisitorAdapter {
 	private OutputStream out;
 
 	public UMLOutputStream(OutputStream out) {
-		//TODO FIXME: this needs to setup everything now
+		// TODO FIXME: this needs to setup everything now
 		this.out = out;
+		// this.prepareDotFile(fontName, fontSize);
+		this.setupPostVisitTargetClass();
+		this.setupPreVisitTargetClass();
+		this.setupVisitClassField();
+		this.setupPosVisitClassField();
+		this.setupVisitIClassMethod();
+		// this.setupVisitRelationsipManager();
+		// this.endDotFile();
 	}
 
 	private void write(String s) {
@@ -85,7 +93,6 @@ public class UMLOutputStream extends VisitorAdapter {
 		});
 	}
 
-
 	public void setupPosVisitClassField() {
 		super.addVisit(VisitType.PostVisit, IClassField.class,
 				(ITraverser t) -> {
@@ -120,7 +127,6 @@ public class UMLOutputStream extends VisitorAdapter {
 					}
 				});
 	}
-
 
 	private boolean hasAssociation(String checker,
 			IRelationshipManager relationshipManager) {
