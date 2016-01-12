@@ -1,76 +1,49 @@
 package visitor;
 
-import api.IClassDeclaration;
-import api.IClassField;
-import api.IClassMethod;
-import api.IRelationshipManager;
-import api.ITargetClass;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public abstract class VisitorAdapter implements IVisitor {
 
-	@Override
-	public void preVisit(ITargetClass c) {
+	Map<LookupKey, IVisitMethod> keyToVisitMethodMap;
 
+	public VisitorAdapter() {
+		this.keyToVisitMethodMap = new HashMap<>();
 	}
 
 	@Override
-	public void visit(ITargetClass c) {
-
+	public void preVisit(ITraverser t) {
+		this.doVisit(VisitType.PreVisit, t);
 	}
 
 	@Override
-	public void postVisit(ITargetClass c) {
-
+	public void visit(ITraverser t) {
+		this.doVisit(VisitType.Visit, t);
 	}
 
 	@Override
-	public void preVisit(IClassField f) {
+	public void postVisit(ITraverser t) {
+		this.doVisit(VisitType.PostVisit, t);
+	}
 
+	private void doVisit(VisitType vType, ITraverser t) {
+		LookupKey key = new LookupKey(vType, t.getClass());
+		IVisitMethod m = this.keyToVisitMethodMap.get(key);
+		if (m != null)
+			m.execute(t);
 	}
 
 	@Override
-	public void visit(IClassField f) {
-
+	public void addVisit(VisitType visitType, Class<?> clazz, IVisitMethod m) {
+		LookupKey key = new LookupKey(visitType, clazz);
+		this.keyToVisitMethodMap.put(key, m);
 	}
 
 	@Override
-	public void postVisit(IClassField f) {
-
-	}
-
-	@Override
-	public void preVisit(IClassDeclaration d) {
-
-	}
-
-	@Override
-	public void visit(IClassDeclaration d) {
-
-	}
-
-	@Override
-	public void postVisit(IClassDeclaration d) {
-
-	}
-
-	@Override
-	public void preVisit(IClassMethod m) {
-
-	}
-
-	@Override
-	public void visit(IClassMethod m) {
-
-	}
-
-	@Override
-	public void postVisit(IClassMethod m) {
-
-	}
-	
-	@Override
-	public void visit(IRelationshipManager m) {
-		
+	public void removeVisit(VisitType visitType, Class<?> clazz) {
+		LookupKey key = new LookupKey(visitType, clazz);
+		this.keyToVisitMethodMap.remove(key);
 	}
 
 }

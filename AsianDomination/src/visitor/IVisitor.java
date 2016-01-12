@@ -1,27 +1,27 @@
 package visitor;
 
-import api.IClassDeclaration;
-import api.IClassField;
-import api.IClassMethod;
-import api.IRelationshipManager;
-import api.ITargetClass;
 
 public interface IVisitor {
-	public void preVisit(ITargetClass c);
-	public void visit(ITargetClass c);
-	public void postVisit(ITargetClass c);
+	public void preVisit(ITraverser c);
+	public void visit(ITraverser c);
+	public void postVisit(ITraverser c);
 	
-	public void preVisit(IClassField f);
-	public void visit(IClassField f);
-	public void postVisit(IClassField f);
-
-	public void preVisit(IClassDeclaration d);
-	public void visit(IClassDeclaration d);
-	public void postVisit(IClassDeclaration d);
-
-	public void preVisit(IClassMethod m);
-	public void visit(IClassMethod m);
-	public void postVisit(IClassMethod m);
-
-	public void visit(IRelationshipManager relationshipManager);
+	
+	public void addVisit(VisitType visitType, Class<?> clazz, IVisitMethod m);
+	public void removeVisit(VisitType visitType, Class<?> clazz);
+	
+	
+//	public void preVisit(IClassField f);
+//	public void visit(IClassField f);
+//	public void postVisit(IClassField f);
+//
+//	public void preVisit(IClassDeclaration d);
+//	public void visit(IClassDeclaration d);
+//	public void postVisit(IClassDeclaration d);
+//
+//	public void preVisit(IClassMethod m);
+//	public void visit(IClassMethod m);
+//	public void postVisit(IClassMethod m);
+//
+//	public void visit(IRelationshipManager relationshipManager);
 }
