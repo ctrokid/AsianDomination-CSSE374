@@ -1,7 +1,5 @@
 package visitor;
 
-import impl.RelationshipManager;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
@@ -17,6 +15,7 @@ public class UMLOutputStream extends VisitorAdapter {
 	private OutputStream out;
 
 	public UMLOutputStream(OutputStream out) {
+		//TODO FIXME: this needs to setup everything now
 		this.out = out;
 	}
 
@@ -40,72 +39,93 @@ public class UMLOutputStream extends VisitorAdapter {
 		this.write("\n}");
 	}
 
-	@Override
-	public void preVisit(ITargetClass c) {
-		StringBuilder sb = new StringBuilder();
-		String className = c.getDeclaration().getName();
+	public void setupPreVisitTargetClass() {
+		IVisitMethod command = new IVisitMethod() {
+			@Override
+			public void execute(ITraverser t) {
+				ITargetClass c = (ITargetClass) t;
+				StringBuilder sb = new StringBuilder();
+				String className = c.getDeclaration().getName();
 
-		sb.append(className + "[\n\t");
-		sb.append("label = \"{" + className + "|");
-
-		this.write(sb.toString());
-	}
-
-	@Override
-	public void postVisit(ITargetClass c) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("}\"\n]\n\n");
-
-		this.write(sb.toString());
-	}
-
-	@Override
-	public void visit(IClassField c) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(c.getAccessLevel() + " " + c.getName() + " : ");
-		sb.append(c.getType() + c.getSignature() + "\\l");
-
-		this.write(sb.toString());
-	}
-
-	@Override
-	public void visit(IClassMethod c) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(c.getAccessLevel() + " " + c.getName());
-		sb.append("(" + c.getSignature() + ") : ");
-		sb.append(c.getReturnType() + "\\l");
-
-		this.write(sb.toString());
-	}
-
-	@Override
-	public void postVisit(IClassField c) {
-		this.write("|");
-	}
-
-	@Override
-	public void visit(IRelationshipManager relationshipManager) {
-		for (RelationshipType edgeType : RelationshipType.values()) {
-			Collection<String> relationships = relationshipManager.getRelationshipEdges(edgeType);
-			
-			if (relationships.size() > 0)
-				this.write(DotClassUtils.CreateRelationshipEdge(edgeType));
-			
-			for (String edge : relationships) {
-				if(edgeType.equals(RelationshipType.USES)){
-					if(!hasAssociation(edge, relationshipManager)){
-						this.write(edge + "\n");
-					}
-				} else {
-					this.write(edge + "\n");
-				}
+				sb.append(className + "[\n\t");
+				sb.append("label = \"{" + className + "|");
+				write(sb.toString());
 			}
-			this.write("\n");
-		}
+		};
+		super.addVisit(VisitType.PreVisit, ITargetClass.class, command);
 	}
-	
-	private boolean hasAssociation(String checker, IRelationshipManager relationshipManager){
-		if(relationshipManager.getRelationshipEdges(RelationshipType.ASSOCIATION).contains(checker)){
+
+	public void setupPostVisitTargetClass() {
+		super.addVisit(VisitType.PostVisit, ITargetClass.class,
+				(ITraverser t) -> {
+					StringBuilder sb = new StringBuilder();
+					sb.append("}\"\n]\n\n");
+					write(sb.toString());
+				});
+	}
+
+	public void setupVisitClassField() {
+		super.addVisit(VisitType.Visit, IClassField.class, (ITraverser t) -> {
+			IClassField c = (IClassField) t;
+			StringBuilder sb = new StringBuilder();
+			sb.append(c.getAccessLevel() + " " + c.getName() + " : ");
+			sb.append(c.getType() + c.getSignature() + "\\l");
+			write(sb.toString());
+		});
+	}
+
+	public void setupVisitIClassMethod() {
+		super.addVisit(VisitType.Visit, IClassMethod.class, (ITraverser t) -> {
+			IClassMethod c = (IClassMethod) t;
+			StringBuilder sb = new StringBuilder();
+			sb.append(c.getAccessLevel() + " " + c.getName());
+			sb.append("(" + c.getSignature() + ") : ");
+			sb.append(c.getReturnType() + "\\l");
+			write(sb.toString());
+		});
+	}
+
+
+	public void setupPosVisitClassField() {
+		super.addVisit(VisitType.PostVisit, IClassField.class,
+				(ITraverser t) -> {
+					write("|");
+				});
+	}
+
+	public void setupVisitRelationsipManager() {
+		super.addVisit(
+				VisitType.Visit,
+				IRelationshipManager.class,
+				(ITraverser t) -> {
+					IRelationshipManager relationshipManager = (IRelationshipManager) t;
+					for (RelationshipType edgeType : RelationshipType.values()) {
+						Collection<String> relationships = relationshipManager
+								.getRelationshipEdges(edgeType);
+
+						if (relationships.size() > 0)
+							write(DotClassUtils
+									.CreateRelationshipEdge(edgeType));
+
+						for (String edge : relationships) {
+							if (edgeType.equals(RelationshipType.USES)) {
+								if (!hasAssociation(edge, relationshipManager)) {
+									write(edge + "\n");
+								}
+							} else {
+								write(edge + "\n");
+							}
+						}
+						write("\n");
+					}
+				});
+	}
+
+
+	private boolean hasAssociation(String checker,
+			IRelationshipManager relationshipManager) {
+		if (relationshipManager.getRelationshipEdges(
+				RelationshipType.ASSOCIATION).contains(checker)) {
 			return true;
 		}
 		return false;
