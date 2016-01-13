@@ -20,13 +20,13 @@ import visitor.IVisitor;
 import visitor.UMLOutputStream;
 
 public class DesignParser {
-	private static String sourceDir = "C:\\Users\\trowbrct\\Desktop\\CSSE374\\AsianDomination-CSSE374\\AsianDomination\\src";
-	public static final String[] CLASSES = PackageInspector.getClasses(sourceDir, new File(sourceDir));
+//	private static String sourceDir = "C:\\Users\\trowbrct\\Desktop\\CSSE374\\AsianDomination-CSSE374\\AsianDomination\\src";
+	public static final String[] CLASSES = //PackageInspector.getClasses(sourceDir, new File(sourceDir));
 		{
-//		"headfirst.factory.pizzaaf.Cheese",
-//		"headfirst.factory.pizzaaf.ChicagoPizzaIngredientFactory",
-//		"headfirst.factory.pizzaaf.Clams",
-//		"headfirst.factory.pizzaaf.FreshClams",
+		"headfirst.factory.pizzaaf.Cheese",
+		"headfirst.factory.pizzaaf.ChicagoPizzaIngredientFactory",
+		"headfirst.factory.pizzaaf.Clams",
+		"headfirst.factory.pizzaaf.FreshClams",
 //		"headfirst.factory.pizzaaf.FrozenClams",
 //		"headfirst.factory.pizzaaf.MarinaraSauce",
 //		"headfirst.factory.pizzaaf.MozzarellaCheese",
@@ -61,6 +61,7 @@ public class DesignParser {
 		OutputStream out = new FileOutputStream(asmOutputPath);
 		IVisitor dotOut = new UMLOutputStream(out);
 		((UMLOutputStream) dotOut).prepareDotFile("Sans", "8");
+		
 		
 		for (int i = 0; i < CLASSES.length; i++) {
 			targetClasses[i] = new TargetClass();

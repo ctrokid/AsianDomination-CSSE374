@@ -17,14 +17,14 @@ public class UMLOutputStream extends VisitorAdapter {
 	public UMLOutputStream(OutputStream out) {
 		// TODO FIXME: this needs to setup everything now
 		this.out = out;
-		// this.prepareDotFile(fontName, fontSize);
+//		this.prepareDotFile("Sans", "8");
 		this.setupPostVisitTargetClass();
 		this.setupPreVisitTargetClass();
 		this.setupVisitClassField();
 		this.setupPosVisitClassField();
 		this.setupVisitIClassMethod();
-		// this.setupVisitRelationsipManager();
-		// this.endDotFile();
+		this.setupVisitRelationsipManager();
+//		this.endDotFile();
 	}
 
 	private void write(String s) {
@@ -64,12 +64,11 @@ public class UMLOutputStream extends VisitorAdapter {
 	}
 
 	public void setupPostVisitTargetClass() {
-		super.addVisit(VisitType.PostVisit, ITargetClass.class,
-				(ITraverser t) -> {
-					StringBuilder sb = new StringBuilder();
-					sb.append("}\"\n]\n\n");
-					write(sb.toString());
-				});
+		super.addVisit(VisitType.PostVisit, ITargetClass.class, (ITraverser t) -> {
+			StringBuilder sb = new StringBuilder();
+			sb.append("}\"\n]\n\n");
+			write(sb.toString());
+		});
 	}
 
 	public void setupVisitClassField() {
@@ -94,44 +93,36 @@ public class UMLOutputStream extends VisitorAdapter {
 	}
 
 	public void setupPosVisitClassField() {
-		super.addVisit(VisitType.PostVisit, IClassField.class,
-				(ITraverser t) -> {
-					write("|");
-				});
+		super.addVisit(VisitType.PostVisit, IClassField.class, (ITraverser t) -> {
+			write("|");
+		});
 	}
 
 	public void setupVisitRelationsipManager() {
-		super.addVisit(
-				VisitType.Visit,
-				IRelationshipManager.class,
-				(ITraverser t) -> {
-					IRelationshipManager relationshipManager = (IRelationshipManager) t;
-					for (RelationshipType edgeType : RelationshipType.values()) {
-						Collection<String> relationships = relationshipManager
-								.getRelationshipEdges(edgeType);
+		super.addVisit(VisitType.Visit, IRelationshipManager.class, (ITraverser t) -> {
+			IRelationshipManager relationshipManager = (IRelationshipManager) t;
+			for (RelationshipType edgeType : RelationshipType.values()) {
+				Collection<String> relationships = relationshipManager.getRelationshipEdges(edgeType);
 
-						if (relationships.size() > 0)
-							write(DotClassUtils
-									.CreateRelationshipEdge(edgeType));
+				if (relationships.size() > 0)
+					write(DotClassUtils.CreateRelationshipEdge(edgeType));
 
-						for (String edge : relationships) {
-							if (edgeType.equals(RelationshipType.USES)) {
-								if (!hasAssociation(edge, relationshipManager)) {
-									write(edge + "\n");
-								}
-							} else {
-								write(edge + "\n");
-							}
+				for (String edge : relationships) {
+					if (edgeType.equals(RelationshipType.USES)) {
+						if (!hasAssociation(edge, relationshipManager)) {
+							write(edge + "\n");
 						}
-						write("\n");
+					} else {
+						write(edge + "\n");
 					}
-				});
+				}
+				write("\n");
+			}
+		});
 	}
 
-	private boolean hasAssociation(String checker,
-			IRelationshipManager relationshipManager) {
-		if (relationshipManager.getRelationshipEdges(
-				RelationshipType.ASSOCIATION).contains(checker)) {
+	private boolean hasAssociation(String checker, IRelationshipManager relationshipManager) {
+		if (relationshipManager.getRelationshipEdges(RelationshipType.ASSOCIATION).contains(checker)) {
 			return true;
 		}
 		return false;

@@ -15,13 +15,13 @@ public class TargetClass implements ITargetClass {
 	private Collection<IClassField> fieldParts;
 	private Collection<IClassMethod> methodParts;
 	private IClassDeclaration declarationPart;
-	
+
 	public TargetClass() {
 		fieldParts = new ArrayList<IClassField>();
 		methodParts = new ArrayList<IClassMethod>();
 		declarationPart = null;
 	}
-	
+
 	@Override
 	public Collection<IClassField> getFieldParts() {
 		return fieldParts;
@@ -53,23 +53,25 @@ public class TargetClass implements ITargetClass {
 
 	@Override
 	public void accept(IVisitor v) {
+		//TODO: pass in the type here, strategy pattern
 		v.preVisit(this);
-		
+
 		IClassField lastField = null;
 		for (Iterator<IClassField> fieldIter = fieldParts.iterator(); fieldIter.hasNext();) {
 			lastField = fieldIter.next();
 			lastField.accept(v);
 		}
-		
+
 		// Need to print separation
 		// so we call postVisit on ONE field
 		// doesn't matter which field it is, this should be safe
-		v.postVisit(lastField);
-		
+		if (lastField != null)
+			v.postVisit(lastField);
+
 		for (IClassMethod method : methodParts) {
 			method.accept(v);
 		}
-		
+
 		v.postVisit(this);
 	}
 
