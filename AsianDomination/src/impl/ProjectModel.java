@@ -1,6 +1,8 @@
 package impl;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
@@ -14,22 +16,25 @@ import asm.visitor.ClassFieldVisitor;
 import asm.visitor.ClassMethodVisitor;
 import utils.LaunchDiagramGenerator;
 import utils.LaunchDiagramGenerator.DiagramFileExtension;
+import visitor.IDiagramOutputStream;
 import visitor.IVisitor;
 import visitor.UMLOutputStream;
 
-public class ProjectModel implements IProjectModel  {
+public class ProjectModel implements IProjectModel {
 	private String[] _targetClasses;
 	private IRelationshipManager _relationshipManager;
-	private IVisitor _output;
+	private IDiagramOutputStream _output;
 	String _textOutputPath;
 	String _diagramOutputPath;
 
 	public ProjectModel(String[] targetClass, IRelationshipManager relationshipManager, String textOutputPath,
-			String diagramOutputPath) {
+			String diagramOutputPath) throws IOException {
 		_targetClasses = targetClass;
 		_relationshipManager = relationshipManager;
 		_textOutputPath = textOutputPath;
 		_diagramOutputPath = diagramOutputPath;
+		OutputStream out = new FileOutputStream(_textOutputPath);
+		_output = new UMLOutputStream(out);
 
 	}
 
@@ -37,10 +42,10 @@ public class ProjectModel implements IProjectModel  {
 	public void accept(IVisitor v) {
 
 	}
-	
+
 	@Override
 	public void parseModel() throws IOException {
-		//TODO: not complete yet
+		_output.prepareFile();
 		ITargetClass target = null;
 		for (int i = 0; i < _targetClasses.length; i++) {
 			// ASM's ClassReader does the heavy lifting of parsing the compiled
@@ -51,7 +56,7 @@ public class ProjectModel implements IProjectModel  {
 			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor, target, _relationshipManager);
 			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, target,
 					_relationshipManager);
-			
+
 			// TODO: add more DECORATORS here in later milestones to accomplish
 			// specific tasks
 			// Tell the Reader to use our (heavily decorated) ClassVisitor to
@@ -60,15 +65,15 @@ public class ProjectModel implements IProjectModel  {
 			// All TargetClass instances are populated with data
 			// This should print out each class with the internal representation
 			target.accept(_output);
-			
-			((UMLOutputStream) _output).endDotFile();
-			LaunchDiagramGenerator.RunGVEdit(_textOutputPath, _diagramOutputPath, DiagramFileExtension.PDF);
+
 		}
+		_output.endFile();
+		LaunchDiagramGenerator.RunGVEdit(_textOutputPath, _diagramOutputPath, DiagramFileExtension.PDF);
 
 	}
 
 	@Override
-	public void setOutputStream(IVisitor v) {
+	public void setOutputStream(IDiagramOutputStream v) {
 		_output = v;
 	}
 
