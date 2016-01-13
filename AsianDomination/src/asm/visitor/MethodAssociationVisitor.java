@@ -23,11 +23,12 @@ public class MethodAssociationVisitor extends MethodVisitor {
 		_className = className;
 		_arguments = arguments;
 	}
-
+	
 	@Override
 	public void visitFieldInsn(int arg0, String className, String fieldName, String fieldType) {
 		super.visitFieldInsn(arg0, className, fieldName, fieldType);
 		
+		// FIXME: collections don't get populated with internal contents
 		if (!className.equals(_className)) {
 			_relationshipManager.addRelationshipEdge(_className, className, RelationshipType.ASSOCIATION);
 		}

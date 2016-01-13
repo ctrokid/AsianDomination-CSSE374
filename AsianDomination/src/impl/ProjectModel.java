@@ -65,11 +65,12 @@ public class ProjectModel implements IProjectModel {
 			// All TargetClass instances are populated with data
 			// This should print out each class with the internal representation
 			target.accept(_output);
-
 		}
+		
+		_relationshipManager.accept(_output);
+		
 		_output.endFile();
 		LaunchDiagramGenerator.RunGVEdit(_textOutputPath, _diagramOutputPath, DiagramFileExtension.PDF);
-
 	}
 
 	@Override
