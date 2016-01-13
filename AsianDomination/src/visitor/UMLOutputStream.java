@@ -17,14 +17,12 @@ public class UMLOutputStream extends VisitorAdapter {
 	public UMLOutputStream(OutputStream out) {
 		// TODO FIXME: this needs to setup everything now
 		this.out = out;
-//		this.prepareDotFile("Sans", "8");
 		this.setupPostVisitTargetClass();
 		this.setupPreVisitTargetClass();
 		this.setupVisitClassField();
 		this.setupPosVisitClassField();
 		this.setupVisitIClassMethod();
 		this.setupVisitRelationsipManager();
-//		this.endDotFile();
 	}
 
 	private void write(String s) {
@@ -33,18 +31,6 @@ public class UMLOutputStream extends VisitorAdapter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void prepareDotFile(String fontName, String fontSize) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("digraph G {\n");
-		sb.append(DotClassUtils.CreateFontNode(fontName, fontSize));
-
-		this.write(sb.toString());
-	}
-
-	public void endDotFile() {
-		this.write("\n}");
 	}
 
 	public void setupPreVisitTargetClass() {
@@ -126,6 +112,20 @@ public class UMLOutputStream extends VisitorAdapter {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void prepareFile() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("digraph G {\n");
+		sb.append(DotClassUtils.CreateFontNode("Sans", "8"));
+
+		this.write(sb.toString());
+	}
+
+	@Override
+	public void endFile() {
+		this.write("\n}");
 	}
 
 }
