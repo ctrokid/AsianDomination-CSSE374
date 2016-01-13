@@ -1,4 +1,4 @@
-package unitTests;
+package integrationTests;
 
 import org.junit.Test;
 
