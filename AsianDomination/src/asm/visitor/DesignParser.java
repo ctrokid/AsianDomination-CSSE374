@@ -4,16 +4,17 @@ import java.io.File;
 
 import api.IProjectModel;
 import api.IRelationshipManager;
+import impl.InputCommand;
 import impl.PrintCommand;
 import impl.ProjectModel;
 import impl.RelationshipManager;
 import utils.PackageInspector;
 
 public class DesignParser {
-	 private static String sourceDir =
-	 "C:\\Users\\yangr\\git\\AsianDomination-CSSE374\\AsianDomination\\DummyClasses";
-	 public static final String[] ARGUMENTS =
-	 PackageInspector.getClasses(sourceDir, new File(sourceDir));
+//	 private static String sourceDir =
+//	 "C:\\Users\\yangr\\git\\AsianDomination-CSSE374\\AsianDomination\\DummyClasses";
+//	 public static final String[] CLASSES =
+//	 PackageInspector.getClasses(sourceDir, new File(sourceDir));
 	// { "headfirst.factory.pizzaaf.Cheese",
 	// "headfirst.factory.pizzaaf.ChicagoPizzaIngredientFactory",
 	// "headfirst.factory.pizzaaf.Clams",
@@ -41,20 +42,22 @@ public class DesignParser {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {		
-//		PrintCommand print = new PrintCommand();
-//		String command = print.run();
-//		if (command.equals("UML")) {// Maybe make an map??????
-			IRelationshipManager relationshipManager = new RelationshipManager(ARGUMENTS);
+		PrintCommand print = new PrintCommand();
+		InputCommand inputCommand = print.run();
+		
+		if (inputCommand.getCommandType().equals("UML")) {
+			IRelationshipManager relationshipManager = new RelationshipManager(inputCommand.getClasses());
 
-			String asmOutputPath = "input_output/factoryTest.gv";
-			String diagramOutputPath = "input_output/factoryTest";
+			String asmOutputPath = "input_output/inputCommand.gv";
+			String diagramOutputPath = "input_output/inputCommandTest";
 
-			IProjectModel model = new ProjectModel(ARGUMENTS, relationshipManager, asmOutputPath, diagramOutputPath);
+			IProjectModel model = new ProjectModel(inputCommand.getClasses(), relationshipManager, asmOutputPath, diagramOutputPath);
 			model.parseModel();
-//		}else if(command.equals("SEQ")){
-//			//DO SEQ COMMANDS HERE
-//			
-//		}
+			
+		} else if(inputCommand.getCommandType().equals("SEQ")){
+			//DO SEQ COMMANDS HERE
+			
+		}
 
 	}
 }

@@ -47,7 +47,7 @@ public class UMLMethodAssociationVisitor extends MethodVisitor {
 
 		// Recursively go into variable className's class
 		// add new next node to current node
-		System.out.println(_className + " " + className + " " + methodName);
+		// System.out.println(_className + " " + className + " " + methodName);
 		if (!className.equals(_className)) {
 			_relationshipManager.addRelationshipEdge(_className, className,
 					RelationshipType.ASSOCIATION);
