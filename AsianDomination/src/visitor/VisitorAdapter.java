@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public abstract class VisitorAdapter implements IVisitor {
+public abstract class VisitorAdapter implements IDiagramOutputStream {
 
 	Map<LookupKey, IVisitMethod> keyToVisitMethodMap;
 
@@ -45,5 +45,9 @@ public abstract class VisitorAdapter implements IVisitor {
 		LookupKey key = new LookupKey(visitType, clazz);
 		this.keyToVisitMethodMap.remove(key);
 	}
+	
+	public abstract void prepareFile();
+	
+	public abstract void endFile(String inputPath, String outputPath);
 
 }
