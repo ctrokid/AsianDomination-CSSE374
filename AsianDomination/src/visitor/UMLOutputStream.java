@@ -9,7 +9,9 @@ import api.IClassMethod;
 import api.IRelationshipManager;
 import api.ITargetClass;
 import utils.DotClassUtils;
+import utils.LaunchDiagramGenerator;
 import utils.DotClassUtils.RelationshipType;
+import utils.LaunchDiagramGenerator.DiagramFileExtension;
 
 public class UMLOutputStream extends VisitorAdapter {
 	private OutputStream out;
@@ -124,8 +126,9 @@ public class UMLOutputStream extends VisitorAdapter {
 	}
 
 	@Override
-	public void endFile() {
+	public void endFile(String inputPath, String outputPath) {
 		this.write("\n}");
+		
+		LaunchDiagramGenerator.RunGVEdit(inputPath, outputPath, DiagramFileExtension.PDF);
 	}
-
 }

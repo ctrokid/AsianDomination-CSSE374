@@ -48,6 +48,6 @@ public abstract class VisitorAdapter implements IDiagramOutputStream {
 	
 	public abstract void prepareFile();
 	
-	public abstract void endFile();
+	public abstract void endFile(String inputPath, String outputPath);
 
 }

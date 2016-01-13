@@ -14,8 +14,6 @@ import api.ITargetClass;
 import asm.visitor.ClassDeclarationVisitor;
 import asm.visitor.ClassFieldVisitor;
 import asm.visitor.ClassMethodVisitor;
-import utils.LaunchDiagramGenerator;
-import utils.LaunchDiagramGenerator.DiagramFileExtension;
 import visitor.IDiagramOutputStream;
 import visitor.IVisitor;
 import visitor.UMLOutputStream;
@@ -27,9 +25,9 @@ public class ProjectModel implements IProjectModel {
 	String _textOutputPath;
 	String _diagramOutputPath;
 
-	public ProjectModel(String[] targetClass, IRelationshipManager relationshipManager, String textOutputPath,
+	public ProjectModel(String[] targetClasses, IRelationshipManager relationshipManager, String textOutputPath,
 			String diagramOutputPath) throws IOException {
-		_targetClasses = targetClass;
+		_targetClasses = targetClasses;
 		_relationshipManager = relationshipManager;
 		_textOutputPath = textOutputPath;
 		_diagramOutputPath = diagramOutputPath;
@@ -47,9 +45,8 @@ public class ProjectModel implements IProjectModel {
 	public void parseModel() throws IOException {
 		_output.prepareFile();
 		ITargetClass target = null;
+		
 		for (int i = 0; i < _targetClasses.length; i++) {
-			// ASM's ClassReader does the heavy lifting of parsing the compiled
-			// Java class
 			target = new TargetClass();
 			ClassReader reader = new ClassReader(_targetClasses[i]);
 			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, target, _relationshipManager);
@@ -62,6 +59,7 @@ public class ProjectModel implements IProjectModel {
 			// Tell the Reader to use our (heavily decorated) ClassVisitor to
 			// visit the class
 			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
+			
 			// All TargetClass instances are populated with data
 			// This should print out each class with the internal representation
 			target.accept(_output);
@@ -69,8 +67,7 @@ public class ProjectModel implements IProjectModel {
 		
 		_relationshipManager.accept(_output);
 		
-		_output.endFile();
-		LaunchDiagramGenerator.RunGVEdit(_textOutputPath, _diagramOutputPath, DiagramFileExtension.PDF);
+		_output.endFile(_textOutputPath, _diagramOutputPath);
 	}
 
 	@Override
