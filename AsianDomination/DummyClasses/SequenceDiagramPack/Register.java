@@ -13,5 +13,10 @@ public class Register {
 		// must pass
 		// an int argument when calling makePayment
 		sale.makePayment(cashTendered);
+		out();
+	}
+	
+	private void out() {
+		
 	}
 }

@@ -1,11 +1,6 @@
 package asm.visitor;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Scanner;
 
 import api.IProjectModel;
 import api.IRelationshipManager;
@@ -16,8 +11,8 @@ import utils.PackageInspector;
 
 public class DesignParser {
 	 private static String sourceDir =
-	 "C:\\Users\\trowbrct\\Desktop\\CSSE374\\AsianDomination-CSSE374\\AsianDomination\\src";
-	 public static final String[] CLASSES =
+	 "C:\\Users\\yangr\\git\\AsianDomination-CSSE374\\AsianDomination\\DummyClasses";
+	 public static final String[] ARGUMENTS =
 	 PackageInspector.getClasses(sourceDir, new File(sourceDir));
 	// { "headfirst.factory.pizzaaf.Cheese",
 	// "headfirst.factory.pizzaaf.ChicagoPizzaIngredientFactory",
@@ -45,21 +40,21 @@ public class DesignParser {
 	 *            edu.rosehulman.csse374.ClassFieldVisitor java.lang.Math
 	 * @throws Exception
 	 */
-	public static void main(String[] args) throws Exception {
-		PrintCommand print = new PrintCommand();
-		String command = print.run();
-		if (command.equals("UML")) {// Maybe make an map??????
-			IRelationshipManager relationshipManager = new RelationshipManager(CLASSES);
+	public static void main(String[] args) throws Exception {		
+//		PrintCommand print = new PrintCommand();
+//		String command = print.run();
+//		if (command.equals("UML")) {// Maybe make an map??????
+			IRelationshipManager relationshipManager = new RelationshipManager(ARGUMENTS);
 
 			String asmOutputPath = "input_output/factoryTest.gv";
 			String diagramOutputPath = "input_output/factoryTest";
 
-			IProjectModel model = new ProjectModel(CLASSES, relationshipManager, asmOutputPath, diagramOutputPath);
+			IProjectModel model = new ProjectModel(ARGUMENTS, relationshipManager, asmOutputPath, diagramOutputPath);
 			model.parseModel();
-		}else if(command.equals("SEQ")){
-			//DO SEQ COMMANDS HERE
-			
-		}
+//		}else if(command.equals("SEQ")){
+//			//DO SEQ COMMANDS HERE
+//			
+//		}
 
 	}
 }

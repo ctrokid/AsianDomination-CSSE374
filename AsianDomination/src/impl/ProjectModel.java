@@ -14,6 +14,7 @@ import api.ITargetClass;
 import asm.visitor.ClassDeclarationVisitor;
 import asm.visitor.ClassFieldVisitor;
 import asm.visitor.ClassMethodVisitor;
+import asm.visitor.DiagramType;
 import visitor.IDiagramOutputStream;
 import visitor.IVisitor;
 import visitor.UMLOutputStream;
@@ -52,7 +53,7 @@ public class ProjectModel implements IProjectModel {
 			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, target, _relationshipManager);
 			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor, target, _relationshipManager);
 			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, target,
-					_relationshipManager);
+					_relationshipManager, DiagramType.UML);
 
 			// TODO: add more DECORATORS here in later milestones to accomplish
 			// specific tasks
