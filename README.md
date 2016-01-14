@@ -9,7 +9,7 @@ We just used one visitor pattern to visit each TargetClass. After they were visi
 We added a RelationshipManager class to be the second visitor that happens once the classes are printed. This got rid of the VisitCollection method from Milestone 1, as the RelationshipManager can handle printing all relationships (Inheritance, Interface, Association, Uses). See [Milestone 2 UML Diagram] (https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/CurrentManualUML.pdf) for more specific design.
 
 ###Milestone 3
-We added MethodStatement class to store the relationship between classes for sequence diagram and SequenceDiagramMethodVisitor and SequenceDiagramTraverser class to recursively added relationships to generate sequence diagram. See [Milestone 3 UML Diagram]() for more specific design. This is not the desired design for this milestone. We will need to refactor the code and come up with a better design.
+We added MethodStatement class to store the relationship between classes for sequence diagram and SequenceDiagramMethodVisitor and SequenceDiagramTraverser class to recursively added relationships to generate sequence diagram. See [Milestone 3 UML Diagram]() for more specific design. **This is not the desired design for this milestone. We will need to refactor the code and come up with a better design.**
 
 ##Milestone Deliverables
 ---
@@ -34,7 +34,7 @@ We added MethodStatement class to store the relationship between classes for seq
 [Generated UML Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M2ProjectGeneratedUML.pdf)
 
 ###Milestone 3
-TODO: Add links for the following diagrams
+**TODO: Add links for the following diagrams**
 ######Collection Sequence Diagrams
 [Manual Sequence Diagram for Collection]()
 
