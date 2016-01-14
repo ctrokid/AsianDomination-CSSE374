@@ -39,12 +39,16 @@ public class ProjectModel implements IProjectModel {
 		_textOutputPath = textOutputPath;
 		_diagramOutputPath = diagramOutputPath;
 		
-		OutputStream out = new FileOutputStream(_textOutputPath);
+		OutputStream out = null;
 		
-		if (getCommand().getCommandType().equals("UML"))
+		if (getCommand().getCommandType().equals("UML")) {
+			out = new FileOutputStream(_textOutputPath + ".gv");
 			_output = new UMLOutputStream(out);
-		else if (getCommand().getCommandType().equals("SEQ"))
+		}
+		else if (getCommand().getCommandType().equals("SEQ")) {
+			out = new FileOutputStream(_textOutputPath + ".sd");
 			_output = new SequenceOutputStream(out, this);
+		}
 		else {
 			_output = null;
 			System.err.println("Should not get here. Error in Project Model about to happen.");

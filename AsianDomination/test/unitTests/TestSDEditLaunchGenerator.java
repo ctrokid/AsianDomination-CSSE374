@@ -13,7 +13,7 @@ public class TestSDEditLaunchGenerator {
 	
 	@Test
 	public void testSDEditLaunchSuccess() {
-		inputPath = "input_output/sequenceTest.sd";
+		inputPath = "input_output/sdEditSuccessTest";
 		outputPath = "input_output/firstSequenceTest";
 		
 		int actual = LaunchDiagramGenerator.RunSDEdit(inputPath, outputPath, DiagramFileExtension.PDF);
@@ -23,7 +23,7 @@ public class TestSDEditLaunchGenerator {
 	
 	@Test
 	public void testSDEditLaunchFailureBadInputPath() {
-		inputPath = "input_output/sdThisISIntentionalFailureTest.sd";
+		inputPath = "input_output/sdThisISIntentionalFailureTest";
 		outputPath = "input_output/badPathFailureSequenceTest";
 		
 		int actual = LaunchDiagramGenerator.RunSDEdit(inputPath, outputPath, DiagramFileExtension.PDF);
@@ -33,7 +33,7 @@ public class TestSDEditLaunchGenerator {
 	
 	@Test
 	public void testSDEditLaunchFailureBadSDFile() {
-		inputPath = "input_output/sdEditFailureTest.sd";
+		inputPath = "input_output/sdEditFailureTest";
 		outputPath = "input_output/badFileFailureSequenceTest";
 		
 		int actual = LaunchDiagramGenerator.RunSDEdit(inputPath, outputPath, DiagramFileExtension.PDF);

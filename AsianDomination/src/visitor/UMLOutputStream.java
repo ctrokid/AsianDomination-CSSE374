@@ -64,7 +64,12 @@ public class UMLOutputStream extends VisitorAdapter {
 			IClassField c = (IClassField) t;
 			StringBuilder sb = new StringBuilder();
 			sb.append(c.getAccessLevel() + " " + c.getName() + " : ");
-			sb.append(c.getType() + c.getSignature() + "\\l");
+			sb.append(c.getType());
+			
+			if (c.getSignature() != null)
+				sb.append(c.getSignature());
+			
+			sb.append("\\l");
 			write(sb.toString());
 		});
 	}

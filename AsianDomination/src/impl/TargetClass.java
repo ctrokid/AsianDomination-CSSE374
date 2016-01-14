@@ -66,7 +66,7 @@ public class TargetClass implements ITargetClass {
 	private void doUMLVisiting(UMLOutputStream v) {
 		v.preVisit(this);
 
-		IClassField lastField = null;
+		IClassField lastField = new ClassField(null,null,null,null);
 		for (Iterator<IClassField> fieldIter = fieldParts.iterator(); fieldIter.hasNext();) {
 			lastField = fieldIter.next();
 			lastField.accept(v);
@@ -75,8 +75,7 @@ public class TargetClass implements ITargetClass {
 		// Need to print separation
 		// so we call postVisit on ONE field
 		// doesn't matter which field it is, this should be safe
-		if (lastField != null)
-			v.postVisit(lastField);
+		v.postVisit(lastField);
 
 		for (IClassMethod method : methodParts) {
 			method.accept(v);

@@ -15,8 +15,10 @@ public class PrintCommand {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Welcome to AsianDomination. You can generate UML and Sequence Diagram. \n"
 				+ "UML Diagram example: \"UML, package path or classes names\" \n"
+				+ "UML, C:\\Users\\trowbrct\\Desktop\\CSSE374\\AsianDomination-CSSE374\\AsianDomination\\src\n"
 				+ "Squence Diagram example: \"SEQ, package path or classes names, initial class name, method name, depth (default 5)\" \n"
-				+ "Please enter specific command below: ");
+				+ "SEQ, C:\\Users\\trowbrct\\Desktop\\CSSE374\\AsianDomination-CSSE374\\AsianDomination\\src, DesignParser, main, 3\n"
+				+ "Please enter specific command below: \n");
 		
 		String line = in.readLine();
 		String[] clientInput = line.trim().split(",");

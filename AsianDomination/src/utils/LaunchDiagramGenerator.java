@@ -11,7 +11,7 @@ public class LaunchDiagramGenerator {
 	
 	public static int RunGVEdit(String inputPath, String outputPath, DiagramFileExtension ext) {
 		// TODO: this should be added to path. just call 'dot - T...'
-		String cmd = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot -T " + ext.toString().toLowerCase()  + " " + inputPath + " -o "+ outputPath + "." + ext.toString().toLowerCase();
+		String cmd = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot -T " + ext.toString().toLowerCase()  + " " + inputPath + ".gv -o "+ outputPath + "." + ext.toString().toLowerCase();
 		System.out.println("Running Dot Command: ");
 		System.out.println(cmd);
 		
@@ -33,7 +33,7 @@ public class LaunchDiagramGenerator {
 	}
 	
 	public static int RunSDEdit(String inputPath, String outputPath, DiagramFileExtension ext) {
-		String cmd = "java -jar lib/sdedit-4.01.jar -o " + outputPath + "." + ext.toString() + " -t " + ext.toString() + " " + inputPath;
+		String cmd = "java -jar lib/sdedit-4.01.jar -o " + outputPath + "." + ext.toString() + " -t " + ext.toString() + " " + inputPath + ".sd";
 		System.out.println("Running SDedit Command: ");
 		System.out.println(cmd);
 
