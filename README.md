@@ -36,7 +36,7 @@ We added MethodStatement class to store the relationship between classes for seq
 ###Milestone 3
 **TODO: Add links for the following diagrams**
 ######Collection Sequence Diagrams
-[Manual Sequence Diagram for Collection]()
+[Manual Sequence Diagram for Collection](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M3CollectionManualSequence.png)
 
 [Generated Sequence Diagram for Collection]()
 
