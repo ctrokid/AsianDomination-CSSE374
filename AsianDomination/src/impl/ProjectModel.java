@@ -3,11 +3,13 @@ package impl;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Collection;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
+import api.IClassMethod;
 import api.IProjectModel;
 import api.IRelationshipManager;
 import api.ITargetClass;
@@ -41,8 +43,8 @@ public class ProjectModel implements IProjectModel {
 		
 		if (getCommand().getCommandType().equals("UML"))
 			_output = new UMLOutputStream(out);
-		else if (getCommand().getCommandType().equals("Sequence"))
-			_output = new SequenceOutputStream(out);
+		else if (getCommand().getCommandType().equals("SEQ"))
+			_output = new SequenceOutputStream(out, this);
 		else {
 			_output = null;
 			System.err.println("Should not get here. Error in Project Model about to happen.");
@@ -61,7 +63,6 @@ public class ProjectModel implements IProjectModel {
 		for (int i = 0; i < _command.getClasses().length; i++) {
 			_targetClasses[i] = new TargetClass();
 			
-			System.out.println(getCommand().getClasses()[i]);
 			ClassReader reader = new ClassReader(_command.getClasses()[i]);
 			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, _targetClasses[i], _relationshipManager);
 			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor, _targetClasses[i], _relationshipManager);
@@ -90,7 +91,7 @@ public class ProjectModel implements IProjectModel {
 	}
 	
 	private void launchSequenceRun() {
-		SequenceInputCommand cmd = (SequenceInputCommand) getCommand();
+		SequenceInputCommand cmd = (SequenceInputCommand) _command;
 		ITargetClass startingClass = null;
 		
 		for (ITargetClass targetClass : _targetClasses) {
@@ -113,6 +114,37 @@ public class ProjectModel implements IProjectModel {
 	}
 
 	private InputCommand getCommand() {
+		return _command;
+	}
+
+	@Override
+	public ITargetClass getTargetClassByName(String className) {
+		ITargetClass classToReturn = null;
+		
+		for (ITargetClass clazz : _targetClasses) {
+			if (clazz.getDeclaration().getName().equals(className)) {
+				classToReturn = clazz;
+			}
+		}
+		
+		return classToReturn;
+	}
+
+	@Override
+	public Collection<IClassMethod> getTargetClassMethods(ITargetClass targetClass) {
+		Collection<IClassMethod> methods = null;
+		
+		for (ITargetClass clazz : _targetClasses) {
+			if (clazz.getDeclaration().getName().equals(targetClass.getDeclaration().getName())) {
+				methods = clazz.getMethodParts();
+			}
+		}
+		
+		return methods;
+	}
+
+	@Override
+	public InputCommand getInputCommand() {
 		return _command;
 	}
 

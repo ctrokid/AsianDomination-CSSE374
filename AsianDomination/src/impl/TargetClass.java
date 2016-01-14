@@ -55,14 +55,15 @@ public class TargetClass implements ITargetClass {
 
 	@Override
 	public void accept(IVisitor v) {
-		//TODO: pass in the type here, strategy pattern
-		// do current code if UML, write new method for Sequence
-		
-//		if (v instanceof UMLOutputStream)
-//			doSomething()
-//		else if (v instanceof SequenceOutputStream)
-//			SequenceRecursion.startRecursion((SequenceOutputStream) v);
-//			
+		if (v instanceof UMLOutputStream)
+			doUMLVisiting((UMLOutputStream) v);
+		else if (v instanceof SequenceOutputStream) {
+			SequenceDiagramTraverser sdTraverser = new SequenceDiagramTraverser((SequenceOutputStream) v);
+			sdTraverser.startOutput();
+		}
+	}
+
+	private void doUMLVisiting(UMLOutputStream v) {
 		v.preVisit(this);
 
 		IClassField lastField = null;

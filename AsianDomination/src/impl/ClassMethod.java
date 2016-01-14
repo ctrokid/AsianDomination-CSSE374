@@ -43,7 +43,6 @@ public class ClassMethod implements IClassMethod {
 	
 	@Override
 	public void addStatement(MethodStatement stmt) {
-		System.out.println(stmt.toString());
 		_statements.add(stmt);
 	}
 	

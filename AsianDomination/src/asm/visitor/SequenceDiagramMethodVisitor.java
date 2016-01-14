@@ -36,12 +36,11 @@ public class SequenceDiagramMethodVisitor extends MethodVisitor {
 	public void visitMethodInsn(int arg0, String className, String methodName,
 			String returnType, boolean arg4) {
 		super.visitMethodInsn(arg0, className, methodName, returnType, arg4);
-		System.out.println(_className + " " + className + " " + methodName);
 		
 		//Store things here
 		// FIXME : integrate method parameters
 		
-		MethodStatement stmt = new MethodStatement(className, methodName, new String[] {}, returnType);
+		MethodStatement stmt = new MethodStatement(_className, className, methodName, returnType);
 		_classMethod.addStatement(stmt);
 		
 	}

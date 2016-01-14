@@ -1,21 +1,27 @@
 package impl;
 
-import java.util.Arrays;
-
 import api.ITargetClassPart;
 import visitor.IVisitor;
 
 public class MethodStatement implements ITargetClassPart {
+	private String _previousClass;
 	private String _className;
 	private String _methodName;
-	private String[] _params;
 	private String _return;
 	
-	public MethodStatement(String _className, String _methodName, String[] _params, String _return) {
+	public MethodStatement(String _previousClass, String _className, String methodName, String _return) {
+		this._previousClass = _previousClass;
 		this._className = _className;
-		this._methodName = _methodName;
-		this._params = _params;
+		this._methodName = methodName;
+//		setMethodNameAndParameters(methodName);
 		this._return = _return;
+	}
+
+	private void setMethodNameAndParameters(String methodName) {
+		String[] tokens = methodName.split(" ");
+		_methodName = tokens[0];
+//		TODO: later. parse this BS
+//		String params = tokens[1].split(regex);
 	}
 
 	public String getClassName() {
@@ -26,28 +32,26 @@ public class MethodStatement implements ITargetClassPart {
 		return _methodName;
 	}
 
-	public String[] getParams() {
-		return _params;
-	}
-
 	public String getReturn() {
 		return _return;
 	}
 	
-	@Override
-	public String toString() {
-		return "MethodStatement: " + getClassName() + " " + getMethodName() + " " + getReturn();
+	public String getPreviousClass() {
+		return _previousClass;
 	}
 	
+	@Override
+	public String toString() {
+		return "MethodStatement: " + getPreviousClass() + " " + getClassName() + " " + getMethodName() + " " + getReturn();
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((_className == null) ? 0 : _className.hashCode());
-		result = prime * result
-				+ ((_methodName == null) ? 0 : _methodName.hashCode());
-		result = prime * result + Arrays.hashCode(_params);
+		result = prime * result + ((_className == null) ? 0 : _className.hashCode());
+		result = prime * result + ((_methodName == null) ? 0 : _methodName.hashCode());
+		result = prime * result + ((_previousClass == null) ? 0 : _previousClass.hashCode());
 		result = prime * result + ((_return == null) ? 0 : _return.hashCode());
 		return result;
 	}
@@ -66,16 +70,16 @@ public class MethodStatement implements ITargetClassPart {
 				return false;
 		} else if (!_className.equals(other._className))
 			return false;
-		
 		if (_methodName == null) {
 			if (other._methodName != null)
 				return false;
 		} else if (!_methodName.equals(other._methodName))
 			return false;
-		
-		if (!Arrays.equals(_params, other._params))
+		if (_previousClass == null) {
+			if (other._previousClass != null)
+				return false;
+		} else if (!_previousClass.equals(other._previousClass))
 			return false;
-		
 		if (_return == null) {
 			if (other._return != null)
 				return false;

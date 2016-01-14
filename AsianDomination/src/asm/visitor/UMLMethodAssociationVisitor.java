@@ -46,7 +46,7 @@ public class UMLMethodAssociationVisitor extends MethodVisitor {
 					RelationshipType.ASSOCIATION);
 		}
 		
-		MethodStatement stmt = new MethodStatement(className, methodName, new String[] {}, returnType);
+		MethodStatement stmt = new MethodStatement(_className, className, methodName, returnType);
 		_classMethod.addStatement(stmt);
 	}
 
