@@ -2,7 +2,10 @@ package impl;
 
 import java.util.Arrays;
 
-public class MethodStatement {
+import api.ITargetClassPart;
+import visitor.IVisitor;
+
+public class MethodStatement implements ITargetClassPart {
 	private String _className;
 	private String _methodName;
 	private String[] _params;
@@ -15,20 +18,25 @@ public class MethodStatement {
 		this._return = _return;
 	}
 
-	public String get_className() {
+	public String getClassName() {
 		return _className;
 	}
 
-	public String get_methodName() {
+	public String getMethodName() {
 		return _methodName;
 	}
 
-	public String[] get_params() {
+	public String[] getParams() {
 		return _params;
 	}
 
-	public String get_return() {
+	public String getReturn() {
 		return _return;
+	}
+	
+	@Override
+	public String toString() {
+		return "MethodStatement: " + getClassName() + " " + getMethodName() + " " + getReturn();
 	}
 	
 	@Override
@@ -74,6 +82,11 @@ public class MethodStatement {
 		} else if (!_return.equals(other._return))
 			return false;
 		return true;
+	}
+
+	@Override
+	public void accept(IVisitor v) {
+		v.visit(this);
 	}
 	
 }

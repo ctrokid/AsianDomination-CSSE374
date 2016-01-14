@@ -17,24 +17,36 @@ import asm.visitor.ClassMethodVisitor;
 import asm.visitor.DiagramType;
 import visitor.IDiagramOutputStream;
 import visitor.IVisitor;
+import visitor.SequenceOutputStream;
 import visitor.UMLOutputStream;
 
 public class ProjectModel implements IProjectModel {
-	private String[] _targetClasses;
+	private InputCommand _command;
+	private ITargetClass[] _targetClasses;
 	private IRelationshipManager _relationshipManager;
+	
 	private IDiagramOutputStream _output;
-	String _textOutputPath;
-	String _diagramOutputPath;
+	private String _textOutputPath;
+	private String _diagramOutputPath;
 
-	public ProjectModel(String[] targetClasses, IRelationshipManager relationshipManager, String textOutputPath,
+	public ProjectModel(InputCommand command, IRelationshipManager relationshipManager, String textOutputPath,
 			String diagramOutputPath) throws IOException {
-		_targetClasses = targetClasses;
+		_command = command;
+		_targetClasses = new TargetClass[_command.getClasses().length];
 		_relationshipManager = relationshipManager;
 		_textOutputPath = textOutputPath;
 		_diagramOutputPath = diagramOutputPath;
+		
 		OutputStream out = new FileOutputStream(_textOutputPath);
-		_output = new UMLOutputStream(out);
-
+		
+		if (getCommand().getCommandType().equals("UML"))
+			_output = new UMLOutputStream(out);
+		else if (getCommand().getCommandType().equals("Sequence"))
+			_output = new SequenceOutputStream(out);
+		else {
+			_output = null;
+			System.err.println("Should not get here. Error in Project Model about to happen.");
+		}
 	}
 
 	@Override
@@ -45,14 +57,15 @@ public class ProjectModel implements IProjectModel {
 	@Override
 	public void parseModel() throws IOException {
 		_output.prepareFile();
-		ITargetClass target = null;
 		
-		for (int i = 0; i < _targetClasses.length; i++) {
-			target = new TargetClass();
-			ClassReader reader = new ClassReader(_targetClasses[i]);
-			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, target, _relationshipManager);
-			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor, target, _relationshipManager);
-			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, target,
+		for (int i = 0; i < _command.getClasses().length; i++) {
+			_targetClasses[i] = new TargetClass();
+			
+			System.out.println(getCommand().getClasses()[i]);
+			ClassReader reader = new ClassReader(_command.getClasses()[i]);
+			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, _targetClasses[i], _relationshipManager);
+			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor, _targetClasses[i], _relationshipManager);
+			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, _targetClasses[i],
 					_relationshipManager, DiagramType.UML);
 
 			// TODO: add more DECORATORS here in later milestones to accomplish
@@ -63,17 +76,44 @@ public class ProjectModel implements IProjectModel {
 			
 			// All TargetClass instances are populated with data
 			// This should print out each class with the internal representation
-			target.accept(_output);
+			// With Sequence diagram, this should print the whole file
+			if (getCommand().getCommandType().equals("UML"))
+				_targetClasses[i].accept(_output);
 		}
 		
-		_relationshipManager.accept(_output);
+		if (getCommand().getCommandType().equals("UML"))
+			_relationshipManager.accept(_output);
+		else
+			launchSequenceRun();
 		
 		_output.endFile(_textOutputPath, _diagramOutputPath);
+	}
+	
+	private void launchSequenceRun() {
+		SequenceInputCommand cmd = (SequenceInputCommand) getCommand();
+		ITargetClass startingClass = null;
+		
+		for (ITargetClass targetClass : _targetClasses) {
+			if (targetClass.getDeclaration().getName().equals(cmd.getInitialClass())) {
+				startingClass = targetClass;
+				break;
+			}
+		}
+		
+		startingClass.accept(_output);
 	}
 
 	@Override
 	public void setOutputStream(IDiagramOutputStream v) {
 		_output = v;
+	}
+	
+	public IDiagramOutputStream getOutputStream() {
+		return _output;
+	}
+
+	private InputCommand getCommand() {
+		return _command;
 	}
 
 }

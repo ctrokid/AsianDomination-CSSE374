@@ -3,6 +3,9 @@ package visitor;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import api.IClassDeclaration;
+import impl.ClassDeclaration;
+import impl.MethodStatement;
 import utils.LaunchDiagramGenerator;
 import utils.LaunchDiagramGenerator.DiagramFileExtension;
 
@@ -11,9 +14,10 @@ public class SequenceOutputStream extends VisitorAdapter {
 	
 	public SequenceOutputStream(OutputStream out) {
 		this.out = out;
+		this.setupVisitClassDeclaration();
+		this.setupVisitMethodStatement();
 	}
 	
-	@SuppressWarnings("unused")
 	private void write(String s) {
 		try {
 			this.out.write(s.getBytes());
@@ -25,6 +29,24 @@ public class SequenceOutputStream extends VisitorAdapter {
 	@Override
 	public void prepareFile() {
 		// Unimplemented. Nothing to do
+	}
+	
+	public void setupVisitMethodStatement() {
+		super.addVisit(VisitType.Visit, MethodStatement.class, (ITraverser t) -> {
+			MethodStatement stmt = (MethodStatement) t;
+			StringBuilder sb = new StringBuilder();
+			sb.append(stmt.getClassName() + " " + stmt.getMethodName() + " " + stmt.getReturn() + "\n");
+			write(sb.toString());
+		});
+	}
+	
+	public void setupVisitClassDeclaration() {
+		super.addVisit(VisitType.Visit, ClassDeclaration.class, (ITraverser t) -> {
+			IClassDeclaration clazz = (ClassDeclaration) t;
+			StringBuilder sb = new StringBuilder();
+			sb.append("/ " + clazz.getName() + "\n");
+			write(sb.toString());
+		});
 	}
 
 	@Override

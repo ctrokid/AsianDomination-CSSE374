@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import visitor.IVisitor;
+import visitor.SequenceOutputStream;
+import visitor.UMLOutputStream;
 import api.IClassDeclaration;
 import api.IClassField;
 import api.IClassMethod;
@@ -54,6 +56,13 @@ public class TargetClass implements ITargetClass {
 	@Override
 	public void accept(IVisitor v) {
 		//TODO: pass in the type here, strategy pattern
+		// do current code if UML, write new method for Sequence
+		
+//		if (v instanceof UMLOutputStream)
+//			doSomething()
+//		else if (v instanceof SequenceOutputStream)
+//			SequenceRecursion.startRecursion((SequenceOutputStream) v);
+//			
 		v.preVisit(this);
 
 		IClassField lastField = null;

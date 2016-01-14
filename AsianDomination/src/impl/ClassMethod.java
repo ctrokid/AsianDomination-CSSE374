@@ -41,10 +41,13 @@ public class ClassMethod implements IClassMethod {
 		return _returnType;
 	}
 	
+	@Override
 	public void addStatement(MethodStatement stmt) {
+		System.out.println(stmt.toString());
 		_statements.add(stmt);
 	}
 	
+	@Override
 	public Collection<MethodStatement> getStatements() {
 		return _statements;
 	}

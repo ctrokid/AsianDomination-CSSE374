@@ -8,6 +8,7 @@ import impl.InputCommand;
 import impl.PrintCommand;
 import impl.ProjectModel;
 import impl.RelationshipManager;
+import impl.SequenceInputCommand;
 import utils.PackageInspector;
 
 public class DesignParser {
@@ -42,22 +43,22 @@ public class DesignParser {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {		
+		String diagramOutputPath = "input_output/sequenceDiagramTest";
+		String asmOutputPath = "";
+		
 		PrintCommand print = new PrintCommand();
 		InputCommand inputCommand = print.run();
 		
+		IRelationshipManager relationshipManager = new RelationshipManager(inputCommand.getClasses());
+		IProjectModel model = null;
+		
 		if (inputCommand.getCommandType().equals("UML")) {
-			IRelationshipManager relationshipManager = new RelationshipManager(inputCommand.getClasses());
-
-			String asmOutputPath = "input_output/inputCommand.gv";
-			String diagramOutputPath = "input_output/inputCommandTest";
-
-			IProjectModel model = new ProjectModel(inputCommand.getClasses(), relationshipManager, asmOutputPath, diagramOutputPath);
-			model.parseModel();
-			
+			asmOutputPath = "input_output/inputCommand.gv";
 		} else if(inputCommand.getCommandType().equals("SEQ")){
-			//DO SEQ COMMANDS HERE
-			
+			asmOutputPath = "input_output/sequenceTest.sd";			
 		}
-
+		
+		model = new ProjectModel(inputCommand, relationshipManager, asmOutputPath, diagramOutputPath);
+		model.parseModel();
 	}
 }

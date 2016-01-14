@@ -2,30 +2,25 @@ package asm.visitor;
 
 import org.objectweb.asm.MethodVisitor;
 
+import api.IClassMethod;
 import api.IRelationshipManager;
+import impl.MethodStatement;
 import utils.DotClassUtils.RelationshipType;
 
 public class UMLMethodAssociationVisitor extends MethodVisitor {
 	private IRelationshipManager _relationshipManager;
 	private String _className;
 	private String _arguments;
-
-	public UMLMethodAssociationVisitor(int api,
-			IRelationshipManager relationshipManager, String className,
-			String arguments) {
-		super(api);
-		_relationshipManager = relationshipManager;
-		_className = className;
-		_arguments = arguments;
-	}
+	private IClassMethod _classMethod;
 
 	public UMLMethodAssociationVisitor(int api, MethodVisitor decorated,
 			IRelationshipManager relationshipManager, String className,
-			String arguments) {
+			String arguments, IClassMethod classMethod) {
 		super(api, decorated);
 		_relationshipManager = relationshipManager;
 		_className = className;
 		_arguments = arguments;
+		_classMethod = classMethod;
 	}
 
 	@Override
@@ -45,23 +40,15 @@ public class UMLMethodAssociationVisitor extends MethodVisitor {
 			String returnType, boolean arg4) {
 		super.visitMethodInsn(arg0, className, methodName, returnType, arg4);
 
-		// Recursively go into variable className's class
-		// add new next node to current node
 		// System.out.println(_className + " " + className + " " + methodName);
 		if (!className.equals(_className)) {
 			_relationshipManager.addRelationshipEdge(_className, className,
 					RelationshipType.ASSOCIATION);
 		}
+		
+		MethodStatement stmt = new MethodStatement(className, methodName, new String[] {}, returnType);
+		_classMethod.addStatement(stmt);
 	}
-
-	// FIXME: Not needed for Milestone 2, might need later
-	// @Override
-	// public void visitTypeInsn(int code, String classType) {
-	// super.visitTypeInsn(code, classType);
-	// System.err.println("visitTypeInsn");
-	// System.out.println(code);
-	// System.out.println(classType);
-	// }
 
 	@Override
 	public void visitVarInsn(int code, int var) {
