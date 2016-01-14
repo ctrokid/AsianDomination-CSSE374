@@ -40,22 +40,21 @@ public class SequenceDiagramTraverser {
 	}
 
 	private void search(String prevClass, IClassDeclaration clazz, IClassMethod method, int level, int seqLevel) {
-		// if (!_classesAdded.contains(clazz.getName())) {
 		if(!_classesAdded.containsKey(seqLevel)){
 			_classesAdded.put(seqLevel, new ArrayList<String>());
 		}
+		
 		if (!_classesAdded.get(seqLevel).contains(clazz.getName())) {
 			clazz.accept(_output);
-			// _classesAdded.add(clazz.getName());
 			_classesAdded.get(seqLevel).add(clazz.getName());
 		}
 
 		Collection<MethodStatement> stmts = method.getStatements();
 
 		for (MethodStatement stmt : stmts) {
-			_stmtsToWrite.add(stmt);
-
 			if (level != _callDepth) {
+				_stmtsToWrite.add(stmt);
+				
 				ITargetClass targetClass = _model
 						.getTargetClassByName(AsmClassUtils.GetStringStrippedByCharacter(stmt.getClassName(), '/'));
 				IClassMethod nextMethod = getMethodFromCollection(_model.getTargetClassMethods(targetClass),
@@ -69,7 +68,6 @@ public class SequenceDiagramTraverser {
 					targetClass.getDeclaration().accept(_output);
 					_classesAdded.get(seqLevel).add(targetClass.getDeclaration().getName());
 				}
-
 			}
 		}
 	}
