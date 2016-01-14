@@ -4,6 +4,7 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+import api.IClassMethod;
 import api.IRelationshipManager;
 import api.ITargetClass;
 import impl.ClassMethod;
@@ -37,24 +38,28 @@ public class ClassMethodVisitor extends ClassVisitor {
 		String type = AsmClassUtils.GetReturnType(desc);
 		String arguments = AsmClassUtils.GetArguments(desc);
 		
-		MethodVisitor _decorator = createDecoratedVisitor(toDecorate, arguments);
+		IClassMethod classMethod = new ClassMethod(name, arguments, accessLevel, type);
+//		MethodVisitor _decorator = createDecoratedVisitor(toDecorate, arguments, classMethod);
+		MethodVisitor _decorator = new UMLMethodAssociationVisitor(Opcodes.ASM5, toDecorate, _relationshipManager, _targetClass.getDeclaration().getName(), arguments, classMethod);
+		
 		if (!name.contains("<")) {
-			_targetClass.addPart(new ClassMethod(name, arguments, accessLevel, type));
+			_targetClass.addPart(classMethod);
 			_relationshipManager.addRelationshipEdge(_targetClass.getDeclaration().getName(), type, RelationshipType.USES);
 		}
 
 		return _decorator;
 	}
 	
-	private MethodVisitor createDecoratedVisitor(MethodVisitor toDecorate, String arguments) {
+	@SuppressWarnings("unused")
+	private MethodVisitor createDecoratedVisitor(MethodVisitor toDecorate, String arguments, IClassMethod classMethod) {
 		MethodVisitor visitor = null;
 		
 		switch (_diagramType) {
 			case UML:
-				visitor = new UMLMethodAssociationVisitor(Opcodes.ASM5, toDecorate, _relationshipManager, _targetClass.getDeclaration().getName(), arguments);
+				visitor = new UMLMethodAssociationVisitor(Opcodes.ASM5, toDecorate, _relationshipManager, _targetClass.getDeclaration().getName(), arguments, classMethod);
 				break;
 			case SEQUENCE:
-				visitor = new SequenceDiagramMethodVisitor(Opcodes.ASM5, toDecorate, _relationshipManager, _targetClass.getDeclaration().getName(), arguments);
+				visitor = new SequenceDiagramMethodVisitor(Opcodes.ASM5, toDecorate, _relationshipManager, _targetClass.getDeclaration().getName(), arguments, classMethod);
 				break;
 		}
 		
