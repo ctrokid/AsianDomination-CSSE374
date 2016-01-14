@@ -79,3 +79,12 @@ By running DesignParser class, the concole will require user input to generate U
 UML Diagram example: "UML, package path or classes names" 
 Squence Diagram example: "SEQ, package path or classes names, initial class name, method name, depth (default 5)" 
 Once the classes ran, the PDF can be accessed under input_output folder. 
+
+##TODO List for Asians
+---
+- [ ] Add Pizza class to Abstract Pizza Factory 
+- [ ] Update Milestone 3 UML Diagram
+- [ ] Add link for Milestone 3 deliverables
+- [ ] 
+
+
