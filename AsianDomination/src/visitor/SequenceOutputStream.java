@@ -40,7 +40,12 @@ public class SequenceOutputStream extends VisitorAdapter {
 			MethodStatement stmt = (MethodStatement) t;
 			StringBuilder sb = new StringBuilder();
 			
-			sb.append(stmt.getPreviousClass() + "." + AsmClassUtils.GetStringStrippedByCharacter(stmt.getClassName(), '/') + "." + stmt.getMethodName() + stmt.getReturn() + "\n");
+			String methodNameAndParams = stmt.getMethodName() + stmt.getReturn();
+			
+			if (stmt.getMethodName().equals("<init>"))
+				methodNameAndParams = "new";
+			
+			sb.append(stmt.getPreviousClass() + ":" + AsmClassUtils.GetStringStrippedByCharacter(stmt.getClassName(), '/') + "." + methodNameAndParams + "\n");//stmt.getReturn() + "\n");
 			write(sb.toString());
 		});
 	}
@@ -49,11 +54,19 @@ public class SequenceOutputStream extends VisitorAdapter {
 		super.addVisit(VisitType.Visit, ClassDeclaration.class, (ITraverser t) -> {
 			IClassDeclaration clazz = (ClassDeclaration) t;
 			StringBuilder sb = new StringBuilder();
-			sb.append("/" + clazz.getName() + "[a]\n");
+			
+			if (!clazz.isFirstClass())
+				sb.append("/");
+			
+			sb.append(clazz.getName() + ":" + clazz.getName() + "[a]\n");
 			write(sb.toString());
 		});
 	}
 
+	public void writeNewLine() {
+		write("\n");
+	}
+	
 	@Override
 	public void endFile(String inputPath, String outputPath) {
 		LaunchDiagramGenerator.RunSDEdit(inputPath, outputPath, DiagramFileExtension.PDF);

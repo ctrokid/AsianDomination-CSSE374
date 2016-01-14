@@ -1,6 +1,7 @@
 package impl;
 
 import api.ITargetClassPart;
+import utils.SignatureParser;
 import visitor.IVisitor;
 
 public class MethodStatement implements ITargetClassPart {
@@ -13,15 +14,9 @@ public class MethodStatement implements ITargetClassPart {
 		this._previousClass = _previousClass;
 		this._className = _className;
 		this._methodName = methodName;
-//		setMethodNameAndParameters(methodName);
-		this._return = _return;
-	}
-
-	private void setMethodNameAndParameters(String methodName) {
-		String[] tokens = methodName.split(" ");
-		_methodName = tokens[0];
-//		TODO: later. parse this BS
-//		String params = tokens[1].split(regex);
+		
+		String params = SignatureParser.getParams(_return).toString();
+		this._return = "(" + params.substring(1, params.length()-1) + ")";
 	}
 
 	public String getClassName() {

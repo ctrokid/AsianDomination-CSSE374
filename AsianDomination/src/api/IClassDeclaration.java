@@ -8,4 +8,7 @@ public interface IClassDeclaration extends ITargetClassPart {
 	public String getSuperType();
 
 	public String[] getInterfaces();
+	
+	public boolean isFirstClass();
+	public void setFirstClass();
 }

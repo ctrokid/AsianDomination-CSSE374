@@ -13,7 +13,7 @@ public class TestSDEditLaunchGenerator {
 	
 	@Test
 	public void testSDEditLaunchSuccess() {
-		inputPath = "input_output/sdEditSuccessTest.sd";
+		inputPath = "input_output/sequenceTest.sd";
 		outputPath = "input_output/firstSequenceTest";
 		
 		int actual = LaunchDiagramGenerator.RunSDEdit(inputPath, outputPath, DiagramFileExtension.PDF);

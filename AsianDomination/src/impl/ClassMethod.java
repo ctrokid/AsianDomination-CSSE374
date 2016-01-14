@@ -1,5 +1,6 @@
 package impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -18,7 +19,7 @@ public class ClassMethod implements IClassMethod {
 		_signature = signature;
 		_accessLevel = accessLevel;
 		_returnType = returnType;
-		_statements = new HashSet<MethodStatement>();
+		_statements = new ArrayList<MethodStatement>();
 	}
 	
 	@Override

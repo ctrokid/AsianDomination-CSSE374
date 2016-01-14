@@ -8,12 +8,14 @@ public class ClassDeclaration implements IClassDeclaration {
 	private String _type;
 	private String _superType;
 	private String[] _interfaces;
+	private boolean _firstClass;
 	
 	public ClassDeclaration(String name, String type, String superType, String[] interfaces) {
 		_name = name;
 		_type = type;
 		_superType = superType;
 		_interfaces = interfaces;
+		_firstClass = false;
 	}
 
 	@Override
@@ -39,5 +41,15 @@ public class ClassDeclaration implements IClassDeclaration {
 	@Override
 	public void accept(IVisitor v) {
 		v.visit(this);
+	}
+	
+	@Override
+	public void setFirstClass() {
+		_firstClass = true;
+	}
+
+	@Override
+	public boolean isFirstClass() {
+		return _firstClass;
 	}
 }
