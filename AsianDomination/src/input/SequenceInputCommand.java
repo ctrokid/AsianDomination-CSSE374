@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import construction.IAddStrategy;
-import visitor.IDiagramOutputStream;
+import output.IDiagramOutputStream;
 
 public class SequenceInputCommand extends InputCommand {
 	private String _initialClass;

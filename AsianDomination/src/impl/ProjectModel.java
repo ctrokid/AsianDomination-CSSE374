@@ -3,7 +3,10 @@ package impl;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
@@ -17,6 +20,8 @@ import asm.visitor.ClassDeclarationVisitor;
 import asm.visitor.ClassFieldVisitor;
 import asm.visitor.ClassMethodVisitor;
 import asm.visitor.DiagramType;
+import construction.IAddStrategy;
+import input.InputCommand;
 import visitor.IDiagramOutputStream;
 import visitor.IVisitor;
 import visitor.SequenceOutputStream;
@@ -24,127 +29,30 @@ import visitor.UMLOutputStream;
 
 public class ProjectModel implements IProjectModel {
 	private InputCommand _command;
-	private ITargetClass[] _targetClasses;
+	private HashMap<String, ITargetClass> _targetClasses;
 	private IRelationshipManager _relationshipManager;
-	
-	private IDiagramOutputStream _output;
-	private String _textOutputPath;
-	private String _diagramOutputPath;
 
-	public ProjectModel(InputCommand command, IRelationshipManager relationshipManager, String textOutputPath,
-			String diagramOutputPath) throws IOException {
+	public ProjectModel(InputCommand command, IRelationshipManager relationshipManager) throws IOException {
 		_command = command;
-		_targetClasses = new TargetClass[_command.getClasses().length];
+		_targetClasses = new LinkedHashMap<String, ITargetClass>();
 		_relationshipManager = relationshipManager;
-		_textOutputPath = textOutputPath;
-		_diagramOutputPath = diagramOutputPath;
-		
-		OutputStream out = null;
-		
-		if (getCommand().getCommandType().equals("UML")) {
-			out = new FileOutputStream(_textOutputPath + ".gv");
-			_output = new UMLOutputStream(out);
-		}
-		else if (getCommand().getCommandType().equals("SEQ")) {
-			out = new FileOutputStream(_textOutputPath + ".sd");
-			_output = new SequenceOutputStream(out, this);
-		}
-		else {
-			_output = null;
-			System.err.println("Should not get here. Error in Project Model about to happen.");
-		}
-	}
-
-	@Override
-	public void accept(IVisitor v) {
-
 	}
 
 	@Override
 	public void parseModel() throws IOException {
-		_output.prepareFile();
+		IAddStrategy addStrategy  = _command.getAddStrategy();
+		addStrategy.setProjectModel(this);
+		addStrategy.buildModel(_command.getInputParameters());
 		
-		for (int i = 0; i < _command.getClasses().length; i++) {
-			_targetClasses[i] = new TargetClass();
-			
-			ClassReader reader = new ClassReader(_command.getClasses()[i]);
-			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, _targetClasses[i], _relationshipManager);
-			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor, _targetClasses[i], _relationshipManager);
-			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, _targetClasses[i],
-					_relationshipManager, DiagramType.UML);
-
-			// TODO: add more DECORATORS here in later milestones to accomplish
-			// specific tasks
-			// Tell the Reader to use our (heavily decorated) ClassVisitor to
-			// visit the class
-			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
-			
-			// All TargetClass instances are populated with data
-			// This should print out each class with the internal representation
-			// With Sequence diagram, this should print the whole file
-			if (getCommand().getCommandType().equals("UML"))
-				_targetClasses[i].accept(_output);
-		}
-		
-		if (getCommand().getCommandType().equals("UML"))
-			_relationshipManager.accept(_output);
-		else
-			launchSequenceRun();
-		
-		_output.endFile(_textOutputPath, _diagramOutputPath);
-	}
-	
-	private void launchSequenceRun() {
-		SequenceInputCommand cmd = (SequenceInputCommand) _command;
-		ITargetClass startingClass = null;
-		
-		for (ITargetClass targetClass : _targetClasses) {
-			if (targetClass.getDeclaration().getName().equals(cmd.getInitialClass())) {
-				startingClass = targetClass;
-				break;
-			}
-		}
-		
-		startingClass.accept(_output);
-	}
-
-	@Override
-	public void setOutputStream(IDiagramOutputStream v) {
-		_output = v;
-	}
-	
-	public IDiagramOutputStream getOutputStream() {
-		return _output;
-	}
-
-	private InputCommand getCommand() {
-		return _command;
+		IDiagramOutputStream digramOutputStream = _command.getOutputStream();
+		digramOutputStream.setProjectModel(this);
+		digramOutputStream.writeOutput();
+		digramOutputStream.generateDiagram();
 	}
 
 	@Override
 	public ITargetClass getTargetClassByName(String className) {
-		ITargetClass classToReturn = null;
-		
-		for (ITargetClass clazz : _targetClasses) {
-			if (clazz.getDeclaration().getName().equals(className)) {
-				classToReturn = clazz;
-			}
-		}
-		
-		return classToReturn;
-	}
-
-	@Override
-	public Collection<IClassMethod> getTargetClassMethods(ITargetClass targetClass) {
-		Collection<IClassMethod> methods = null;
-		
-		for (ITargetClass clazz : _targetClasses) {
-			if (clazz.getDeclaration().getName().equals(targetClass.getDeclaration().getName())) {
-				methods = clazz.getMethodParts();
-			}
-		}
-		
-		return methods;
+		return _targetClasses.get(className);
 	}
 
 	@Override
@@ -154,7 +62,37 @@ public class ProjectModel implements IProjectModel {
 
 	@Override
 	public IRelationshipManager getRelationshioManager() {
-		return  _relationshipManager;
+		return _relationshipManager;
+	}
+
+	@Override
+	public Collection<ITargetClass> getTargetClasses() {
+		Collection<ITargetClass> targetClasses = new ArrayList<ITargetClass>();
+		for(String c: _targetClasses.keySet()){
+			targetClasses.add(_targetClasses.get(c));
+		}
+		return targetClasses;
+	}
+
+	@Override
+	public void addClass(String classPath) {
+		ITargetClass clazz = new TargetClass(classPath);
+		if(_targetClasses.containsKey(classPath)){
+			return;
+		}
+		
+		_targetClasses.put(classPath, clazz);
+		
+		ClassReader reader;
+		try {
+			reader = new ClassReader(classPath);
+			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, this, classPath);
+			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor, this, classPath);
+			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, this, classPath);
+			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

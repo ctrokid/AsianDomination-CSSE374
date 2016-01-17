@@ -8,16 +8,11 @@ import input.InputCommand;
 import visitor.IDiagramOutputStream;
 import visitor.ITraverser;
 
-public interface IProjectModel extends ITraverser {
+public interface IProjectModel{
 	public void parseModel() throws IOException;
-
-	public void setOutputStream(IDiagramOutputStream v);
-
+	public Collection<ITargetClass> getTargetClasses();
 	public ITargetClass getTargetClassByName(String className);
-
-	public Collection<IClassMethod> getTargetClassMethods(ITargetClass targetClass);
-
 	public InputCommand getInputCommand();
-
 	public IRelationshipManager getRelationshioManager();
+	public void addClass(String classPath);
 }
