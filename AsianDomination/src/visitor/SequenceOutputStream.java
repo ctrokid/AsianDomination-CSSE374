@@ -40,12 +40,12 @@ public class SequenceOutputStream extends VisitorAdapter {
 			MethodStatement stmt = (MethodStatement) t;
 			StringBuilder sb = new StringBuilder();
 			
-			String methodNameAndParams = stmt.getMethodName() + stmt.getReturn();
+			String methodNameAndParams = stmt.getMethodName() + stmt.getParameter();
 			
 			if (stmt.getMethodName().equals("<init>"))
 				methodNameAndParams = "new";
 			
-			sb.append(stmt.getPreviousClass() + ":" + AsmClassUtils.GetStringStrippedByCharacter(stmt.getClassName(), '/') + "." + methodNameAndParams + "\n");//stmt.getReturn() + "\n");
+			sb.append(stmt.getCallerClass() + ":" + AsmClassUtils.GetStringStrippedByCharacter(stmt.getClassToCall(), '/') + "." + methodNameAndParams + "\n");//stmt.getReturn() + "\n");
 			write(sb.toString());
 		});
 	}

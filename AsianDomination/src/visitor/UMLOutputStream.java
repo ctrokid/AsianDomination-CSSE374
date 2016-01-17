@@ -8,6 +8,7 @@ import api.IClassField;
 import api.IClassMethod;
 import api.IRelationshipManager;
 import api.ITargetClass;
+import impl.RelationshipManager.RelationshipEdge;
 import utils.DotClassUtils;
 import utils.LaunchDiagramGenerator;
 import utils.DotClassUtils.RelationshipType;
@@ -41,7 +42,7 @@ public class UMLOutputStream extends VisitorAdapter {
 			public void execute(ITraverser t) {
 				ITargetClass c = (ITargetClass) t;
 				StringBuilder sb = new StringBuilder();
-				String className = c.getDeclaration().getName();
+				String className = c.getClassName();
 
 				sb.append(className + "[\n\t");
 				sb.append("label = \"{" + className + "|");
@@ -63,7 +64,7 @@ public class UMLOutputStream extends VisitorAdapter {
 		super.addVisit(VisitType.Visit, IClassField.class, (ITraverser t) -> {
 			IClassField c = (IClassField) t;
 			StringBuilder sb = new StringBuilder();
-			sb.append(c.getAccessLevel() + " " + c.getName() + " : ");
+			sb.append(c.getAccessLevel() + " " + c.getFieldName() + " : ");
 			sb.append(c.getType());
 			
 			if (c.getSignature() != null)
@@ -78,7 +79,7 @@ public class UMLOutputStream extends VisitorAdapter {
 		super.addVisit(VisitType.Visit, IClassMethod.class, (ITraverser t) -> {
 			IClassMethod c = (IClassMethod) t;
 			StringBuilder sb = new StringBuilder();
-			sb.append(c.getAccessLevel() + " " + c.getName());
+			sb.append(c.getAccessLevel() + " " + c.getMethodName());
 			sb.append("(" + c.getSignature() + ") : ");
 			sb.append(c.getReturnType() + "\\l");
 			write(sb.toString());
@@ -95,12 +96,12 @@ public class UMLOutputStream extends VisitorAdapter {
 		super.addVisit(VisitType.Visit, IRelationshipManager.class, (ITraverser t) -> {
 			IRelationshipManager relationshipManager = (IRelationshipManager) t;
 			for (RelationshipType edgeType : RelationshipType.values()) {
-				Collection<String> relationships = relationshipManager.getRelationshipEdges(edgeType);
+				Collection<RelationshipEdge> relationships = relationshipManager.getRelationshipEdges(edgeType);
 
 				if (relationships.size() > 0)
 					write(DotClassUtils.CreateRelationshipEdge(edgeType));
 
-				for (String edge : relationships) {
+				for (RelationshipEdge edge : relationships) {
 					if (edgeType.equals(RelationshipType.USES)) {
 						if (!hasAssociation(edge, relationshipManager)) {
 							write(edge + "\n");
@@ -114,8 +115,8 @@ public class UMLOutputStream extends VisitorAdapter {
 		});
 	}
 
-	private boolean hasAssociation(String checker, IRelationshipManager relationshipManager) {
-		if (relationshipManager.getRelationshipEdges(RelationshipType.ASSOCIATION).contains(checker)) {
+	private boolean hasAssociation(RelationshipEdge edge, IRelationshipManager relationshipManager) {
+		if (relationshipManager.getRelationshipEdges(RelationshipType.ASSOCIATION).contains(edge)) {
 			return true;
 		}
 		return false;
