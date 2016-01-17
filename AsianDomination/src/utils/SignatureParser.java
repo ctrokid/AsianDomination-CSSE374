@@ -121,12 +121,12 @@ public class SignatureParser {
 		}
 		
 		private static String parseParam(String param){
-			if(primitiveTypes.containsKey(param)){
-				return primitiveTypes.get(param);
+			if(primitiveTypes.containsKey(param.charAt(0))){
+				return primitiveTypes.get(param.charAt(0));
 			} else if (param.charAt(0) == '[') {
 				return parseParam(param.substring(1)) + "[]";
 			} else if (param.charAt(0) == 'L'){
-				return param.substring(1);
+				return param.substring(1, param.length()-1);
 			} else {
 				return param;
 			}
