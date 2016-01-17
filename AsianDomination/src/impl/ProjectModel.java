@@ -152,4 +152,9 @@ public class ProjectModel implements IProjectModel {
 		return _command;
 	}
 
+	@Override
+	public IRelationshipManager getRelationshioManager() {
+		return  _relationshipManager;
+	}
+
 }

@@ -25,11 +25,17 @@ public class RelationshipManager implements IRelationshipManager {
 	public void accept(IVisitor v) {
 		v.visit(this);
 	}
-
+	
+	private boolean containsRelationshipEdge(RelationshipEdge edge, RelationshipType edgeType) {
+		return relationships.get(edgeType).contains(edge);
+	}
+	
 	@Override
-	public void addRelationshipEdge(RelationshipEdge edge, RelationshipType edgeType) {
+	public void addRelationshipEdge(String _subClass, String _superClass, RelationshipType edgeType) {
+		RelationshipEdge edge = new RelationshipEdge(_subClass,_subClass);
 		if (!containsRelationshipEdge(edge, edgeType))
 			relationships.get(edgeType).add(edge);
+		
 	}
 
 	@Override
@@ -38,25 +44,26 @@ public class RelationshipManager implements IRelationshipManager {
 	}
 
 	@Override
-	public boolean containsRelationshipEdge(RelationshipEdge edge, RelationshipType edgeType) {
-		return relationships.get(edgeType).contains(edge);
+	public boolean containsRelationshipEdge(String _subClass, String _superClass, RelationshipType edgeType) {
+		RelationshipEdge edge = new RelationshipEdge(_subClass, _superClass);
+		return containsRelationshipEdge(edge, edgeType);
 	}
 
 	public class RelationshipEdge {
 		String _superClass;
-		String _subclass;
+		String _subClass;
 
-		public RelationshipEdge(String _superClass, String _subclass) {
+		public RelationshipEdge( String _subClass, String _superClass) {
 			this._superClass = _superClass;
-			this._subclass = _subclass;
+			this._subClass = _subClass;
 		}
 
 		public String get_superClass() {
 			return _superClass;
 		}
 
-		public String get_subclass() {
-			return _subclass;
+		public String get_subClass() {
+			return _subClass;
 		}
 
 		private RelationshipManager getOuterType() {
@@ -68,7 +75,7 @@ public class RelationshipManager implements IRelationshipManager {
 			final int prime = 31;
 			int result = 1;
 			result = prime * result + getOuterType().hashCode();
-			result = prime * result + ((_subclass == null) ? 0 : _subclass.hashCode());
+			result = prime * result + ((_subClass == null) ? 0 : _subClass.hashCode());
 			result = prime * result + ((_superClass == null) ? 0 : _superClass.hashCode());
 			return result;
 		}
@@ -84,10 +91,10 @@ public class RelationshipManager implements IRelationshipManager {
 			RelationshipEdge other = (RelationshipEdge) obj;
 			if (!getOuterType().equals(other.getOuterType()))
 				return false;
-			if (_subclass == null) {
-				if (other._subclass != null)
+			if (_subClass == null) {
+				if (other._subClass != null)
 					return false;
-			} else if (!_subclass.equals(other._subclass))
+			} else if (!_subClass.equals(other._subClass))
 				return false;
 			if (_superClass == null) {
 				if (other._superClass != null)
@@ -97,6 +104,10 @@ public class RelationshipManager implements IRelationshipManager {
 			return true;
 		}
 
+		
+
 	}
+
+
 
 }

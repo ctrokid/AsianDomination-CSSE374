@@ -3,6 +3,7 @@ package asm.visitor;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 
+import api.IProjectModel;
 import api.IRelationshipManager;
 import api.ITargetClass;
 import impl.ClassField;
@@ -13,16 +14,16 @@ public class ClassFieldVisitor extends ClassVisitor {
 	private ITargetClass _targetClass;
 	private IRelationshipManager _relationshipManager;
 	
-	public ClassFieldVisitor(int api, ITargetClass targetClass, IRelationshipManager relationshipManager) {
+	public ClassFieldVisitor(int api, IProjectModel _model, String className) {
 		super(api);
-		_targetClass = targetClass;
-		_relationshipManager = relationshipManager;
+		_targetClass = _model.getTargetClassByName(className);
+		_relationshipManager = _model.getRelationshioManager();
 	}
 
-	public ClassFieldVisitor(int api, ClassVisitor decorated, ITargetClass targetClass, IRelationshipManager relationshipManager) {
+	public ClassFieldVisitor(int api, ClassVisitor decorated, IProjectModel model, String className) {
 		super(api, decorated);
-		_targetClass = targetClass;
-		_relationshipManager = relationshipManager;
+		_targetClass = model.getTargetClassByName(className);
+		_relationshipManager = model.getRelationshioManager();
 	}
 
 	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
@@ -32,12 +33,12 @@ public class ClassFieldVisitor extends ClassVisitor {
 		
 		if (signature != null) {
 			signature = AsmClassUtils.parseSignature(signature);
-			_relationshipManager.addRelationshipEdge(_targetClass.getDeclaration().getName(), signature.substring(2, signature.length()-2), RelationshipType.ASSOCIATION);
+			_relationshipManager.addRelationshipEdge(_targetClass.getClassName(), signature.substring(2, signature.length()-2), RelationshipType.ASSOCIATION);
 		}
 		else
-			_relationshipManager.addRelationshipEdge(_targetClass.getDeclaration().getName(), returnType, RelationshipType.ASSOCIATION);
+			_relationshipManager.addRelationshipEdge(_targetClass.getClassName(), returnType, RelationshipType.ASSOCIATION);
 		
-		_targetClass.addPart(new ClassField(name, accessLevel, signature, returnType));
+		_targetClass.addClassField((new ClassField(name, accessLevel, signature, returnType)));
 		
 		return toDecorate;
 	};

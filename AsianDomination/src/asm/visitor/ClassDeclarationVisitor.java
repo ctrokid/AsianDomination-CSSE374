@@ -3,9 +3,9 @@ package asm.visitor;
 
 import org.objectweb.asm.ClassVisitor;
 
+import api.IProjectModel;
 import api.IRelationshipManager;
 import api.ITargetClass;
-import impl.ClassDeclaration;
 import utils.AsmClassUtils;
 import utils.DotClassUtils.RelationshipType;
 
@@ -13,10 +13,10 @@ public class ClassDeclarationVisitor extends ClassVisitor {
 	protected ITargetClass _targetClass;
 	protected IRelationshipManager _relationshipManager;
 	
-	public ClassDeclarationVisitor(int api, ITargetClass targetClass, IRelationshipManager relationshipManager) {
+	public ClassDeclarationVisitor(int api,IProjectModel _model, String className) {
 		super(api);
-		_targetClass = targetClass;
-		_relationshipManager = relationshipManager;
+		_targetClass = _model.getTargetClassByName(className);
+		_relationshipManager = _model.getRelationshioManager();
 	}
 
 	@Override
@@ -28,8 +28,6 @@ public class ClassDeclarationVisitor extends ClassVisitor {
 			interfaces[i] = AsmClassUtils.GetStringStrippedByCharacter(interfaces[i], '/');
 			_relationshipManager.addRelationshipEdge(name, interfaces[i], RelationshipType.IMPLEMENTATION);
 		}
-		
-		_targetClass.addPart(new ClassDeclaration(name, signature, superName, interfaces));
 		_relationshipManager.addRelationshipEdge(name, superName, RelationshipType.INHERITANCE);
 		
 		super.visit(version, access, name, signature, superName, interfaces);
