@@ -43,7 +43,6 @@ public class RelationshipManager implements IRelationshipManager {
 	}
 
 	public class RelationshipEdge {
-
 		String _superClass;
 		String _subclass;
 
