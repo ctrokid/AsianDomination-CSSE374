@@ -1,6 +1,6 @@
 package api;
 
-public interface IMethodStatement {
+public interface IMethodStatement extends ITargetClassPart {
 	public String getCallerClass();
 	public String getClassToCall();
 	public String getParameter();
