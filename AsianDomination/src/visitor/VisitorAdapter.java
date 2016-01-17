@@ -3,6 +3,8 @@ package visitor;
 import java.util.HashMap;
 import java.util.Map;
 
+import output.IDiagramOutputStream;
+
 
 public abstract class VisitorAdapter implements IDiagramOutputStream {
 

@@ -1,7 +1,7 @@
 package input;
 
 import construction.IAddStrategy;
-import visitor.IDiagramOutputStream;
+import output.IDiagramOutputStream;
 
 public abstract class InputCommand {
 	private String _diagramOutputPath;
