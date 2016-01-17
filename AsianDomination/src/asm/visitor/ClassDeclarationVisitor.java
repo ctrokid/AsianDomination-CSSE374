@@ -16,7 +16,7 @@ public class ClassDeclarationVisitor extends ClassVisitor {
 	public ClassDeclarationVisitor(int api,IProjectModel _model, String className) {
 		super(api);
 		_targetClass = _model.getTargetClassByName(className);
-		_relationshipManager = _model.getRelationshioManager();
+		_relationshipManager = _model.getRelationshipManager();
 	}
 
 	@Override

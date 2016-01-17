@@ -1,8 +1,6 @@
 package impl;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,20 +10,15 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
-import api.IClassMethod;
 import api.IProjectModel;
 import api.IRelationshipManager;
 import api.ITargetClass;
 import asm.visitor.ClassDeclarationVisitor;
 import asm.visitor.ClassFieldVisitor;
 import asm.visitor.ClassMethodVisitor;
-import asm.visitor.DiagramType;
 import construction.IAddStrategy;
 import input.InputCommand;
-import visitor.IDiagramOutputStream;
-import visitor.IVisitor;
-import visitor.SequenceOutputStream;
-import visitor.UMLOutputStream;
+import output.IDiagramOutputStream;
 
 public class ProjectModel implements IProjectModel {
 	private InputCommand _command;
@@ -61,7 +54,7 @@ public class ProjectModel implements IProjectModel {
 	}
 
 	@Override
-	public IRelationshipManager getRelationshioManager() {
+	public IRelationshipManager getRelationshipManager() {
 		return _relationshipManager;
 	}
 
@@ -83,12 +76,13 @@ public class ProjectModel implements IProjectModel {
 		
 		_targetClasses.put(classPath, clazz);
 		
-		ClassReader reader;
 		try {
-			reader = new ClassReader(classPath);
+			ClassReader reader = new ClassReader(classPath);
+			
 			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, this, classPath);
 			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor, this, classPath);
 			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, this, classPath);
+			
 			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -13,7 +13,6 @@ public class RelationshipManager implements IRelationshipManager {
 	private HashMap<RelationshipType, Collection<RelationshipEdge>> relationships;
 
 	public RelationshipManager() {
-
 		relationships = new HashMap<RelationshipType, Collection<RelationshipEdge>>();
 
 		for (RelationshipType type : RelationshipType.values()) {
@@ -32,10 +31,10 @@ public class RelationshipManager implements IRelationshipManager {
 	
 	@Override
 	public void addRelationshipEdge(String _subClass, String _superClass, RelationshipType edgeType) {
-		RelationshipEdge edge = new RelationshipEdge(_subClass,_subClass);
-		if (!containsRelationshipEdge(edge, edgeType))
-			relationships.get(edgeType).add(edge);
+		RelationshipEdge edge = new RelationshipEdge(_subClass,_superClass);
 		
+		if (!relationships.get(edgeType).contains(edge))
+			relationships.get(edgeType).add(edge);
 	}
 
 	@Override
@@ -58,11 +57,11 @@ public class RelationshipManager implements IRelationshipManager {
 			this._subClass = _subClass;
 		}
 
-		public String get_superClass() {
+		public String getSuperClass() {
 			return _superClass;
 		}
 
-		public String get_subClass() {
+		public String getSubClass() {
 			return _subClass;
 		}
 

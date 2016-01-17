@@ -17,13 +17,13 @@ public class ClassFieldVisitor extends ClassVisitor {
 	public ClassFieldVisitor(int api, IProjectModel _model, String className) {
 		super(api);
 		_targetClass = _model.getTargetClassByName(className);
-		_relationshipManager = _model.getRelationshioManager();
+		_relationshipManager = _model.getRelationshipManager();
 	}
 
 	public ClassFieldVisitor(int api, ClassVisitor decorated, IProjectModel model, String className) {
 		super(api, decorated);
 		_targetClass = model.getTargetClassByName(className);
-		_relationshipManager = model.getRelationshioManager();
+		_relationshipManager = model.getRelationshipManager();
 	}
 
 	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {

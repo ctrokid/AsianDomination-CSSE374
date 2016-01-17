@@ -9,7 +9,7 @@ import api.IRelationshipManager;
 import api.ITargetClass;
 
 import impl.ClassMethod;
-
+import jdk.internal.org.objectweb.asm.Opcodes;
 import utils.AsmClassUtils;
 import utils.DotClassUtils.RelationshipType;
 
@@ -20,13 +20,13 @@ public class ClassMethodVisitor extends ClassVisitor {
 	public ClassMethodVisitor(int api, IProjectModel _model, String className)  {
 		super(api);
 		this._targetClass = _model.getTargetClassByName(className);
-		this._relationshipManager = _model.getRelationshioManager();
+		this._relationshipManager = _model.getRelationshipManager();
 	}
 
 	public ClassMethodVisitor(int api, ClassVisitor decorated, IProjectModel _model, String className) {
 		super(api, decorated);
 		this._targetClass = _model.getTargetClassByName(className);
-		this._relationshipManager = _model.getRelationshioManager();
+		this._relationshipManager = _model.getRelationshipManager();
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class ClassMethodVisitor extends ClassVisitor {
 		String arguments = AsmClassUtils.GetArguments(desc);
 		
 		IClassMethod classMethod = new ClassMethod(name, arguments, accessLevel, type);
-		MethodVisitor _decorator = new UMLMethodAssociationVisitor(access, toDecorate, _relationshipManager, _targetClass.getClassName(), arguments, classMethod);
+		MethodVisitor _decorator = new UMLMethodAssociationVisitor(Opcodes.ASM5, toDecorate, _relationshipManager, _targetClass.getClassName(), arguments, classMethod);
 		
 		if (!name.contains("<")) {
 			_targetClass.addClassMethod(classMethod);
