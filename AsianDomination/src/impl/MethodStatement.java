@@ -1,8 +1,6 @@
 package impl;
 
 import api.IMethodStatement;
-import api.ITargetClassPart;
-import utils.SignatureParser;
 import visitor.IVisitor;
 
 public class MethodStatement implements IMethodStatement {
@@ -16,8 +14,9 @@ public class MethodStatement implements IMethodStatement {
 		this._callerClass = _callerClass;
 		this._classToCall = _classToCall;
 		this._methodName = methodName;
-		String params = SignatureParser.getParams(_return).toString();
-		this._parameters = "(" + params.substring(1, params.length() - 1) + ")";
+		this._parameters = _return;
+//		String params = SignatureParser.getParams(_return).toString();
+//		this._parameters = "(" + params.substring(1, params.length() - 1) + ")";
 		this._sequenceLevel = _sequenceLevel;
 	}
 
