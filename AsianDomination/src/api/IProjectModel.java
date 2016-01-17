@@ -3,7 +3,7 @@ package api;
 import java.io.IOException;
 import java.util.Collection;
 
-import impl.InputCommand;
+import input.InputCommand;
 import visitor.IDiagramOutputStream;
 import visitor.ITraverser;
 
