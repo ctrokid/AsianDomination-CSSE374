@@ -2,16 +2,11 @@ package impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 import visitor.IVisitor;
-import visitor.SequenceOutputStream;
-import visitor.UMLOutputStream;
-import api.IClassDeclaration;
 import api.IClassField;
 import api.IClassMethod;
 import api.ITargetClass;
-import api.ITargetClassPart;
 
 public class TargetClass implements ITargetClass {
 	private String _className;
