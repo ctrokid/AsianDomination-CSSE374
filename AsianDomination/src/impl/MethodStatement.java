@@ -1,53 +1,66 @@
 package impl;
 
+import api.IMethodStatement;
 import api.ITargetClassPart;
 import utils.SignatureParser;
 import visitor.IVisitor;
 
-public class MethodStatement implements ITargetClassPart {
-	private String _previousClass;
-	private String _className;
+public class MethodStatement implements IMethodStatement {
+	private String _callerClass; // previousClass
+	private String _classToCall; // className
 	private String _methodName;
-	private String _return;
-	
-	public MethodStatement(String _previousClass, String _className, String methodName, String _return) {
-		this._previousClass = _previousClass;
-		this._className = _className;
+	private String _parameters;
+	private int _sequenceLevel;
+
+	public MethodStatement(String _callerClass, String _classToCall, String methodName, String _return, int _sequenceLevel) {
+		this._callerClass = _callerClass;
+		this._classToCall = _classToCall;
 		this._methodName = methodName;
-		
 		String params = SignatureParser.getParams(_return).toString();
-		this._return = "(" + params.substring(1, params.length()-1) + ")";
+		this._parameters = "(" + params.substring(1, params.length() - 1) + ")";
+		this._sequenceLevel = _sequenceLevel;
 	}
 
-	public String getClassName() {
-		return _className;
+	public String getClassToCall() {
+		return _classToCall;
 	}
 
 	public String getMethodName() {
 		return _methodName;
 	}
 
-	public String getReturn() {
-		return _return;
+	public String getParameters() {
+		return _parameters;
 	}
-	
-	public String getPreviousClass() {
-		return _previousClass;
+
+	public String getCallerClass() {
+		return _callerClass;
+	}
+
+	public int getSequenceLevel() {
+		return _sequenceLevel;
 	}
 	
 	@Override
+	public String getParameter() {
+		return _parameters;
+	}
+
+	@Override
 	public String toString() {
-		return "MethodStatement: " + getPreviousClass() + " " + getClassName() + " " + getMethodName() + " " + getReturn();
+		return "MethodStatement: " + getCallerClass() + " " + getClassToCall() + " " + getMethodName() + " "
+				+ getParameters() + " " + getSequenceLevel();
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((_className == null) ? 0 : _className.hashCode());
+		result = prime * result + ((_callerClass == null) ? 0 : _callerClass.hashCode());
+		result = prime * result + ((_classToCall == null) ? 0 : _classToCall.hashCode());
 		result = prime * result + ((_methodName == null) ? 0 : _methodName.hashCode());
-		result = prime * result + ((_previousClass == null) ? 0 : _previousClass.hashCode());
-		result = prime * result + ((_return == null) ? 0 : _return.hashCode());
+		result = prime * result + ((_parameters == null) ? 0 : _parameters.hashCode());
+		result = prime * result + _sequenceLevel;
 		return result;
 	}
 
@@ -60,32 +73,35 @@ public class MethodStatement implements ITargetClassPart {
 		if (getClass() != obj.getClass())
 			return false;
 		MethodStatement other = (MethodStatement) obj;
-		if (_className == null) {
-			if (other._className != null)
+		if (_callerClass == null) {
+			if (other._callerClass != null)
 				return false;
-		} else if (!_className.equals(other._className))
+		} else if (!_callerClass.equals(other._callerClass))
+			return false;
+		if (_classToCall == null) {
+			if (other._classToCall != null)
+				return false;
+		} else if (!_classToCall.equals(other._classToCall))
 			return false;
 		if (_methodName == null) {
 			if (other._methodName != null)
 				return false;
 		} else if (!_methodName.equals(other._methodName))
 			return false;
-		if (_previousClass == null) {
-			if (other._previousClass != null)
+		if (_parameters == null) {
+			if (other._parameters != null)
 				return false;
-		} else if (!_previousClass.equals(other._previousClass))
+		} else if (!_parameters.equals(other._parameters))
 			return false;
-		if (_return == null) {
-			if (other._return != null)
-				return false;
-		} else if (!_return.equals(other._return))
+		if (_sequenceLevel != other._sequenceLevel)
 			return false;
 		return true;
 	}
 
-	@Override
 	public void accept(IVisitor v) {
 		v.visit(this);
 	}
+
 	
+
 }

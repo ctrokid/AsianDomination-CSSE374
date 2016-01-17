@@ -19,6 +19,7 @@ public class SignatureParser {
 		primitiveTypes.put('I', "int");
 		primitiveTypes.put('D', "double");
 		primitiveTypes.put('F', "float");
+		primitiveTypes.put('B',"boolean");
 		lastIsArrayObject = false;
 	}
 
