@@ -9,8 +9,8 @@ import org.junit.Test;
 import construction.IAddStrategy;
 import construction.SDAddStrategy;
 import input.SequenceInputCommand;
-import input.UMLInputCommand;
 import output.IDiagramOutputStream;
+import output.SDDiagramOutputStream;
 
 public class TestSequenceInputCommand {
 	private SequenceInputCommand _cmd;

@@ -25,14 +25,14 @@ public class ProjectModel implements IProjectModel {
 	private HashMap<String, ITargetClass> _targetClasses;
 	private IRelationshipManager _relationshipManager;
 
-	public ProjectModel(InputCommand command) throws IOException {
+	public ProjectModel(InputCommand command) {
 		_command = command;
 		_targetClasses = new LinkedHashMap<String, ITargetClass>();
 		_relationshipManager = new RelationshipManager();
 	}
 
 	@Override
-	public void parseModel() throws IOException {
+	public void parseModel() {
 		IAddStrategy addStrategy  = _command.getAddStrategy();
 		addStrategy.setProjectModel(this);
 		addStrategy.buildModel(_command.getInputParameters());
@@ -40,7 +40,7 @@ public class ProjectModel implements IProjectModel {
 		IDiagramOutputStream digramOutputStream = _command.getOutputStream();
 		digramOutputStream.setProjectModel(this);
 		digramOutputStream.writeOutput();
-		digramOutputStream.generateDiagram();
+		digramOutputStream.generateDiagram(_command.getDiagramOutputPath());
 	}
 
 	@Override

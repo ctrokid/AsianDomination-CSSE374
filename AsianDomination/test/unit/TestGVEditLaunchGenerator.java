@@ -13,7 +13,7 @@ public class TestGVEditLaunchGenerator {
 	
 	@Test
 	public void testGVEditLaunchSuccess() {
-		inputPath = "input_output/dotSuccessTest";
+		inputPath = "input_output/dotSuccessTest.gv";
 		outputPath = "firstDotTest";
 		
 		int actual = LaunchDiagramGenerator.RunGVEdit(inputPath, outputPath, DiagramFileExtension.PDF);
@@ -23,7 +23,7 @@ public class TestGVEditLaunchGenerator {
 	
 	@Test
 	public void testGVEditLaunchFailureBadPath() {
-		inputPath = "input_output/dotIntentionalbadpathSuccessTest";
+		inputPath = "input_output/dotIntentionalbadpathSuccessTest.gv";
 		outputPath = "badPathFailureUMLTest";
 		
 		int actual = LaunchDiagramGenerator.RunGVEdit(inputPath, outputPath, DiagramFileExtension.PDF);

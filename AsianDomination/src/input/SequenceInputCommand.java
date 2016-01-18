@@ -1,11 +1,9 @@
 package input;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 import construction.IAddStrategy;
 import construction.SDAddStrategy;
 import output.IDiagramOutputStream;
+import output.SDDiagramOutputStream;
 
 public class SequenceInputCommand extends InputCommand {
 	private String _initialClass;
@@ -49,6 +47,6 @@ public class SequenceInputCommand extends InputCommand {
 		return new SDAddStrategy();
 	}
 	public IDiagramOutputStream getOutputStream(){
-		return new SDDiagramOutputStream();
+		return new SDDiagramOutputStream(_asmOutputPath);
 	}
 }

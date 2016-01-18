@@ -1,6 +1,6 @@
 package visitor;
 
-class LookupKey {
+public class LookupKey {
 	VisitType visitType;
 	Class<?> clazz;
 	

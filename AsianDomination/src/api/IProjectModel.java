@@ -1,12 +1,11 @@
 package api;
 
-import java.io.IOException;
 import java.util.Collection;
 
 import input.InputCommand;
 
 public interface IProjectModel{
-	public void parseModel() throws IOException;
+	public void parseModel();
 	public Collection<ITargetClass> getTargetClasses();
 	public ITargetClass getTargetClassByName(String className);
 	public InputCommand getInputCommand();

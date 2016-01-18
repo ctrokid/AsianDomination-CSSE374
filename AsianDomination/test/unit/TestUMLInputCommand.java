@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import output.IDiagramOutputStream;
+import output.UMLDiagramOutputStream;
 import construction.IAddStrategy;
 import construction.UMLAddStrategy;
 

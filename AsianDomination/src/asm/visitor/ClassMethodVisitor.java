@@ -32,7 +32,7 @@ public class ClassMethodVisitor extends ClassVisitor {
 	@Override
 	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
-		
+
 		String accessLevel = AsmClassUtils.GetAccessLevel(access);
 		String type = AsmClassUtils.GetReturnType(desc);
 		String arguments = AsmClassUtils.GetArguments(desc);

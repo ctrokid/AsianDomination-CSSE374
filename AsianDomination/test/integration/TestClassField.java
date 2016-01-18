@@ -4,24 +4,31 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import api.IClassField;
 import impl.ClassField;
+import output.AbstractDiagramOutputStream;
+import output.UMLDiagramOutputStream;
 import utils.AsmClassUtils;
 import visitor.IVisitor;
-import visitor.UMLOutputStream;
 
 public class TestClassField {
 	private IVisitor outStreamVisitor;
 	private OutputStream bytesOut;
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		bytesOut = new ByteArrayOutputStream();
-		outStreamVisitor = new UMLOutputStream(bytesOut);
+		outStreamVisitor = new UMLDiagramOutputStream("");
+		
+		Field f = AbstractDiagramOutputStream.class.getDeclaredField("_outputStream");
+		f.setAccessible(true);
+		
+		f.set(outStreamVisitor, bytesOut);
 	}
 	
 	@Test

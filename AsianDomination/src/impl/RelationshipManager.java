@@ -32,9 +32,10 @@ public class RelationshipManager implements IRelationshipManager {
 	@Override
 	public void addRelationshipEdge(String _subClass, String _superClass, RelationshipType edgeType) {
 		RelationshipEdge edge = new RelationshipEdge(_subClass,_superClass);
-		
+
 		if (!relationships.get(edgeType).contains(edge))
 			relationships.get(edgeType).add(edge);
+		
 	}
 
 	@Override
@@ -106,7 +107,5 @@ public class RelationshipManager implements IRelationshipManager {
 		
 
 	}
-
-
 
 }

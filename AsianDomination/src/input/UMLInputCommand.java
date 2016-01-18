@@ -3,6 +3,7 @@ package input;
 import construction.IAddStrategy;
 import construction.UMLAddStrategy;
 import output.IDiagramOutputStream;
+import output.UMLDiagramOutputStream;
 
 public class UMLInputCommand extends InputCommand{
 	private String[] _classes;
@@ -26,6 +27,6 @@ public class UMLInputCommand extends InputCommand{
 	}
 	
 	public IDiagramOutputStream getOutputStream(){
-		return new UMLDiagramOutputStream();
+		return new UMLDiagramOutputStream(_asmOutputPath + ".gv");
 	}
 }

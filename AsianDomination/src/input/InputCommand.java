@@ -4,14 +4,14 @@ import construction.IAddStrategy;
 import output.IDiagramOutputStream;
 
 public abstract class InputCommand {
-	private String _diagramOutputPath;
-	private String _asmOutputPath;
+	protected String _diagramOutputPath;
+	protected String _asmOutputPath;
 
-	
 	public InputCommand(String diagramOutputPath, String asmOutputPath ) {
 		_diagramOutputPath = diagramOutputPath;
 		_asmOutputPath = asmOutputPath;
 	}
+	
 	public String getDiagramOutputPath(){
 		return _diagramOutputPath;
 	}
