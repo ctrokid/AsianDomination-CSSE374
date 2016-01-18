@@ -1,11 +1,9 @@
 package asm.visitor;
 
 import api.IProjectModel;
-import api.IRelationshipManager;
-import impl.InputCommand;
 import impl.PrintCommand;
 import impl.ProjectModel;
-import impl.RelationshipManager;
+import input.InputCommand;
 
 public class DesignParser {
 
@@ -22,13 +20,10 @@ public class DesignParser {
 		String diagramOutputPath = "input_output/sequenceDiagramTest";
 		String asmOutputPath = "input_output/sequenceTest";	
 		
-		PrintCommand print = new PrintCommand();
+		PrintCommand print = new PrintCommand(diagramOutputPath, asmOutputPath);
 		InputCommand inputCommand = print.run();
 		
-		IRelationshipManager relationshipManager = new RelationshipManager(inputCommand.getClasses());
-		IProjectModel model = null;
-		
-		model = new ProjectModel(inputCommand, relationshipManager, asmOutputPath, diagramOutputPath);
+		IProjectModel model = new ProjectModel(inputCommand);
 		model.parseModel();
 	}
 }

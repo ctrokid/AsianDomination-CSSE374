@@ -40,14 +40,14 @@ public class UMLMethodAssociationVisitor extends MethodVisitor {
 			String returnType, boolean arg4) {
 		super.visitMethodInsn(arg0, className, methodName, returnType, arg4);
 
-		// System.out.println(_className + " " + className + " " + methodName);
 		if (!className.equals(_className)) {
 			_relationshipManager.addRelationshipEdge(_className, className,
 					RelationshipType.ASSOCIATION);
 		}
 		
-		MethodStatement stmt = new MethodStatement(_className, className, methodName, returnType);
-		_classMethod.addStatement(stmt);
+		// TODO: sequence level get set and not passed in?
+		MethodStatement stmt = new MethodStatement(_className, className, methodName, returnType, 1);
+		_classMethod.addMethodStatement(stmt);
 	}
 
 	@Override

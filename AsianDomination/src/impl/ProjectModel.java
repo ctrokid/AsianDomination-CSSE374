@@ -25,10 +25,10 @@ public class ProjectModel implements IProjectModel {
 	private HashMap<String, ITargetClass> _targetClasses;
 	private IRelationshipManager _relationshipManager;
 
-	public ProjectModel(InputCommand command, IRelationshipManager relationshipManager) throws IOException {
+	public ProjectModel(InputCommand command) throws IOException {
 		_command = command;
 		_targetClasses = new LinkedHashMap<String, ITargetClass>();
-		_relationshipManager = relationshipManager;
+		_relationshipManager = new RelationshipManager();
 	}
 
 	@Override
