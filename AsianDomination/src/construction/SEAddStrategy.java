@@ -3,11 +3,11 @@ package construction;
 import api.IProjectModel;
 
 public class SEAddStrategy extends AbstractAddStrategy {
-
+	protected IProjectModel _projectModel;
+	
 	@Override
 	public void setProjectModel(IProjectModel model) {
-		// TODO Auto-generated method stub
-
+		_projectModel = model;
 	}
 
 	@Override
@@ -16,8 +16,4 @@ public class SEAddStrategy extends AbstractAddStrategy {
 
 	}
 	
-	private void addClassesRecursively(String className, String methodName, String params, int level, int sequenceLevel){
-		
-	}
-
 }

@@ -9,5 +9,5 @@ public interface IRelationshipManager extends ITargetClassPart {
 
 	public Collection<RelationshipEdge> getRelationshipEdges(RelationshipType edgeType);
 
-	boolean containsRelationshipEdge( String _subClass, String _superClass, RelationshipType edgeType);
+	boolean containsRelationshipEdge(String _subClass, String _superClass, RelationshipType edgeType);
 }
