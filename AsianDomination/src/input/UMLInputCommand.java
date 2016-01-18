@@ -1,6 +1,7 @@
 package input;
 
 import construction.IAddStrategy;
+import construction.UMLAddStrategy;
 import output.IDiagramOutputStream;
 
 public class UMLInputCommand extends InputCommand{
