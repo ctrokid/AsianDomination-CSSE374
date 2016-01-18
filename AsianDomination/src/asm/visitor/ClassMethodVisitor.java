@@ -38,7 +38,7 @@ public class ClassMethodVisitor extends ClassVisitor {
 		String arguments = AsmClassUtils.GetArguments(desc);
 		
 		IClassMethod classMethod = new ClassMethod(name, arguments, accessLevel, type);
-		MethodVisitor _decorator = new UMLMethodAssociationVisitor(Opcodes.ASM5, toDecorate, _relationshipManager, _targetClass.getClassName(), arguments, classMethod);
+		MethodVisitor _decorator = new MethodAssociationVisitor(Opcodes.ASM5, toDecorate, _relationshipManager, _targetClass.getClassName(), arguments, classMethod);
 		
 		if (!name.contains("<")) {
 			_targetClass.addClassMethod(classMethod);

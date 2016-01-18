@@ -7,13 +7,13 @@ import api.IRelationshipManager;
 import impl.MethodStatement;
 import utils.DotClassUtils.RelationshipType;
 
-public class UMLMethodAssociationVisitor extends MethodVisitor {
+public class MethodAssociationVisitor extends MethodVisitor {
 	private IRelationshipManager _relationshipManager;
 	private String _className;
 	private String _arguments;
 	private IClassMethod _classMethod;
 
-	public UMLMethodAssociationVisitor(int api, MethodVisitor decorated,
+	public MethodAssociationVisitor(int api, MethodVisitor decorated,
 			IRelationshipManager relationshipManager, String className,
 			String arguments, IClassMethod classMethod) {
 		super(api, decorated);
