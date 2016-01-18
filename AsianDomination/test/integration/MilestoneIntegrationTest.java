@@ -8,12 +8,10 @@ import java.io.OutputStream;
 import org.junit.Before;
 import org.junit.Test;
 
-import api.IClassDeclaration;
 import api.IClassField;
 import api.IClassMethod;
 import api.IRelationshipManager;
 import api.ITargetClass;
-import impl.ClassDeclaration;
 import impl.ClassField;
 import impl.ClassMethod;
 import impl.RelationshipManager;
@@ -35,27 +33,23 @@ public class MilestoneIntegrationTest {
 	
 	@Test
 	public void testTwoClassesWithInheritance() {
-		ITargetClass clazz1 = new TargetClass();
-		ITargetClass clazz2 = new TargetClass();
+		ITargetClass clazz1 = new TargetClass("test/examples/Animal");
+		ITargetClass clazz2 = new TargetClass("test/examples/Cat");
 		
-		IClassDeclaration decl = new ClassDeclaration("Age", "", "object", new String[] { });
 		IClassField field = new ClassField("age", "-", "", "int");
 		IClassMethod method = new ClassMethod("getAge", "", "+", "int");
 		
-		clazz1.addPart(decl);
-		clazz1.addPart(field);
-		clazz1.addPart(method);
+		clazz1.addClassField(field);
+		clazz1.addClassMethod(method);
 		
-		decl = new ClassDeclaration("SubAge", "", "Age", new String[] { });
 		method = new ClassMethod("getSomething", "", "-", "double");
 		
-		clazz2.addPart(decl);
-		clazz2.addPart(method);
+		clazz2.addClassMethod(method);
 		
 		clazz1.accept(outStreamVisitor);
 		clazz2.accept(outStreamVisitor);
 		
-		relationshipManager = new RelationshipManager(new String[] {"SubAge", "Age"});
+		relationshipManager = new RelationshipManager();
 		relationshipManager.addRelationshipEdge("SubAge", "Age", RelationshipType.INHERITANCE);
 		
 		relationshipManager.accept(outStreamVisitor);
@@ -68,14 +62,11 @@ public class MilestoneIntegrationTest {
 	
 	@Test
 	public void testTwoClassesWithInterface() {
-		ITargetClass clazz1 = new TargetClass();
+		ITargetClass clazz1 = new TargetClass("test/examples/Animal");
 		
-		IClassDeclaration decl = new ClassDeclaration("Age", "", "object", new String[] { "IRunnable" });
-		
-		clazz1.addPart(decl);
 		clazz1.accept(outStreamVisitor);
 		
-		relationshipManager = new RelationshipManager(new String[] {"Age", "IRunnable"});
+		relationshipManager = new RelationshipManager();
 		relationshipManager.addRelationshipEdge("Age", "IRunnable", RelationshipType.IMPLEMENTATION);
 		
 		relationshipManager.accept(outStreamVisitor);
