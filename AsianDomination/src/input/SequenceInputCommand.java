@@ -43,8 +43,7 @@ public class SequenceInputCommand extends InputCommand {
 		return params;
 	}
 	public IAddStrategy getAddStrategy(){
-		
-		return new SDAddStrategy();
+		return new SDAddStrategy(_maxCallDepth);
 	}
 	public IDiagramOutputStream getOutputStream(){
 		return new SDDiagramOutputStream(_asmOutputPath);

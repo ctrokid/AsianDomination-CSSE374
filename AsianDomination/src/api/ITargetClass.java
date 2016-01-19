@@ -11,4 +11,5 @@ public interface ITargetClass extends ITraverser {
 	public Collection<IClassField> getFields();
 	public void addClassMethod(IClassMethod classMethod);
 	public void addClassField(IClassField classField);
+	public IClassMethod getMethodByName(String methodName, String params);
 }
