@@ -50,6 +50,12 @@ public class MethodStatement implements IMethodStatement {
 		return "MethodStatement: " + getCallerClass() + " " + getClassToCall() + " " + getMethodName() + " "
 				+ getParameters() + " " + getSequenceLevel();
 	}
+	
+	@Override
+	public void setSequencelevel(int depth) {
+		this._sequenceLevel = depth;
+		
+	}
 
 	@Override
 	public int hashCode() {
@@ -100,6 +106,8 @@ public class MethodStatement implements IMethodStatement {
 	public void accept(IVisitor v) {
 		v.visit(this);
 	}
+
+
 
 	
 
