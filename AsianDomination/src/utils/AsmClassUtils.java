@@ -20,9 +20,8 @@ public class AsmClassUtils {
 	
 	public static String GetReturnType(String desc) {
 		String returnType = Type.getReturnType(desc).getClassName();
-		returnType = returnType.substring(returnType.lastIndexOf('.') + 1);
 		
-		return returnType;
+		return returnType.replace(".", "/");
 	}
 
 	public static String GetArguments(String desc) {

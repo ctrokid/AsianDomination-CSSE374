@@ -29,6 +29,7 @@ public class MethodAssociationVisitor extends MethodVisitor {
 		super.visitFieldInsn(arg0, className, fieldName, fieldType);
 
 		// FIXME: collections don't get populated with internal contents
+		// FIXME: could be a bug for singletons
 		if (!className.equals(_className)) {
 			_relationshipManager.addRelationshipEdge(_className, className,
 					RelationshipType.ASSOCIATION);
@@ -40,10 +41,14 @@ public class MethodAssociationVisitor extends MethodVisitor {
 			String returnType, boolean arg4) {
 		super.visitMethodInsn(arg0, className, methodName, returnType, arg4);
 
-		if (!className.equals(_className)) {
-			_relationshipManager.addRelationshipEdge(_className, className,
-					RelationshipType.ASSOCIATION);
+		RelationshipType relationshipType = RelationshipType.ASSOCIATION;
+		
+		// TODO : this could be a bug.
+		if (!className.equals(_classMethod.getReturnType())) {
+			relationshipType = RelationshipType.USES;
 		}
+		
+		_relationshipManager.addRelationshipEdge(_className, className, relationshipType);
 		
 		// TODO: sequence level get set and not passed in?
 		MethodStatement stmt = new MethodStatement(_className, className, methodName, returnType, 1);

@@ -57,12 +57,11 @@ public class TestClassMethodVisitor {
 		
 		IRelationshipManager manager = model.getRelationshipManager();
 		Collection<RelationshipEdge> edges = manager.getRelationshipEdges(RelationshipType.USES);
-		System.out.println(edges.size());
 		
 		boolean contains = edges.contains(((RelationshipManager) manager).new RelationshipEdge("test/examples/Animal", "void"));
 		assertTrue(contains);
 		
-		contains = edges.contains(((RelationshipManager) manager).new RelationshipEdge("test/examples/Animal", "String"));
+		contains = edges.contains(((RelationshipManager) manager).new RelationshipEdge("test/examples/Animal", "java/lang/String"));
 		assertTrue(contains);
 	}
 	

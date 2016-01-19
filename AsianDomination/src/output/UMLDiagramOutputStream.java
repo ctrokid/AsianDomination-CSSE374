@@ -52,7 +52,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 			IClassField c = (IClassField) t;
 			StringBuilder sb = new StringBuilder();
 			sb.append(c.getAccessLevel() + " " + c.getFieldName() + " : ");
-			sb.append(c.getType());
+			sb.append(AsmClassUtils.GetStringStrippedByCharacter(c.getType(), '/'));
 			
 			if (c.getSignature() != null)
 				sb.append(c.getSignature());
@@ -71,7 +71,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 			
 			sb.append(c.getAccessLevel() + " " + c.getMethodName());
 			sb.append("(" + c.getSignature() + ") : ");
-			sb.append(c.getReturnType() + "\\l");
+			sb.append(AsmClassUtils.GetStringStrippedByCharacter(c.getReturnType(), '/') + "\\l");
 			
 			write(sb.toString());
 		});
