@@ -3,6 +3,7 @@ package impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import visitor.IVisitor;
 import api.IClassField;
@@ -11,14 +12,13 @@ import api.ITargetClass;
 
 public class TargetClass implements ITargetClass {
 	private String _className;
-//	private Collection<IClassMethod> _methodNameToClassMethod;
 	private HashMap<String, IClassMethod> _methodNameToClassMethod;
 	
 	private Collection<IClassField> _fields;
 
 	public TargetClass(String className) {
 		_fields = new ArrayList<IClassField>();
-		_methodNameToClassMethod = new HashMap<String, IClassMethod>();
+		_methodNameToClassMethod = new LinkedHashMap<String, IClassMethod>();
 		_className = className;
 	}
 
@@ -56,6 +56,12 @@ public class TargetClass implements ITargetClass {
 	public void accept(IVisitor v) {
 		v.visit(this);
 
+	}
+
+	@Override
+	public IClassMethod getMethodByName(String methodName, String params) {
+		String key = methodName + params;
+		return _methodNameToClassMethod.get(key);
 	}
 
 }
