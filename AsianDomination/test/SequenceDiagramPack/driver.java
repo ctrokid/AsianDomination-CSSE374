@@ -6,6 +6,5 @@ public class driver {
 		Register r = new Register(s);
 		double a = 10.0;
 		r.checkout(a);
-//		r.out(true, 10.0, 2);
 	}
 }

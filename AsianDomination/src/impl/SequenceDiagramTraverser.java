@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import api.IClassDeclaration;
 import api.IClassMethod;
 import api.IProjectModel;
 import api.ITargetClass;
+import input.SequenceInputCommand;
 import utils.AsmClassUtils;
 import visitor.SequenceOutputStream;
 

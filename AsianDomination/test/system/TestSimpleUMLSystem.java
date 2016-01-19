@@ -2,10 +2,8 @@ package system;
 
 import impl.ProjectModel;
 import input.InputCommand;
-import input.UMLInputCommand;
 import output.AbstractDiagramOutputStream;
 import output.IDiagramOutputStream;
-import output.UMLDiagramOutputStream;
 
 import static org.junit.Assert.*;
 
@@ -16,8 +14,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import utils.LaunchDiagramGenerator;
-import utils.LaunchDiagramGenerator.DiagramFileExtension;
 import api.IProjectModel;
 import construction.UMLAddStrategy;
 import fake.FakeInputCommand;

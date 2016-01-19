@@ -6,4 +6,5 @@ public interface IMethodStatement extends ITargetClassPart {
 	public String getParameter();
 	public String getMethodName();
 	public int getSequenceLevel();
+	public void setSequencelevel(int depth);
 }
