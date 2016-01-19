@@ -2,6 +2,7 @@ package impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import visitor.IVisitor;
 import api.IClassField;
@@ -10,12 +11,14 @@ import api.ITargetClass;
 
 public class TargetClass implements ITargetClass {
 	private String _className;
-	private Collection<IClassMethod> _methodNameToClassMethod;
-	private Collection<IClassField> _fieldNameToClassField;
+//	private Collection<IClassMethod> _methodNameToClassMethod;
+	private HashMap<String, IClassMethod> _methodNameToClassMethod;
+	
+	private Collection<IClassField> _fields;
 
 	public TargetClass(String className) {
-		_fieldNameToClassField = new ArrayList<IClassField>();
-		_methodNameToClassMethod = new ArrayList<IClassMethod>();
+		_fields = new ArrayList<IClassField>();
+		_methodNameToClassMethod = new HashMap<String, IClassMethod>();
 		_className = className;
 	}
 
@@ -23,25 +26,30 @@ public class TargetClass implements ITargetClass {
 	public String getClassName() {
 		return _className;
 	}
-
+	
 	@Override
 	public Collection<IClassMethod> getMethods() {
-		return _methodNameToClassMethod;
+		Collection<IClassMethod> methods= new ArrayList<IClassMethod>();
+		for (String key : _methodNameToClassMethod.keySet()) {
+		   methods.add( _methodNameToClassMethod.get(key));
+		}
+		return methods;
 	}
 
 	@Override
 	public Collection<IClassField> getFields() {
-		return _fieldNameToClassField;
+		return _fields;
 	}
 
 	@Override
 	public void addClassMethod(IClassMethod classMethod) {
-		this._methodNameToClassMethod.add(classMethod);
+		String key = classMethod.getMethodName()+classMethod.getSignature();
+		this._methodNameToClassMethod.put(key, classMethod);
 	}
 
 	@Override
 	public void addClassField(IClassField classField) {
-		this._fieldNameToClassField.add(classField);
+		this._fields.add(classField);
 	}
 
 	@Override
