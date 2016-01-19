@@ -106,9 +106,6 @@ public class MethodStatement implements IMethodStatement {
 	public void accept(IVisitor v) {
 		v.visit(this);
 	}
-
-
-
 	
 
 }
