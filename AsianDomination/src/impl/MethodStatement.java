@@ -1,6 +1,7 @@
 package impl;
 
 import api.IMethodStatement;
+import utils.SignatureParser;
 import visitor.IVisitor;
 
 public class MethodStatement implements IMethodStatement {
@@ -15,8 +16,8 @@ public class MethodStatement implements IMethodStatement {
 		this._classToCall = _classToCall;
 		this._methodName = methodName;
 		this._parameters = _return;
-//		String params = SignatureParser.getParams(_return).toString();
-//		this._parameters = "(" + params.substring(1, params.length() - 1) + ")";
+		String params = SignatureParser.getParams(_return).toString();
+		this._parameters = params.substring(1, params.length() - 1);
 		this._sequenceLevel = _sequenceLevel;
 	}
 
@@ -39,11 +40,6 @@ public class MethodStatement implements IMethodStatement {
 	public int getSequenceLevel() {
 		return _sequenceLevel;
 	}
-	
-	@Override
-	public String getParameter() {
-		return _parameters;
-	}
 
 	@Override
 	public String toString() {
@@ -54,7 +50,6 @@ public class MethodStatement implements IMethodStatement {
 	@Override
 	public void setSequencelevel(int depth) {
 		this._sequenceLevel = depth;
-		
 	}
 
 	@Override

@@ -113,8 +113,12 @@ public class SignatureParser {
 		public static ArrayList<String> getParams(String signatures) {
 			result = new ArrayList<String>();
 			params = Type.getArgumentTypes(signatures);
+			if (params == null)
+				return result;
+			
 			for(Type param: params) {
 				String p = parseParam(param.toString());
+				p = AsmClassUtils.GetStringStrippedByCharacter(p, '/');
 				result.add(p);
 			}
 			return result;

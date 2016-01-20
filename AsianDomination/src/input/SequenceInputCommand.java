@@ -46,6 +46,6 @@ public class SequenceInputCommand extends InputCommand {
 		return new SDAddStrategy(_maxCallDepth);
 	}
 	public IDiagramOutputStream getOutputStream(){
-		return new SDDiagramOutputStream(_asmOutputPath, _initialClass, _methodName, _parameters, _maxCallDepth);
+		return new SDDiagramOutputStream(_asmOutputPath + ".sd", _initialClass, _methodName, _parameters, _maxCallDepth);
 	}
 }

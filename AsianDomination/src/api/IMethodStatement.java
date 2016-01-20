@@ -3,7 +3,7 @@ package api;
 public interface IMethodStatement extends ITargetClassPart {
 	public String getCallerClass();
 	public String getClassToCall();
-	public String getParameter();
+	public String getParameters();
 	public String getMethodName();
 	public int getSequenceLevel();
 	public void setSequencelevel(int depth);

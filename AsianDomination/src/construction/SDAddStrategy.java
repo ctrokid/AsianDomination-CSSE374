@@ -36,12 +36,10 @@ public class SDAddStrategy extends AbstractAddStrategy {
 			String classToCall = currentStatement.getClassToCall();
 			if (!modelContainClass(classToCall)) {
 				super._projectModel.addClass(classToCall);
-				addClassesRecursively(classToCall, currentStatement.getMethodName(), currentStatement.getParameter(),
+				addClassesRecursively(classToCall, currentStatement.getMethodName(), currentStatement.getParameters(),
 						depth + 1, sequenceLevel + 1);
 			}
-
 		}
-
 	}
 
 	private boolean modelContainClass(String className) {
