@@ -68,6 +68,9 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 		super.addVisit(VisitType.Visit, IClassMethod.class, (ITraverser t) -> {
 			IClassMethod c = (IClassMethod) t;
 			StringBuilder sb = new StringBuilder();
+			if (c.getMethodName().contains("<"))
+				return;
+			
 			
 			sb.append(c.getAccessLevel() + " " + c.getMethodName());
 			sb.append("(" + c.getSignature() + ") : ");
