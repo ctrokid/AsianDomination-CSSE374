@@ -32,8 +32,12 @@ public class ClassFieldVisitor extends ClassVisitor {
 		String accessLevel = AsmClassUtils.GetAccessLevel(access);
 		
 		if (signature != null) {
-			signature = AsmClassUtils.parseSignature(signature);
-			_relationshipManager.addRelationshipEdge(_targetClass.getClassName(), signature.substring(2, signature.length()-2), RelationshipType.ASSOCIATION);
+			String sig = AsmClassUtils.parseSignature(signature, false);
+			signature = "\\<" + AsmClassUtils.parseSignature(signature, true) + "\\>";
+			
+			for (String param : sig.split(",")) {
+				_relationshipManager.addRelationshipEdge(_targetClass.getClassName(), param.trim(), RelationshipType.ASSOCIATION);
+			}
 		}
 		else
 			_relationshipManager.addRelationshipEdge(_targetClass.getClassName(), returnType, RelationshipType.ASSOCIATION);

@@ -16,7 +16,7 @@ public class MethodStatement implements IMethodStatement {
 		this._classToCall = _classToCall;
 		this._methodName = methodName;
 		this._parameters = _return;
-		String params = SignatureParser.getParams(_return).toString();
+		String params = SignatureParser.getParams(_return, true).toString();
 		this._parameters = params.substring(1, params.length() - 1);
 		this._sequenceLevel = _sequenceLevel;
 	}

@@ -1,4 +1,5 @@
 package utils;
+
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
@@ -45,25 +46,26 @@ public class AsmClassUtils {
 		return str.substring(str.lastIndexOf(character) + 1);
 	}
 
-	public static String parseSignature(String signature) {
+	public static String parseSignature(String signature, boolean parseSlashes) {
 		StringBuilder sb = new StringBuilder();
-		String[] tokens = signature.split(";");
+		String[] tokens = signature.split("<");
 
-		sb.append("\\<");
-		
 		// FIXME: Collection inside of a collection is not working right now.
-		int size = 1;
-		if (tokens.length >= 3)
-			size = 2;
 		
-		for (int i = 0; i < size; i++) {
-			sb.append(GetStringStrippedByCharacter(tokens[i], '/'));
+		for (int i = 1; i < tokens.length; i++) {
+			String str = "(" + tokens[i].substring(0, tokens[i].length() - 2) + ")";
+			// FIXME : these weird symbols are sometimes passed in from ClassFieldVisitor
+			if (str.contains("$") || str.contains("*"))
+				continue;
+			String params = SignatureParser.getParams(str, parseSlashes).toString();
+			String toAppend = params.substring(1, params.length() - 1);
 			
-			if (i != size - 1)
+			sb.append(toAppend);
+			
+			if (i != tokens.length - 1)
 				sb.append(',');
 		}
-		sb.append("\\>");
-		
+
 		return sb.toString().replaceAll("\\$", ".");
 	}
 }

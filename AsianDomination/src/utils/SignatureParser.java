@@ -110,7 +110,7 @@ public class SignatureParser {
 		 * @param signatures
 		 * @return ArrayList<String> parameters
 		 */
-		public static ArrayList<String> getParams(String signatures) {
+		public static ArrayList<String> getParams(String signatures, boolean parseSlashes) {
 			result = new ArrayList<String>();
 			params = Type.getArgumentTypes(signatures);
 			if (params == null)
@@ -118,7 +118,9 @@ public class SignatureParser {
 			
 			for(Type param: params) {
 				String p = parseParam(param.toString());
-				p = AsmClassUtils.GetStringStrippedByCharacter(p, '/');
+				
+				if (parseSlashes)
+					p = AsmClassUtils.GetStringStrippedByCharacter(p, '/');
 				result.add(p);
 			}
 			return result;
