@@ -2,6 +2,7 @@ package system;
 
 import impl.ProjectModel;
 import input.InputCommand;
+import input.UMLInputCommand;
 import output.AbstractDiagramOutputStream;
 import output.IDiagramOutputStream;
 
@@ -91,9 +92,12 @@ public class TestSimpleUMLSystem {
 		assertFalse(actual.contains(catDoesNotAssociateAnimal));
 	}
 	
-//	@Test
-//	public void TestUMLForProjectSubsystem() {
-//		String[] classes = new String[] {
+	@Test
+	public void TestUMLForProjectSubsystem() {
+		String[] classes = new String[] {
+				"SequenceDiagramPack/driver",
+				"SequenceDiagramPack/Payment",
+				"SequenceDiagramPack/Sale"
 //			"api/IClassField",
 //			"api/IClassMethod",
 //			"api/IMethodStatement",
@@ -136,12 +140,12 @@ public class TestSimpleUMLSystem {
 //			"visitor/LookupKey",
 //			"visitor/VisitorAdapter",
 //			"visitor/VisitType"
-//		};
-//		
-//		_cmd = new UMLInputCommand("input_output/testProjectSubsystem", "input_output/testProjectSubsystem", classes);
-//		IProjectModel model = new ProjectModel(_cmd);
-//		model.parseModel();
-//	}
+		};
+		
+		_cmd = new UMLInputCommand("input_output/testProjectSubsystem", "input_output/testProjectSubsystem", classes);
+		IProjectModel model = new ProjectModel(_cmd);
+		model.parseModel();
+	}
 	
 //	@Test
 //	public void TestUMLForAnimalCatExample() {

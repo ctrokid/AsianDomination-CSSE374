@@ -14,7 +14,7 @@ public class TestGVEditLaunchGenerator {
 	@Test
 	public void testGVEditLaunchSuccess() {
 		inputPath = "input_output/dotSuccessTest.gv";
-		outputPath = "firstDotTest";
+		outputPath = "input_output/firstDotTest";
 		
 		int actual = LaunchDiagramGenerator.RunGVEdit(inputPath, outputPath, DiagramFileExtension.PDF);
 		int expected = 0;

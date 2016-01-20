@@ -49,11 +49,11 @@ public class TestClassMethodVisitor {
 		_visitor = new ClassMethodVisitor(Opcodes.ASM5, model, classPath);
 		_visitor.visitMethod(1, "helloWorld", "(Ljava/lang/String;I)V", null, null);
 		_visitor.visitMethod(2, "run", "()Ljava/lang/String;", null, null);
-		// should not add <init> methods
+		// should NOW add <init> methods
 		_visitor.visitMethod(1, "<init>", "()V", null, null);
 		
 		ITargetClass clazz = model.getTargetClassByName(classPath);
-		assertEquals(2, clazz.getMethods().size());
+		assertEquals(3, clazz.getMethods().size());
 		
 		IRelationshipManager manager = model.getRelationshipManager();
 		Collection<RelationshipEdge> edges = manager.getRelationshipEdges(RelationshipType.USES);

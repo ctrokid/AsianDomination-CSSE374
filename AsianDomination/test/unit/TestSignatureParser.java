@@ -28,7 +28,7 @@ public class TestSignatureParser {
 	public void hashMapParsingTest(){
 		ArrayList<String> param = SignatureParser.getParams("(Ljava/util/HashMap;)Ljava/util/Collection");
 		assertEquals(1,param.size());
-		assertEquals("java/util/HashMap", param.get(0));
+		assertEquals("HashMap", param.get(0));
 	}
 	
 
