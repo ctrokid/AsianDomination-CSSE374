@@ -40,8 +40,9 @@ public class ClassMethodVisitor extends ClassVisitor {
 		IClassMethod classMethod = new ClassMethod(name, arguments, accessLevel, type);
 		MethodVisitor _decorator = new MethodAssociationVisitor(Opcodes.ASM5, toDecorate, _relationshipManager, _targetClass.getClassName(), arguments, classMethod);
 		
+		_targetClass.addClassMethod(classMethod);
+
 		if (!name.contains("<")) {
-			_targetClass.addClassMethod(classMethod);
 			_relationshipManager.addRelationshipEdge( _targetClass.getClassName(), type, RelationshipType.USES);
 		}
 
