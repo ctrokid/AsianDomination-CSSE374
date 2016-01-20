@@ -32,7 +32,10 @@ public class RelationshipManager implements IRelationshipManager {
 	@Override
 	public void addRelationshipEdge(String _subClass, String _superClass, RelationshipType edgeType) {
 		RelationshipEdge edge = new RelationshipEdge(_subClass,_superClass);
-
+		
+		if (_subClass.equals(_superClass) && edgeType.equals(RelationshipType.USES))
+			return;
+			
 		// TODO : let's talk about this. Email from Chandan added the second condition to the if statement.
 		if (!relationships.get(edgeType).contains(edge) && !relationships.get(RelationshipType.INHERITANCE).contains(edge))
 			relationships.get(edgeType).add(edge);

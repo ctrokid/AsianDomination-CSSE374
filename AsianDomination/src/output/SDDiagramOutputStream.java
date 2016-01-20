@@ -17,11 +17,19 @@ import visitor.VisitType;
 public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 	private List<String> _classNames;
 	private List<String> _methodStatements;
+	private String _initialClass;
+	private String _initialMethod;
+	private String _initialMethodParameters;
+	private int _maxCallDepth;
 	
-	public SDDiagramOutputStream(String asmOutputPath, inputParams) {
+	public SDDiagramOutputStream(String asmOutputPath, String initialClass, String initialMethod, String initialParameters, int maxCallDepth) {
 		super(asmOutputPath);
 		_classNames = new ArrayList<String>();
 		_methodStatements = new ArrayList<String>();
+		_initialClass = initialClass;
+		_initialMethod = initialMethod;
+		_initialMethodParameters = initialParameters;
+		_maxCallDepth = maxCallDepth;
 	}
 	
 	public void setupVisitMethodStatement() {
@@ -56,23 +64,26 @@ public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 
 	@Override
 	public void writeOutput() {
-		// 1. for initial class, add to "data structure"
-		// 							EXISTING OR NOT EXISTING CLASS???? / or no /
-		// 2. call visitModelRecursively
+		_classNames.add(_initialClass);
+		visitModelRecursively(_initialClass, _initialMethod, _initialMethodParameters, 1);
 	}
 
-	private void visitModelRecursively(String className, String methodName, String params) {
+	private void visitModelRecursively(String className, String methodName, String params, int level) {
 		// 3. get the method*****(from instance variables)
-			ITargetClass clazz = _projectModel.getTargetClassByName(className);
-			IClassMethod methods = clazz.getMethodByName(methodName, params);
-			for(IMethodStatement ms: methods.getMethodStatements()){
-				ms.accept(this);
-				if(_classNames.contains(className)){
-					visitModelRecursively(ms.getClassToCall(), ms.getMethodName(), ms.getParameter());
-				}else{
-					visitModelRecursively("/"+ms.getClassToCall(), ms.getMethodName(), ms.getParameter());
-				}
-			}
+		if (level > _maxCallDepth)
+			return;
+		
+		ITargetClass clazz = _projectModel.getTargetClassByName(className);
+		IClassMethod methods = clazz.getMethodByName(methodName, params);
+		for(IMethodStatement ms: methods.getMethodStatements()){
+			ms.accept(this);
+			
+			String classToCall = ms.getClassToCall();
+			if(!_classNames.contains(className))
+				classToCall = "/" + ms.getClassToCall();
+				
+			visitModelRecursively(classToCall, ms.getMethodName(), ms.getParameter(), level + 1);
+		}
 		// 4. loop over each statement
 		// 5. add statement to "data structure"
 		// 5. recurse on stmt.classToCall()

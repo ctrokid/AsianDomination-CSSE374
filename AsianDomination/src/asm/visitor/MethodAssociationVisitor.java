@@ -44,13 +44,13 @@ public class MethodAssociationVisitor extends MethodVisitor {
 		RelationshipType relationshipType = RelationshipType.ASSOCIATION;
 		
 		// TODO : this could be a bug.
+		// put in for factory methods to return uses relationship
 		if (!className.equals(_classMethod.getReturnType())) {
 			relationshipType = RelationshipType.USES;
 		}
 		
 		_relationshipManager.addRelationshipEdge(_className, className, relationshipType);
 		
-		// TODO: sequence level get set and not passed in?
 		MethodStatement stmt = new MethodStatement(_className, className, methodName, returnType, 1);
 		_classMethod.addMethodStatement(stmt);
 	}

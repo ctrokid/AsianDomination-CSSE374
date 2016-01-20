@@ -5,8 +5,12 @@ import api.IMethodStatement;
 import api.ITargetClass;
 
 public class SDAddStrategy extends AbstractAddStrategy {
-	private final int MAX_CALLDEPTH = 5;
+	private int MAX_CALLDEPTH = 5;
 
+	public SDAddStrategy(int maxCallDepth) {
+		MAX_CALLDEPTH = maxCallDepth;
+	}
+	
 	@Override
 	public void buildModel(String[] params) {
 		super._projectModel.addClass(params[0]);
