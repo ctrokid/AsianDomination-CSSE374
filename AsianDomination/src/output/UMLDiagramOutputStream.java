@@ -155,7 +155,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 	}
 
 	public void generateDiagram(String diagramOutputPath) {
-		LaunchDiagramGenerator.RunGVEdit(_asmOutputPath, diagramOutputPath, DiagramFileExtension.PDF);
+		LaunchDiagramGenerator.RunGVEdit(_asmOutputPath, diagramOutputPath, DiagramFileExtension.PNG);
 	}
 
 }
