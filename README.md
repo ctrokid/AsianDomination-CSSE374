@@ -23,7 +23,7 @@ Milestone 3 UML Diagram
 
 
 ###Milestone 4
-Before writing the logic for milestone 4, we decided to refactor our design in a large manner. We added two strategy patterns: one for building the model, and one for writing it out. These strategies combined with an abstract InputCommand class act as a form template method design pattern. The project model uses the strategies from the InputCommand to do the program execution (Building/Writing). This allowsed us to implement the following minimal changes for Singleton detection.
+Before writing the logic for milestone 4, we decided to refactor our design in a large manner. We added two strategy patterns: one for building the model, and one for writing it out. These strategies combined with an abstract InputCommand class act as a form template method design pattern. The project model uses the strategies from the InputCommand to do the program execution (Building/Writing). This allowed us to implement the following minimal changes for Singleton detection.
 
 We extended the UmlDiagramOutputStream, then added a singleton detection method. It checks the TargetClass before it is printed out. If it passes the singleton test, then it is printed out differently. We are still working on singleton that is based on abstractFactory design pattern.
 
