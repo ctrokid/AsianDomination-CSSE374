@@ -55,7 +55,7 @@ public class AsmClassUtils {
 		for (int i = 1; i < tokens.length; i++) {
 			String str = "(" + tokens[i].substring(0, tokens[i].length() - 2) + ")";
 			// FIXME : these weird symbols are sometimes passed in from ClassFieldVisitor
-			if (str.contains("$") || str.contains("*"))
+			if (str.contains("$") || str.contains("*") || str.contains("TK;TV"))
 				continue;
 			String params = SignatureParser.getParams(str, parseSlashes).toString();
 			String toAppend = params.substring(1, params.length() - 1);

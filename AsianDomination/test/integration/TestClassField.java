@@ -73,7 +73,7 @@ public class TestClassField {
 	
 	@Test
 	public void testAcceptCollectionFieldType() {
-		String signature = AsmClassUtils.parseSignature("Ljava/util/Collection<Ljava/lang/String;>;");
+		String signature = AsmClassUtils.parseSignature("Ljava/util/Collection<Ljava/lang/String;>;", true);
 		IClassField field = new ClassField("classList", "+", signature, "Collection");
 		field.accept(outStreamVisitor);
 		
@@ -84,7 +84,7 @@ public class TestClassField {
 	
 	@Test
 	public void testAcceptHashMapFieldType() {
-		String signature = AsmClassUtils.parseSignature("Ljava/util/HashMap<Ljava/lang/String;Ljava/util/lang/Integer;>;");
+		String signature = AsmClassUtils.parseSignature("Ljava/util/HashMap<Ljava/lang/String;Ljava/util/lang/Integer;>;", true);
 		IClassField field = new ClassField("map", "+", signature, "HashMap");
 		field.accept(outStreamVisitor);
 		

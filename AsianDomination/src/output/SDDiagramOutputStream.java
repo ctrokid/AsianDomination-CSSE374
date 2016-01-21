@@ -23,6 +23,7 @@ public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 	private String _initialMethodParameters;
 	private int _maxCallDepth;
 	
+	
 	public SDDiagramOutputStream(String asmOutputPath, String initialClass, String initialMethod, String initialParameters, int maxCallDepth) {
 		super(asmOutputPath);
 		_classNames = new LinkedHashMap<String, String>();
@@ -42,9 +43,19 @@ public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 			StringBuilder sb = new StringBuilder();
 			String methodNameAndParams = stmt.getMethodName() + "(" + stmt.getParameters() + ")";
 			
+			String[] params = stmt.getParameters().split(",");
+			
+			
 			if (stmt.getMethodName().equals("<init>")) {
-				methodNameAndParams = "new";
-				_classNames.put(stmt.getClassToCall(), "/" + stmt.getClassToCall() + ":" + stmt.getClassToCall() + "[a]\n");
+				methodNameAndParams = "create("+ stmt.getParameters()+")";
+				
+				if (!_classNames.containsKey(stmt.getClassToCall())) {
+					_classNames.put(stmt.getClassToCall(), stmt.getClassToCall() + ":" + stmt.getClassToCall() + "[a]\n");
+				}
+			}
+			for(String p: params){
+				if (!_classNames.containsKey(p.trim())) 
+					_classNames.put(stmt.getClassToCall(), stmt.getClassToCall() + ":" + stmt.getClassToCall() + "[a]\n");
 			}
 			
 			sb.append(stmt.getCallerClass() + ":" + stmt.getClassToCall() + "." + methodNameAndParams + "\n");
@@ -77,7 +88,6 @@ public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 	}
 
 	private void visitModelRecursively(String className, String methodName, String params, int level) {
-		// 3. get the method*****(from instance variables)
 		if (level > _maxCallDepth)
 			return;
 		
@@ -85,17 +95,9 @@ public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 		IClassMethod methods = clazz.getMethodByName(methodName, params);
 		
 		for(IMethodStatement ms: methods.getMethodStatements()){
-			if (ms.getClassToCall().equals("java/lang/Object"))
-				return;
 			ms.accept(this);
-				
 			visitModelRecursively(ms.getClassToCall(), ms.getMethodName(), ms.getParameters(), level + 1);
 		}
-		// 4. loop over each statement
-		// 5. add statement to "data structure"
-		// 5. recurse on stmt.classToCall()
-		// 6. check if calssToCall has the current class, if the class is in the list, no / otherwise add /
-			
 	}
 	
 	@Override

@@ -15,7 +15,8 @@ public class MethodStatement implements IMethodStatement {
 		this._callerClass = _callerClass;
 		this._classToCall = _classToCall;
 		this._methodName = methodName;
-		this._parameters = _return;
+		System.out.println("class is: " + _callerClass);
+		System.out.println(" return is: " + _return);
 		String params = SignatureParser.getParams(_return, true).toString();
 		this._parameters = params.substring(1, params.length() - 1);
 		this._sequenceLevel = _sequenceLevel;
@@ -47,11 +48,6 @@ public class MethodStatement implements IMethodStatement {
 				+ getParameters() + " " + getSequenceLevel();
 	}
 	
-	@Override
-	public void setSequencelevel(int depth) {
-		this._sequenceLevel = depth;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;

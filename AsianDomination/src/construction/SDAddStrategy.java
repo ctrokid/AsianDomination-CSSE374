@@ -14,11 +14,10 @@ public class SDAddStrategy extends AbstractAddStrategy {
 	@Override
 	public void buildModel(String[] params) {
 		super._projectModel.addClass(params[0]);
-		addClassesRecursively(params[0], params[1], params[2], 1, Integer.parseInt(params[3]));
+		addClassesRecursively(params[0], params[1], params[2], 1);
 	}
 
-	private void addClassesRecursively(String className, String methodName, String params, int depth,
-			int sequenceLevel) {
+	private void addClassesRecursively(String className, String methodName, String params, int depth) {
 		if (depth > MAX_CALLDEPTH) {
 			return;
 		}
@@ -32,13 +31,12 @@ public class SDAddStrategy extends AbstractAddStrategy {
 
 		IClassMethod currentMethod = currentClass.getMethodByName(methodName, params);
 		for (IMethodStatement currentStatement : currentMethod.getMethodStatements()) {
-			currentStatement.setSequencelevel(depth);
 			String classToCall = currentStatement.getClassToCall();
 			if (!modelContainClass(classToCall)) {
 				super._projectModel.addClass(classToCall);
-				addClassesRecursively(classToCall, currentStatement.getMethodName(), currentStatement.getParameters(),
-						depth + 1, sequenceLevel + 1);
 			}
+				addClassesRecursively(classToCall, currentStatement.getMethodName(), currentStatement.getParameters(), depth + 1);
+			
 		}
 	}
 
