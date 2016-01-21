@@ -95,9 +95,9 @@ public class TestSimpleUMLSystem {
 	@Test
 	public void TestUMLForProjectSubsystem() {
 		String[] classes = new String[] {
-				"SequenceDiagramPack/driver",
-				"SequenceDiagramPack/Payment",
-				"SequenceDiagramPack/Sale"
+//				"SequenceDiagramPack/driver",
+//				"SequenceDiagramPack/Payment",
+//				"SequenceDiagramPack/Sale"
 //			"api/IClassField",
 //			"api/IClassMethod",
 //			"api/IMethodStatement",
@@ -140,6 +140,7 @@ public class TestSimpleUMLSystem {
 //			"visitor/LookupKey",
 //			"visitor/VisitorAdapter",
 //			"visitor/VisitType"
+			"examples/simple/SingletonExample"
 		};
 		
 		_cmd = new UMLInputCommand("input_output/testProjectSubsystem", "input_output/testProjectSubsystem", classes);

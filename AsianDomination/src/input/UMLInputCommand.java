@@ -4,6 +4,7 @@ import construction.IAddStrategy;
 import construction.UMLAddStrategy;
 import output.IDiagramOutputStream;
 import output.UMLDiagramOutputStream;
+import output.UMLSingletonDiagramOutputStream;
 
 public class UMLInputCommand extends InputCommand{
 	private String[] _classes;
@@ -27,6 +28,6 @@ public class UMLInputCommand extends InputCommand{
 	}
 	
 	public IDiagramOutputStream getOutputStream(){
-		return new UMLDiagramOutputStream(_asmOutputPath + ".gv");
+		return new UMLSingletonDiagramOutputStream(_asmOutputPath + ".gv");
 	}
 }

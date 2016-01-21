@@ -1,11 +1,17 @@
 package examples.simple;
 
 public class SingletonExample {
-	private static SingletonExample singletonInstance = new SingletonExample();
+	private static volatile SingletonExample s;
+	private SingletonExample(){
+		
+	};
 	
-	private SingletonExample() {}
-	
-	public static SingletonExample getInstance() {
-		return singletonInstance;
+	public SingletonExample getInstance(){
+		synchronized (s) {
+			if(s == null){
+				s = new SingletonExample();
+			}
+		}
+		return s;
 	}
 }
