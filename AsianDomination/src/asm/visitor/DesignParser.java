@@ -3,6 +3,7 @@ package asm.visitor;
 import api.IProjectModel;
 import impl.ProjectModel;
 import input.InputCommand;
+import input.SequenceInputCommand;
 import utils.CommandGenerator;
 import utils.CommandGenerator.ExecuteCommand;
 
@@ -25,7 +26,14 @@ public class DesignParser {
 //		PrintCommand print = new PrintCommand(diagramOutputPath, asmOutputPath);
 //		InputCommand inputCommand = print.run();
 		
-//		CommandGenerator.SEQUENCE_DIAGRAM_MAX_DEPTH = 3;
+//		------------------------------------
+//		CODE TO RUN PROJECT SEQUENCE DIAGRAM
+//		String initialClass = "asm/visitor/DesignParser";
+//		String initialMethod = "main";
+//		String initialParams = "String[]";
+//		String outputPath = "demo_diagrams/ProjectSD";
+//		
+//		InputCommand inputCommand = new SequenceInputCommand(outputPath, outputPath, initialClass, initialMethod, initialParams, 5);
 		
 		for (ExecuteCommand ex : ExecuteCommand.values()) {
 			InputCommand inputCommand = CommandGenerator.getInputCommand(ex);

@@ -33,7 +33,7 @@ public class LaunchDiagramGenerator {
 	}
 	
 	public static int RunSDEdit(String inputPath, String outputPath, DiagramFileExtension ext) {
-		String cmd = "java -jar lib/sdedit-4.01.jar -o " + outputPath + "." + ext.toString() + " -t " + ext.toString() + " " + inputPath + ".sd";
+		String cmd = "java -jar lib/sdedit-4.01.jar -o " + outputPath + "." + ext.toString() + " -t " + ext.toString() + " " + inputPath;
 		System.out.println("Running SDedit Command: ");
 		System.out.println(cmd);
 
