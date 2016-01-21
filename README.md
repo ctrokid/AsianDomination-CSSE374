@@ -3,13 +3,30 @@
 ## Design of the tool:
 ---
 ###Milestone 1 
-We just used one visitor pattern to visit each TargetClass. After they were visited, we used a VisitCollection method to print the inheritance/interface relationships. See [Milestone 1 UML Diagram] (https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M1ManualUML.pdf) for more specific design. 
+We just used one visitor pattern to visit each TargetClass. After they were visited, we used a VisitCollection method to print the inheritance/interface relationships. 
+
+Milestone 1 UML Diagram 
+![milestone1uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/Milestone1UML.jpg)
 
 ###Milestone 2
-We added a RelationshipManager class to be the second visitor that happens once the classes are printed. This got rid of the VisitCollection method from Milestone 1, as the RelationshipManager can handle printing all relationships (Inheritance, Interface, Association, Uses). See [Milestone 2 UML Diagram] (https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/CurrentManualUML.pdf) for more specific design.
+We added a RelationshipManager class to be the second visitor that happens once the classes are printed. This got rid of the VisitCollection method from Milestone 1, as the RelationshipManager can handle printing all relationships (Inheritance, Interface, Association, Uses). 
+
+Milestone 2 UML Diagram
+![milestone2uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/Milestone2UML.jpg)
 
 ###Milestone 3
-We added MethodStatement class to store the relationship between classes for sequence diagram and SequenceDiagramMethodVisitor and SequenceDiagramTraverser class to recursively added relationships to generate sequence diagram. See [Milestone 3 UML Diagram]() for more specific design. **This is not the desired design for this milestone. We will need to refactor the code and come up with a better design.**
+We added MethodStatement class to store the relationship between classes for sequence diagram and SequenceDiagramMethodVisitor and SequenceDiagramTraverser class to recursively added relationships to generate sequence diagram. 
+
+Milestone 3 UML Diagram
+![miletone3uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/Milestone3UML.jpg)
+
+
+
+###Milestone 4
+We extended the old umldiagramoutputstream, then add a singleton detection method. It checks the TargetClass before it is printed out. If it passes the singleton test, then it is printed out differently. We are still working on singleton that is based on abstracFactory design pattern.
+
+Milestone 4UML Diagram
+![milestone4uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/Milestone4UML.jpg)
 
 ##Milestone Deliverables
 ---
@@ -20,7 +37,7 @@ We added MethodStatement class to store the relationship between classes for seq
 [Generated UML Diagram for Lab 1-3](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M1lab1-3GeneratedUML.pdf)
 
 ######Project UML Diagrams
-[Manual UML Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M1ManualUML.pdf)
+[Manual UML Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/Milestone1UML.jpg)
 
 [Generated UML Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M1projectGeneratedUML.pdf)
 
@@ -29,21 +46,20 @@ We added MethodStatement class to store the relationship between classes for seq
 [Generated UML for Abstract Factory PizzaStore](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M2AbstractFactoryPizzaStoreUML.pdf)
 
 ######Project UML Diagrams
-[Manual UML Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/CurrentManualUML.pdf)
+[Manual UML Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/Milestone2UML.jpg)
 
 [Generated UML Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M2ProjectGeneratedUML.pdf)
 
 ###Milestone 3
-**TODO: Add links for the following diagrams**
 ######Collection Sequence Diagrams
 [Manual Sequence Diagram for Collection](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M3CollectionManualSequence.png)
 
-[Generated Sequence Diagram for Collection]()
+[Generated Sequence Diagram for Collection](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/demo_diagrams/M3CollectionsSD.PNG)
 
 ######Project Sequence Diagrams
-[Manual Sequence Diagram for Project]()
+[Manual Sequence Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M3ProjectManualSequence.jpg)
 
-[Generated Sequence Diagram for Project]()
+[Generated Sequence Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/demo_diagrams/ProjectSD.PNG)
 
 
 ## Tasks Log:
@@ -67,24 +83,28 @@ All members pair programmed milestone 2 for 6 hours.
 01/10/2016
 All members met up for 3 hours to refactor Milestone 2.
 
-01/18/2016
+01/11/2016
 All members met up for 2 hours to come up designs for Milestone 3.
 
-01/20/2016
+01/13/2016
 All members met up for 10 hours attempting to finish Milestone 3. But we didn't .....
+
+01/15/2016
+All members met up for 30 minutes to talk aobut new design.
+
+01/17/2016
+All members met up for 3 hours to redesign the entire project.
+
+01/18/2016
+All members met up for 2 hours and started refactor and code for the new design.
+
+01/19/2016
+All members met up for 3.5 hours continue working on refactoring and fixing bugs in the project.
+
+01/20/2016
+All members met up for 5.5 hours to finish sequence diagram (milestone 3) and finished milestone 4.
+
 
 ##Instruction of Running Code:
 ---
-By running DesignParser class, the concole will require user input to generate UMl or Sequence diagram. The input should be as shown below:
-UML Diagram example: "UML, package path or classes names" 
-Squence Diagram example: "SEQ, package path or classes names, initial class name, method name, depth (default 5)" 
-Once the classes ran, the PDF can be accessed under input_output folder. 
-
-##TODO List for Asians
----
-- [ ] Add Pizza class to Abstract Pizza Factory 
-- [ ] Update Milestone 3 UML Diagram
-- [ ] Add link for Milestone 3 deliverables
-- [ ] 
-
-
+Current by running main, the project will generate all the milestone's images to input_output folder. The command line is currently not functional, will be functional later on in the project milestones.
