@@ -5,6 +5,13 @@ import java.util.ArrayList;
 
 public class PackageInspector {
 //	Sample sourceDir = "C:\\Users\\yangr\\git\\AsianDomination-CSSE374\\AsianDomination\\src";
+//	public static void main(String[]args){
+//		String sourceDir = "C:\\Users\\yangr\\git\\AsianDomination-CSSE374\\AsianDomination\\src";
+//		String[] array = getClasses(sourceDir, new File(sourceDir));
+//		for(String a:array){
+//			System.out.println(a);
+//		}
+//	}
 	
 	private static ArrayList<String> toArrayHelper(String sourceDir, File dir) {
 		ArrayList<String> classList = new ArrayList<String>();
@@ -15,7 +22,7 @@ public class PackageInspector {
 			if(isJavaClass(name)){
 				//TODO FIXME: this is weird a weird fix, maybe there is another way to remove previous patterns
 				int index = dir.getPath().lastIndexOf(sourceDir)+sourceDir.length();
-				classList.add(dir.getPath().substring(index).replace("\\", ".").substring(1)+"."+name.replaceAll(".java", ""));
+				classList.add(dir.getPath().substring(index).replace("\\", "/").substring(1)+"/"+name.replaceAll(".java", ""));
 				continue;
 			}
 			File tempFile = new File(dir.getPath() + "\\"+name);
