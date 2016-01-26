@@ -7,7 +7,7 @@ public interface IClassMethod extends ITargetClassPart {
 	
 	public String getMethodName();
 
-	public String getAccessLevel();
+	public int getAccessLevel();
 	
 	public String getReturnType();
 	

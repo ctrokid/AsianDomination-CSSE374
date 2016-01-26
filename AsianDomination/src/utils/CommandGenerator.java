@@ -21,7 +21,7 @@ public class CommandGenerator {
 		
 		switch (cmd) {
 			case M1_Lab1_3Uml:
-				inputCommand = getM1LabUML();
+//				inputCommand = getM1LabUML();
 				break;
 			case M2_AbstractPizzaStoreFactoryUml:
 				inputCommand = getM2FactoryUML();

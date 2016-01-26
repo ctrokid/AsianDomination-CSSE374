@@ -39,7 +39,7 @@ public class DesignParser {
 			InputCommand inputCommand = CommandGenerator.getInputCommand(ex);
 			
 			if (inputCommand == null)
-				return;
+				continue;
 			
 			IProjectModel model = new ProjectModel(inputCommand);
 			model.parseModel();

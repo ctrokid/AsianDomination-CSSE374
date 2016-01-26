@@ -38,7 +38,7 @@ public class TestClassMethod {
 	public void testGetAccessLevel() {
 		String expected = "+";
 		_method = new ClassMethod("helloWorld", "test", expected, "void");
-		assertEquals(expected, _method.getAccessLevel());
+		assertEquals(expected, String.valueOf(_method.getAccessLevel()));
 	}
 	
 	@Test

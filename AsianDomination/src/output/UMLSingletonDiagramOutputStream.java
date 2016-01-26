@@ -60,7 +60,7 @@ public class UMLSingletonDiagramOutputStream extends UMLDiagramOutputStream {
 	private boolean isConstructorPrivate(ITargetClass t){
 		Collection<IClassMethod> methods = t.getMethods();
 		for(IClassMethod current: methods){
-			if(current.getMethodName().contains("<init>")&&(!current.getAccessLevel().equals("-"))){
+			if(current.getMethodName().contains("<init>")&&(!String.valueOf(current.getAccessLevel()).equals("-"))){
 				return false;
 			}
 		}
