@@ -28,7 +28,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 		this.setupVisitRelationshipManager();
 	}
 	
-	public void setupPreVisitTargetClass() {
+	protected void setupPreVisitTargetClass() {
 		super.addVisit(VisitType.PreVisit, ITargetClass.class, (ITraverser t) -> {
 			ITargetClass c = (ITargetClass) t;
 			StringBuilder sb = new StringBuilder();
@@ -41,30 +41,28 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 		});
 	}
 	
-	public void setupPostVisitTargetClass() {
+	protected void setupPostVisitTargetClass() {
 		super.addVisit(VisitType.PostVisit, ITargetClass.class, (ITraverser t) -> {
 			write("}\"\n]\n\n");
 		});
 	}
 	
-	public void setupVisitClassField() {
+	protected void setupVisitClassField() {
 		super.addVisit(VisitType.Visit, IClassField.class, (ITraverser t) -> {
 			IClassField c = (IClassField) t;
 			StringBuilder sb = new StringBuilder();
 			sb.append(c.getAccessLevel() + " " + c.getFieldName() + " : ");
 			sb.append(AsmClassUtils.GetStringStrippedByCharacter(c.getType(), '/'));
 			
-			if (c.getSignature() != null)
+			if (c.getSignature() != null && !c.getSignature().equals(""))
 				sb.append(c.getSignature());
-				// FIXME : possible bug
-//				sb.append("\\<" + AsmClassUtils.parseSignature(c.getSignature()) + "\\>");
 			
 			sb.append("\\l");
 			write(sb.toString());
 		});
 	}
 	
-	public void setupVisitIClassMethod() {
+	protected void setupVisitIClassMethod() {
 		super.addVisit(VisitType.Visit, IClassMethod.class, (ITraverser t) -> {
 			IClassMethod c = (IClassMethod) t;
 			StringBuilder sb = new StringBuilder();
@@ -80,13 +78,13 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 		});
 	}
 
-	public void setupPosVisitClassField() {
+	protected void setupPosVisitClassField() {
 		super.addVisit(VisitType.PostVisit, IClassField.class, (ITraverser t) -> {
 			write("|");
 		});
 	}
 
-	public void setupVisitRelationshipManager() {
+	protected void setupVisitRelationshipManager() {
 		super.addVisit(VisitType.Visit, IRelationshipManager.class, (ITraverser t) -> {
 			IRelationshipManager relationshipManager = (IRelationshipManager) t;
 			
@@ -142,7 +140,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 		endFile();
 	}
 
-	private void prepareFile() {
+	protected void prepareFile() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("digraph G {\n");
 		sb.append(DotClassUtils.CreateFontNode("Sans", "8"));
@@ -150,7 +148,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 		write(sb.toString());
 	}
 	
-	private void endFile() {
+	protected void endFile() {
 		write("\n}");
 	}
 
