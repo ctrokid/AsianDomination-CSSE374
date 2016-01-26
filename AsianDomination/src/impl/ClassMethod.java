@@ -28,8 +28,8 @@ public class ClassMethod implements IClassMethod {
 	}
 
 	@Override
-	public String getAccessLevel() {
-		return _accessLevel;
+	public int getAccessLevel() {
+		return Integer.parseInt(_accessLevel);
 	}
 
 	@Override
