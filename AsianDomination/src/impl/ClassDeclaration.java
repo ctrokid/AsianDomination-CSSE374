@@ -6,19 +6,19 @@ import api.IClassDeclaration;
 import visitor.IVisitor;
 
 public class ClassDeclaration implements IClassDeclaration {
-	private String _superType;
+	private String _superClassType;
 	private String _signature;
 	private List<String> _interfaces;
 	
 	public ClassDeclaration(String superType, String signature, List<String> interfaces) {
-		_superType = superType;
+		_superClassType = superType;
 		_signature = signature;
 		_interfaces = interfaces;
 	}
 	
 	@Override
-	public String getSuperType() {
-		return _superType;
+	public String getSuperClassType() {
+		return _superClassType;
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 
 import visitor.IVisitor;
+import api.IClassDeclaration;
 import api.IClassField;
 import api.IClassMethod;
 import api.ITargetClass;
@@ -14,6 +15,7 @@ import utils.DotClassUtils.RelationshipType;
 
 public class TargetClass implements ITargetClass {
 	private String _className;
+	private IClassDeclaration _declaration;
 	private HashMap<String, IClassMethod> _methodNameToClassMethod;
 	private HashMap<RelationshipType, HashSet<String>> _edges;
 
@@ -21,6 +23,7 @@ public class TargetClass implements ITargetClass {
 
 	public TargetClass(String className) {
 		_fields = new ArrayList<IClassField>();
+		_declaration = null;
 		_methodNameToClassMethod = new LinkedHashMap<String, IClassMethod>();
 		_edges = new HashMap<RelationshipType, HashSet<String>>();
 		_className = className;
@@ -83,6 +86,15 @@ public class TargetClass implements ITargetClass {
 	@Override
 	public HashMap<RelationshipType, HashSet<String>> getRelationEdges() {
 		return _edges;
+	}
+
+	@Override
+	public void addDeclarationVisitor(ClassDeclaration classDeclaration) {
+		_declaration = classDeclaration;
+	}
+
+	public IClassDeclaration getDeclaration() {
+		return _declaration;
 	}
 
 }

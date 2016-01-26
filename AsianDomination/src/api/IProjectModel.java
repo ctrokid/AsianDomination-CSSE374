@@ -9,6 +9,5 @@ public interface IProjectModel{
 	public Collection<ITargetClass> getTargetClasses();
 	public ITargetClass getTargetClassByName(String className);
 	public InputCommand getInputCommand();
-	public IRelationshipManager getRelationshipManager();
 	public void addClass(String classPath);
 }

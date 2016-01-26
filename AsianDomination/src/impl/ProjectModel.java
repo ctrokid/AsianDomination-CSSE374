@@ -11,7 +11,6 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
 import api.IProjectModel;
-import api.IRelationshipManager;
 import api.ITargetClass;
 import asm.visitor.ClassDeclarationVisitor;
 import asm.visitor.ClassFieldVisitor;
@@ -23,12 +22,12 @@ import output.IDiagramOutputStream;
 public class ProjectModel implements IProjectModel {
 	private InputCommand _command;
 	private HashMap<String, ITargetClass> _targetClasses;
-	private IRelationshipManager _relationshipManager;
+//	private IRelationshipManager _relationshipManager;
 
 	public ProjectModel(InputCommand command) {
 		_command = command;
 		_targetClasses = new LinkedHashMap<String, ITargetClass>();
-		_relationshipManager = new RelationshipManager();
+//		_relationshipManager = new RelationshipManager();
 	}
 
 	@Override
@@ -51,11 +50,6 @@ public class ProjectModel implements IProjectModel {
 	@Override
 	public InputCommand getInputCommand() {
 		return _command;
-	}
-
-	@Override
-	public IRelationshipManager getRelationshipManager() {
-		return _relationshipManager;
 	}
 
 	@Override
