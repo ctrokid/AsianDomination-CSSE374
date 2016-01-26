@@ -43,7 +43,7 @@ public class MethodAssociationVisitor extends MethodVisitor {
 
 		RelationshipType relationshipType = RelationshipType.ASSOCIATION;
 		
-		// TODO : this could be a bug.
+		// FIXME : this could be a bug.
 		// put in for factory methods to return uses relationship
 		if (!className.equals(_classMethod.getReturnType())) {
 			relationshipType = RelationshipType.USES;
@@ -51,7 +51,7 @@ public class MethodAssociationVisitor extends MethodVisitor {
 		
 		_relationshipManager.addRelationshipEdge(_className, className, relationshipType);
 		
-		MethodStatement stmt = new MethodStatement(_className, className, methodName, returnType, 1);
+		MethodStatement stmt = new MethodStatement(_className, className, methodName, returnType);
 		_classMethod.addMethodStatement(stmt);
 	}
 

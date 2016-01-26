@@ -11,24 +11,24 @@ import visitor.VisitType;
 
 public class UMLSingletonDiagramOutputStream extends UMLDiagramOutputStream {
 
-
 	public UMLSingletonDiagramOutputStream(String asmOutputPath) {
 		super(asmOutputPath);
 	}
 	
 	@Override
-	public void setupPreVisitTargetClass() {
+	protected void setupPreVisitTargetClass() {
 		super.addVisit(VisitType.PreVisit, ITargetClass.class, (ITraverser t) -> {
 			ITargetClass c = (ITargetClass) t;
 			StringBuilder sb = new StringBuilder();
-			// TODO : let's talk about this some more
 			String className = AsmClassUtils.GetStringStrippedByCharacter(c.getClassName(), '/');
 			String singletonDecor = "";
 			String colorChange = "";
+			
 			if(isSingleton(c)){
 				colorChange = "color = blue,";
 				singletonDecor = "\\n\\<\\<Singleton\\>\\>";
 			}
+			
 			sb.append(className + "[\n\t");
 			sb.append(colorChange+"label = \"{" + className +singletonDecor+ "|");
 			write(sb.toString());
@@ -38,8 +38,8 @@ public class UMLSingletonDiagramOutputStream extends UMLDiagramOutputStream {
 	private boolean isSingleton(ITargetClass t){
 		String classType = t.getClassName();
 		if(fieldContainsClassInstance(t, classType)){
-			if(isConstructorPrivate(t, classType)){
-				if(returnAInstanceOfItself(t, classType)){
+			if(isConstructorPrivate(t)){
+				if(returnsSelfInstance(t, classType)){
 					return true;
 				}
 			}
@@ -57,7 +57,7 @@ public class UMLSingletonDiagramOutputStream extends UMLDiagramOutputStream {
 		return false;
 	}
 	
-	private boolean isConstructorPrivate(ITargetClass t, String classType){
+	private boolean isConstructorPrivate(ITargetClass t){
 		Collection<IClassMethod> methods = t.getMethods();
 		for(IClassMethod current: methods){
 			if(current.getMethodName().contains("<init>")&&(!current.getAccessLevel().equals("-"))){
@@ -67,7 +67,7 @@ public class UMLSingletonDiagramOutputStream extends UMLDiagramOutputStream {
 		return true;
 	}
 	
-	private boolean returnAInstanceOfItself(ITargetClass t, String classType){
+	private boolean returnsSelfInstance(ITargetClass t, String classType){
 		Collection<IClassMethod> methods = t.getMethods();
 		for(IClassMethod current: methods){
 			if(current.getReturnType().equals(classType)){

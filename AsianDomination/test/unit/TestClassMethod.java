@@ -50,7 +50,7 @@ public class TestClassMethod {
 	
 	@Test
 	public void testAddMethodStatement() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		MethodStatement stmt = new MethodStatement("problem.Main", "string", "helloWorld", "(Ljava/lang/String;I)V", 1);
+		MethodStatement stmt = new MethodStatement("problem.Main", "string", "helloWorld", "(Ljava/lang/String;I)V");
 		
 		_method = new ClassMethod("helloWorld", "test", "+", "void");
 		_method.addMethodStatement(stmt);
@@ -63,10 +63,10 @@ public class TestClassMethod {
 	public void testAddOverloadedMethodStatements() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		_method = new ClassMethod("helloWorld", "test", "+", "void");
 		
-		MethodStatement stmt = new MethodStatement("problem.Main", "string", "helloWorld", "(Ljava/lang/String;I)V", 1);
+		MethodStatement stmt = new MethodStatement("problem.Main", "string", "helloWorld", "(Ljava/lang/String;I)V");
 		_method.addMethodStatement(stmt);
 		
-		MethodStatement stmt2 = new MethodStatement("problem.Main", "string", "helloWorld", "(Ljava/lang/String;I)V", 1);
+		MethodStatement stmt2 = new MethodStatement("problem.Main", "string", "helloWorld", "(Ljava/lang/String;I)V");
 		_method.addMethodStatement(stmt2);
 		
 		assertTrue(_method.getMethodStatements().contains(stmt));
@@ -77,10 +77,10 @@ public class TestClassMethod {
 	public void testGetMethodStatementsByNameOverloaded() {
 		_method = new ClassMethod("helloWorld", "test", "+", "void");
 		
-		MethodStatement stmt = new MethodStatement("problem.Main", "string", "helloWorld", "(Ljava/lang/String;I)V", 1);
+		MethodStatement stmt = new MethodStatement("problem.Main", "string", "helloWorld", "(Ljava/lang/String;I)V");
 		_method.addMethodStatement(stmt);
 		
-		MethodStatement stmt2 = new MethodStatement("problem.Main", "string", "helloWorld", "(Ljava/lang/String;I)V", 1);
+		MethodStatement stmt2 = new MethodStatement("problem.Main", "string", "helloWorld", "(Ljava/lang/String;I)V");
 		_method.addMethodStatement(stmt2);
 		
 		assertTrue(_method.getMethodStatements().contains(stmt));

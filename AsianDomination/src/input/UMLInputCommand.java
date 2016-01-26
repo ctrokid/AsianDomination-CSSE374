@@ -3,7 +3,6 @@ package input;
 import construction.IAddStrategy;
 import construction.UMLAddStrategy;
 import output.IDiagramOutputStream;
-import output.UMLDiagramOutputStream;
 import output.UMLSingletonDiagramOutputStream;
 
 public class UMLInputCommand extends InputCommand{

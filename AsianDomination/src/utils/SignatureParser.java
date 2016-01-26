@@ -74,6 +74,9 @@ public class SignatureParser {
 	 */
 	public static ArrayList<String> getParams(String signatures, boolean parseSlashes) {
 		result = new ArrayList<String>();
+		if (signatures.contains("(T"))
+			return result;
+		
 		params = Type.getArgumentTypes(signatures);
 //		System.err.println(params);
 		if (params == null)

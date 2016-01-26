@@ -13,6 +13,9 @@ public class SDAddStrategy extends AbstractAddStrategy {
 	
 	@Override
 	public void buildModel(String[] params) {
+		if (_projectModel == null)
+			return;
+		
 		super._projectModel.addClass(params[0]);
 		addClassesRecursively(params[0], params[1], params[2], 1);
 	}
