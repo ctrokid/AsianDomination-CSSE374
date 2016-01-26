@@ -12,6 +12,8 @@ import impl.MethodStatement;
 import utils.LaunchDiagramGenerator;
 import utils.LaunchDiagramGenerator.DiagramFileExtension;
 import visitor.ITraverser;
+import visitor.IVisitMethod;
+import visitor.IVisitor;
 import visitor.VisitType;
 
 public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
@@ -22,8 +24,8 @@ public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 	private String _initialMethodParameters;
 	private int _maxCallDepth;
 	
-	public SDDiagramOutputStream(String asmOutputPath, String initialClass, String initialMethod, String initialParameters, int maxCallDepth) {
-		super(asmOutputPath);
+	public SDDiagramOutputStream(String asmOutputPath, String initialClass, String initialMethod, String initialParameters, int maxCallDepth, IVisitor visitor) {
+		super(asmOutputPath, visitor);
 		_classNameToOutput = new LinkedHashMap<String, String>();
 		_methodStatements = new ArrayList<String>();
 		_initialClass = initialClass;
