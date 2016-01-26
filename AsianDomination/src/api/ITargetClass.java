@@ -2,7 +2,10 @@ package api;
 
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 
+import utils.DotClassUtils.RelationshipType;
 import visitor.ITraverser;
 
 public interface ITargetClass extends ITraverser {
@@ -12,4 +15,6 @@ public interface ITargetClass extends ITraverser {
 	public void addClassMethod(IClassMethod classMethod);
 	public void addClassField(IClassField classField);
 	public IClassMethod getMethodByName(String methodName, String params);
+	public void addRelationship(RelationshipType edgeType, String subjectClass);
+	public HashMap<RelationshipType, HashSet<String>> getRelationEdges();
 }
