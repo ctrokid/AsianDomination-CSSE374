@@ -2,6 +2,7 @@ package input;
 
 import construction.IAddStrategy;
 import construction.UMLAddStrategy;
+import impl.Visitor;
 import output.IDiagramOutputStream;
 import output.UMLSingletonDiagramOutputStream;
 
@@ -27,6 +28,6 @@ public class UMLInputCommand extends InputCommand{
 	}
 	
 	public IDiagramOutputStream getOutputStream(){
-		return new UMLSingletonDiagramOutputStream(_asmOutputPath + ".gv");
+		return new UMLSingletonDiagramOutputStream(_asmOutputPath + ".gv", new Visitor());
 	}
 }

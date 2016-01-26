@@ -25,15 +25,18 @@ public class AsmClassUtils {
 		return returnType.replace(".", "/");
 	}
 
-	public static String GetArguments(String desc) {
+	public static String GetArguments(String desc, boolean parseSlashes) {
 		StringBuilder sb = new StringBuilder();
 		Type[] args = Type.getArgumentTypes(desc);
 		
 		for (int i = 0; i < args.length; i++) {
 			String arg = args[i].getClassName();
-			arg = arg.substring(arg.lastIndexOf(".") + 1);
-			sb.append(arg);
+			arg = arg.replace('.', '/');
 			
+			if (parseSlashes)
+				arg = arg.substring(arg.lastIndexOf("/") + 1);
+			
+			sb.append(arg);
 			if (i != args.length - 1) {
 				sb.append(", ");
 			}

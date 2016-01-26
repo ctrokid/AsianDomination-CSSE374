@@ -8,7 +8,6 @@ import impl.MethodStatement;
 import utils.DotClassUtils.RelationshipType;
 
 public class MethodAssociationVisitor extends MethodVisitor {
-	private String _className;
 	private String _arguments;
 	private IClassMethod _classMethod;
 	private ITargetClass _targetClass;
@@ -47,7 +46,7 @@ public class MethodAssociationVisitor extends MethodVisitor {
 		}
 		_targetClass.addRelationship(relationshipType, className);
 
-		MethodStatement stmt = new MethodStatement(_className, className, methodName, returnType);
+		MethodStatement stmt = new MethodStatement(_targetClass.getClassName(), className, methodName, returnType);
 		_classMethod.addMethodStatement(stmt);
 	}
 

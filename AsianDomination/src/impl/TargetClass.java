@@ -11,6 +11,7 @@ import api.IClassDeclaration;
 import api.IClassField;
 import api.IClassMethod;
 import api.ITargetClass;
+import utils.AsmClassUtils;
 import utils.DotClassUtils.RelationshipType;
 
 public class TargetClass implements ITargetClass {
@@ -50,7 +51,7 @@ public class TargetClass implements ITargetClass {
 
 	@Override
 	public void addClassMethod(IClassMethod classMethod) {
-		String key = classMethod.getMethodName() + classMethod.getSignature();
+		String key = classMethod.getMethodName() + AsmClassUtils.GetArguments(classMethod.getSignature(), true);
 		this._methodNameToClassMethod.put(key, classMethod);
 	}
 

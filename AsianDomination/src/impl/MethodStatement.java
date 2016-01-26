@@ -14,8 +14,7 @@ public class MethodStatement implements IMethodStatement {
 		this._callerClass = _callerClass;
 		this._classToCall = _classToCall;
 		this._methodName = methodName;
-//		System.out.println("class is: " + _callerClass);
-//		System.out.println(" return is: " + _return);
+		// FIXME: I should be somewhere else
 		String params = SignatureParser.getParams(_return, true).toString();
 		this._parameters = params.substring(1, params.length() - 1);
 	}

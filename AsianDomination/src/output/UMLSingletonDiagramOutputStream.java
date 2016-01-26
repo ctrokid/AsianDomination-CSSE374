@@ -7,12 +7,13 @@ import api.IClassMethod;
 import api.ITargetClass;
 import utils.AsmClassUtils;
 import visitor.ITraverser;
+import visitor.IVisitor;
 import visitor.VisitType;
 
 public class UMLSingletonDiagramOutputStream extends UMLDiagramOutputStream {
 
-	public UMLSingletonDiagramOutputStream(String asmOutputPath) {
-		super(asmOutputPath);
+	public UMLSingletonDiagramOutputStream(String asmOutputPath, IVisitor visitor) {
+		super(asmOutputPath, visitor);
 	}
 	
 	@Override

@@ -21,7 +21,7 @@ public class CommandGenerator {
 		
 		switch (cmd) {
 			case M1_Lab1_3Uml:
-//				inputCommand = getM1LabUML();
+				inputCommand = getM1LabUML();
 				break;
 			case M2_AbstractPizzaStoreFactoryUml:
 				inputCommand = getM2FactoryUML();
@@ -119,15 +119,15 @@ public class CommandGenerator {
 		String[] classes = new String[] {
 			"api/IClassField",
 			"api/IClassMethod",
+			"api/IClassDeclaration",
 			"api/IMethodStatement",
 			"api/IProjectModel",
-			"api/IRelationshipManager",
 			"api/ITargetClass",
 			"api/ITargetClassPart",
+			"impl/ClassDeclaration",
 			"impl/ClassField",
 			"impl/ClassMethod",
 			"impl/MethodStatement",
-			"impl/RelationshipManager",
 			"impl/ProjectModel",
 			"impl/TargetClass",
 			"impl/PrintCommand",
@@ -156,6 +156,7 @@ public class CommandGenerator {
 			"visitor/ITraverser",
 			"visitor/IVisitMethod",
 			"visitor/IVisitor",
+			"impl/Visitor",
 			"visitor/LookupKey",
 			"visitor/VisitorAdapter",
 			"visitor/VisitType"

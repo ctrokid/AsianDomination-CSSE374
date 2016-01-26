@@ -30,10 +30,11 @@ public class ClassMethodVisitor extends ClassVisitor {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
 
 		String type = AsmClassUtils.GetReturnType(desc);
-		String arguments = AsmClassUtils.GetArguments(desc);
 
-		IClassMethod classMethod = new ClassMethod(name, arguments, access, type);
-		MethodVisitor _decorator = new MethodAssociationVisitor(Opcodes.ASM5, toDecorate, _targetClass, arguments, classMethod);
+		IClassMethod classMethod = new ClassMethod(name, desc, access, type);
+		
+		String args = AsmClassUtils.GetArguments(desc, false);
+		MethodVisitor _decorator = new MethodAssociationVisitor(Opcodes.ASM5, toDecorate, _targetClass, args, classMethod);
 		
 		//FIXME:TODO Watch for UML bug totally ignoring static now
 		if (!name.equals("clinit")) {

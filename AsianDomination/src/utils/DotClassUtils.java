@@ -9,34 +9,26 @@ public class DotClassUtils {
 	}
 	
 	public static String CreateRelationshipEdge(RelationshipType type) {
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append("edge [\n\t");
+		String edge = "";
 		
 		switch (type) {
 			case INHERITANCE:
-				sb.append("arrowhead = \"empty\"\n\t");
-				sb.append("style = \"solid\"\n");
+				edge = "[arrowhead = \"empty\",style = \"solid\"];\n";
 				break;
 			case IMPLEMENTATION:
-				sb.append("arrowhead = \"empty\"\n\t");
-				sb.append("style = \"dashed\"\n");
+				edge = "[arrowhead = \"empty\",style = \"dashed\"];\n";
 				break;
 			case ASSOCIATION:
-				sb.append("arrowhead = \"vee\"\n\t");
-				sb.append("style = \"solid\"\n");
+				edge = "[arrowhead = \"vee\",style = \"solid\"];\n";
 				break;
 			case USES:
-				sb.append("arrowhead = \"vee\"\n\t");
-				sb.append("style = \"dashed\"\n");
+				edge = "[arrowhead = \"vee\",style = \"dashed\"];\n";
 				break;
 			default:
 				break;
 		}
 		
-		sb.append("]\n\n");
-		
-		return sb.toString();
+		return edge;
 	}
 	
 	public static String CreateFontNode(String fontName, String fontSize) {
