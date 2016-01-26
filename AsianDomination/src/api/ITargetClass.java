@@ -28,4 +28,6 @@ public interface ITargetClass extends ITraverser {
 	public void addDeclarationVisitor(ClassDeclaration classDeclaration);
 
 	public IClassDeclaration getDeclaration();
+	
+	public boolean containsRelationship(RelationshipType edgeType, String subjectClass);
 }
