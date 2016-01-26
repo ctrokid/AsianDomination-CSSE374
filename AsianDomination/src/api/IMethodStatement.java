@@ -5,5 +5,4 @@ public interface IMethodStatement extends ITargetClassPart {
 	public String getClassToCall();
 	public String getParameters();
 	public String getMethodName();
-	public int getSequenceLevel();
 }

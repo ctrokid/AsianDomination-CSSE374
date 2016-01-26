@@ -9,17 +9,15 @@ public class MethodStatement implements IMethodStatement {
 	private String _classToCall; // className
 	private String _methodName;
 	private String _parameters;
-	private int _sequenceLevel;
 
-	public MethodStatement(String _callerClass, String _classToCall, String methodName, String _return, int _sequenceLevel) {
+	public MethodStatement(String _callerClass, String _classToCall, String methodName, String _return) {
 		this._callerClass = _callerClass;
 		this._classToCall = _classToCall;
 		this._methodName = methodName;
-		System.out.println("class is: " + _callerClass);
-		System.out.println(" return is: " + _return);
+//		System.out.println("class is: " + _callerClass);
+//		System.out.println(" return is: " + _return);
 		String params = SignatureParser.getParams(_return, true).toString();
 		this._parameters = params.substring(1, params.length() - 1);
-		this._sequenceLevel = _sequenceLevel;
 	}
 
 	public String getClassToCall() {
@@ -38,14 +36,10 @@ public class MethodStatement implements IMethodStatement {
 		return _callerClass;
 	}
 
-	public int getSequenceLevel() {
-		return _sequenceLevel;
-	}
-
 	@Override
 	public String toString() {
 		return "MethodStatement: " + getCallerClass() + " " + getClassToCall() + " " + getMethodName() + " "
-				+ getParameters() + " " + getSequenceLevel();
+				+ getParameters();
 	}
 	
 	@Override
@@ -56,7 +50,6 @@ public class MethodStatement implements IMethodStatement {
 		result = prime * result + ((_classToCall == null) ? 0 : _classToCall.hashCode());
 		result = prime * result + ((_methodName == null) ? 0 : _methodName.hashCode());
 		result = prime * result + ((_parameters == null) ? 0 : _parameters.hashCode());
-		result = prime * result + _sequenceLevel;
 		return result;
 	}
 
@@ -88,8 +81,6 @@ public class MethodStatement implements IMethodStatement {
 			if (other._parameters != null)
 				return false;
 		} else if (!_parameters.equals(other._parameters))
-			return false;
-		if (_sequenceLevel != other._sequenceLevel)
 			return false;
 		return true;
 	}
