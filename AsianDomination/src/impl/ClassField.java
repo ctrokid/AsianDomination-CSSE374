@@ -5,11 +5,11 @@ import visitor.IVisitor;
 
 public class ClassField implements IClassField {
 	private String _fieldName;
-	private String _accessLevel;
+	private int _accessLevel;
 	private String _signature;
 	private String _type;
 	
-	public ClassField(String fieldName, String accessLevel, String signature, String type) {
+	public ClassField(String fieldName, int accessLevel, String signature, String type) {
 		_fieldName = fieldName;
 		_accessLevel = accessLevel;
 		_signature = signature;
@@ -23,7 +23,7 @@ public class ClassField implements IClassField {
 
 	@Override
 	public int getAccessLevel() {
-		return Integer.parseInt(_accessLevel);
+		return _accessLevel;
 	}
 
 	@Override

@@ -10,11 +10,11 @@ import visitor.IVisitor;
 public class ClassMethod implements IClassMethod {
 	private String _methodName;
 	private String _signature;
-	private String _accessLevel;
+	private int _accessLevel;
 	private String _returnType;
 	private Collection<IMethodStatement> _methodStatements;
 
-	public ClassMethod(String name, String signature, String accessLevel, String returnType) {
+	public ClassMethod(String name, String signature, int accessLevel, String returnType) {
 		_methodName = name;
 		_signature = signature;
 		_accessLevel = accessLevel;
@@ -29,7 +29,7 @@ public class ClassMethod implements IClassMethod {
 
 	@Override
 	public int getAccessLevel() {
-		return Integer.parseInt(_accessLevel);
+		return _accessLevel;
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class ClassMethod implements IClassMethod {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((_accessLevel == null) ? 0 : _accessLevel.hashCode());
+		result = prime * result + _accessLevel;
 		result = prime * result + ((_methodName == null) ? 0 : _methodName.hashCode());
 		result = prime * result + ((_methodStatements == null) ? 0 : _methodStatements.hashCode());
 		result = prime * result + ((_returnType == null) ? 0 : _returnType.hashCode());
@@ -79,10 +79,7 @@ public class ClassMethod implements IClassMethod {
 		if (getClass() != obj.getClass())
 			return false;
 		ClassMethod other = (ClassMethod) obj;
-		if (_accessLevel == null) {
-			if (other._accessLevel != null)
-				return false;
-		} else if (!_accessLevel.equals(other._accessLevel))
+		if (_accessLevel != other._accessLevel)
 			return false;
 		if (_methodName == null) {
 			if (other._methodName != null)
@@ -106,5 +103,55 @@ public class ClassMethod implements IClassMethod {
 			return false;
 		return true;
 	}
+
+	
+//	@Override
+//	public int hashCode() {
+//		final int prime = 31;
+//		int result = 1;
+//		result = prime * result + ((_accessLevel == null) ? 0 : _accessLevel.hashCode());
+//		result = prime * result + ((_methodName == null) ? 0 : _methodName.hashCode());
+//		result = prime * result + ((_methodStatements == null) ? 0 : _methodStatements.hashCode());
+//		result = prime * result + ((_returnType == null) ? 0 : _returnType.hashCode());
+//		result = prime * result + ((_signature == null) ? 0 : _signature.hashCode());
+//		return result;
+//	}
+//
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		ClassMethod other = (ClassMethod) obj;
+//		if (_accessLevel == null) {
+//			if (other._accessLevel != null)
+//				return false;
+//		} else if (!_accessLevel.equals(other._accessLevel))
+//			return false;
+//		if (_methodName == null) {
+//			if (other._methodName != null)
+//				return false;
+//		} else if (!_methodName.equals(other._methodName))
+//			return false;
+//		if (_methodStatements == null) {
+//			if (other._methodStatements != null)
+//				return false;
+//		} else if (!_methodStatements.equals(other._methodStatements))
+//			return false;
+//		if (_returnType == null) {
+//			if (other._returnType != null)
+//				return false;
+//		} else if (!_returnType.equals(other._returnType))
+//			return false;
+//		if (_signature == null) {
+//			if (other._signature != null)
+//				return false;
+//		} else if (!_signature.equals(other._signature))
+//			return false;
+//		return true;
+//	}
 
 }

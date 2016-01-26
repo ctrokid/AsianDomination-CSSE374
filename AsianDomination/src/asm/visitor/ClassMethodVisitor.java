@@ -33,12 +33,11 @@ public class ClassMethodVisitor extends ClassVisitor {
 	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
 
-		String accessLevel = AsmClassUtils.GetAccessLevel(access);
 		String type = AsmClassUtils.GetReturnType(desc);
 		String arguments = AsmClassUtils.GetArguments(desc);
 //		System.err.println("In class: " + _targetClass.getClassName() + " args for method: " + name + " = " + arguments);
 
-		IClassMethod classMethod = new ClassMethod(name, arguments, accessLevel, type);
+		IClassMethod classMethod = new ClassMethod(name, arguments, access, type);
 		MethodVisitor _decorator = new MethodAssociationVisitor(Opcodes.ASM5, toDecorate, _relationshipManager,
 				_targetClass.getClassName(), arguments, classMethod);
 		if (!name.equals("clinit")) {
