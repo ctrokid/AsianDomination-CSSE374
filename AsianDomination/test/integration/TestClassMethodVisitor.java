@@ -2,21 +2,16 @@ package integration;
 
 import static org.junit.Assert.*;
 
-import java.util.Collection;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.objectweb.asm.Opcodes;
 
 import api.IProjectModel;
-import api.IRelationshipManager;
 import api.ITargetClass;
 import fake.FakeInputCommand;
 import fake.FakeProjectModel;
 import asm.visitor.ClassMethodVisitor;
-import impl.RelationshipManager;
-import impl.RelationshipManager.RelationshipEdge;
 import input.InputCommand;
 import utils.DotClassUtils.RelationshipType;
 
@@ -55,13 +50,11 @@ public class TestClassMethodVisitor {
 		ITargetClass clazz = model.getTargetClassByName(classPath);
 		assertEquals(3, clazz.getMethods().size());
 		
-		IRelationshipManager manager = model.getRelationshipManager();
-		Collection<RelationshipEdge> edges = manager.getRelationshipEdges(RelationshipType.USES);
 		
-		boolean contains = edges.contains(((RelationshipManager) manager).new RelationshipEdge("test/examples/Animal", "void"));
+		boolean contains = clazz.containsRelationship(RelationshipType.USES, "void");
 		assertTrue(contains);
 		
-		contains = edges.contains(((RelationshipManager) manager).new RelationshipEdge("test/examples/Animal", "java/lang/String"));
+		contains = clazz.containsRelationship(RelationshipType.USES, "java/lang/String");
 		assertTrue(contains);
 	}
 	

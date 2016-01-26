@@ -2,15 +2,13 @@ package integration;
 
 import static org.junit.Assert.*;
 
-import java.util.Collection;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.objectweb.asm.Opcodes;
 
-import api.IClassField;
 import api.IProjectModel;
+import api.ITargetClass;
 import asm.visitor.ClassFieldVisitor;
 import fake.FakeInputCommand;
 import fake.FakeProjectModel;
@@ -45,18 +43,18 @@ public class TestClassFieldVisitor {
 	public void TestSimplePublicStringField() {
 		_visitor.visitField(Opcodes.ACC_PUBLIC, "map", "String", null, null);
 		
-		Collection<IClassField> fields = model.getTargetClassByName(classPath).getFields();
-		assertEquals(1, fields.size());
-		assertEquals(1, model.getRelationshipManager().getRelationshipEdges(RelationshipType.ASSOCIATION).size());
+		ITargetClass clazz = model.getTargetClassByName(classPath);
+		assertEquals(1, clazz.getFields().size());
+		assertEquals(1, clazz.getRelationEdges().get(RelationshipType.ASSOCIATION).size());
 	}
 	
 	@Test
 	public void TestProtectedSignatureField() {
 		_visitor.visitField(Opcodes.ACC_PROTECTED, "list", "Collection", "Ljava/util/Collection<Lapi/IMethodStatement;>;", null);
 		
-		Collection<IClassField> fields = model.getTargetClassByName(classPath).getFields();
-		assertEquals(1, fields.size());
-		assertEquals(1, model.getRelationshipManager().getRelationshipEdges(RelationshipType.ASSOCIATION).size());
+		ITargetClass clazz = model.getTargetClassByName(classPath);
+		assertEquals(1, clazz.getFields().size());
+		assertEquals(1, clazz.getRelationEdges().get(RelationshipType.ASSOCIATION).size());
 	}
 	
 	@After

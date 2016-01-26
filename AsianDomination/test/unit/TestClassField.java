@@ -6,6 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
+
 import impl.ClassField;
 
 public class TestClassField {
@@ -19,13 +21,13 @@ public class TestClassField {
 	@Test
 	public void TestGetFieldName() {
 		String expected = "_manager";
-		_field = new ClassField(expected, "-", "null", "String");
+		_field = new ClassField(expected, Opcodes.ACC_PRIVATE, "null", "String");
 		assertEquals(expected, _field.getFieldName());
 	}
 	
 	@Test
 	public void TestGetAccessLevel() {
-		String expected = "#";
+		int expected = Opcodes.ACC_PROTECTED;
 		_field = new ClassField("name", expected, "null", "String");
 		assertEquals(expected, _field.getAccessLevel());
 	}
@@ -33,14 +35,14 @@ public class TestClassField {
 	@Test
 	public void TestGetSignature() {
 		String expected = "\\<String\\>";
-		_field = new ClassField("name", "+", expected, "String");
+		_field = new ClassField("name", Opcodes.ACC_PRIVATE, expected, "String");
 		assertEquals(expected, _field.getSignature());		
 	}
 	
 	@Test
 	public void TestGetType() {
 		String expected = "double";
-		_field = new ClassField("name", "+", "\\<String\\>", expected);
+		_field = new ClassField("name", Opcodes.ACC_PUBLIC, "\\<String\\>", expected);
 		assertEquals(expected, _field.getType());
 	}
 	

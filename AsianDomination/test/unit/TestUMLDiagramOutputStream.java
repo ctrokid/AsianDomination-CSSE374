@@ -6,25 +6,22 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 
-import fake.FakeInputCommand;
-import fake.FakeProjectModel;
 import impl.ClassField;
 import impl.ClassMethod;
 import impl.TargetClass;
-import input.InputCommand;
+import impl.Visitor;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
+
 import api.IClassField;
 import api.IClassMethod;
-import api.IProjectModel;
-import api.IRelationshipManager;
 import api.ITargetClass;
 import output.AbstractDiagramOutputStream;
 import output.UMLDiagramOutputStream;
-import utils.DotClassUtils.RelationshipType;
 
 public class TestUMLDiagramOutputStream {
 	private UMLDiagramOutputStream _outStreamVisitor;
@@ -33,7 +30,7 @@ public class TestUMLDiagramOutputStream {
 	@Before
 	public void setup() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		bytesOut = new ByteArrayOutputStream();
-		_outStreamVisitor = new UMLDiagramOutputStream("");
+		_outStreamVisitor = new UMLDiagramOutputStream("", new Visitor());
 		
 		Field f = AbstractDiagramOutputStream.class.getDeclaredField("_outputStream");
 		f.setAccessible(true);
@@ -63,7 +60,7 @@ public class TestUMLDiagramOutputStream {
 	
 	@Test
 	public void TestUMLVisitField() {
-		IClassField field = new ClassField("_name", "#", "\\<String\\>", "Collection");
+		IClassField field = new ClassField("_name", Opcodes.ACC_PROTECTED, "\\<String\\>", "Collection");
 		_outStreamVisitor.visit(field);
 		
 		String expected = "# _name : Collection\\<String\\>\\l";
@@ -73,42 +70,20 @@ public class TestUMLDiagramOutputStream {
 	
 	@Test
 	public void TestUMLVisitMethod() {
-		IClassMethod method = new ClassMethod("helloWorld", "int, String", "-", "double");
+		IClassMethod method = new ClassMethod("helloWorld", "(Ljava/util/Collection;I)Ljava/lang/String;", Opcodes.ACC_PRIVATE, "double");
 		_outStreamVisitor.visit(method);
 		
-		String expected = "- helloWorld(int, String) : double\\l";
+		String expected = "- helloWorld(Collection, int) : double\\l";
 		String actual = bytesOut.toString();
 		assertEquals(expected, actual);
 	}
 	
 	@Test
 	public void TestUMLPostVisitField() {
-		IClassField field = new ClassField(null, null, null, null);
+		IClassField field = new ClassField(null, 0, null, null);
 		_outStreamVisitor.postVisit(field);
 		
 		String expected = "|";
-		String actual = bytesOut.toString();
-		assertEquals(expected, actual);
-	}
-	
-	@Test
-	public void TestUMLVisitRelationshipManager() {
-		InputCommand fakeCmd = new FakeInputCommand("", "", new String[] { });
-		IProjectModel fakeModel = new FakeProjectModel(fakeCmd);
-		
-		fakeModel.addClass("test/example/Animal");
-		fakeModel.addClass("test/example/Cat");
-		fakeModel.addClass("test/example/output/OutStream");
-		
-		IRelationshipManager manager = fakeModel.getRelationshipManager();
-		manager.addRelationshipEdge("test/example/Animal", "test/example/Cat", RelationshipType.INHERITANCE);
-		manager.addRelationshipEdge("test/example/Cat", "test/example/output/OutStream", RelationshipType.ASSOCIATION);
-		manager.addRelationshipEdge("test/example/Animal", "test/interfaces/IRunnable", RelationshipType.IMPLEMENTATION);
-		
-		_outStreamVisitor.setProjectModel(fakeModel);
-		_outStreamVisitor.visit(manager);
-		
-		String expected = "edge [\n\tarrowhead = \"empty\"\n\tstyle = \"solid\"\n]\n\nAnimal -> Cat\n\nedge [\n\tarrowhead = \"empty\"\n\tstyle = \"dashed\"\n]\n\n\nedge [\n\tarrowhead = \"vee\"\n\tstyle = \"solid\"\n]\n\nCat -> OutStream\n\nedge [\n\tarrowhead = \"vee\"\n\tstyle = \"dashed\"\n]\n\n\n";
 		String actual = bytesOut.toString();
 		assertEquals(expected, actual);
 	}

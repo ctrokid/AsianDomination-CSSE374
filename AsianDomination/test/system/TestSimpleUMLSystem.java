@@ -1,6 +1,7 @@
 package system;
 
 import impl.ProjectModel;
+import impl.Visitor;
 import input.InputCommand;
 import input.UMLInputCommand;
 import output.AbstractDiagramOutputStream;
@@ -38,7 +39,7 @@ public class TestSimpleUMLSystem {
 		};
 		
 		ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
-		IDiagramOutputStream out = new FakeUMLDiagramOutputStream("");
+		IDiagramOutputStream out = new FakeUMLDiagramOutputStream("", new Visitor());
 		Field f = AbstractDiagramOutputStream.class.getDeclaredField("_outputStream");
 		f.setAccessible(true);
 		f.set(out, bytesOut);
@@ -52,10 +53,14 @@ public class TestSimpleUMLSystem {
 		
 		String actual = bytesOut.toString();
 		String expectedFactory = "{SimpleAnimalFactory||+ createAnimal(String) : Animal\\l}";
-		String expectedUses = "edge [\n\tarrowhead = \"vee\"\n\tstyle = \"dashed\"\n]\n\nSimpleAnimalFactory -> Animal\nSimpleAnimalFactory -> Dog\nSimpleAnimalFactory -> Cat";
+		String expectedAnimalUses = "SimpleAnimalFactory -> Animal[arrowhead = \"vee\",style = \"dashed\"];\n";
+		String expectedDogUses = "SimpleAnimalFactory -> Dog[arrowhead = \"vee\",style = \"dashed\"];\n";
+		String expectedCatUses = "SimpleAnimalFactory -> Cat[arrowhead = \"vee\",style = \"dashed\"];\n";
 		
 		assertTrue(actual.contains(expectedFactory));
-		assertTrue(actual.contains(expectedUses));
+		assertTrue(actual.contains(expectedAnimalUses));
+		assertTrue(actual.contains(expectedDogUses));
+		assertTrue(actual.contains(expectedCatUses));
 	}
 	
 	@Test
@@ -66,7 +71,7 @@ public class TestSimpleUMLSystem {
 		};
 		
 		ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
-		IDiagramOutputStream out = new FakeUMLDiagramOutputStream("");
+		IDiagramOutputStream out = new FakeUMLDiagramOutputStream("", new Visitor());
 		Field f = AbstractDiagramOutputStream.class.getDeclaredField("_outputStream");
 		f.setAccessible(true);
 		f.set(out, bytesOut);
@@ -81,9 +86,9 @@ public class TestSimpleUMLSystem {
 		String actual = bytesOut.toString();
 		String catExpected = "{Cat|- fur : Fur\\l|+ getNoise(int) : String\\l}";
 		String animalExpected = "{Animal|# name : String\\l- age : int\\l+ var : double\\l|+ getNoise(int) : String\\l+ run() : void\\l}";
-		String catToAnimal = "edge [\n\tarrowhead = \"empty\"\n\tstyle = \"solid\"\n]\n\nCat -> Animal";
+		String catToAnimal = "Cat -> Animal[arrowhead = \"empty\",style = \"solid\"];\n";
 		String catDoesNotAssociateFur = "Cat -> Fur";
-		String catDoesNotAssociateAnimal = "edge [\n\tarrowhead = \"vee\"\n\tstyle = \"solid\"\n]\n\nCat -> Animal";
+		String catDoesNotAssociateAnimal = "Cat -> Animal[arrowhead = \"vee\",style = \"solid\"];\n";
 		
 		assertTrue(actual.contains(catExpected));
 		assertTrue(actual.contains(animalExpected));
@@ -108,7 +113,6 @@ public class TestSimpleUMLSystem {
 //			"impl/ClassField",
 //			"impl/ClassMethod",
 //			"impl/MethodStatement",
-//			"impl/RelationshipManager",
 //			"impl/ProjectModel",
 //			"impl/TargetClass",
 //			"impl/PrintCommand",

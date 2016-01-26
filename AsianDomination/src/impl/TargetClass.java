@@ -26,8 +26,12 @@ public class TargetClass implements ITargetClass {
 		_fields = new ArrayList<IClassField>();
 		_declaration = null;
 		_methodNameToClassMethod = new LinkedHashMap<String, IClassMethod>();
-		_edges = new HashMap<RelationshipType, HashSet<String>>();
 		_className = className;
+		
+		_edges = new HashMap<RelationshipType, HashSet<String>>();
+		for (RelationshipType type : RelationshipType.values()) {
+			_edges.put(type, new HashSet<String>());
+		}
 	}
 
 	@Override

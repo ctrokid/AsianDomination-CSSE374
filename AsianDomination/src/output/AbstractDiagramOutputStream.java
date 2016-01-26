@@ -4,15 +4,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 import api.IProjectModel;
-import impl.Visitor;
 import visitor.ITraverser;
 import visitor.IVisitMethod;
 import visitor.IVisitor;
-import visitor.LookupKey;
 import visitor.VisitType;
 
 public abstract class AbstractDiagramOutputStream implements IDiagramOutputStream {

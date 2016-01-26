@@ -12,7 +12,6 @@ import impl.MethodStatement;
 import utils.LaunchDiagramGenerator;
 import utils.LaunchDiagramGenerator.DiagramFileExtension;
 import visitor.ITraverser;
-import visitor.IVisitMethod;
 import visitor.IVisitor;
 import visitor.VisitType;
 

@@ -4,11 +4,17 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+
 import org.junit.After;
 import org.junit.Before;
 import org.objectweb.asm.Opcodes;
 
+import api.IClassDeclaration;
 import api.IProjectModel;
+import api.ITargetClass;
 import asm.visitor.ClassDeclarationVisitor;
 import fake.FakeInputCommand;
 import fake.FakeProjectModel;
@@ -43,35 +49,58 @@ public class TestClassDeclarationVisitor {
 	}
 	
 	@Test
+	public void TestClassDeclaration() {
+		_visitor.visit(VERSION, ACCESS, classPath, null, "Thread", new String[] { "test/Runnable", "test/IFaceApp" });
+		
+		ITargetClass clazz = model.getTargetClassByName(classPath);
+		IClassDeclaration decl = clazz.getDeclaration();
+		
+		assertEquals("Thread", decl.getSuperClassType());
+		assertEquals(Arrays.asList("test/Runnable", "test/IFaceApp"), decl.getInterfaces());
+	}
+	
+	@Test
 	public void TestSimpleDeclaration() {		
 		_visitor.visit(VERSION, ACCESS, classPath, null, "java/lang/Object", new String[] {});
 		
-		assertTrue(model.getRelationshipManager().getRelationshipEdges(RelationshipType.IMPLEMENTATION).size() == 0);
-		assertTrue(model.getRelationshipManager().getRelationshipEdges(RelationshipType.INHERITANCE).size() == 1);
+		ITargetClass clazz = model.getTargetClassByName(classPath);
+		HashMap<RelationshipType, HashSet<String>> relationships = clazz.getRelationEdges();
+		
+		assertEquals(relationships.get(RelationshipType.INHERITANCE).size(), 1);
+		assertEquals(relationships.get(RelationshipType.IMPLEMENTATION).size(), 0);
 	}
 	
 	@Test
 	public void TestInheritanceDeclaration() {
 		_visitor.visit(VERSION, ACCESS, classPath, null, "test/example/Cat", new String[] { });
 		
-		assertTrue(model.getRelationshipManager().getRelationshipEdges(RelationshipType.IMPLEMENTATION).size() == 0);
-		assertTrue(model.getRelationshipManager().getRelationshipEdges(RelationshipType.INHERITANCE).size() == 1);
+		ITargetClass clazz = model.getTargetClassByName(classPath);
+		HashMap<RelationshipType, HashSet<String>> relationships = clazz.getRelationEdges();
+		
+		assertEquals(relationships.get(RelationshipType.INHERITANCE).size(), 1);
+		assertEquals(relationships.get(RelationshipType.IMPLEMENTATION).size(), 0);
 	}
 	
 	@Test
 	public void TestInterfacesDeclaration() {
 		_visitor.visit(VERSION, ACCESS, classPath, null, "Thread", new String[] { "test/Runnable", "test/IFaceApp" });
 		
-		assertTrue(model.getRelationshipManager().getRelationshipEdges(RelationshipType.IMPLEMENTATION).size() == 2);
-		assertTrue(model.getRelationshipManager().getRelationshipEdges(RelationshipType.INHERITANCE).size() == 1);
+		ITargetClass clazz = model.getTargetClassByName(classPath);
+		HashMap<RelationshipType, HashSet<String>> relationships = clazz.getRelationEdges();
+		
+		assertEquals(relationships.get(RelationshipType.INHERITANCE).size(), 1);
+		assertEquals(relationships.get(RelationshipType.IMPLEMENTATION).size(), 2);
 	}
 	
 	@Test
 	public void TestInterfaceAndInheritanceDeclaration() {
 		_visitor.visit(VERSION, ACCESS, classPath, null, "test/example/Cat", new String[] { "test/example/IRunnable" });
 		
-		assertTrue(model.getRelationshipManager().getRelationshipEdges(RelationshipType.IMPLEMENTATION).size() == 1);
-		assertTrue(model.getRelationshipManager().getRelationshipEdges(RelationshipType.INHERITANCE).size() == 1);
+		ITargetClass clazz = model.getTargetClassByName(classPath);
+		HashMap<RelationshipType, HashSet<String>> relationships = clazz.getRelationEdges();
+		
+		assertEquals(relationships.get(RelationshipType.INHERITANCE).size(), 1);
+		assertEquals(relationships.get(RelationshipType.IMPLEMENTATION).size(), 1);
 	}
 	
 	@After

@@ -8,6 +8,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
+
 import api.IMethodStatement;
 import impl.ClassMethod;
 import impl.MethodStatement;
@@ -23,28 +25,28 @@ public class TestClassMethod {
 	@Test
 	public void testGetSignature() {
 		String expected = "signature";
-		_method = new ClassMethod("helloWorld", expected, "+", "void");
+		_method = new ClassMethod("helloWorld", expected, Opcodes.ACC_PUBLIC, "void");
 		assertEquals(expected, _method.getSignature());
 	}
 	
 	@Test
 	public void testGetMethodName() {
 		String expected = "helloWorld";
-		_method = new ClassMethod(expected, "test", "+", "void");
+		_method = new ClassMethod(expected, "test", Opcodes.ACC_PUBLIC, "void");
 		assertEquals(expected, _method.getMethodName());
 	}
 	
 	@Test
 	public void testGetAccessLevel() {
-		String expected = "+";
+		int expected = Opcodes.ACC_PUBLIC;
 		_method = new ClassMethod("helloWorld", "test", expected, "void");
-		assertEquals(expected, String.valueOf(_method.getAccessLevel()));
+		assertEquals(expected, _method.getAccessLevel());
 	}
 	
 	@Test
 	public void testGetReturnType() {
 		String expected = "double";
-		_method = new ClassMethod("helloWorld", "test", "+", expected);
+		_method = new ClassMethod("helloWorld", "test", Opcodes.ACC_PROTECTED, expected);
 		assertEquals(expected, _method.getReturnType());
 	}
 	
@@ -52,7 +54,7 @@ public class TestClassMethod {
 	public void testAddMethodStatement() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		MethodStatement stmt = new MethodStatement("problem.Main", "string", "helloWorld", "(Ljava/lang/String;I)V");
 		
-		_method = new ClassMethod("helloWorld", "test", "+", "void");
+		_method = new ClassMethod("helloWorld", "test", Opcodes.ACC_PUBLIC, "void");
 		_method.addMethodStatement(stmt);
 		
 		Collection<IMethodStatement> stmts = _method.getMethodStatements();
@@ -61,7 +63,7 @@ public class TestClassMethod {
 	
 	@Test
 	public void testAddOverloadedMethodStatements() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		_method = new ClassMethod("helloWorld", "test", "+", "void");
+		_method = new ClassMethod("helloWorld", "test", Opcodes.ACC_PUBLIC, "void");
 		
 		MethodStatement stmt = new MethodStatement("problem.Main", "string", "helloWorld", "(Ljava/lang/String;I)V");
 		_method.addMethodStatement(stmt);
@@ -75,7 +77,7 @@ public class TestClassMethod {
 	
 	@Test
 	public void testGetMethodStatementsByNameOverloaded() {
-		_method = new ClassMethod("helloWorld", "test", "+", "void");
+		_method = new ClassMethod("helloWorld", "test", Opcodes.ACC_PUBLIC, "void");
 		
 		MethodStatement stmt = new MethodStatement("problem.Main", "string", "helloWorld", "(Ljava/lang/String;I)V");
 		_method.addMethodStatement(stmt);

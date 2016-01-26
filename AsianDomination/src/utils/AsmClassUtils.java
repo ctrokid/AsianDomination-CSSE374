@@ -26,6 +26,9 @@ public class AsmClassUtils {
 	}
 
 	public static String GetArguments(String desc, boolean parseSlashes) {
+		if (desc.equals(""))
+			return desc;
+		
 		StringBuilder sb = new StringBuilder();
 		Type[] args = Type.getArgumentTypes(desc);
 		

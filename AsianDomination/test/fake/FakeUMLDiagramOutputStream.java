@@ -1,11 +1,12 @@
 package fake;
 
 import output.UMLDiagramOutputStream;
+import visitor.IVisitor;
 
 public class FakeUMLDiagramOutputStream extends UMLDiagramOutputStream {
 
-	public FakeUMLDiagramOutputStream(String asmOutputPath) {
-		super(asmOutputPath);
+	public FakeUMLDiagramOutputStream(String asmOutputPath, IVisitor visitor) {
+		super(asmOutputPath, visitor);
 	}
 	
 	@Override
