@@ -8,8 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import api.IProjectModel;
+import impl.Visitor;
 import visitor.ITraverser;
 import visitor.IVisitMethod;
+import visitor.IVisitor;
 import visitor.LookupKey;
 import visitor.VisitType;
 
@@ -17,13 +19,12 @@ public abstract class AbstractDiagramOutputStream implements IDiagramOutputStrea
 	protected IProjectModel _projectModel;
 	protected OutputStream _outputStream;
 	protected String _asmOutputPath;
-	protected Map<LookupKey, IVisitMethod> _keyToVisitMethodMap;
+	protected IVisitor _visitor;
 
-	public AbstractDiagramOutputStream(String asmOutputPath) {
+	public AbstractDiagramOutputStream(String asmOutputPath, IVisitor visitor) {
 		_asmOutputPath = asmOutputPath;
-		_keyToVisitMethodMap = new HashMap<LookupKey, IVisitMethod>();
 		_projectModel = null;
-		
+		_visitor = visitor;
 		try {
 			_outputStream = new FileOutputStream(asmOutputPath);
 		} catch (FileNotFoundException e) {
@@ -32,8 +33,9 @@ public abstract class AbstractDiagramOutputStream implements IDiagramOutputStrea
 	}
 
 	public abstract void writeOutput();
+
 	public abstract void generateDiagram(String diagramOutputPath);
-	
+
 	protected void write(String s) {
 		try {
 			_outputStream.write(s.getBytes());
@@ -47,32 +49,22 @@ public abstract class AbstractDiagramOutputStream implements IDiagramOutputStrea
 	}
 
 	public void preVisit(ITraverser i) {
-		this.doVisit(VisitType.PreVisit, i);
+		_visitor.preVisit(i);
 	}
 
 	public void visit(ITraverser i) {
-		this.doVisit(VisitType.Visit, i);
+		_visitor.visit(i);
 	}
 
 	public void postVisit(ITraverser i) {
-		this.doVisit(VisitType.PostVisit, i);
-	}
-
-	protected void doVisit(VisitType vType, ITraverser t) {
-		LookupKey key = new LookupKey(vType, t.getClass());
-		IVisitMethod m = _keyToVisitMethodMap.get(key);
-		
-		if (m != null)
-			m.execute(t);
+		_visitor.postVisit(i);
 	}
 	
 	public void addVisit(VisitType visitType, Class<?> clazz, IVisitMethod m) {
-		LookupKey key = new LookupKey(visitType, clazz);
-		_keyToVisitMethodMap.put(key, m);
+		_visitor.addVisit(visitType, clazz, m);
 	}
 
 	public void removeVisit(VisitType visitType, Class<?> clazz) {
-		LookupKey key = new LookupKey(visitType, clazz);
-		_keyToVisitMethodMap.remove(key);
+		_visitor.removeVisit(visitType, clazz);
 	}
 }
