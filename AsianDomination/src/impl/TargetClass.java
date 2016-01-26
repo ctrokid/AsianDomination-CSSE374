@@ -97,4 +97,15 @@ public class TargetClass implements ITargetClass {
 		return _declaration;
 	}
 
+	@Override
+	public boolean containsRelationship(RelationshipType edgeType, String subjectClass) {
+		HashSet<String> particutlarEdges = _edges.get(edgeType);
+		if (particutlarEdges != null) {
+			if (particutlarEdges.contains(subjectClass)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
