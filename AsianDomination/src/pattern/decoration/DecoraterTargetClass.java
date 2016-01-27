@@ -9,5 +9,5 @@ public class DecoraterTargetClass extends AbstractTargetClassDecorator {
 		super(pattern, _associatedClassName, _decoratedClass);
 		// TODO Auto-generated constructor stub
 	}
-
+	
 }
