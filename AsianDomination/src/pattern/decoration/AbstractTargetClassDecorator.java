@@ -1,8 +1,9 @@
-package pattern.detection;
+package pattern.decoration;
 
 import api.ITargetClass;
 
 public abstract class AbstractTargetClassDecorator {
+	
 	protected String _associatedClassName;
 	protected ITargetClass _decoratedClass;
 

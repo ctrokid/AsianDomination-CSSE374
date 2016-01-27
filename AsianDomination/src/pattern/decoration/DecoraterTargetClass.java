@@ -1,4 +1,4 @@
-package pattern.detection;
+package pattern.decoration;
 
 public class DecoraterTargetClass {
 
