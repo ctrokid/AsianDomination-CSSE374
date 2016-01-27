@@ -19,7 +19,7 @@ import visitor.IVisitor;
 import visitor.VisitType;
 
 public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
-	private List<String> _relationships;
+	protected List<String> _relationships;
 	
 	public UMLDiagramOutputStream(String asmOutputPath, IVisitor visitor) {
 		super(asmOutputPath, visitor);
