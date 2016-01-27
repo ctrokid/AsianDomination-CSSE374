@@ -32,77 +32,66 @@ public abstract class AbstractTargetClassDecorator implements ITargetClass {
 	public PATTERN_TYPE getPatternType() {
 		return pattern;
 	}
-	
+
 	@Override
 	public String getClassName() {
-		// TODO Auto-generated method stub
-		return null;
+		return _decoratedClass.getClassName();
 	}
 
 	@Override
 	public Collection<IClassMethod> getMethods() {
-		// TODO Auto-generated method stub
-		return null;
+		return _decoratedClass.getMethods();
 	}
 
 	@Override
 	public Collection<IClassField> getFields() {
-		// TODO Auto-generated method stub
-		return null;
+		return _decoratedClass.getFields();
 	}
 
 	@Override
 	public void addClassMethod(IClassMethod classMethod) {
-		// TODO Auto-generated method stub
-		
+		_decoratedClass.addClassMethod(classMethod);
+
 	}
 
 	@Override
 	public void addClassField(IClassField classField) {
-		// TODO Auto-generated method stub
-		
+		_decoratedClass.addClassField(classField);
 	}
 
 	@Override
 	public IClassMethod getMethodByName(String methodName, String params) {
-		// TODO Auto-generated method stub
-		return null;
+		return _decoratedClass.getMethodByName(methodName, params);
 	}
 
 	@Override
 	public void addRelationship(RelationshipType edgeType, String subjectClass) {
-		// TODO Auto-generated method stub
-		
+		_decoratedClass.addRelationship(edgeType, subjectClass);
 	}
 
 	@Override
 	public HashMap<RelationshipType, HashSet<String>> getRelationEdges() {
-		// TODO Auto-generated method stub
-		return null;
+		return _decoratedClass.getRelationEdges();
 	}
 
 	@Override
 	public void addDeclarationVisitor(ClassDeclaration classDeclaration) {
-		// TODO Auto-generated method stub
-		
+		_decoratedClass.addDeclarationVisitor(classDeclaration);
 	}
 
 	@Override
 	public IClassDeclaration getDeclaration() {
-		// TODO Auto-generated method stub
-		return null;
+		return _decoratedClass.getDeclaration();
 	}
 
 	@Override
 	public boolean containsRelationship(RelationshipType edgeType, String subjectClass) {
-		// TODO Auto-generated method stub
-		return false;
+		return containsRelationship(edgeType, subjectClass);
 	}
 
 	@Override
 	public void accept(IVisitor v) {
-		// TODO Auto-generated method stub
-		
+		_decoratedClass.accept(v);
 	}
 
 }
