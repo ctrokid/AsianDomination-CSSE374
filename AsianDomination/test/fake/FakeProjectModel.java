@@ -49,4 +49,8 @@ public class FakeProjectModel implements IProjectModel {
 		return _cmd;
 	}
 
+	@Override
+	public void decorateClass(ITargetClass clazz) {
+	}
+
 }

@@ -8,17 +8,16 @@ import api.IClassField;
 import api.IClassMethod;
 import api.IProjectModel;
 import api.ITargetClass;
+import pattern.decoration.SingletonDecorator;
 
-public class SingletonPatternDetector implements IPatternDetectionStrategy {
-	public static enum SINGLETON_PATTERN {
-		SINGLETON
-	}
+public class SingletonPatternDetector implements IPatternDetectionStrategy {	
 	
 	@Override
 	public void detectPatterns(IProjectModel model) {
 		for (ITargetClass clazz : model.getTargetClasses()) {
 			if (isSingleton(clazz)) {
-				// TODO : DECORATE WITH SINGLETON DETECTION
+				clazz = new SingletonDecorator("", clazz);
+				model.decorateClass(clazz);
 			}
 		}
 	}

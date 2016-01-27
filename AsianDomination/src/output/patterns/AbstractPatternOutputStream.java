@@ -9,5 +9,6 @@ public abstract class  AbstractPatternOutputStream extends UMLDiagramOutputStrea
 		super(asmOutputPath, visitor);
 	}
 
-	protected abstract void setUpPreVisitDecoratedTargetClass();
+	@Override
+	protected abstract void setupPreVisitTargetClass();
 }

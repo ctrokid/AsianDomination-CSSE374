@@ -19,7 +19,7 @@ public class UMLSingletonDiagramOutputStream extends AbstractPatternOutputStream
 	}
 
 	@Override
-	protected void setUpPreVisitDecoratedTargetClass() {
+	protected void setupPreVisitTargetClass() {
 		super.addVisit(VisitType.PreVisit, SingletonDecorator.class, (ITraverser t) -> {
 			ITargetClass c = (ITargetClass) t;
 			StringBuilder sb = new StringBuilder();

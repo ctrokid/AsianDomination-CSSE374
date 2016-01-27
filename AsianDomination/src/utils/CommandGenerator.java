@@ -59,7 +59,7 @@ public class CommandGenerator {
 		};
 		String outputPath = "demo_diagrams/M1Lab1-3";
 		
-		cmd = new UMLInputCommand(outputPath, outputPath, classes);
+		cmd = new UMLInputCommand(outputPath, outputPath, classes, null);
 		
 		return cmd;
 	}
@@ -85,7 +85,7 @@ public class CommandGenerator {
 		};
 		String outputPath = "demo_diagrams/M2PizzaFactory";
 		
-		cmd = new UMLInputCommand(outputPath, outputPath, classes);
+		cmd = new UMLInputCommand(outputPath, outputPath, classes, null);
 		
 		return cmd;
 	}
@@ -109,7 +109,7 @@ public class CommandGenerator {
 		};
 		String outputPath = "demo_diagrams/M4ChocolateBoiler";
 		
-		cmd = new UMLInputCommand(outputPath, outputPath, classes);
+		cmd = new UMLInputCommand(outputPath, outputPath, classes, null);
 		
 		return cmd;
 	}
@@ -163,7 +163,7 @@ public class CommandGenerator {
 		};
 		String outputPath = "demo_diagrams/ProjectUML";
 		
-		cmd = new UMLInputCommand(outputPath, outputPath, classes);
+		cmd = new UMLInputCommand(outputPath, outputPath, classes, null);
 		
 		return cmd;
 	}

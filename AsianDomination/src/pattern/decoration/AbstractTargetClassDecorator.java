@@ -86,7 +86,7 @@ public abstract class AbstractTargetClassDecorator implements ITargetClass {
 
 	@Override
 	public boolean containsRelationship(RelationshipType edgeType, String subjectClass) {
-		return containsRelationship(edgeType, subjectClass);
+		return _decoratedClass.containsRelationship(edgeType, subjectClass);
 	}
 
 	@Override

@@ -6,7 +6,7 @@ public class SingletonExample {
 		
 	};
 	
-	public SingletonExample getInstance(){
+	public static SingletonExample getInstance(){
 		synchronized (s) {
 			if(s == null){
 				s = new SingletonExample();

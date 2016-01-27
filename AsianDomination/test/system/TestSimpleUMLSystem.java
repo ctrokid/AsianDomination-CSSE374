@@ -6,11 +6,15 @@ import input.InputCommand;
 import input.UMLInputCommand;
 import output.AbstractDiagramOutputStream;
 import output.IDiagramOutputStream;
+import pattern.detection.IPatternDetectionStrategy;
+import pattern.detection.SingletonPatternDetector;
 
 import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -46,7 +50,7 @@ public class TestSimpleUMLSystem {
 		
 		FakeInputCommand cmd = new FakeInputCommand("", "", classes);
 		cmd.setOutputStream(out);
-		cmd.setAddStrategy(new UMLAddStrategy());
+		cmd.setAddStrategy(new UMLAddStrategy(null));
 		
 		IProjectModel model = new ProjectModel(cmd);
 		model.parseModel();
@@ -78,7 +82,7 @@ public class TestSimpleUMLSystem {
 		
 		FakeInputCommand cmd = new FakeInputCommand("", "", classes);
 		cmd.setOutputStream(out);
-		cmd.setAddStrategy(new UMLAddStrategy());
+		cmd.setAddStrategy(new UMLAddStrategy(null));
 		
 		IProjectModel model = new ProjectModel(cmd);
 		model.parseModel();
@@ -147,7 +151,8 @@ public class TestSimpleUMLSystem {
 			"examples/simple/SingletonExample"
 		};
 		
-		_cmd = new UMLInputCommand("input_output/testProjectSubsystem", "input_output/testProjectSubsystem", classes);
+		List<IPatternDetectionStrategy> detectors = Arrays.asList(new SingletonPatternDetector());
+		_cmd = new UMLInputCommand("input_output/testProjectSubsystem", "input_output/testProjectSubsystem", classes, detectors);
 		IProjectModel model = new ProjectModel(_cmd);
 		model.parseModel();
 	}
