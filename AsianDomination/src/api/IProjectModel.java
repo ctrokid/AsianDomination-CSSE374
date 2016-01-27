@@ -10,4 +10,5 @@ public interface IProjectModel{
 	public ITargetClass getTargetClassByName(String className);
 	public InputCommand getInputCommand();
 	public void addClass(String classPath);
+	public void decorateClass(ITargetClass clazz);
 }

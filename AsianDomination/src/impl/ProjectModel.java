@@ -22,12 +22,10 @@ import output.IDiagramOutputStream;
 public class ProjectModel implements IProjectModel {
 	private InputCommand _command;
 	private HashMap<String, ITargetClass> _targetClasses;
-//	private IRelationshipManager _relationshipManager;
 
 	public ProjectModel(InputCommand command) {
 		_command = command;
 		_targetClasses = new LinkedHashMap<String, ITargetClass>();
-//		_relationshipManager = new RelationshipManager();
 	}
 
 	@Override
@@ -81,6 +79,11 @@ public class ProjectModel implements IProjectModel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void decorateClass(ITargetClass clazz) {
+		_targetClasses.put(clazz.getClassName(), clazz);
 	}
 
 }
