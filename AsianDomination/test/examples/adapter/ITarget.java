@@ -1,4 +1,4 @@
-package AdapterDummieClasses;
+package examples.adapter;
 
 public interface ITarget {
 	public void method1();

@@ -1,14 +1,15 @@
-package examples.simple;
+package examples.singleton;
 
 public class SingletonExample {
 	private static volatile SingletonExample s;
-	private SingletonExample(){
-		
+
+	private SingletonExample() {
+
 	};
-	
-	public static SingletonExample getInstance(){
+
+	public static SingletonExample getInstance() {
 		synchronized (s) {
-			if(s == null){
+			if (s == null) {
 				s = new SingletonExample();
 			}
 		}

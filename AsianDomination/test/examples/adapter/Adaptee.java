@@ -1,4 +1,4 @@
-package AdapterDummieClasses;
+package examples.adapter;
 
 public class Adaptee {
 	public void m1(){

@@ -86,4 +86,27 @@ public class ProjectModel implements IProjectModel {
 		_targetClasses.put(clazz.getClassName(), clazz);
 	}
 
+	@Override
+	public void build() {
+		IAddStrategy addStrategy  = _command.getAddStrategy();
+		addStrategy.setProjectModel(this);
+		addStrategy.buildModel(_command.getInputParameters());
+		
+	}
+
+	@Override
+	public void printModel() {
+		if(_targetClasses.isEmpty()){
+			this.parseModel();
+		} else {
+			IDiagramOutputStream digramOutputStream = _command.getOutputStream();
+			digramOutputStream.setProjectModel(this);
+			digramOutputStream.writeOutput();
+			digramOutputStream.generateDiagram(_command.getDiagramOutputPath());
+		}
+		
+	}
+	
+	
+
 }

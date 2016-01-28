@@ -1,4 +1,4 @@
-package AdapterDummieClasses;
+package examples.adapter;
 
 public class Adapter implements ITarget {
 	Adaptee a = new Adaptee();
