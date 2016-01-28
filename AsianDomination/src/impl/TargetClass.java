@@ -3,8 +3,8 @@ package impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import visitor.IVisitor;
 import api.IClassDeclaration;
@@ -18,7 +18,10 @@ public class TargetClass implements ITargetClass {
 	private String _className;
 	private IClassDeclaration _declaration;
 	private HashMap<String, IClassMethod> _methodNameToClassMethod;
-	private HashMap<RelationshipType, HashSet<String>> _edges;
+	private HashMap<RelationshipType, List<Relationship>> _edges;
+	
+	private String _color;
+	private String _patternString;
 
 	private Collection<IClassField> _fields;
 
@@ -27,10 +30,12 @@ public class TargetClass implements ITargetClass {
 		_declaration = null;
 		_methodNameToClassMethod = new LinkedHashMap<String, IClassMethod>();
 		_className = className;
+		_color = "black";
+		_patternString = "";
 		
-		_edges = new HashMap<RelationshipType, HashSet<String>>();
+		_edges = new HashMap<RelationshipType, List<Relationship>>();
 		for (RelationshipType type : RelationshipType.values()) {
-			_edges.put(type, new HashSet<String>());
+			_edges.put(type, new ArrayList<Relationship>());
 		}
 	}
 
@@ -67,7 +72,6 @@ public class TargetClass implements ITargetClass {
 	@Override
 	public void accept(IVisitor v) {
 		v.visit(this);
-
 	}
 
 	@Override
@@ -78,19 +82,15 @@ public class TargetClass implements ITargetClass {
 
 	@Override
 	public void addRelationship(RelationshipType edgeType, String subjectClass) {
+		Relationship r = new Relationship(subjectClass, edgeType);
+		
 		if (_edges.containsKey(edgeType)) {
-			_edges.get(edgeType).add(subjectClass);
+			_edges.get(edgeType).add(r);
 		} else {
-			HashSet<String> temp = new HashSet<String>();
-			temp.add(subjectClass);
+			List<Relationship> temp = new ArrayList<Relationship>();
+			temp.add(r);
 			_edges.put(edgeType, temp);
 		}
-
-	}
-
-	@Override
-	public HashMap<RelationshipType, HashSet<String>> getRelationEdges() {
-		return _edges;
 	}
 
 	@Override
@@ -104,7 +104,8 @@ public class TargetClass implements ITargetClass {
 
 	@Override
 	public boolean containsRelationship(RelationshipType edgeType, String subjectClass) {
-		HashSet<String> particutlarEdges = _edges.get(edgeType);
+		List<Relationship> particutlarEdges = _edges.get(edgeType);
+		
 		if (particutlarEdges != null) {
 			if (particutlarEdges.contains(subjectClass)) {
 				return true;
@@ -113,4 +114,48 @@ public class TargetClass implements ITargetClass {
 		return false;
 	}
 
+	@Override
+	public List<Relationship> getRelationEdges() {
+		List<Relationship> relationships = new ArrayList<Relationship>();
+		
+		for (RelationshipType type : RelationshipType.values()) {
+			for (Relationship r : _edges.get(type)) {
+				relationships.add(r);
+			}
+		}
+		
+		return relationships;
+	}
+
+	@Override
+	public Relationship getRelationship(RelationshipType type, String subjectClass) {
+		List<Relationship> relationships = _edges.get(type);
+		
+		for (Relationship r : relationships) {
+			if (r.getSuperClass().equals(subjectClass)) 
+				return r;
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public String getColor() {
+		return _color;
+	}
+	
+	@Override
+	public void setColor(String color) {
+		_color = color;
+	}
+
+	@Override
+	public String getPatternString() {
+		return _patternString;
+	}
+	
+	@Override
+	public void setPatternString(String pattern) {
+		_patternString = pattern;
+	}
 }
