@@ -57,7 +57,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 				String relationship = thisClass + " -> " + subjectClass + "[" + DotClassUtils.CreateRelationshipEdge(r.getRelationshipType());
 				
 				if (!r.getDecoratedType().equals(""))
-					relationship += ", " + r.getDecoratedType();
+					relationship += ", label = \"" + r.getDecoratedType() + "\"";
 				
 				relationship += "];\n";
 				

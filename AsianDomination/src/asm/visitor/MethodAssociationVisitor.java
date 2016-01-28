@@ -26,11 +26,9 @@ public class MethodAssociationVisitor extends MethodVisitor {
 
 		// FIXME: collections don't get populated with internal contents
 		// FIXME: could be a bug for singletons
-		// if (!className.equals(_className)) {
-		// _relationshipManager.addRelationshipEdge(_className, className,
-		// RelationshipType.ASSOCIATION);
+		 if (!className.equals(_targetClass.getClassName())) {
 		_targetClass.addRelationship(RelationshipType.ASSOCIATION, className);
-		// }
+		 }
 	}
 
 	@Override
@@ -44,8 +42,10 @@ public class MethodAssociationVisitor extends MethodVisitor {
 		if (!className.equals(_classMethod.getReturnType())) {
 			relationshipType = RelationshipType.USES;
 		}
-		_targetClass.addRelationship(relationshipType, className);
 
+		if (!className.equals(_targetClass.getDeclaration().getSuperClassType()))
+			_targetClass.addRelationship(relationshipType, className);
+		
 		MethodStatement stmt = new MethodStatement(_targetClass.getClassName(), className, methodName, returnType);
 		_classMethod.addMethodStatement(stmt);
 	}

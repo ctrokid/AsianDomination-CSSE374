@@ -106,10 +106,9 @@ public class TargetClass implements ITargetClass {
 	public boolean containsRelationship(RelationshipType edgeType, String subjectClass) {
 		List<Relationship> particutlarEdges = _edges.get(edgeType);
 		
-		if (particutlarEdges != null) {
-			if (particutlarEdges.contains(subjectClass)) {
+		for (Relationship r : particutlarEdges) {
+			if (r.getSuperClass().equals(subjectClass))
 				return true;
-			}
 		}
 		return false;
 	}

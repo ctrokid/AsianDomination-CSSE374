@@ -8,8 +8,10 @@ import api.IClassField;
 import api.IClassMethod;
 import api.IProjectModel;
 import api.ITargetClass;
+import impl.Relationship;
 import pattern.decoration.DecoraterTargetClass;
 import utils.AsmClassUtils;
+import utils.DotClassUtils.RelationshipType;
 
 public class DecoratorPatternDetector implements IPatternDetectionStrategy {
 	private IProjectModel _model = null;
@@ -62,6 +64,8 @@ public class DecoratorPatternDetector implements IPatternDetectionStrategy {
 		// detected the DECORATOR class.
 		if (superType.equals(field.getType())) {
 			clazz = new DecoraterTargetClass(PATTERN_TYPE.DECORATOR_DECORATOR, field.getType(), clazz);
+			Relationship r = clazz.getRelationship(RelationshipType.INHERITANCE, superType);
+			r.setDecoratedType("\\<\\<decorates\\>\\>");
 			_model.decorateClass(clazz);
 			
 			// add the component
@@ -84,6 +88,8 @@ public class DecoratorPatternDetector implements IPatternDetectionStrategy {
 			// check interface
 			if (iface.equals(field.getType())) {
 				clazz = new DecoraterTargetClass(PATTERN_TYPE.DECORATOR_DECORATOR, iface, clazz);
+				Relationship r = clazz.getRelationship(RelationshipType.IMPLEMENTATION, iface);
+				r.setDecoratedType("\\<\\<decorates\\>\\>");
 				_model.decorateClass(clazz);
 				
 				ITargetClass superClazz = _model.getTargetClassByName(iface);
