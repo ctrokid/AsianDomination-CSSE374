@@ -14,13 +14,13 @@ public class ClassStyle {
 		styles.put("Singleton", "style = solid, color = blue ");
 
 		// Adapter
-		String adapterStyle = "style = filled, bgcolor = red ";
+		String adapterStyle = "style = filled, fillcolor = red ";
 		styles.put("adapter", adapterStyle);
 		styles.put("adaptee", adapterStyle);
 		styles.put("target", adapterStyle);
 
 		// Decorator
-		String decoratorStyle = "style = filled, bgcolor = green ";
+		String decoratorStyle = "style = filled, fillcolor = green ";
 		styles.put("decorator", decoratorStyle);
 		styles.put("component", decoratorStyle);
 	}

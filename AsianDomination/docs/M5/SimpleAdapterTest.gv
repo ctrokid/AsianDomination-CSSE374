@@ -1,0 +1,23 @@
+digraph G {
+node [
+	fontname = "Sans"
+	fontsize = 8
+	shape = "record"
+]
+
+Adaptee[
+	style = filled, color = red,label = "{Adaptee\n\<\<adaptee\>\>||+ m1() : void\l+ m2() : void\l+ m3() : void\l}"
+]
+
+Adapter[
+	style = filled, color = red,label = "{Adapter\n\<\<adapter\>\>| a : Adaptee\l|+ method1() : void\l+ method2() : void\l}"
+]
+
+ITarget[
+	style = filled, color = red,label = "{ITarget\n\<\<target\>\>||+ method1() : void\l+ method2() : void\l}"
+]
+
+Adapter -> ITarget[arrowhead = "empty",style = "dashed"];
+Adapter -> Adaptee[arrowhead = "vee",style = "solid", label = "\<\<adapts\>\>"];
+
+}

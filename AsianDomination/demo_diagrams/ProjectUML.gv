@@ -1,0 +1,297 @@
+digraph G {
+node [
+	fontname = "Sans"
+	fontsize = 8
+	shape = "record"
+]
+
+IClassField[
+	style = solid, color = black,label = "{IClassField||+ getFieldName() : String\l+ getAccessLevel() : int\l+ getSignature() : String\l+ getType() : String\l}"
+]
+
+IClassMethod[
+	style = solid, color = black,label = "{IClassMethod||+ getSignature() : String\l+ getMethodName() : String\l+ getAccessLevel() : int\l+ getReturnType() : String\l+ addMethodStatement(IMethodStatement) : void\l+ getMethodStatements() : Collection\l}"
+]
+
+IClassDeclaration[
+	style = solid, color = black,label = "{IClassDeclaration||+ getSuperClassType() : String\l+ getSignature() : String\l+ getInterfaces() : List\l}"
+]
+
+IMethodStatement[
+	style = solid, color = black,label = "{IMethodStatement||+ getCallerClass() : String\l+ getClassToCall() : String\l+ getParameters() : String\l+ getMethodName() : String\l}"
+]
+
+IProjectModel[
+	style = solid, color = black,label = "{IProjectModel||+ parseModel() : void\l+ build() : void\l+ printModel() : void\l+ getTargetClasses() : Collection\l+ getTargetClassByName(String) : ITargetClass\l+ getInputCommand() : InputCommand\l+ addClass(String) : void\l+ decorateClass(ITargetClass) : void\l}"
+]
+
+ITargetClass[
+	style = solid, color = black,label = "{ITargetClass||+ getStyle() : String\l+ setStyle(String) : void\l+ getClassName() : String\l+ getColor() : String\l+ setColor(String) : void\l+ getPatternString() : String\l+ setPatternString(String) : void\l+ getMethods() : Collection\l+ getFields() : Collection\l+ addClassMethod(IClassMethod) : void\l+ addClassField(IClassField) : void\l+ getMethodByName(String, String) : IClassMethod\l+ addRelationship(DotClassUtils$RelationshipType, String) : void\l+ getRelationEdges() : List\l+ getRelationship(DotClassUtils$RelationshipType, String) : Relationship\l+ addDeclarationVisitor(ClassDeclaration) : void\l+ getDeclaration() : IClassDeclaration\l+ containsRelationship(DotClassUtils$RelationshipType, String) : boolean\l}"
+]
+
+ITargetClassPart[
+	style = solid, color = black,label = "{ITargetClassPart||+ accept(IVisitor) : void\l}"
+]
+
+ClassField[
+	style = solid, color = black,label = "{ClassField|- _fieldName : String\l- _accessLevel : int\l- _signature : String\l- _type : String\l|+ getFieldName() : String\l+ getAccessLevel() : int\l+ getSignature() : String\l+ getType() : String\l+ accept(IVisitor) : void\l}"
+]
+
+ClassMethod[
+	style = solid, color = black,label = "{ClassMethod|- _methodName : String\l- _signature : String\l- _accessLevel : int\l- _returnType : String\l- _methodStatements : Collection\<IMethodStatement\>\l|+ getSignature() : String\l+ getAccessLevel() : int\l+ getReturnType() : String\l+ accept(IVisitor) : void\l+ getMethodName() : String\l+ addMethodStatement(IMethodStatement) : void\l+ getMethodStatements() : Collection\l+ hashCode() : int\l+ equals(Object) : boolean\l}"
+]
+
+ClassDeclaration[
+	style = solid, color = black,label = "{ClassDeclaration|- _superClassType : String\l- _signature : String\l- _interfaces : List\<String\>\l|+ getSuperClassType() : String\l+ getSignature() : String\l+ getInterfaces() : List\l+ accept(IVisitor) : void\l}"
+]
+
+MethodStatement[
+	style = solid, color = black,label = "{MethodStatement|- _callerClass : String\l- _classToCall : String\l- _methodName : String\l- _parameters : String\l|+ getClassToCall() : String\l+ getMethodName() : String\l+ getParameters() : String\l+ getCallerClass() : String\l+ toString() : String\l+ hashCode() : int\l+ equals(Object) : boolean\l+ accept(IVisitor) : void\l}"
+]
+
+ProjectModel[
+	style = solid, color = black,label = "{ProjectModel|- _command : InputCommand\l- _targetClasses : HashMap\<String, ITargetClass\>\l|+ parseModel() : void\l+ getTargetClassByName(String) : ITargetClass\l+ getInputCommand() : InputCommand\l+ getTargetClasses() : Collection\l+ addClass(String) : void\l+ decorateClass(ITargetClass) : void\l+ build() : void\l+ printModel() : void\l}"
+]
+
+TargetClass[
+	style = solid, color = black,label = "{TargetClass|- _className : String\l- _declaration : IClassDeclaration\l- _methodNameToClassMethod : HashMap\<String, IClassMethod\>\l- _edges : HashMap\<\>\l- _color : String\l- _patternString : String\l- _style : String\l- _fields : Collection\<IClassField\>\l|+ getClassName() : String\l+ getMethods() : Collection\l+ getFields() : Collection\l+ addClassMethod(IClassMethod) : void\l+ addClassField(IClassField) : void\l+ accept(IVisitor) : void\l+ getMethodByName(String, String) : IClassMethod\l+ addRelationship(DotClassUtils$RelationshipType, String) : void\l+ addDeclarationVisitor(ClassDeclaration) : void\l+ getDeclaration() : IClassDeclaration\l+ containsRelationship(DotClassUtils$RelationshipType, String) : boolean\l+ getRelationEdges() : List\l+ getRelationship(DotClassUtils$RelationshipType, String) : Relationship\l+ getColor() : String\l+ setColor(String) : void\l+ getPatternString() : String\l+ setPatternString(String) : void\l+ getStyle() : String\l+ setStyle(String) : void\l}"
+]
+
+PrintCommand[
+	style = solid, color = black,label = "{PrintCommand|- _asmOutputPath : String\l- _diagramOutputPath : String\l|+ run() : InputCommand\l- handleClassesPath(String) : String[]\l- isInteger(String) : boolean\l}"
+]
+
+ClassDeclarationVisitor[
+	style = solid, color = black,label = "{ClassDeclarationVisitor|# _targetClass : ITargetClass\l|+ visit(int, int, String, String, String, String[]) : void\l}"
+]
+
+ClassFieldVisitor[
+	style = solid, color = black,label = "{ClassFieldVisitor|- _targetClass : ITargetClass\l|+ visitField(int, String, String, String, Object) : FieldVisitor\l}"
+]
+
+ClassMethodVisitor[
+	style = solid, color = black,label = "{ClassMethodVisitor|- _targetClass : ITargetClass\l|+ visitMethod(int, String, String, String, String[]) : MethodVisitor\l}"
+]
+
+MethodAssociationVisitor[
+	style = solid, color = black,label = "{MethodAssociationVisitor|- _arguments : String\l- _classMethod : IClassMethod\l- _targetClass : ITargetClass\l|+ visitFieldInsn(int, String, String, String) : void\l+ visitMethodInsn(int, String, String, String, boolean) : void\l+ visitVarInsn(int, int) : void\l}"
+]
+
+DesignParser[
+	style = solid, color = black,label = "{DesignParser||+ main(String[]) : void\l}"
+]
+
+AbstractAddStrategy[
+	style = solid, color = black,label = "{AbstractAddStrategy|# _projectModel : IProjectModel\l|+ buildModel(String[]) : void\l+ setProjectModel(IProjectModel) : void\l}"
+]
+
+IAddStrategy[
+	style = solid, color = black,label = "{IAddStrategy||+ setProjectModel(IProjectModel) : void\l+ buildModel(String[]) : void\l}"
+]
+
+SDAddStrategy[
+	style = solid, color = black,label = "{SDAddStrategy|- MAX_CALLDEPTH : int\l|+ buildModel(String[]) : void\l- addClassesRecursively(String, String, String, int) : void\l- modelContainClass(String) : boolean\l}"
+]
+
+UMLAddStrategy[
+	style = solid, color = black,label = "{UMLAddStrategy|- _detectors : List\<IPatternDetectionStrategy\>\l|+ buildModel(String[]) : void\l}"
+]
+
+InputCommand[
+	style = solid, color = black,label = "{InputCommand|# _diagramOutputPath : String\l# _asmOutputPath : String\l|+ getDiagramOutputPath() : String\l+ getAsmOutputPath() : String\l+ getInputParameters() : String[]\l+ getAddStrategy() : IAddStrategy\l+ getOutputStream() : IDiagramOutputStream\l}"
+]
+
+SequenceInputCommand[
+	style = solid, color = black,label = "{SequenceInputCommand|- _initialClass : String\l- _methodName : String\l- _maxCallDepth : int\l- _parameters : String\l|+ getInitialClass() : String\l+ getMethodName() : String\l+ getMaxCallDepth() : int\l+ getParameters() : String\l+ getInputParameters() : String[]\l+ getAddStrategy() : IAddStrategy\l+ getOutputStream() : IDiagramOutputStream\l}"
+]
+
+UMLInputCommand[
+	style = solid, color = black,label = "{UMLInputCommand|- _classes : String[]\l- _inputParameters : String[]\l- _detectors : List\<IPatternDetectionStrategy\>\l|+ getClasses() : String[]\l+ getInputParameters() : String[]\l+ getAddStrategy() : IAddStrategy\l+ getOutputStream() : IDiagramOutputStream\l}"
+]
+
+AbstractDiagramOutputStream[
+	style = solid, color = black,label = "{AbstractDiagramOutputStream|# _projectModel : IProjectModel\l# _outputStream : OutputStream\l# _asmOutputPath : String\l- _visitor : IVisitor\l|+ writeOutput() : void\l+ generateDiagram(String) : void\l# write(String) : void\l+ setProjectModel(IProjectModel) : void\l+ preVisit(ITraverser) : void\l+ visit(ITraverser) : void\l+ postVisit(ITraverser) : void\l+ addVisit(VisitType, Class, IVisitMethod) : void\l+ removeVisit(VisitType, Class) : void\l}"
+]
+
+IDiagramOutputStream[
+	style = solid, color = black,label = "{IDiagramOutputStream||+ writeOutput() : void\l+ generateDiagram(String) : void\l+ setProjectModel(IProjectModel) : void\l}"
+]
+
+SDDiagramOutputStream[
+	style = solid, color = black,label = "{SDDiagramOutputStream|- _classNameToOutput : Map\<String, String\>\l- _methodStatements : List\<String\>\l- _initialClass : String\l- _initialMethod : String\l- _initialMethodParameters : String\l- _maxCallDepth : int\l|# setupVisitMethodStatement() : void\l+ writeOutput() : void\l- visitModelRecursively(String, String, String, int) : void\l+ generateDiagram(String) : void\l- lambda$0(ITraverser) : void\l}"
+]
+
+UMLDiagramOutputStream[
+	style = solid, color = black,label = "{UMLDiagramOutputStream|# _relationships : List\<String\>\l|# setupVisitTargetClass() : void\l# setupPostVisitTargetClass() : void\l# setupVisitClassField() : void\l# setupVisitIClassMethod() : void\l# setupPostVisitClassField() : void\l+ writeOutput() : void\l# prepareFile() : void\l# endFile() : void\l+ generateDiagram(String) : void\l- lambda$0(ITraverser) : void\l- lambda$1(ITraverser) : void\l- lambda$2(ITraverser) : void\l- lambda$3(ITraverser) : void\l- lambda$4(ITraverser) : void\l}"
+]
+
+AsmClassUtils[
+	style = solid, color = black,label = "{AsmClassUtils||+ GetAccessLevel(int) : String\l+ GetReturnType(String) : String\l+ GetArguments(String, boolean) : String\l+ GetStringStrippedByCharacter(String, char) : String\l+ parseSignature(String, boolean) : String\l}"
+]
+
+DotClassUtils[
+	style = solid, color = black,label = "{DotClassUtils|- $SWITCH_TABLE$utils$DotClassUtils$RelationshipType : int[]\l|+ CreateRelationshipEdge(DotClassUtils$RelationshipType) : String\l+ CreateFontNode(String, String) : String\l $SWITCH_TABLE$utils$DotClassUtils$RelationshipType() : int[]\l}"
+]
+
+LaunchDiagramGenerator[
+	style = solid, color = black,label = "{LaunchDiagramGenerator||+ RunGVEdit(String, String, LaunchDiagramGenerator$DiagramFileExtension) : int\l+ RunSDEdit(String, String, LaunchDiagramGenerator$DiagramFileExtension) : int\l}"
+]
+
+PackageInspector[
+	style = solid, color = black,label = "{PackageInspector||- toArrayHelper(String, File) : ArrayList\l+ getClasses(String, File) : String[]\l- isJavaClass(String) : Boolean\l}"
+]
+
+ITraverser[
+	style = solid, color = black,label = "{ITraverser||+ accept(IVisitor) : void\l}"
+]
+
+IVisitMethod[
+	style = solid, color = black,label = "{IVisitMethod||+ execute(ITraverser) : void\l}"
+]
+
+IVisitor[
+	style = solid, color = black,label = "{IVisitor||+ preVisit(ITraverser) : void\l+ visit(ITraverser) : void\l+ postVisit(ITraverser) : void\l+ addVisit(VisitType, Class, IVisitMethod) : void\l+ removeVisit(VisitType, Class) : void\l}"
+]
+
+Visitor[
+	style = solid, color = black,label = "{Visitor|- _keyToVisitMethodMap : Map\<LookupKey, IVisitMethod\>\l|+ preVisit(ITraverser) : void\l+ visit(ITraverser) : void\l+ postVisit(ITraverser) : void\l# doVisit(VisitType, ITraverser) : void\l+ addVisit(VisitType, Class, IVisitMethod) : void\l+ removeVisit(VisitType, Class) : void\l}"
+]
+
+LookupKey[
+	style = solid, color = black,label = "{LookupKey| visitType : VisitType\l clazz : Class\<\>\l|+ hashCode() : int\l+ equals(Object) : boolean\l}"
+]
+
+AbstractTargetClassDecorator[
+	style = solid, color = black,label = "{AbstractTargetClassDecorator|# pattern : PATTERN_TYPE\l# _associatedClassName : String\l# _decoratedClass : ITargetClass\l|+ getAssociatedClassName() : String\l+ getPatternType() : PATTERN_TYPE\l+ getClassName() : String\l+ getMethods() : Collection\l+ getFields() : Collection\l+ addClassMethod(IClassMethod) : void\l+ addClassField(IClassField) : void\l+ getMethodByName(String, String) : IClassMethod\l+ addRelationship(DotClassUtils$RelationshipType, String) : void\l+ getRelationEdges() : List\l+ addDeclarationVisitor(ClassDeclaration) : void\l+ getDeclaration() : IClassDeclaration\l+ containsRelationship(DotClassUtils$RelationshipType, String) : boolean\l+ getRelationship(DotClassUtils$RelationshipType, String) : Relationship\l+ getColor() : String\l+ setColor(String) : void\l+ setPatternString(String) : void\l+ getPatternString() : String\l+ accept(IVisitor) : void\l+ getStyle() : String\l+ setStyle(String) : void\l}"
+]
+
+AdapterDecorator[
+	style = solid, color = black,label = "{AdapterDecorator|- $SWITCH_TABLE$pattern$detection$PATTERN_TYPE : int[]\l| $SWITCH_TABLE$pattern$detection$PATTERN_TYPE() : int[]\l}"
+]
+
+DecoratorTargetClass[
+	style = solid, color = black,label = "{DecoratorTargetClass|- $SWITCH_TABLE$pattern$detection$PATTERN_TYPE : int[]\l| $SWITCH_TABLE$pattern$detection$PATTERN_TYPE() : int[]\l}"
+]
+
+SingletonDecorator[
+	style = solid, color = black,label = "{SingletonDecorator||}"
+]
+
+AdaptorPatternDetector[
+	style = solid, color = black,label = "{AdaptorPatternDetector||+ detectPatterns(IProjectModel) : void\l- detectAdapter(ITargetClass, IProjectModel) : void\l- isValidMethodCall(Collection, String) : boolean\l}"
+]
+
+DecoratorPatternDetector[
+	style = solid, color = black,label = "{DecoratorPatternDetector|- _model : IProjectModel\l|+ detectPatterns(IProjectModel) : void\l- getConstructorInstanceFields(String, Collection) : List\l- decorateClassIfDecorator(IClassField, ITargetClass) : boolean\l- tagDecoratedClass(ITargetClass, String, DotClassUtils$RelationshipType) : void\l}"
+]
+
+SingletonPatternDetector[
+	style = solid, color = black,label = "{SingletonPatternDetector||+ detectPatterns(IProjectModel) : void\l- isSingleton(ITargetClass) : boolean\l- fieldContainsClassInstance(ITargetClass, String) : boolean\l- isConstructorPrivate(ITargetClass) : boolean\l- returnsSelfInstance(ITargetClass, String) : boolean\l}"
+]
+
+IPatternDetectionStrategy[
+	style = solid, color = black,label = "{IPatternDetectionStrategy||+ detectPatterns(IProjectModel) : void\l}"
+]
+
+IClassField -> ITargetClassPart[arrowhead = "empty",style = "dashed"];
+IClassMethod -> ITargetClassPart[arrowhead = "empty",style = "dashed"];
+IClassDeclaration -> ITargetClassPart[arrowhead = "empty",style = "dashed"];
+IMethodStatement -> ITargetClassPart[arrowhead = "empty",style = "dashed"];
+IProjectModel -> ITargetClass[arrowhead = "vee",style = "dashed"];
+IProjectModel -> InputCommand[arrowhead = "vee",style = "dashed"];
+ITargetClass -> ITraverser[arrowhead = "empty",style = "dashed"];
+ITargetClass -> IClassMethod[arrowhead = "vee",style = "dashed"];
+ITargetClass -> IClassDeclaration[arrowhead = "vee",style = "dashed"];
+ITargetClassPart -> ITraverser[arrowhead = "empty",style = "dashed"];
+ClassField -> IClassField[arrowhead = "empty",style = "dashed"];
+ClassField -> IVisitor[arrowhead = "vee",style = "dashed"];
+ClassMethod -> IClassMethod[arrowhead = "empty",style = "dashed"];
+ClassMethod -> IMethodStatement[arrowhead = "vee",style = "solid"];
+ClassMethod -> IVisitor[arrowhead = "vee",style = "dashed"];
+ClassDeclaration -> IClassDeclaration[arrowhead = "empty",style = "dashed"];
+ClassDeclaration -> IVisitor[arrowhead = "vee",style = "dashed"];
+MethodStatement -> IMethodStatement[arrowhead = "empty",style = "dashed"];
+MethodStatement -> MethodStatement[arrowhead = "vee",style = "dashed"];
+ProjectModel -> IProjectModel[arrowhead = "empty",style = "dashed"];
+ProjectModel -> InputCommand[arrowhead = "vee",style = "solid"];
+ProjectModel -> ITargetClass[arrowhead = "vee",style = "solid"];
+ProjectModel -> IAddStrategy[arrowhead = "vee",style = "dashed"];
+TargetClass -> ITargetClass[arrowhead = "empty",style = "dashed"];
+TargetClass -> IClassDeclaration[arrowhead = "vee",style = "solid"];
+TargetClass -> IClassMethod[arrowhead = "vee",style = "solid"];
+TargetClass -> IClassField[arrowhead = "vee",style = "solid"];
+TargetClass -> AsmClassUtils[arrowhead = "vee",style = "dashed"];
+TargetClass -> IVisitor[arrowhead = "vee",style = "dashed"];
+PrintCommand -> InputCommand[arrowhead = "vee",style = "dashed"];
+PrintCommand -> PackageInspector[arrowhead = "vee",style = "dashed"];
+ClassDeclarationVisitor -> ITargetClass[arrowhead = "vee",style = "solid"];
+ClassDeclarationVisitor -> IProjectModel[arrowhead = "vee",style = "dashed"];
+ClassFieldVisitor -> ITargetClass[arrowhead = "vee",style = "solid"];
+ClassFieldVisitor -> IProjectModel[arrowhead = "vee",style = "dashed"];
+ClassMethodVisitor -> ITargetClass[arrowhead = "vee",style = "solid"];
+ClassMethodVisitor -> IProjectModel[arrowhead = "vee",style = "dashed"];
+MethodAssociationVisitor -> IClassMethod[arrowhead = "vee",style = "solid"];
+MethodAssociationVisitor -> ITargetClass[arrowhead = "vee",style = "solid"];
+MethodAssociationVisitor -> IClassDeclaration[arrowhead = "vee",style = "dashed"];
+MethodAssociationVisitor -> MethodStatement[arrowhead = "vee",style = "dashed"];
+DesignParser -> ProjectModel[arrowhead = "vee",style = "dashed"];
+DesignParser -> IProjectModel[arrowhead = "vee",style = "dashed"];
+AbstractAddStrategy -> IAddStrategy[arrowhead = "empty",style = "dashed"];
+AbstractAddStrategy -> IProjectModel[arrowhead = "vee",style = "solid"];
+SDAddStrategy -> AbstractAddStrategy[arrowhead = "empty",style = "solid"];
+SDAddStrategy -> AbstractAddStrategy[arrowhead = "vee",style = "solid"];
+UMLAddStrategy -> AbstractAddStrategy[arrowhead = "empty",style = "solid"];
+UMLAddStrategy -> IPatternDetectionStrategy[arrowhead = "vee",style = "solid"];
+UMLAddStrategy -> IProjectModel[arrowhead = "vee",style = "dashed"];
+InputCommand -> IAddStrategy[arrowhead = "vee",style = "dashed"];
+InputCommand -> IDiagramOutputStream[arrowhead = "vee",style = "dashed"];
+SequenceInputCommand -> InputCommand[arrowhead = "empty",style = "solid"];
+SequenceInputCommand -> SequenceInputCommand[arrowhead = "vee",style = "dashed"];
+UMLInputCommand -> InputCommand[arrowhead = "empty",style = "solid"];
+UMLInputCommand -> IPatternDetectionStrategy[arrowhead = "vee",style = "solid"];
+UMLInputCommand -> IAddStrategy[arrowhead = "vee",style = "dashed"];
+UMLInputCommand -> UMLAddStrategy[arrowhead = "vee",style = "dashed"];
+UMLInputCommand -> IDiagramOutputStream[arrowhead = "vee",style = "dashed"];
+UMLInputCommand -> Visitor[arrowhead = "vee",style = "dashed"];
+UMLInputCommand -> UMLDiagramOutputStream[arrowhead = "vee",style = "dashed"];
+AbstractDiagramOutputStream -> IDiagramOutputStream[arrowhead = "empty",style = "dashed"];
+AbstractDiagramOutputStream -> IProjectModel[arrowhead = "vee",style = "solid"];
+AbstractDiagramOutputStream -> IVisitor[arrowhead = "vee",style = "solid"];
+AbstractDiagramOutputStream -> ITraverser[arrowhead = "vee",style = "dashed"];
+IDiagramOutputStream -> IVisitor[arrowhead = "empty",style = "dashed"];
+SDDiagramOutputStream -> AbstractDiagramOutputStream[arrowhead = "empty",style = "solid"];
+SDDiagramOutputStream -> IVisitor[arrowhead = "vee",style = "dashed"];
+SDDiagramOutputStream -> SDDiagramOutputStream[arrowhead = "vee",style = "dashed"];
+UMLDiagramOutputStream -> AbstractDiagramOutputStream[arrowhead = "empty",style = "solid"];
+UMLDiagramOutputStream -> IVisitor[arrowhead = "vee",style = "dashed"];
+UMLDiagramOutputStream -> UMLDiagramOutputStream[arrowhead = "vee",style = "dashed"];
+DotClassUtils -> DotClassUtils[arrowhead = "vee",style = "dashed"];
+PackageInspector -> PackageInspector[arrowhead = "vee",style = "dashed"];
+Visitor -> IVisitor[arrowhead = "empty",style = "dashed"];
+Visitor -> LookupKey[arrowhead = "vee",style = "solid"];
+Visitor -> IVisitMethod[arrowhead = "vee",style = "solid"];
+Visitor -> ITraverser[arrowhead = "vee",style = "dashed"];
+Visitor -> Visitor[arrowhead = "vee",style = "dashed"];
+AbstractTargetClassDecorator -> ITargetClass[arrowhead = "empty",style = "dashed"];
+AbstractTargetClassDecorator -> ITargetClass[arrowhead = "vee",style = "solid"];
+AbstractTargetClassDecorator -> IClassMethod[arrowhead = "vee",style = "dashed"];
+AbstractTargetClassDecorator -> IClassField[arrowhead = "vee",style = "dashed"];
+AdapterDecorator -> AbstractTargetClassDecorator[arrowhead = "empty",style = "solid"];
+AdapterDecorator -> ITargetClass[arrowhead = "vee",style = "dashed"];
+AdapterDecorator -> AdapterDecorator[arrowhead = "vee",style = "dashed"];
+DecoratorTargetClass -> AbstractTargetClassDecorator[arrowhead = "empty",style = "solid"];
+DecoratorTargetClass -> ITargetClass[arrowhead = "vee",style = "dashed"];
+DecoratorTargetClass -> DecoratorTargetClass[arrowhead = "vee",style = "dashed"];
+SingletonDecorator -> AbstractTargetClassDecorator[arrowhead = "empty",style = "solid"];
+SingletonDecorator -> ITargetClass[arrowhead = "vee",style = "dashed"];
+SingletonDecorator -> SingletonDecorator[arrowhead = "vee",style = "dashed"];
+AdaptorPatternDetector -> IPatternDetectionStrategy[arrowhead = "empty",style = "dashed"];
+AdaptorPatternDetector -> IProjectModel[arrowhead = "vee",style = "dashed"];
+DecoratorPatternDetector -> IPatternDetectionStrategy[arrowhead = "empty",style = "dashed"];
+DecoratorPatternDetector -> IProjectModel[arrowhead = "vee",style = "solid"];
+DecoratorPatternDetector -> ITargetClass[arrowhead = "vee",style = "dashed"];
+DecoratorPatternDetector -> IClassMethod[arrowhead = "vee",style = "dashed"];
+SingletonPatternDetector -> IPatternDetectionStrategy[arrowhead = "empty",style = "dashed"];
+SingletonPatternDetector -> IProjectModel[arrowhead = "vee",style = "dashed"];
+
+}
