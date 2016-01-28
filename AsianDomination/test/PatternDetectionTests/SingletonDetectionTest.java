@@ -43,9 +43,13 @@ public class SingletonDetectionTest {
 
 		String[] classes = new String[] { "examples/singleton/SingletonExample", 
 										  "examples/singleton/BadSingleton1",
-										  "examples/singleton/BadSingleton2" };
+										  "examples/singleton/BadSingleton2",
+										  "java/io/FilterInputStream",
+										  "java/lang/Runtime",
+										  "java/awt/Desktop",
+										  "java/util/Calendar"};
 
-		IProjectModel model = buildModel(classes);
+		IProjectModel model = buildModel(classes, "");
 		SingletonPatternDetector s = new SingletonPatternDetector();
 		s.detectPatterns(model);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
@@ -58,19 +62,40 @@ public class SingletonDetectionTest {
 		
 		ITargetClass badS2 = i.next();
 		assertEquals("black", badS2.getColor());
+		
+		//FilterInputStream
+		assertEquals("black", i.next().getColor());
+		
+		//Runtime
+		assertEquals("blue", i.next().getColor());
+		
+		//Desktop
+		assertEquals("black", i.next().getColor());
+		
+		//Calendar
+		assertEquals("black", i.next().getColor());
 	}
 
 	@Test
 	public void IntegrationTest() {
 		String[] classes = new String[] {
 				 "headfirst/singleton/chocolate/ChocolateBoiler",
-				 "headfirst/singleton/chocolate/ChocolateController",
-				 "java/io/FilterInputStream",
-				 "java/lang/Runtime",
-				 "java/awt/Desktop",
-				 "java/util/Calendar"
+				 "headfirst/singleton/chocolate/ChocolateController"
+				 
 		};
-		IProjectModel model = buildModel(classes);
+		IProjectModel model = buildModel(classes, "docs/M4/SingletonTest");
+		model.printModel();
+	}
+	
+	@Test
+	public void IntegrationTest2() {
+		String[] classes = new String[] {
+				  "java/io/FilterInputStream",
+				  "java/lang/Runtime",
+				  "java/awt/Desktop",
+				  "java/util/Calendar"
+		};
+		IProjectModel model = buildModel(classes, "docs/M4/AutomatedSingletonTest");
 		model.printModel();
 	}
 
@@ -79,11 +104,9 @@ public class SingletonDetectionTest {
 		_cmd = null;
 	}
 
-	private IProjectModel buildModel(String[] classes) {
-		List<IPatternDetectionStrategy> detectors = Arrays.asList(new SingletonPatternDetector(),
-				new DecoratorPatternDetector(), new AdaptorPatternDetector());
-		_cmd = new UMLInputCommand("input_output/testProjectSubsystem", "input_output/testProjectSubsystem", classes,
-				detectors);
+	private IProjectModel buildModel(String[] classes, String path) {
+		List<IPatternDetectionStrategy> detectors = Arrays.asList(new SingletonPatternDetector());
+		_cmd = new UMLInputCommand(path, path, classes, detectors);
 		IProjectModel model = new ProjectModel(_cmd);
 		model.build();
 		return model;
