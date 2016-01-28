@@ -31,6 +31,10 @@ public class AdaptorPatternDetector implements IPatternDetectionStrategy {
 		}
 		// check field
 		Collection<IClassField> fields = clazz.getFields();
+		if (fields.size() != 1) {
+			return;
+		}
+		
 		IClassField f = fields.iterator().next();
 		String adaptee = f.getType();
 
@@ -63,7 +67,7 @@ public class AdaptorPatternDetector implements IPatternDetectionStrategy {
 			Collection<IMethodStatement> statms = m.getMethodStatements();
 			boolean isValid = false;
 			for (IMethodStatement statm : statms) {
-				if (statm.getCallerClass().equals(adaptee)) {
+				if (statm.getClassToCall().equals(adaptee)) {
 					isValid = true;
 					break;
 				}

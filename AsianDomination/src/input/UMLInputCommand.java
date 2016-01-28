@@ -4,10 +4,10 @@ import java.util.List;
 
 import construction.IAddStrategy;
 import construction.UMLAddStrategy;
-import impl.Visitor;
 import output.IDiagramOutputStream;
 import output.UMLDiagramOutputStream;
 import pattern.detection.IPatternDetectionStrategy;
+import visitor.Visitor;
 
 public class UMLInputCommand extends InputCommand{
 	private String[] _classes;

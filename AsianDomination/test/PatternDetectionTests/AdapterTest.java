@@ -1,7 +1,6 @@
 package PatternDetectionTests;
 
 import impl.ProjectModel;
-import impl.Visitor;
 import input.InputCommand;
 import input.UMLInputCommand;
 import output.AbstractDiagramOutputStream;
@@ -9,6 +8,7 @@ import output.IDiagramOutputStream;
 import pattern.detection.DecoratorPatternDetector;
 import pattern.detection.IPatternDetectionStrategy;
 import pattern.detection.SingletonPatternDetector;
+import visitor.Visitor;
 
 import static org.junit.Assert.*;
 

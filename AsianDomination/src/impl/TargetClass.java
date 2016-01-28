@@ -22,6 +22,7 @@ public class TargetClass implements ITargetClass {
 	
 	private String _color;
 	private String _patternString;
+	private String _style;
 
 	private Collection<IClassField> _fields;
 
@@ -32,6 +33,7 @@ public class TargetClass implements ITargetClass {
 		_className = className;
 		_color = "black";
 		_patternString = "";
+		_style = "solid";
 		
 		_edges = new HashMap<RelationshipType, List<Relationship>>();
 		for (RelationshipType type : RelationshipType.values()) {
@@ -156,5 +158,15 @@ public class TargetClass implements ITargetClass {
 	@Override
 	public void setPatternString(String pattern) {
 		_patternString = pattern;
+	}
+
+	@Override
+	public String getStyle() {
+		return _style;
+	}
+
+	@Override
+	public void setStyle(String style) {
+		_style = style;
 	}
 }

@@ -9,6 +9,10 @@ import utils.DotClassUtils.RelationshipType;
 import visitor.ITraverser;
 
 public interface ITargetClass extends ITraverser {
+	public String getStyle();
+	
+	public void setStyle(String style);
+	
 	public String getClassName();
 	
 	public String getColor();

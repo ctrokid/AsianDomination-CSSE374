@@ -119,4 +119,13 @@ public abstract class AbstractTargetClassDecorator implements ITargetClass {
 		_decoratedClass.accept(v);
 	}
 
+	@Override
+	public String getStyle() {
+		return _decoratedClass.getStyle();
+	}
+	
+	@Override
+	public void setStyle(String style) {
+		_decoratedClass.setStyle(style);
+	}
 }

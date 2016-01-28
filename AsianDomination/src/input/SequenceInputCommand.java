@@ -2,9 +2,9 @@ package input;
 
 import construction.IAddStrategy;
 import construction.SDAddStrategy;
-import impl.Visitor;
 import output.IDiagramOutputStream;
 import output.SDDiagramOutputStream;
+import visitor.Visitor;
 
 public class SequenceInputCommand extends InputCommand {
 	private String _initialClass;

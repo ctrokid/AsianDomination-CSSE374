@@ -21,6 +21,7 @@ public class AdapterDecorator extends AbstractTargetClassDecorator {
 			break;
 	}
 	setColor("red");
+	setStyle("filled");
 	}
 	
 }
