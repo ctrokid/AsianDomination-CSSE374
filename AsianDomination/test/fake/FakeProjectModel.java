@@ -21,8 +21,6 @@ public class FakeProjectModel implements IProjectModel {
 	
 	@Override
 	public void parseModel() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -51,6 +49,14 @@ public class FakeProjectModel implements IProjectModel {
 
 	@Override
 	public void decorateClass(ITargetClass clazz) {
+	}
+
+	@Override
+	public void build() {
+	}
+
+	@Override
+	public void printModel() {
 	}
 
 }
