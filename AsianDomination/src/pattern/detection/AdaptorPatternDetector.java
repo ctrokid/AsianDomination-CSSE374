@@ -41,16 +41,16 @@ public class AdaptorPatternDetector implements IPatternDetectionStrategy {
 		}
 
 		// grab the adapter, adaptee, and target
-		//TODO:FIXME This code is really ugly, maybe you can fix it later
+		// TODO:FIXME This code is really ugly, maybe you can fix it later
 		clazz = new AdapterDecorator(PATTERN_TYPE.ADAPTER_ADAPTER, "", clazz);
 		ITargetClass adapteee = model.getTargetClassByName(adaptee);
 		ITargetClass targ = model.getTargetClassByName(target.get(0));
 		adapteee = new AdapterDecorator(PATTERN_TYPE.ADAPTER_ADAPTEE, "", adapteee);
 		targ = new AdapterDecorator(PATTERN_TYPE.ADAPTER_TARGET, "", targ);
-		
+
 		Relationship adaptorRelation = clazz.getRelationship(RelationshipType.ASSOCIATION, adapteee.getClassName());
 		adaptorRelation.setDecoratedType("\\<\\<adapts\\>\\>");
-		
+
 		model.decorateClass(clazz);
 		model.decorateClass(adapteee);
 		model.decorateClass(targ);
