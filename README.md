@@ -6,20 +6,19 @@
 We just used one visitor pattern to visit each TargetClass. After they were visited, we used a VisitCollection method to print the inheritance/interface relationships. 
 
 Milestone 1 UML Diagram 
-![milestone1uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/Milestone1UML.jpg)
+![milestone1uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M1/Milestone1UML.jpg)
 
 ###Milestone 2
 We added a RelationshipManager class to be the second visitor that happens once the classes are printed. This got rid of the VisitCollection method from Milestone 1, as the RelationshipManager can handle printing all relationships (Inheritance, Interface, Association, Uses). 
 
 Milestone 2 UML Diagram
-![milestone2uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/Milestone2UML.jpg)
+![milestone2uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M2/Milestone2UML.jpg)
 
 ###Milestone 3
 We added MethodStatement class to store the relationship between classes for sequence diagram and SequenceDiagramMethodVisitor and SequenceDiagramTraverser class to recursively added relationships to generate sequence diagram. 
 
 Milestone 3 UML Diagram
-![miletone3uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/Milestone3UML.jpg)
-
+![miletone3uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M3/Milestone3UML.jpg)
 
 
 ###Milestone 4
@@ -27,42 +26,66 @@ Before writing the logic for milestone 4, we decided to refactor our design in a
 
 We extended the UmlDiagramOutputStream, then added a singleton detection method. It checks the TargetClass before it is printed out. If it passes the singleton test, then it is printed out differently. We are still working on singleton that is based on abstractFactory design pattern.
 
-Milestone 4UML Diagram
-![milestone4uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/Milestone4UML.jpg)
+Milestone 4 UML Diagram
+![milestone4uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M4/Milestone4UML.jpg)
+
+
+###Milestone 5
+For this milestone, since we are dectecting adapter and decorator patterns, we added decorators for both pattern and modified Targetclass to detect the patterns. 
+
+We refactored the code so the ITarget class can recognize different patterns. The client side can simply modify three classes in out application to achieve detect a new pattern. 
+
+Milestone 5 UML Diagram
+![milestone5uml]()
 
 ##Milestone Deliverables
 ---
 ###Milestone 1
 ######Lab 1-3 UML Diagrams
-[Manual UML Diagram for Lab 1-3](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M1lab1-3ManualUML.PNG)
+[Manual UML Diagram for Lab 1-3](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M1/M1lab1-3ManualUML.PNG)
 
-[Generated UML Diagram for Lab 1-3](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M1lab1-3GeneratedUML.pdf)
+[Generated UML Diagram for Lab 1-3](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M1/M1lab1-3GeneratedUML.pdf)
 
 ######Project UML Diagrams
-[Manual UML Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/Milestone1UML.jpg)
+[Manual UML Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M1/Milestone1UML.jpg)
 
-[Generated UML Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M1projectGeneratedUML.pdf)
+[Generated UML Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M1/M1projectGeneratedUML.pdf)
 
 ###Milestone 2
 ######Abstract Factory PizzaStore
-[Generated UML for Abstract Factory PizzaStore](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M2AbstractFactoryPizzaStoreUML.pdf)
+[Generated UML for Abstract Factory PizzaStore](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M2/M2AbstractFactoryPizzaStoreUML.pdf)
 
 ######Project UML Diagrams
-[Manual UML Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/Milestone2UML.jpg)
+[Manual UML Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M2/Milestone2UML.jpg)
 
-[Generated UML Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M2ProjectGeneratedUML.pdf)
+[Generated UML Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M2/M2ProjectGeneratedUML.pdf)
 
 ###Milestone 3
 ######Collection Sequence Diagrams
-[Manual Sequence Diagram for Collection](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M3CollectionManualSequence.png)
+[Manual Sequence Diagram for Collection](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M3/M3CollectionManualSequence.png)
 
-[Generated Sequence Diagram for Collection](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/demo_diagrams/M3CollectionsSD.PNG)
+[Generated Sequence Diagram for Collection]()
 
 ######Project Sequence Diagrams
-[Manual Sequence Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M3ProjectManualSequence.jpg)
+[Manual Sequence Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M3/M3ProjectManualSequence.jpg)
 
-[Generated Sequence Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/demo_diagrams/ProjectSD.PNG)
+[Generated Sequence Diagram for Project]()
 
+###Milestone 4
+######Singleton Java Classes
+[Singleton Detacting Java Classes](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M4/AutomatedSingletonTest.png)
+
+[Chocolate Boiler](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M4/SingletonTest.png)
+
+[Milestone 4 UML Diagram](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M4/Milestone4UML.jpg)
+
+###Milestone 5
+######In Class Lab Detecting
+[Lab2-1, Lab5-1]
+
+[Java Classes]
+
+[Generated Project UML](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M5/Milestone5-GeneratedUML.png)
 
 ## Tasks Log:
 ---
@@ -106,6 +129,17 @@ All members met up for 3.5 hours continue working on refactoring and fixing bugs
 01/20/2016
 All members met up for 5.5 hours to finish sequence diagram (milestone 3) and finished milestone 4.
 
+01/24/2016
+All members met for 2.5 hours to refactor current code
+
+01/25/2016
+All members met for 3 hours to redesign milestone 5 and started implementation.
+
+01/26/2016
+All members met for 3 hours to add necessary classes for adapter and decorator.
+
+01/27/2016
+All members met for 7 hours to finish up milestone 5. 
 
 ##Instruction of Running Code:
 ---
