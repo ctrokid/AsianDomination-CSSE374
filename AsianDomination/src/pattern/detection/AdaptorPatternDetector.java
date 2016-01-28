@@ -11,7 +11,7 @@ import api.IProjectModel;
 import api.ITargetClass;
 import pattern.decoration.AdapteeDecorator;
 import pattern.decoration.AdapterDecorator;
-import pattern.decoration.TargetDecorator;
+import pattern.decoration.AdapterTargetDecorator;
 
 public class AdaptorPatternDetector implements IPatternDetectionStrategy {
 
@@ -49,7 +49,7 @@ public class AdaptorPatternDetector implements IPatternDetectionStrategy {
 		model.decorateClass(adapteee);
 
 		ITargetClass targ = model.getTargetClassByName(target.get(0));
-		targ = new TargetDecorator(targ);
+		targ = new AdapterTargetDecorator(targ);
 		model.decorateClass(targ);
 
 		return;
