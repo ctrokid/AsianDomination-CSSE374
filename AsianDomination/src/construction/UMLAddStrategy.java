@@ -21,6 +21,9 @@ public class UMLAddStrategy extends AbstractAddStrategy {
 			_projectModel.addClass(clazz);
 		}
 		
+		if (_detectors == null)
+			return;
+		
 		for (IPatternDetectionStrategy detector : _detectors) {
 			detector.detectPatterns(_projectModel);
 		}

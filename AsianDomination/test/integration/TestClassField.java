@@ -13,11 +13,11 @@ import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 
 import api.IClassField;
 import impl.ClassField;
-import impl.Visitor;
 import output.AbstractDiagramOutputStream;
 import output.UMLDiagramOutputStream;
 import utils.AsmClassUtils;
 import visitor.IVisitor;
+import visitor.Visitor;
 
 public class TestClassField {
 	private IVisitor outStreamVisitor;

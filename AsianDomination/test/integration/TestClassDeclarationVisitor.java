@@ -5,8 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -18,8 +17,8 @@ import api.ITargetClass;
 import asm.visitor.ClassDeclarationVisitor;
 import fake.FakeInputCommand;
 import fake.FakeProjectModel;
+import impl.Relationship;
 import input.InputCommand;
-import utils.DotClassUtils.RelationshipType;
 
 public class TestClassDeclarationVisitor {
 	private static final int VERSION = 51;
@@ -64,10 +63,9 @@ public class TestClassDeclarationVisitor {
 		_visitor.visit(VERSION, ACCESS, classPath, null, "java/lang/Object", new String[] {});
 		
 		ITargetClass clazz = model.getTargetClassByName(classPath);
-		HashMap<RelationshipType, HashSet<String>> relationships = clazz.getRelationEdges();
+		List<Relationship> relationships = clazz.getRelationEdges();
 		
-		assertEquals(relationships.get(RelationshipType.INHERITANCE).size(), 1);
-		assertEquals(relationships.get(RelationshipType.IMPLEMENTATION).size(), 0);
+		assertEquals(relationships.size(), 1);
 	}
 	
 	@Test
@@ -75,10 +73,9 @@ public class TestClassDeclarationVisitor {
 		_visitor.visit(VERSION, ACCESS, classPath, null, "test/example/Cat", new String[] { });
 		
 		ITargetClass clazz = model.getTargetClassByName(classPath);
-		HashMap<RelationshipType, HashSet<String>> relationships = clazz.getRelationEdges();
+		List<Relationship> relationships = clazz.getRelationEdges();
 		
-		assertEquals(relationships.get(RelationshipType.INHERITANCE).size(), 1);
-		assertEquals(relationships.get(RelationshipType.IMPLEMENTATION).size(), 0);
+		assertEquals(relationships.size(), 1);
 	}
 	
 	@Test
@@ -86,10 +83,9 @@ public class TestClassDeclarationVisitor {
 		_visitor.visit(VERSION, ACCESS, classPath, null, "Thread", new String[] { "test/Runnable", "test/IFaceApp" });
 		
 		ITargetClass clazz = model.getTargetClassByName(classPath);
-		HashMap<RelationshipType, HashSet<String>> relationships = clazz.getRelationEdges();
+		List<Relationship> relationships = clazz.getRelationEdges();
 		
-		assertEquals(relationships.get(RelationshipType.INHERITANCE).size(), 1);
-		assertEquals(relationships.get(RelationshipType.IMPLEMENTATION).size(), 2);
+		assertEquals(relationships.size(), 3);
 	}
 	
 	@Test
@@ -97,10 +93,9 @@ public class TestClassDeclarationVisitor {
 		_visitor.visit(VERSION, ACCESS, classPath, null, "test/example/Cat", new String[] { "test/example/IRunnable" });
 		
 		ITargetClass clazz = model.getTargetClassByName(classPath);
-		HashMap<RelationshipType, HashSet<String>> relationships = clazz.getRelationEdges();
+		List<Relationship> relationships = clazz.getRelationEdges();
 		
-		assertEquals(relationships.get(RelationshipType.INHERITANCE).size(), 1);
-		assertEquals(relationships.get(RelationshipType.IMPLEMENTATION).size(), 1);
+		assertEquals(relationships.size(), 2);
 	}
 	
 	@After

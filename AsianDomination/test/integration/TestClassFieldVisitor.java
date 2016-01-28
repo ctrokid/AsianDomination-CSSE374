@@ -13,7 +13,6 @@ import asm.visitor.ClassFieldVisitor;
 import fake.FakeInputCommand;
 import fake.FakeProjectModel;
 import input.InputCommand;
-import utils.DotClassUtils.RelationshipType;
 
 public class TestClassFieldVisitor {
 	private IProjectModel model;
@@ -45,7 +44,7 @@ public class TestClassFieldVisitor {
 		
 		ITargetClass clazz = model.getTargetClassByName(classPath);
 		assertEquals(1, clazz.getFields().size());
-		assertEquals(1, clazz.getRelationEdges().get(RelationshipType.ASSOCIATION).size());
+		assertEquals(1, clazz.getRelationEdges().size());
 	}
 	
 	@Test
@@ -54,7 +53,7 @@ public class TestClassFieldVisitor {
 		
 		ITargetClass clazz = model.getTargetClassByName(classPath);
 		assertEquals(1, clazz.getFields().size());
-		assertEquals(1, clazz.getRelationEdges().get(RelationshipType.ASSOCIATION).size());
+		assertEquals(1, clazz.getRelationEdges().size());
 	}
 	
 	@After

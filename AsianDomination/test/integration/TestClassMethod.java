@@ -11,10 +11,10 @@ import org.junit.Test;
 import org.objectweb.asm.Opcodes;
 
 import impl.ClassMethod;
-import impl.Visitor;
 import output.AbstractDiagramOutputStream;
 import output.UMLDiagramOutputStream;
 import visitor.IVisitor;
+import visitor.Visitor;
 
 public class TestClassMethod {
 	private IVisitor outStreamVisitor;

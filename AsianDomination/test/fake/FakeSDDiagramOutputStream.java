@@ -1,7 +1,7 @@
 package fake;
 
-import impl.Visitor;
 import output.SDDiagramOutputStream;
+import visitor.Visitor;
 
 public class FakeSDDiagramOutputStream extends SDDiagramOutputStream {
 

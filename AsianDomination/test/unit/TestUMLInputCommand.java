@@ -32,7 +32,7 @@ public class TestUMLInputCommand {
 		String[] classes = new String[] {
 				"test/examples/Animal"
 		};
-		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes);
+		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes, null);
 		assertEquals(_diagramOutputPath, _cmd.getDiagramOutputPath());
 	}
 	
@@ -41,7 +41,7 @@ public class TestUMLInputCommand {
 		String[] classes = new String[] {
 				"test/examples/Animal"
 		};
-		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes);
+		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes, null);
 		assertEquals(_asmOutputPath, _cmd.getAsmOutputPath());
 	}
 	
@@ -50,7 +50,7 @@ public class TestUMLInputCommand {
 		String[] classes = new String[] {
 				"test/examples/Animal"
 		};
-		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes);
+		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes, null);
 		
 		IAddStrategy addStrat = _cmd.getAddStrategy();
 		assertTrue(addStrat instanceof UMLAddStrategy);
@@ -61,7 +61,7 @@ public class TestUMLInputCommand {
 		String[] classes = new String[] {
 				"test/examples/Animal"
 		};
-		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes);
+		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes, null);
 		
 		IDiagramOutputStream outStrat = _cmd.getOutputStream();
 		assertTrue(outStrat instanceof UMLDiagramOutputStream);
@@ -72,7 +72,7 @@ public class TestUMLInputCommand {
 		String[] classes = new String[] {
 				"test/examples/Animal"
 		};
-		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes);
+		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes, null);
 		
 		assertEquals(Arrays.asList(classes), Arrays.asList(_cmd.getInputParameters()));
 	}

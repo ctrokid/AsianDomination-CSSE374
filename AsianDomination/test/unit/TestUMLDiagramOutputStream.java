@@ -9,7 +9,6 @@ import java.lang.reflect.Field;
 import impl.ClassField;
 import impl.ClassMethod;
 import impl.TargetClass;
-import impl.Visitor;
 
 import org.junit.After;
 import org.junit.Before;
@@ -22,6 +21,7 @@ import api.IClassMethod;
 import api.ITargetClass;
 import output.AbstractDiagramOutputStream;
 import output.UMLDiagramOutputStream;
+import visitor.Visitor;
 
 public class TestUMLDiagramOutputStream {
 	private UMLDiagramOutputStream _outStreamVisitor;
@@ -41,9 +41,9 @@ public class TestUMLDiagramOutputStream {
 	@Test
 	public void TestUMLPreVisitClass() {
 		ITargetClass clazz = new TargetClass("problem/test");
-		_outStreamVisitor.preVisit(clazz);
+		_outStreamVisitor.visit(clazz);
 		
-		String expected = "test[\n\tlabel = \"{test|";
+		String expected = "test[\n\tstyle = solid, color = black,label = \"{test|";
 		String actual = bytesOut.toString();
 		assertEquals(expected, actual);
 	}
