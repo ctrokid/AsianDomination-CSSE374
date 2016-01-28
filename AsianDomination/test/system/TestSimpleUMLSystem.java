@@ -5,7 +5,7 @@ import input.InputCommand;
 import input.UMLInputCommand;
 import output.AbstractDiagramOutputStream;
 import output.IDiagramOutputStream;
-import pattern.detection.AdaptorPatternDetector;
+import pattern.detection.AdapterPatternDetector;
 import pattern.detection.DecoratorPatternDetector;
 import pattern.detection.IPatternDetectionStrategy;
 import pattern.detection.SingletonPatternDetector;
@@ -174,7 +174,7 @@ public class TestSimpleUMLSystem {
 //				"AdapterDummieClasses/ITarget"
 		};
 		
-		List<IPatternDetectionStrategy> detectors = Arrays.asList(new SingletonPatternDetector(), new DecoratorPatternDetector(), new AdaptorPatternDetector());
+		List<IPatternDetectionStrategy> detectors = Arrays.asList(new SingletonPatternDetector(), new DecoratorPatternDetector(), new AdapterPatternDetector());
 		_cmd = new UMLInputCommand("input_output/testProjectSubsystem", "input_output/testProjectSubsystem", classes, detectors);
 		IProjectModel model = new ProjectModel(_cmd);
 		model.parseModel();

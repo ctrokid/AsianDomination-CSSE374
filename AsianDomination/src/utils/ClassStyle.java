@@ -11,7 +11,7 @@ public class ClassStyle {
 		defaultStyle = "style = solid, bgcolor = black ";
 		styles = new HashMap<String, String>();
 		// Singleton
-		styles.put("Singleton", "style = solid, bgcolor = blue ");
+		styles.put("Singleton", "style = solid, color = blue ");
 
 		// Adapter
 		String adapterStyle = "style = filled, bgcolor = red ";

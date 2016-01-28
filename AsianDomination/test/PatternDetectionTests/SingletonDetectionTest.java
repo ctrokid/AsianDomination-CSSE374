@@ -5,7 +5,8 @@ import input.InputCommand;
 import input.UMLInputCommand;
 import output.AbstractDiagramOutputStream;
 import output.IDiagramOutputStream;
-import pattern.detection.AdaptorPatternDetector;
+import pattern.decoration.SingletonDecorator;
+import pattern.detection.AdapterPatternDetector;
 import pattern.detection.DecoratorPatternDetector;
 import pattern.detection.IPatternDetectionStrategy;
 import pattern.detection.SingletonPatternDetector;
@@ -55,25 +56,25 @@ public class SingletonDetectionTest {
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 		
 		ITargetClass singelton = i.next();
-		assertEquals("blue", singelton.getColor());
+		assertTrue(singelton instanceof SingletonDecorator);
 		
 		ITargetClass badS1 = i.next();
-		assertEquals("black", badS1.getColor());
+		assertFalse(badS1 instanceof SingletonDecorator);
 		
 		ITargetClass badS2 = i.next();
-		assertEquals("black", badS2.getColor());
+		assertFalse(badS2 instanceof SingletonDecorator);
 		
 		//FilterInputStream
-		assertEquals("black", i.next().getColor());
+		assertFalse(i.next() instanceof SingletonDecorator);
 		
 		//Runtime
-		assertEquals("blue", i.next().getColor());
+		assertTrue(i.next() instanceof SingletonDecorator);
 		
 		//Desktop
-		assertEquals("black", i.next().getColor());
+		assertFalse(i.next() instanceof SingletonDecorator);
 		
 		//Calendar
-		assertEquals("black", i.next().getColor());
+		assertFalse(i.next() instanceof SingletonDecorator);
 	}
 
 	@Test

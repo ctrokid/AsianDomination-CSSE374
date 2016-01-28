@@ -6,11 +6,11 @@ node [
 ]
 
 ChocolateBoiler[
-	style = solid, color = blue,label = "{ChocolateBoiler\n\<\<Singleton\>\>|- empty : boolean\l- boiled : boolean\l- uniqueInstance : ChocolateBoiler\l|+ getInstance() : ChocolateBoiler\l+ fill() : void\l+ drain() : void\l+ boil() : void\l+ isEmpty() : boolean\l+ isBoiled() : boolean\l}"
+	style = solid, color = blue ,label = "{ChocolateBoiler\n\<\<Singleton\>\>|- empty : boolean\l- boiled : boolean\l- uniqueInstance : ChocolateBoiler\l|+ getInstance() : ChocolateBoiler\l+ fill() : void\l+ drain() : void\l+ boil() : void\l+ isEmpty() : boolean\l+ isBoiled() : boolean\l}"
 ]
 
 ChocolateController[
-	style = solid, color = black,label = "{ChocolateController||+ main(String[]) : void\l}"
+	style = solid, bgcolor = black ,label = "{ChocolateController||+ main(String[]) : void\l}"
 ]
 
 ChocolateBoiler -> ChocolateBoiler[arrowhead = "vee",style = "solid"];

@@ -3,7 +3,8 @@ package PatternDetectionTests;
 import impl.ProjectModel;
 import input.InputCommand;
 import input.UMLInputCommand;
-import pattern.detection.AdaptorPatternDetector;
+import pattern.decoration.AdapterDecorator;
+import pattern.detection.AdapterPatternDetector;
 import pattern.detection.IPatternDetectionStrategy;
 import pattern.detection.SingletonPatternDetector;
 
@@ -29,7 +30,7 @@ public class AdapterTest {
 	}
 
 	@Test
-	public void simpleSingletonTest() {
+	public void simpleAdapterTest() {
 
 		String[] classes = new String[] { "examples/adapter/Adaptee",
 										  "examples/adapter/Adapter",
@@ -42,13 +43,14 @@ public class AdapterTest {
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 		
 		ITargetClass Adaptee = i.next();
-		assertEquals("red", Adaptee.getColor());
+		
+		assertTrue(Adaptee instanceof AdapterDecorator);
 		
 		ITargetClass Adapter = i.next();
-		assertEquals("red", Adapter.getColor());
+		assertTrue(Adapter instanceof AdapterDecorator);
 		
 		ITargetClass ITarget = i.next();
-		assertEquals("red", ITarget.getColor());
+		assertTrue(ITarget instanceof AdapterDecorator);
 		
 		model.printModel();
 	}
@@ -82,7 +84,7 @@ public class AdapterTest {
 	}
 
 	private IProjectModel buildModel(String[] classes, String path) {
-		List<IPatternDetectionStrategy> detectors = Arrays.asList(new AdaptorPatternDetector());
+		List<IPatternDetectionStrategy> detectors = Arrays.asList(new AdapterPatternDetector());
 		_cmd = new UMLInputCommand(path, path, classes, detectors);
 		IProjectModel model = new ProjectModel(_cmd);
 		model.build();

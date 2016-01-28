@@ -5,7 +5,6 @@ import java.util.Collection;
 import input.InputCommand;
 
 public interface IProjectModel{
-	public void parseModel();
 	public void build();
 	public void printModel();
 	public Collection<ITargetClass> getTargetClasses();

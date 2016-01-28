@@ -28,17 +28,17 @@ public class ProjectModel implements IProjectModel {
 		_targetClasses = new LinkedHashMap<String, ITargetClass>();
 	}
 
-	@Override
-	public void parseModel() {
-		IAddStrategy addStrategy  = _command.getAddStrategy();
-		addStrategy.setProjectModel(this);
-		addStrategy.buildModel(_command.getInputParameters());
-		
-		IDiagramOutputStream digramOutputStream = _command.getOutputStream();
-		digramOutputStream.setProjectModel(this);
-		digramOutputStream.writeOutput();
-		digramOutputStream.generateDiagram(_command.getDiagramOutputPath());
-	}
+//	@Override
+//	public void parseModel() {
+//		IAddStrategy addStrategy  = _command.getAddStrategy();
+//		addStrategy.setProjectModel(this);
+//		addStrategy.buildModel(_command.getInputParameters());
+//		
+//		IDiagramOutputStream digramOutputStream = _command.getOutputStream();
+//		digramOutputStream.setProjectModel(this);
+//		digramOutputStream.writeOutput();
+//		digramOutputStream.generateDiagram(_command.getDiagramOutputPath());
+//	}
 
 	@Override
 	public ITargetClass getTargetClassByName(String className) {
@@ -97,7 +97,7 @@ public class ProjectModel implements IProjectModel {
 	@Override
 	public void printModel() {
 		if(_targetClasses.isEmpty()){
-			this.parseModel();
+			build();
 		} else {
 			IDiagramOutputStream digramOutputStream = _command.getOutputStream();
 			digramOutputStream.setProjectModel(this);
