@@ -1,0 +1,68 @@
+digraph G {
+node [
+	fontname = "Sans"
+	fontsize = 8
+	shape = "record"
+]
+
+Beverage[
+	style = filled, fillcolor = green ,label = "{Beverage\n\<\<component\>\>| description : String\l|+ getDescription() : String\l+ cost() : double\l}"
+]
+
+CondimentDecorator[
+	style = filled, fillcolor = green ,label = "{CondimentDecorator\n\<\<decorator\>\>||+ getDescription() : String\l}"
+]
+
+Milk[
+	style = filled, fillcolor = green ,label = "{Milk\n\<\<decorator\>\>| bev : double\l beverage : Beverage\l cheese : String\l|+ getDescription() : String\l+ cost() : double\l}"
+]
+
+DarkRoast[
+	style = solid, bgcolor = black ,label = "{DarkRoast||+ cost() : double\l}"
+]
+
+Decaf[
+	style = solid, bgcolor = black ,label = "{Decaf||+ cost() : double\l}"
+]
+
+Espresso[
+	style = solid, bgcolor = black ,label = "{Espresso||+ cost() : double\l}"
+]
+
+HouseBlend[
+	style = solid, bgcolor = black ,label = "{HouseBlend||+ cost() : double\l}"
+]
+
+Mocha[
+	style = filled, fillcolor = green ,label = "{Mocha\n\<\<decorator\>\>| beverage : Beverage\l|+ getDescription() : String\l+ cost() : double\l}"
+]
+
+Soy[
+	style = filled, fillcolor = green ,label = "{Soy\n\<\<decorator\>\>| beverage : Beverage\l|+ getDescription() : String\l+ cost() : double\l}"
+]
+
+StarbuzzCoffee[
+	style = solid, bgcolor = black ,label = "{StarbuzzCoffee||+ main(String[]) : void\l}"
+]
+
+Whip[
+	style = filled, fillcolor = green ,label = "{Whip\n\<\<decorator\>\>| beverage : Beverage\l|+ getDescription() : String\l+ cost() : double\l}"
+]
+
+CondimentDecorator -> Beverage[arrowhead = "empty",style = "solid", label = "\<\<decorates\>\>"];
+Milk -> CondimentDecorator[arrowhead = "empty",style = "solid"];
+Milk -> Beverage[arrowhead = "vee",style = "solid"];
+DarkRoast -> Beverage[arrowhead = "empty",style = "solid"];
+Decaf -> Beverage[arrowhead = "empty",style = "solid"];
+Espresso -> Beverage[arrowhead = "empty",style = "solid"];
+HouseBlend -> Beverage[arrowhead = "empty",style = "solid"];
+Mocha -> CondimentDecorator[arrowhead = "empty",style = "solid"];
+Mocha -> Beverage[arrowhead = "vee",style = "solid"];
+Soy -> CondimentDecorator[arrowhead = "empty",style = "solid"];
+Soy -> Beverage[arrowhead = "vee",style = "solid"];
+StarbuzzCoffee -> Espresso[arrowhead = "vee",style = "dashed"];
+StarbuzzCoffee -> Beverage[arrowhead = "vee",style = "dashed"];
+Whip -> CondimentDecorator[arrowhead = "empty",style = "solid"];
+Whip -> Beverage[arrowhead = "vee",style = "solid"];
+
+}
