@@ -87,6 +87,8 @@ Milestone 5 UML Diagram
 
 [Java Classes]
 
+[Runzi's Simple Adatper](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M5/SimpleAdapterTest.png)
+
 [Generated Project UML](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M5/Milestone5-GeneratedUML.png)
 
 ## Tasks Log:
