@@ -20,9 +20,6 @@ public class DecoratorTargetClass extends AbstractTargetClassDecorator {
 			default:
 				break;
 		}
-		
-		setColor("green");
-		setStyle("filled");
 	}
 	
 }
