@@ -55,29 +55,6 @@ public class AdapterTest {
 		model.printModel();
 	}
 
-//	@Test
-//	public void IntegrationTest() {
-//		String[] classes = new String[] {
-//				 "headfirst/singleton/chocolate/ChocolateBoiler",
-//				 "headfirst/singleton/chocolate/ChocolateController"
-//				 
-//		};
-//		IProjectModel model = buildModel(classes, "docs/M4/SingletonTest");
-//		model.printModel();
-//	}
-//	
-//	@Test
-//	public void IntegrationTest2() {
-//		String[] classes = new String[] {
-//				  "java/io/FilterInputStream",
-//				  "java/lang/Runtime",
-//				  "java/awt/Desktop",
-//				  "java/util/Calendar"
-//		};
-//		IProjectModel model = buildModel(classes, "docs/M4/AutomatedSingletonTest");
-//		model.printModel();
-//	}
-
 	@After
 	public void tearDown() {
 		_cmd = null;

@@ -76,6 +76,7 @@ public class SingletonDetectionTest {
 		//Calendar
 		assertFalse(i.next() instanceof SingletonDecorator);
 	}
+	
 
 	@Test
 	public void IntegrationTest() {
