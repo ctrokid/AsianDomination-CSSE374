@@ -9,9 +9,7 @@ import api.IClassMethod;
 import api.IMethodStatement;
 import api.IProjectModel;
 import api.ITargetClass;
-import pattern.decoration.AdapteeDecorator;
 import pattern.decoration.AdapterDecorator;
-import pattern.decoration.AdapterTargetDecorator;
 
 public class AdaptorPatternDetector implements IPatternDetectionStrategy {
 
@@ -41,15 +39,15 @@ public class AdaptorPatternDetector implements IPatternDetectionStrategy {
 		}
 
 		// decorate adaptee, and client
-		clazz = new AdapterDecorator(clazz);
+		clazz = new AdapterDecorator(PATTERN_TYPE.ADAPTER_ADAPTER, "", clazz);
 		model.decorateClass(clazz);
 
 		ITargetClass adapteee = model.getTargetClassByName(adaptee);
-		adapteee = new AdapteeDecorator(adapteee);
+		adapteee = new AdapterDecorator(PATTERN_TYPE.ADAPTER_ADAPTEE, "", adapteee);
 		model.decorateClass(adapteee);
 
 		ITargetClass targ = model.getTargetClassByName(target.get(0));
-		targ = new AdapterTargetDecorator(targ);
+		targ = new AdapterDecorator(PATTERN_TYPE.ADAPTER_TARGET, "", targ);
 		model.decorateClass(targ);
 
 		return;
