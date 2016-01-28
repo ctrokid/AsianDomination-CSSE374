@@ -1,14 +1,14 @@
 package pattern.decoration;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 
 import api.IClassDeclaration;
 import api.IClassField;
 import api.IClassMethod;
 import api.ITargetClass;
 import impl.ClassDeclaration;
+import impl.Relationship;
 import pattern.detection.PATTERN_TYPE;
 import utils.DotClassUtils.RelationshipType;
 import visitor.IVisitor;
@@ -70,7 +70,7 @@ public abstract class AbstractTargetClassDecorator implements ITargetClass {
 	}
 
 	@Override
-	public HashMap<RelationshipType, HashSet<String>> getRelationEdges() {
+	public List<Relationship> getRelationEdges() {
 		return _decoratedClass.getRelationEdges();
 	}
 
@@ -87,6 +87,31 @@ public abstract class AbstractTargetClassDecorator implements ITargetClass {
 	@Override
 	public boolean containsRelationship(RelationshipType edgeType, String subjectClass) {
 		return _decoratedClass.containsRelationship(edgeType, subjectClass);
+	}
+	
+	@Override
+	public Relationship getRelationship(RelationshipType type, String subjectClass) {
+		return _decoratedClass.getRelationship(type, subjectClass);
+	}
+	
+	@Override
+	public String getColor() {
+		return _decoratedClass.getColor();
+	}
+
+	@Override
+	public void setColor(String color) {
+		_decoratedClass.setColor(color);
+	}
+
+	@Override
+	public void setPatternString(String pattern) {
+		_decoratedClass.setPatternString(pattern);
+	}
+	
+	@Override
+	public String getPatternString() {
+		return _decoratedClass.getPatternString();
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import input.InputCommand;
 import input.UMLInputCommand;
 import output.AbstractDiagramOutputStream;
 import output.IDiagramOutputStream;
+import pattern.detection.DecoratorPatternDetector;
 import pattern.detection.IPatternDetectionStrategy;
 import pattern.detection.SingletonPatternDetector;
 
@@ -114,7 +115,7 @@ public class TestSimpleUMLSystem {
 //			"api/IRelationshipManager",
 //			"api/ITargetClass",
 //			"api/ITargetClassPart",
-//			"impl/ClassField",
+			"impl/ClassField",
 //			"impl/ClassMethod",
 //			"impl/MethodStatement",
 //			"impl/ProjectModel",
@@ -148,10 +149,13 @@ public class TestSimpleUMLSystem {
 //			"visitor/LookupKey",
 //			"visitor/VisitorAdapter",
 //			"visitor/VisitType"
-			"examples/simple/SingletonExample"
+			"examples/simple/SingletonExample",
+			"examples/decorator/Beverage",
+			"examples/decorator/CondimentDecorator",
+			"examples/decorator/Milk"
 		};
 		
-		List<IPatternDetectionStrategy> detectors = Arrays.asList(new SingletonPatternDetector());
+		List<IPatternDetectionStrategy> detectors = Arrays.asList(new SingletonPatternDetector(), new DecoratorPatternDetector());
 		_cmd = new UMLInputCommand("input_output/testProjectSubsystem", "input_output/testProjectSubsystem", classes, detectors);
 		IProjectModel model = new ProjectModel(_cmd);
 		model.parseModel();

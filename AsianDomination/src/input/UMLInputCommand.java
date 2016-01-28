@@ -6,7 +6,7 @@ import construction.IAddStrategy;
 import construction.UMLAddStrategy;
 import impl.Visitor;
 import output.IDiagramOutputStream;
-import output.patterns.UMLSingletonDiagramOutputStream;
+import output.UMLDiagramOutputStream;
 import pattern.detection.IPatternDetectionStrategy;
 
 public class UMLInputCommand extends InputCommand{
@@ -33,6 +33,6 @@ public class UMLInputCommand extends InputCommand{
 	}
 	
 	public IDiagramOutputStream getOutputStream(){
-		return new UMLSingletonDiagramOutputStream(_asmOutputPath + ".gv", new Visitor());
+		return new UMLDiagramOutputStream(_asmOutputPath + ".gv", new Visitor());
 	}
 }

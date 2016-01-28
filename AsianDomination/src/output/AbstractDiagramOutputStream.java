@@ -15,7 +15,7 @@ public abstract class AbstractDiagramOutputStream implements IDiagramOutputStrea
 	protected IProjectModel _projectModel;
 	protected OutputStream _outputStream;
 	protected String _asmOutputPath;
-	protected IVisitor _visitor;
+	private IVisitor _visitor;
 
 	public AbstractDiagramOutputStream(String asmOutputPath, IVisitor visitor) {
 		_asmOutputPath = asmOutputPath;

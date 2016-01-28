@@ -13,16 +13,16 @@ public class DotClassUtils {
 		
 		switch (type) {
 			case INHERITANCE:
-				edge = "[arrowhead = \"empty\",style = \"solid\"];\n";
+				edge = "arrowhead = \"empty\",style = \"solid\"";
 				break;
 			case IMPLEMENTATION:
-				edge = "[arrowhead = \"empty\",style = \"dashed\"];\n";
+				edge = "arrowhead = \"empty\",style = \"dashed\"";
 				break;
 			case ASSOCIATION:
-				edge = "[arrowhead = \"vee\",style = \"solid\"];\n";
+				edge = "arrowhead = \"vee\",style = \"solid\"";
 				break;
 			case USES:
-				edge = "[arrowhead = \"vee\",style = \"dashed\"];\n";
+				edge = "arrowhead = \"vee\",style = \"dashed\"";
 				break;
 			default:
 				break;

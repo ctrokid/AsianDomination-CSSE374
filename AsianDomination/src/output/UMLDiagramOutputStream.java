@@ -1,14 +1,13 @@
 package output;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 import api.IClassField;
 import api.IClassMethod;
 import api.ITargetClass;
 import impl.ClassField;
+import impl.Relationship;
 import utils.AsmClassUtils;
 import utils.DotClassUtils;
 import utils.DotClassUtils.RelationshipType;
@@ -23,49 +22,56 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 	
 	public UMLDiagramOutputStream(String asmOutputPath, IVisitor visitor) {
 		super(asmOutputPath, visitor);
-		this.setupPreVisitTargetClass();
+		this.setupVisitTargetClass();
 		this.setupPostVisitTargetClass();
 		this.setupVisitClassField();
-		this.setupPosVisitClassField();
+		this.setupPostVisitClassField();
 		this.setupVisitIClassMethod();
 		_relationships = new ArrayList<String>();
 	}
 
-	protected void setupPreVisitTargetClass() {
-		super.addVisit(VisitType.PreVisit, ITargetClass.class, (ITraverser t) -> {
+	protected void setupVisitTargetClass() {
+		super.addVisit(VisitType.Visit, ITargetClass.class, (ITraverser t) -> {
 			ITargetClass c = (ITargetClass) t;
 			StringBuilder sb = new StringBuilder();
 			String className = AsmClassUtils.GetStringStrippedByCharacter(c.getClassName(), '/');
 
 			sb.append(className + "[\n\t");
-			sb.append("label = \"{" + className + "|");
+			sb.append("color = " + c.getColor() + ",label = \"{" + className + c.getPatternString() + "|");
 			write(sb.toString());
-			
-			HashMap<RelationshipType, HashSet<String>> relationshipEdges = c.getRelationEdges();
-			for (RelationshipType type : RelationshipType.values()) {
-				
-				for (String edge : relationshipEdges.get(type)) {
-					
-					if (_projectModel.getTargetClassByName(edge) == null)
-						continue;
-					
-					String edgeToWrite = AsmClassUtils.GetStringStrippedByCharacter(c.getClassName(), '/') + " -> " + AsmClassUtils.GetStringStrippedByCharacter(edge, '/') + DotClassUtils.CreateRelationshipEdge(type);
-					
-					if (type.equals(RelationshipType.USES)) {
-						if (!c.containsRelationship(RelationshipType.ASSOCIATION, edge)) {
-							_relationships.add(edgeToWrite);
-						}						
-					} else {
-						_relationships.add(edgeToWrite);
-					}
-				}
-			}
 		});
 	}
 
 	protected void setupPostVisitTargetClass() {
 		super.addVisit(VisitType.PostVisit, ITargetClass.class, (ITraverser t) -> {
 			write("}\"\n]\n\n");
+			ITargetClass c = (ITargetClass) t;
+			
+			for (Relationship r : c.getRelationEdges()) {
+				if (_projectModel.getTargetClassByName(r.getSuperClass()) == null)
+					continue;
+				
+				String thisClass = AsmClassUtils.GetStringStrippedByCharacter(c.getClassName(), '/');
+				String subjectClass = AsmClassUtils.GetStringStrippedByCharacter(r.getSuperClass(), '/');
+				
+				String relationship = thisClass + " -> " + subjectClass + "[" + DotClassUtils.CreateRelationshipEdge(r.getRelationshipType());
+				
+				if (!r.getDecoratedType().equals(""))
+					relationship += ", " + r.getDecoratedType();
+				
+				relationship += "];\n";
+				
+				if (_relationships.contains(relationship))
+					return;
+				
+				if (r.getRelationshipType().equals(RelationshipType.USES)) {
+					if (!c.containsRelationship(RelationshipType.ASSOCIATION, r.getSuperClass())) {
+						_relationships.add(relationship);
+					}						
+				} else {
+					_relationships.add(relationship);
+				}
+			}
 		});
 	}
 
@@ -103,7 +109,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 		});
 	}
 
-	protected void setupPosVisitClassField() {
+	protected void setupPostVisitClassField() {
 		super.addVisit(VisitType.PostVisit, IClassField.class, (ITraverser t) -> {
 			write("|");
 		});
@@ -114,7 +120,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 		prepareFile();
 
 		for (ITargetClass clazz : _projectModel.getTargetClasses()) {
-			preVisit(clazz);
+			clazz.accept(this);
 
 			for (IClassField field : clazz.getFields()) {
 				field.accept(this);
