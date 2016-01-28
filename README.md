@@ -36,7 +36,7 @@ For this milestone, since we are dectecting adapter and decorator patterns, we a
 We refactored the code so the ITarget class can recognize different patterns. The client side can simply modify three classes in out application to achieve detect a new pattern. 
 
 Milestone 5 UML Diagram
-![milestone5uml]()
+![milestone5uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M5/MilestoneManual5UML.png)
 
 ##Milestone Deliverables
 ---
@@ -64,12 +64,12 @@ Milestone 5 UML Diagram
 ######Collection Sequence Diagrams
 [Manual Sequence Diagram for Collection](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M3/M3CollectionManualSequence.png)
 
-[Generated Sequence Diagram for Collection]()
+[Generated Sequence Diagram for Collection](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/demo_diagrams/M3CollectionsSD.PNG)
 
 ######Project Sequence Diagrams
 [Manual Sequence Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M3/M3ProjectManualSequence.jpg)
 
-[Generated Sequence Diagram for Project]()
+[Generated Sequence Diagram for Project](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/demo_diagrams/ProjectSD.PNG)
 
 ###Milestone 4
 ######Singleton Java Classes
@@ -81,7 +81,9 @@ Milestone 5 UML Diagram
 
 ###Milestone 5
 ######In Class Lab Detecting
-[Lab2-1, Lab5-1]
+[Lab2-1](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/demo_diagrams/M5Lab2.png)
+
+[Lab5-1]
 
 [Java Classes]
 
