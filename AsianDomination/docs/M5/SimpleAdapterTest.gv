@@ -6,15 +6,15 @@ node [
 ]
 
 Adaptee[
-	style = filled, color = red,label = "{Adaptee\n\<\<adaptee\>\>||+ m1() : void\l+ m2() : void\l+ m3() : void\l}"
+	style = filled, fillcolor = red ,label = "{Adaptee\n\<\<adaptee\>\>||+ m1() : void\l+ m2() : void\l+ m3() : void\l}"
 ]
 
 Adapter[
-	style = filled, color = red,label = "{Adapter\n\<\<adapter\>\>| a : Adaptee\l|+ method1() : void\l+ method2() : void\l}"
+	style = filled, fillcolor = red ,label = "{Adapter\n\<\<adapter\>\>| a : Adaptee\l|+ method1() : void\l+ method2() : void\l}"
 ]
 
 ITarget[
-	style = filled, color = red,label = "{ITarget\n\<\<target\>\>||+ method1() : void\l+ method2() : void\l}"
+	style = filled, fillcolor = red ,label = "{ITarget\n\<\<target\>\>||+ method1() : void\l+ method2() : void\l}"
 ]
 
 Adapter -> ITarget[arrowhead = "empty",style = "dashed"];
