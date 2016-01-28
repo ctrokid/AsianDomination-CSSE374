@@ -152,6 +152,8 @@ public class TargetClass implements ITargetClass {
 
 	@Override
 	public String getPatternStringName() {
+		if (_patternString.equals(""))
+			return "";
 		String pattern = _patternString.substring(6, _patternString.length() - 4);
 		return pattern;
 	}
