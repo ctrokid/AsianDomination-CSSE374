@@ -19,7 +19,7 @@ public class TargetClass implements ITargetClass {
 	private IClassDeclaration _declaration;
 	private HashMap<String, IClassMethod> _methodNameToClassMethod;
 	private HashMap<RelationshipType, List<Relationship>> _edges;
-	
+
 	private String _color;
 	private String _patternString;
 	private String _style;
@@ -34,7 +34,7 @@ public class TargetClass implements ITargetClass {
 		_color = "black";
 		_patternString = "";
 		_style = "solid";
-		
+
 		_edges = new HashMap<RelationshipType, List<Relationship>>();
 		for (RelationshipType type : RelationshipType.values()) {
 			_edges.put(type, new ArrayList<Relationship>());
@@ -85,7 +85,7 @@ public class TargetClass implements ITargetClass {
 	@Override
 	public void addRelationship(RelationshipType edgeType, String subjectClass) {
 		Relationship r = new Relationship(subjectClass, edgeType);
-		
+
 		if (_edges.containsKey(edgeType)) {
 			_edges.get(edgeType).add(r);
 		} else {
@@ -107,7 +107,7 @@ public class TargetClass implements ITargetClass {
 	@Override
 	public boolean containsRelationship(RelationshipType edgeType, String subjectClass) {
 		List<Relationship> particutlarEdges = _edges.get(edgeType);
-		
+
 		for (Relationship r : particutlarEdges) {
 			if (r.getSuperClass().equals(subjectClass))
 				return true;
@@ -118,55 +118,42 @@ public class TargetClass implements ITargetClass {
 	@Override
 	public List<Relationship> getRelationEdges() {
 		List<Relationship> relationships = new ArrayList<Relationship>();
-		
+
 		for (RelationshipType type : RelationshipType.values()) {
 			for (Relationship r : _edges.get(type)) {
 				relationships.add(r);
 			}
 		}
-		
+
 		return relationships;
 	}
 
 	@Override
 	public Relationship getRelationship(RelationshipType type, String subjectClass) {
 		List<Relationship> relationships = _edges.get(type);
-		
+
 		for (Relationship r : relationships) {
-			if (r.getSuperClass().equals(subjectClass)) 
+			if (r.getSuperClass().equals(subjectClass))
 				return r;
 		}
-		
+
 		return null;
-	}
-	
-	@Override
-	public String getColor() {
-		return _color;
-	}
-	
-	@Override
-	public void setColor(String color) {
-		_color = color;
 	}
 
 	@Override
 	public String getPatternString() {
 		return _patternString;
 	}
-	
+
 	@Override
 	public void setPatternString(String pattern) {
 		_patternString = pattern;
 	}
 
 	@Override
-	public String getStyle() {
-		return _style;
+	public String getPatternStringName() {
+		String pattern = _patternString.substring(6, _patternString.length() - 4);
+		return pattern;
 	}
 
-	@Override
-	public void setStyle(String style) {
-		_style = style;
-	}
 }

@@ -17,7 +17,6 @@ public class SingletonPatternDetector implements IPatternDetectionStrategy {
 		for (ITargetClass clazz : model.getTargetClasses()) {
 			if (isSingleton(clazz)) {
 				clazz = new SingletonDecorator(PATTERN_TYPE.SINGLETON, "", clazz);
-				clazz.setColor("blue");
 				clazz.setPatternString("\\n\\<\\<Singleton\\>\\>");
 				
 				model.decorateClass(clazz);

@@ -9,17 +9,11 @@ import utils.DotClassUtils.RelationshipType;
 import visitor.ITraverser;
 
 public interface ITargetClass extends ITraverser {
-	public String getStyle();
-	
-	public void setStyle(String style);
-	
 	public String getClassName();
 	
-	public String getColor();
-	
-	public void setColor(String color);
-	
 	public String getPatternString();
+	
+	public String getPatternStringName();
 	
 	public void setPatternString(String pattern);
 

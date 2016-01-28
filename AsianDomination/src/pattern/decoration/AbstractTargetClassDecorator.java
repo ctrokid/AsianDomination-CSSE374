@@ -94,15 +94,6 @@ public abstract class AbstractTargetClassDecorator implements ITargetClass {
 		return _decoratedClass.getRelationship(type, subjectClass);
 	}
 	
-	@Override
-	public String getColor() {
-		return _decoratedClass.getColor();
-	}
-
-	@Override
-	public void setColor(String color) {
-		_decoratedClass.setColor(color);
-	}
 
 	@Override
 	public void setPatternString(String pattern) {
@@ -113,19 +104,15 @@ public abstract class AbstractTargetClassDecorator implements ITargetClass {
 	public String getPatternString() {
 		return _decoratedClass.getPatternString();
 	}
+	
+	@Override
+	public String getPatternStringName() {
+		return _decoratedClass.getPatternStringName();
+	}
 
 	@Override
 	public void accept(IVisitor v) {
 		_decoratedClass.accept(v);
 	}
 
-	@Override
-	public String getStyle() {
-		return _decoratedClass.getStyle();
-	}
-	
-	@Override
-	public void setStyle(String style) {
-		_decoratedClass.setStyle(style);
-	}
 }

@@ -9,6 +9,7 @@ import api.ITargetClass;
 import impl.ClassField;
 import impl.Relationship;
 import utils.AsmClassUtils;
+import utils.ClassStyle;
 import utils.DotClassUtils;
 import utils.DotClassUtils.RelationshipType;
 import utils.LaunchDiagramGenerator;
@@ -35,9 +36,9 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 			ITargetClass c = (ITargetClass) t;
 			StringBuilder sb = new StringBuilder();
 			String className = AsmClassUtils.GetStringStrippedByCharacter(c.getClassName(), '/');
-
+			ClassStyle style = new ClassStyle();
 			sb.append(className + "[\n\t");
-			sb.append("style = " + c.getStyle() + ", color = " + c.getColor() + ",label = \"{" + className + c.getPatternString() + "|");
+			sb.append(style.getStyleByType(c.getPatternStringName()) +",label = \"{" + className + c.getPatternString() + "|");
 			write(sb.toString());
 		});
 	}
