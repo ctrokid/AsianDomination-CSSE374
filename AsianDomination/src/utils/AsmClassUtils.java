@@ -56,25 +56,49 @@ public class AsmClassUtils {
 		StringBuilder sb = new StringBuilder();
 		String[] tokens = signature.split("<");
 
-		if (tokens.length > 2)
-			return "";
-		
-		// FIXME: Collection inside of a collection is not working right now.
 		for (int i = 1; i < tokens.length; i++) {
-			String str = "(" + tokens[i].substring(0, tokens[i].length() - 2) + ")";
-			// FIXME : these weird symbols are sometimes passed in from ClassFieldVisitor
-			if (str.contains("$") || str.contains("*") || str.contains("TK;TV"))
-				continue;
-
-			String params = SignatureParser.getParams(str, parseSlashes).toString();
-			String toAppend = params.substring(1, params.length() - 1);
-			
-			sb.append(toAppend);
-			
-			if (i != tokens.length - 1)
-				sb.append(',');
+			// check if it's a hash map
+			String[] split = tokens[i].split(";");
+			if (split.length > 2 || (split.length == 2 && !split[0].contains(">"))) {
+				// hash map logic
+				for (int j = 0; j < split.length; j++) {
+					if (split[j].charAt(0) == 'L') {
+						split[j] = split[j].replaceFirst("L", "");
+					}
+					
+					if (!split[j].contains(">")) {
+						String toAppend = split[j].replace("$", "/");
+						
+						if (parseSlashes)
+							toAppend = GetStringStrippedByCharacter(toAppend, '/');
+						
+						sb.append(toAppend);
+						
+						if (j != split.length - 1 && !split[j + 1].contains(">"))
+							sb.append(',');
+						else if (i != tokens.length -1)
+							sb.append(',');
+					}
+				}
+			} else {
+				String str = tokens[i];
+				
+				if (tokens[i].charAt(0) == 'L') {
+					str = str.replaceFirst("L", "");
+				}
+				
+				String toAppend = str.replace("$", "/");
+				
+				if (parseSlashes)
+					toAppend = GetStringStrippedByCharacter(toAppend, '/');
+				
+				sb.append(toAppend);
+				
+				if (i != tokens.length - 1)
+					sb.append(',');
+			}			
 		}
-
-		return sb.toString().replaceAll("\\$", ".");
+		
+		return sb.toString();
 	}
 }
