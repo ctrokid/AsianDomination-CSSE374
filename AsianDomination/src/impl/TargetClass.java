@@ -19,21 +19,16 @@ public class TargetClass implements ITargetClass {
 	private IClassDeclaration _declaration;
 	private HashMap<String, IClassMethod> _methodNameToClassMethod;
 	private HashMap<RelationshipType, List<Relationship>> _edges;
-
-	private String _color;
-	private String _patternString;
-	private String _style;
-
 	private Collection<IClassField> _fields;
+	
+	private String _patternString;
 
 	public TargetClass(String className) {
 		_fields = new ArrayList<IClassField>();
 		_declaration = null;
 		_methodNameToClassMethod = new LinkedHashMap<String, IClassMethod>();
 		_className = className;
-		_color = "black";
 		_patternString = "";
-		_style = "solid";
 
 		_edges = new HashMap<RelationshipType, List<Relationship>>();
 		for (RelationshipType type : RelationshipType.values()) {
@@ -84,6 +79,9 @@ public class TargetClass implements ITargetClass {
 
 	@Override
 	public void addRelationship(RelationshipType edgeType, String subjectClass) {
+		if (edgeType.equals(RelationshipType.USES) && _className.equals(subjectClass))
+			return;
+		
 		Relationship r = new Relationship(subjectClass, edgeType);
 
 		if (_edges.containsKey(edgeType)) {
@@ -157,5 +155,5 @@ public class TargetClass implements ITargetClass {
 		String pattern = _patternString.substring(6, _patternString.length() - 4);
 		return pattern;
 	}
-
+	
 }
