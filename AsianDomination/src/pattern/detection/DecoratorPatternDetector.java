@@ -111,6 +111,18 @@ public class DecoratorPatternDetector implements IPatternDetectionStrategy {
 		superClazz = _model.getTargetClassByName(superType);
 		superClazz = new DecoratorTargetClass(PATTERN_TYPE.DECORATOR_COMPONENT, "", superClazz);
 		_model.decorateClass(superClazz);
+		
+		tagConcreteDecorators(clazz.getClassName());
+	}
+	
+	private void tagConcreteDecorators(String superType) {
+		for (ITargetClass c : _model.getTargetClasses()) {
+			// found concrete decorator
+			if (c.containsRelationship(RelationshipType.INHERITANCE, superType)) {
+				c = new DecoratorTargetClass(PATTERN_TYPE.DECORATOR_CONCRETE, superType, c);
+				_model.decorateClass(c);
+			}
+		}
 	}
 
 }
