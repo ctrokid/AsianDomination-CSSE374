@@ -4,7 +4,6 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 
 import api.IClassMethod;
-import api.IProjectModel;
 import api.ITargetClass;
 
 import impl.ClassMethod;
@@ -15,14 +14,14 @@ import utils.DotClassUtils.RelationshipType;
 public class ClassMethodVisitor extends ClassVisitor {
 	private ITargetClass _targetClass;
 
-	public ClassMethodVisitor(int api, IProjectModel _model, String className) {
+	public ClassMethodVisitor(int api, ITargetClass targetClass) {
 		super(api);
-		this._targetClass = _model.getTargetClassByName(className);
+		this._targetClass = targetClass;
 	}
 
-	public ClassMethodVisitor(int api, ClassVisitor decorated, IProjectModel _model, String className) {
+	public ClassMethodVisitor(int api, ClassVisitor decorated, ITargetClass targetClass) {
 		super(api, decorated);
-		this._targetClass = _model.getTargetClassByName(className);
+		this._targetClass = targetClass;
 	}
 
 	@Override

@@ -1,11 +1,9 @@
 package asm.visitor;
 
-
 import java.util.Arrays;
 
 import org.objectweb.asm.ClassVisitor;
 
-import api.IProjectModel;
 import api.ITargetClass;
 import impl.ClassDeclaration;
 import utils.DotClassUtils.RelationshipType;
@@ -13,9 +11,9 @@ import utils.DotClassUtils.RelationshipType;
 public class ClassDeclarationVisitor extends ClassVisitor {
 	protected ITargetClass _targetClass;
 	
-	public ClassDeclarationVisitor(int api,IProjectModel _model, String className) {
+	public ClassDeclarationVisitor(int api, ITargetClass targetClass) {
 		super(api);
-		_targetClass = _model.getTargetClassByName(className);
+		_targetClass = targetClass;
 	}
 
 	@Override

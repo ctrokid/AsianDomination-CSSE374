@@ -49,24 +49,12 @@ public class ProjectModel implements IProjectModel {
 
 	@Override
 	public void addClass(String classPath) {
-		ITargetClass clazz = new TargetClass(classPath);
 		if(_targetClasses.containsKey(classPath)){
 			return;
 		}
 		
+		ITargetClass clazz = dynamicallyReadClass(classPath);
 		_targetClasses.put(classPath, clazz);
-		
-		try {
-			ClassReader reader = new ClassReader(classPath);
-			
-			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, this, classPath);
-			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor, this, classPath);
-			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, this, classPath);
-			
-			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
@@ -95,6 +83,33 @@ public class ProjectModel implements IProjectModel {
 		
 	}
 	
+	@Override
+	public ITargetClass forcefullyGetClassByName(String className) {
+		ITargetClass clazz = getTargetClassByName(className);
+		
+		if (clazz == null) {
+			return dynamicallyReadClass(className);
+		}
+		
+		return clazz;
+	}
 	
+	private ITargetClass dynamicallyReadClass(String classPath) {
+		ITargetClass clazz = new TargetClass(classPath);
+		
+		try {
+			ClassReader reader = new ClassReader(classPath);
+			
+			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, clazz);
+			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor, clazz);
+			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, clazz);
+			
+			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return clazz;
+	}
 
 }

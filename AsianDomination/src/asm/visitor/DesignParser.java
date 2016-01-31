@@ -42,6 +42,8 @@ public class DesignParser {
 				continue;
 			
 			IProjectModel model = new ProjectModel(inputCommand);
+			
+			model.build();
 			model.printModel();
 		}
 	}
