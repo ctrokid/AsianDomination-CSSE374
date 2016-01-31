@@ -47,22 +47,28 @@ public class AdapterPatternDetector implements IPatternDetectionStrategy {
 		// grab the adapter, adaptee, and target
 		// TODO:FIXME This code is really ugly, maybe you can fix it later
 		clazz = new AdapterDecorator(PATTERN_TYPE.ADAPTER_ADAPTER, "", clazz);
-		ITargetClass adapteee = model.getTargetClassByName(adaptee);
-		ITargetClass targ = model.getTargetClassByName(target.get(0));
-		adapteee = new AdapterDecorator(PATTERN_TYPE.ADAPTER_ADAPTEE, "", adapteee);
+		
+		ITargetClass adapteeClass = model.forcefullyGetClassByName(adaptee);
+		
+		ITargetClass targ = model.forcefullyGetClassByName(target.get(0));
+		adapteeClass = new AdapterDecorator(PATTERN_TYPE.ADAPTER_ADAPTEE, "", adapteeClass);
 		targ = new AdapterDecorator(PATTERN_TYPE.ADAPTER_TARGET, "", targ);
 		
-		Relationship adaptorRelation = clazz.getRelationship(RelationshipType.ASSOCIATION, adapteee.getClassName());
+		Relationship adaptorRelation = clazz.getRelationship(RelationshipType.ASSOCIATION, adapteeClass.getClassName());
 		adaptorRelation.setDecoratedType("\\<\\<adapts\\>\\>");
 
 		model.decorateClass(clazz);
-		model.decorateClass(adapteee);
+		model.decorateClass(adapteeClass);
 		model.decorateClass(targ);
 		return;
 	}
 
 	private boolean isValidMethodCall(Collection<IClassMethod> methods, String adaptee) {
 		for (IClassMethod m : methods) {
+			// don't check constructor
+			if (m.getMethodName().contains("<"))
+				continue;
+			
 			// check each statement
 			Collection<IMethodStatement> statms = m.getMethodStatements();
 			boolean isValid = false;

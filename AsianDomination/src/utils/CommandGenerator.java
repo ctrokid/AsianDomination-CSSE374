@@ -1,8 +1,13 @@
 package utils;
 
+import java.util.Arrays;
+
 import input.InputCommand;
 import input.SequenceInputCommand;
 import input.UMLInputCommand;
+import pattern.detection.AdapterPatternDetector;
+import pattern.detection.DecoratorPatternDetector;
+import pattern.detection.SingletonPatternDetector;
 
 public class CommandGenerator {
 	public static int SEQUENCE_DIAGRAM_MAX_DEPTH = 5;
@@ -12,6 +17,8 @@ public class CommandGenerator {
 		M2_AbstractPizzaStoreFactoryUml,
 		M3_CollectionsShuffleSD,
 		M4_ChocolateBoiler,
+		M5_Lab2_1Uml,
+		M5_Lab5_1Uml,
 		ProjectUml,
 		ProjectSD
 	}
@@ -32,6 +39,12 @@ public class CommandGenerator {
 			case M4_ChocolateBoiler:
 				inputCommand = getM4ChocolateBoilerUML();
 				break;
+			case M5_Lab2_1Uml:
+				inputCommand = getM5Lab2UML();
+				break;
+			case M5_Lab5_1Uml:
+				inputCommand = getM5Lab5UML();
+				break;
 			case ProjectUml:
 				inputCommand = getProjectUML();
 				break;
@@ -43,6 +56,42 @@ public class CommandGenerator {
 		return inputCommand;
 	}
 	
+	private static InputCommand getM5Lab5UML() {
+		InputCommand cmd = null;
+		String[] classes = new String[] {
+			"problem/client/App",
+			"problem/client/IteratorToEnumerationAdapter",
+			"problem/lib/LinearTransformer"
+		};
+		String outputPath = "demo_diagrams/M5Lab5";
+		
+		cmd = new UMLInputCommand(outputPath, outputPath, classes, Arrays.asList(new AdapterPatternDetector()));
+		
+		return cmd;
+	}
+
+	private static InputCommand getM5Lab2UML() {
+		InputCommand cmd = null;
+		String[] classes = new String[] {
+			"examples/decorator/Beverage",
+			"examples/decorator/CondimentDecorator",
+			"examples/decorator/Milk",
+			"examples/decorator/DarkRoast",
+			"examples/decorator/Decaf",
+			"examples/decorator/Espresso",
+			"examples/decorator/HouseBlend",
+			"examples/decorator/Mocha",
+			"examples/decorator/Soy",
+			"examples/decorator/StarbuzzCoffee",
+			"examples/decorator/Whip"
+		};
+		String outputPath = "demo_diagrams/M5Lab2";
+		
+		cmd = new UMLInputCommand(outputPath, outputPath, classes, Arrays.asList(new DecoratorPatternDetector()));
+		
+		return cmd;
+	}
+
 	private static InputCommand getM1LabUML() {
 		InputCommand cmd = null;
 		String[] classes = new String[] {
@@ -109,7 +158,7 @@ public class CommandGenerator {
 		};
 		String outputPath = "demo_diagrams/M4ChocolateBoiler";
 		
-		cmd = new UMLInputCommand(outputPath, outputPath, classes, null);
+		cmd = new UMLInputCommand(outputPath, outputPath, classes, Arrays.asList(new SingletonPatternDetector()));
 		
 		return cmd;
 	}
@@ -131,6 +180,7 @@ public class CommandGenerator {
 			"impl/ProjectModel",
 			"impl/TargetClass",
 			"impl/PrintCommand",
+			"impl/Relationship",
 			"asm/visitor/ClassDeclarationVisitor",
 			"asm/visitor/ClassFieldVisitor",
 			"asm/visitor/ClassMethodVisitor",
@@ -155,19 +205,19 @@ public class CommandGenerator {
 			"visitor/IVisitMethod",
 			"visitor/IVisitor",
 			"visitor/Visitor",
-			"visitor/LookupKey",
+//			"visitor/LookupKey",
 			"pattern/decoration/AbstractTargetClassDecorator",
 			"pattern/decoration/AdapterDecorator",
 			"pattern/decoration/DecoratorTargetClass",
 			"pattern/decoration/SingletonDecorator",
-			"pattern/detection/AdaptorPatternDetector",
+			"pattern/detection/AdapterPatternDetector",
 			"pattern/detection/DecoratorPatternDetector",
 			"pattern/detection/SingletonPatternDetector",
 			"pattern/detection/IPatternDetectionStrategy",
 		};
 		String outputPath = "demo_diagrams/ProjectUML";
 		
-		cmd = new UMLInputCommand(outputPath, outputPath, classes, null);
+		cmd = new UMLInputCommand(outputPath, outputPath, classes, Arrays.asList(new SingletonPatternDetector(), new AdapterPatternDetector(), new DecoratorPatternDetector()));
 		
 		return cmd;
 	}
