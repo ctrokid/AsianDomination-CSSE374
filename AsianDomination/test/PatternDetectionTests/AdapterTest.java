@@ -35,8 +35,7 @@ public class AdapterTest {
 		String[] classes = new String[] { "examples/adapter/Adaptee",
 										  "examples/adapter/Adapter",
 										  "examples/adapter/ITarget"
-										  };
-
+										 };
 		IProjectModel model = buildModel(classes, "docs/M5/SimpleAdapterTest");
 		SingletonPatternDetector s = new SingletonPatternDetector();
 		s.detectPatterns(model);
@@ -52,7 +51,28 @@ public class AdapterTest {
 		ITargetClass ITarget = i.next();
 		assertTrue(ITarget instanceof AdapterDecorator);
 		
-		model.printModel();
+//		model.printModel();
+	}
+	
+	@Test
+	public void adapterTest() {
+		String[] classes = new String[] { }; //add classes in here, you could create bad classes
+		//you don't have to change this
+		IProjectModel model = buildModel(classes, "docs/M5/SimpleAdapterTest");
+		SingletonPatternDetector s = new SingletonPatternDetector();
+		s.detectPatterns(model);
+		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
+		//the second person modify the code below
+		
+		ITargetClass Adaptee = i.next();
+		assertTrue(Adaptee instanceof AdapterDecorator);
+		
+		ITargetClass Adapter = i.next();
+		assertTrue(Adapter instanceof AdapterDecorator);
+		
+		ITargetClass ITarget = i.next();
+		assertTrue(ITarget instanceof AdapterDecorator);
+//		model.printModel();
 	}
 
 	@After
