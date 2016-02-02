@@ -6,7 +6,6 @@ import java.util.List;
 import api.IClassField;
 import api.IClassMethod;
 import api.ITargetClass;
-import impl.ClassField;
 import impl.Relationship;
 import utils.AsmClassUtils;
 import utils.ClassStyle;
@@ -122,18 +121,6 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 
 		for (ITargetClass clazz : _projectModel.getTargetClasses()) {
 			clazz.accept(this);
-
-			for (IClassField field : clazz.getFields()) {
-				field.accept(this);
-			}
-
-			postVisit(new ClassField(null, 0, null, null));
-
-			for (IClassMethod method : clazz.getMethods()) {
-				method.accept(this);
-			}
-
-			postVisit(clazz);
 		}
 
 		for (String relationship : _relationships) {

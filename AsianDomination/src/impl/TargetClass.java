@@ -69,6 +69,18 @@ public class TargetClass implements ITargetClass {
 	@Override
 	public void accept(IVisitor v) {
 		v.visit(this);
+		
+		for (IClassField field : _fields) {
+			field.accept(v);
+		}
+
+		v.postVisit(new ClassField(null, 0, null, null));
+
+		for (IClassMethod method : getMethods()) {
+			method.accept(v);
+		}
+
+		v.postVisit(this);
 	}
 
 	@Override
