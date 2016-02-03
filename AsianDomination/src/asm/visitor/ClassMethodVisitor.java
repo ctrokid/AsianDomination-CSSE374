@@ -4,6 +4,7 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 
 import api.IClassMethod;
+import api.IRelationshipManager;
 import api.ITargetClass;
 
 import impl.ClassMethod;
@@ -13,15 +14,17 @@ import utils.DotClassUtils.RelationshipType;
 
 public class ClassMethodVisitor extends ClassVisitor {
 	private ITargetClass _targetClass;
-
-	public ClassMethodVisitor(int api, ITargetClass targetClass) {
+	private IRelationshipManager _relationshipManager;
+	public ClassMethodVisitor(int api, ITargetClass targetClass, IRelationshipManager relationshipManager) {
 		super(api);
 		this._targetClass = targetClass;
+		this._relationshipManager = relationshipManager;
 	}
 
-	public ClassMethodVisitor(int api, ClassVisitor decorated, ITargetClass targetClass) {
+	public ClassMethodVisitor(int api, ClassVisitor decorated, ITargetClass targetClass, IRelationshipManager relationshipManager) {
 		super(api, decorated);
 		this._targetClass = targetClass;
+		this._relationshipManager = relationshipManager;
 	}
 
 	@Override
@@ -33,13 +36,13 @@ public class ClassMethodVisitor extends ClassVisitor {
 		IClassMethod classMethod = new ClassMethod(name, desc, access, type);
 		
 		String args = AsmClassUtils.GetArguments(desc, false);
-		MethodVisitor _decorator = new MethodAssociationVisitor(Opcodes.ASM5, toDecorate, _targetClass, args, classMethod);
+		MethodVisitor _decorator = new MethodAssociationVisitor(Opcodes.ASM5, toDecorate, _targetClass, args, classMethod, this._relationshipManager);
 		
 		//FIXME:TODO Watch for UML bug totally ignoring static now
 		if (!name.equals("clinit")) {
 			_targetClass.addClassMethod(classMethod);
 			if (!name.contains("<")) {
-				_targetClass.addRelationship(RelationshipType.USES, type);
+				_relationshipManager.addRelationship(_targetClass.getClassName(),RelationshipType.USES, type);
 			}
 		}
 		return _decorator;
