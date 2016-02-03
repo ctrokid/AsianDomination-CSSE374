@@ -5,8 +5,11 @@ import input.InputCommand;
 import input.UMLInputCommand;
 import pattern.decoration.AdapterDecorator;
 import pattern.detection.AdapterPatternDetector;
+import pattern.detection.IDetectionVisitor;
 import pattern.detection.IPatternDetectionStrategy;
+import pattern.detection.SingletonDetectionVisitor;
 import pattern.detection.SingletonPatternDetector;
+import visitor.Visitor;
 
 import static org.junit.Assert.*;
 
@@ -32,47 +35,42 @@ public class AdapterTest {
 	@Test
 	public void simpleAdapterTest() {
 
-		String[] classes = new String[] { "examples/adapter/Adaptee",
-										  "examples/adapter/Adapter",
-										  "examples/adapter/ITarget"
-										 };
+		String[] classes = new String[] { "examples/adapter/Adaptee", "examples/adapter/Adapter",
+				"examples/adapter/ITarget" };
 		IProjectModel model = buildModel(classes, "docs/M5/SimpleAdapterTest");
-		SingletonPatternDetector s = new SingletonPatternDetector();
-		s.detectPatterns(model);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
-		
+
 		ITargetClass Adaptee = i.next();
-		
+
 		assertTrue(Adaptee instanceof AdapterDecorator);
-		
+
 		ITargetClass Adapter = i.next();
 		assertTrue(Adapter instanceof AdapterDecorator);
-		
+
 		ITargetClass ITarget = i.next();
 		assertTrue(ITarget instanceof AdapterDecorator);
-		
-//		model.printModel();
+
+		// model.printModel();
 	}
-	
+
 	@Test
 	public void adapterTest() {
-		String[] classes = new String[] { }; //add classes in here, you could create bad classes
-		//you don't have to change this
+		String[] classes = new String[] {}; // add classes in here, you could
+											// create bad classes
+		// you don't have to change this
 		IProjectModel model = buildModel(classes, "docs/M5/SimpleAdapterTest");
-		SingletonPatternDetector s = new SingletonPatternDetector();
-		s.detectPatterns(model);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
-		//the second person modify the code below
-		
+		// the second person modify the code below
+
 		ITargetClass Adaptee = i.next();
 		assertTrue(Adaptee instanceof AdapterDecorator);
-		
+
 		ITargetClass Adapter = i.next();
 		assertTrue(Adapter instanceof AdapterDecorator);
-		
+
 		ITargetClass ITarget = i.next();
 		assertTrue(ITarget instanceof AdapterDecorator);
-//		model.printModel();
+		// model.printModel();
 	}
 
 	@After
@@ -82,12 +80,10 @@ public class AdapterTest {
 
 	private IProjectModel buildModel(String[] classes, String path) {
 		List<IPatternDetectionStrategy> detectors = Arrays.asList(new AdapterPatternDetector());
-		_cmd = new UMLInputCommand(path, path, classes, detectors);
+		List<IDetectionVisitor> detectVisitors = Arrays.asList(new SingletonDetectionVisitor(new Visitor()));
+		_cmd = new UMLInputCommand(path, path, classes, detectVisitors, detectors);
 		IProjectModel model = new ProjectModel(_cmd);
 		model.build();
 		return model;
 	}
 }
-
-
-
