@@ -23,6 +23,12 @@ public class ClassStyle {
 		String decoratorStyle = "style = filled, fillcolor = green";
 		styles.put("decorator", decoratorStyle);
 		styles.put("component", decoratorStyle);
+		
+		// Composite
+		String compositeStyle = "style = filled, fillcolor = yellow";
+		styles.put("Composite", compositeStyle);
+		styles.put("Component", compositeStyle);
+		styles.put("Leaf", compositeStyle);
 	}
 
 	public String getStyleByType(String type) {
