@@ -119,7 +119,7 @@ public class TargetClass implements ITargetClass {
 		List<Relationship> particutlarEdges = _edges.get(edgeType);
 
 		for (Relationship r : particutlarEdges) {
-			if (r.getSuperClass().equals(subjectClass))
+			if (r.getDependentClass().equals(subjectClass))
 				return true;
 		}
 		return false;
@@ -143,7 +143,7 @@ public class TargetClass implements ITargetClass {
 		List<Relationship> relationships = _edges.get(type);
 
 		for (Relationship r : relationships) {
-			if (r.getSuperClass().equals(subjectClass))
+			if (r.getDependentClass().equals(subjectClass))
 				return r;
 		}
 

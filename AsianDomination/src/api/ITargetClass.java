@@ -1,9 +1,6 @@
 package api;
 
 import java.util.Collection;
-import java.util.List;
-
-import impl.Relationship;
 import utils.DotClassUtils.RelationshipType;
 import visitor.ITraverser;
 
@@ -24,11 +21,11 @@ public interface ITargetClass extends ITraverser {
 
 	public IClassMethod getMethodByName(String methodName, String params);
 
-	public void addRelationship(RelationshipType edgeType, String subjectClass);
+//	public void addRelationship(RelationshipType edgeType, String subjectClass);
 
-	public List<Relationship> getRelationEdges();
+//	public List<Relationship> getRelationEdges();
 	
-	public Relationship getRelationship(RelationshipType type, String subjectClass);
+//	public Relationship getRelationship(RelationshipType type, String subjectClass);
 
 	public void setClassDeclaration(IClassDeclaration classDeclaration);
 

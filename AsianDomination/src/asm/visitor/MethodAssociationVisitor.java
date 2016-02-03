@@ -5,6 +5,7 @@ import org.objectweb.asm.MethodVisitor;
 import api.IClassMethod;
 import api.ITargetClass;
 import impl.MethodStatement;
+import impl.RelationshipManager;
 import utils.DotClassUtils.RelationshipType;
 
 public class MethodAssociationVisitor extends MethodVisitor {
@@ -13,7 +14,7 @@ public class MethodAssociationVisitor extends MethodVisitor {
 	private ITargetClass _targetClass;
 
 	public MethodAssociationVisitor(int api, MethodVisitor decorated, ITargetClass targetClass, String arguments,
-			IClassMethod classMethod) {
+			IClassMethod classMethod, RelationshipManager _relationshipManager) {
 		super(api, decorated);
 		_targetClass = targetClass;
 		_arguments = arguments;
@@ -28,6 +29,7 @@ public class MethodAssociationVisitor extends MethodVisitor {
 		// FIXME: could be a bug for singletons
 		 if (!className.equals(_targetClass.getClassName())) {
 		_targetClass.addRelationship(RelationshipType.ASSOCIATION, className);
+		
 		 }
 	}
 
