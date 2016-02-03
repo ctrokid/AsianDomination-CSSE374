@@ -14,7 +14,7 @@ public class Relationship implements IRelationship{
 		_decoratedType = "";
 	}
 
-	public String getSuperClass() {
+	public String getDependentClass() {
 		return this._superClass;
 	}
 

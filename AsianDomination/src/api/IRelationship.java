@@ -4,7 +4,7 @@ import utils.DotClassUtils.RelationshipType;
 
 public interface IRelationship {
 
-	public String getSuperClass();
+	public String getDependentClass();
 
 	public RelationshipType getRelationshipType();
 

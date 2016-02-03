@@ -53,8 +53,8 @@ public class AdapterPatternDetector implements IPatternDetectionStrategy {
 		ITargetClass targ = model.forcefullyGetClassByName(target.get(0));
 		adapteeClass = new AdapterDecorator(PATTERN_TYPE.ADAPTER_ADAPTEE, "", adapteeClass);
 		targ = new AdapterDecorator(PATTERN_TYPE.ADAPTER_TARGET, "", targ);
-		
-		Relationship adaptorRelation = clazz.getRelationship(RelationshipType.ASSOCIATION, adapteeClass.getClassName());
+
+		Relationship adaptorRelation = model.getRelationshipManager().getClassRelationship(clazz.getClassName(), RelationshipType.ASSOCIATION, adapteeClass.getClassName());
 		adaptorRelation.setDecoratedType("\\<\\<adapts\\>\\>");
 
 		model.decorateClass(clazz);

@@ -47,12 +47,12 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 			write("}\"\n]\n\n");
 			ITargetClass c = (ITargetClass) t;
 			
-			for (Relationship r : c.getRelationEdges()) {
-				if (_projectModel.getTargetClassByName(r.getSuperClass()) == null)
+			for (Relationship r : _projectModel.getRelationshipManager().getClassRelationships(c.getClassName())) {
+				if (_projectModel.getTargetClassByName(r.getDependentClass()) == null)
 					continue;
 				
 				String thisClass = AsmClassUtils.GetStringStrippedByCharacter(c.getClassName(), '/');
-				String subjectClass = AsmClassUtils.GetStringStrippedByCharacter(r.getSuperClass(), '/');
+				String subjectClass = AsmClassUtils.GetStringStrippedByCharacter(r.getDependentClass(), '/');
 				
 				String relationship = thisClass + " -> " + subjectClass + "[" + DotClassUtils.CreateRelationshipEdge(r.getRelationshipType());
 				
@@ -65,7 +65,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 					return;
 				
 				if (r.getRelationshipType().equals(RelationshipType.USES)) {
-					if (!c.containsRelationship(RelationshipType.ASSOCIATION, r.getSuperClass())) {
+					if (_projectModel.getRelationshipManager().getClassRelationship(c.getClassName(), RelationshipType.ASSOCIATION, r.getDependentClass()) == null) {
 						_relationships.add(relationship);
 					}						
 				} else {

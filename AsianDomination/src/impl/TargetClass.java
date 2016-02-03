@@ -90,64 +90,12 @@ public class TargetClass implements ITargetClass {
 	}
 
 	@Override
-	public void addRelationship(RelationshipType edgeType, String subjectClass) {
-		if (edgeType.equals(RelationshipType.USES) && _className.equals(subjectClass))
-			return;
-		
-		Relationship r = new Relationship(subjectClass, edgeType);
-
-		if (_edges.containsKey(edgeType)) {
-			_edges.get(edgeType).add(r);
-		} else {
-			List<Relationship> temp = new ArrayList<Relationship>();
-			temp.add(r);
-			_edges.put(edgeType, temp);
-		}
-	}
-
-	@Override
 	public void setClassDeclaration(IClassDeclaration classDeclaration) {
 		_declaration = classDeclaration;
 	}
 
 	public IClassDeclaration getDeclaration() {
 		return _declaration;
-	}
-
-	@Override
-	public boolean containsRelationship(RelationshipType edgeType, String subjectClass) {
-		List<Relationship> particutlarEdges = _edges.get(edgeType);
-
-		for (Relationship r : particutlarEdges) {
-			if (r.getSuperClass().equals(subjectClass))
-				return true;
-		}
-		return false;
-	}
-
-	@Override
-	public List<Relationship> getRelationEdges() {
-		List<Relationship> relationships = new ArrayList<Relationship>();
-
-		for (RelationshipType type : RelationshipType.values()) {
-			for (Relationship r : _edges.get(type)) {
-				relationships.add(r);
-			}
-		}
-
-		return relationships;
-	}
-
-	@Override
-	public Relationship getRelationship(RelationshipType type, String subjectClass) {
-		List<Relationship> relationships = _edges.get(type);
-
-		for (Relationship r : relationships) {
-			if (r.getSuperClass().equals(subjectClass))
-				return r;
-		}
-
-		return null;
 	}
 
 	@Override

@@ -8,6 +8,8 @@ public interface IProjectModel{
 	public void buildModel();
 	public void printModel();
 	
+	public IRelationshipManager getRelationshipManager();
+	
 	public Collection<ITargetClass> getTargetClasses();
 	public ITargetClass getTargetClassByName(String className);
 	public ITargetClass forcefullyGetClassByName(String className);
