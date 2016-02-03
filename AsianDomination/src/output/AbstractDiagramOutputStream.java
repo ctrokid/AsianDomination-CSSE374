@@ -15,7 +15,7 @@ public abstract class AbstractDiagramOutputStream implements IDiagramOutputStrea
 	protected IProjectModel _projectModel;
 	protected OutputStream _outputStream;
 	protected String _asmOutputPath;
-	private IVisitor _visitor;
+	protected IVisitor _visitor;
 
 	public AbstractDiagramOutputStream(String asmOutputPath, IVisitor visitor) {
 		_asmOutputPath = asmOutputPath;
@@ -42,25 +42,5 @@ public abstract class AbstractDiagramOutputStream implements IDiagramOutputStrea
 
 	public void setProjectModel(IProjectModel projectModel) {
 		_projectModel = projectModel;
-	}
-
-	public void preVisit(ITraverser i) {
-		_visitor.preVisit(i);
-	}
-
-	public void visit(ITraverser i) {
-		_visitor.visit(i);
-	}
-
-	public void postVisit(ITraverser i) {
-		_visitor.postVisit(i);
-	}
-	
-	public void addVisit(VisitType visitType, Class<?> clazz, IVisitMethod m) {
-		_visitor.addVisit(visitType, clazz, m);
-	}
-
-	public void removeVisit(VisitType visitType, Class<?> clazz) {
-		_visitor.removeVisit(visitType, clazz);
 	}
 }

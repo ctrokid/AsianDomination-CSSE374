@@ -2,12 +2,14 @@ package construction;
 
 import api.IClassMethod;
 import api.IMethodStatement;
+import api.IProjectModel;
 import api.ITargetClass;
 
 public class SDAddStrategy extends AbstractAddStrategy {
 	private int MAX_CALLDEPTH = 5;
 
-	public SDAddStrategy(int maxCallDepth) {
+	public SDAddStrategy(int maxCallDepth, IProjectModel model) {
+		super(model);
 		MAX_CALLDEPTH = maxCallDepth;
 	}
 	

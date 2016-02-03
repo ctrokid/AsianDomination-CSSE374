@@ -1,5 +1,6 @@
 package input;
 
+import api.IProjectModel;
 import construction.IAddStrategy;
 import construction.SDAddStrategy;
 import output.IDiagramOutputStream;
@@ -43,8 +44,8 @@ public class SequenceInputCommand extends InputCommand {
 		};
 		return params;
 	}
-	public IAddStrategy getAddStrategy(){
-		return new SDAddStrategy(_maxCallDepth);
+	public IAddStrategy getAddStrategy(IProjectModel model){
+		return new SDAddStrategy(_maxCallDepth, model);
 	}
 	public IDiagramOutputStream getOutputStream(){
 		return new SDDiagramOutputStream(_asmOutputPath + ".sd", _initialClass, _methodName, _parameters, _maxCallDepth, new Visitor());

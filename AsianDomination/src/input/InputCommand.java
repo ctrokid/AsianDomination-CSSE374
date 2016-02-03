@@ -1,5 +1,6 @@
 package input;
 
+import api.IProjectModel;
 import construction.IAddStrategy;
 import output.IDiagramOutputStream;
 
@@ -21,6 +22,6 @@ public abstract class InputCommand {
 	}
 	
 	public abstract String[] getInputParameters();
-	public abstract IAddStrategy getAddStrategy();
+	public abstract IAddStrategy getAddStrategy(IProjectModel model);
 	public abstract IDiagramOutputStream getOutputStream();
 }

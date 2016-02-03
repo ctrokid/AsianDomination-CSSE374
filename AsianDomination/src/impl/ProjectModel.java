@@ -64,8 +64,7 @@ public class ProjectModel implements IProjectModel {
 
 	@Override
 	public void build() {
-		IAddStrategy addStrategy  = _command.getAddStrategy();
-		addStrategy.setProjectModel(this);
+		IAddStrategy addStrategy  = _command.getAddStrategy(this);
 		addStrategy.buildModel(_command.getInputParameters());
 		
 	}
@@ -106,6 +105,7 @@ public class ProjectModel implements IProjectModel {
 			
 			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
 		} catch (IOException e) {
+			System.err.println("Can not find " + classPath);
 			e.printStackTrace();
 		}
 		

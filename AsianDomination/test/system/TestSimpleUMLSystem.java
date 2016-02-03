@@ -7,7 +7,9 @@ import output.AbstractDiagramOutputStream;
 import output.IDiagramOutputStream;
 import pattern.detection.AdapterPatternDetector;
 import pattern.detection.DecoratorPatternDetector;
+import pattern.detection.IDetectionVisitor;
 import pattern.detection.IPatternDetectionStrategy;
+import pattern.detection.SingletonDetectionVisitor;
 import pattern.detection.SingletonPatternDetector;
 import visitor.Visitor;
 
@@ -107,59 +109,59 @@ public class TestSimpleUMLSystem {
 	@Test
 	public void TestUMLForProjectSubsystem() {
 		String[] classes = new String[] {
-			"api/IClassField",
-			"api/IClassMethod",
-			"api/IClassDeclaration",
-			"api/IMethodStatement",
-			"api/IProjectModel",
-			"api/ITargetClass",
-			"api/ITargetClassPart",
-			"impl/ClassField",
-			"impl/ClassMethod",
-			"impl/ClassDeclaration",
-			"impl/MethodStatement",
-			"impl/ProjectModel",
-			"impl/TargetClass",
-			"impl/PrintCommand",
-			"asm/visitor/ClassDeclarationVisitor",
-			"asm/visitor/ClassFieldVisitor",
-			"asm/visitor/ClassMethodVisitor",
-			"asm/visitor/MethodAssociationVisitor",
-			"asm/visitor/DesignParser",
-			"construction/AbstractAddStrategy",
-			"construction/IAddStrategy",
-			"construction/SDAddStrategy",
-			"construction/UMLAddStrategy",
-			"input/InputCommand",
-			"input/SequenceInputCommand",
-			"input/UMLInputCommand",
-			"output/AbstractDiagramOutputStream",
-			"output/IDiagramOutputStream",
-			"output/SDDiagramOutputStream",
-			"output/UMLDiagramOutputStream",
-			"utils/AsmClassUtils",
-			"utils/DotClassUtils",
-			"utils/LaunchDiagramGenerator",
-			"utils/PackageInspector",
-			"visitor/ITraverser",
-			"visitor/IVisitMethod",
-			"visitor/IVisitor",
-			"visitor/Visitor",
-			"visitor/LookupKey",
-			"pattern/decoration/AbstractTargetClassDecorator",
-			"pattern/decoration/AdapterDecorator",
-			"pattern/decoration/DecoratorTargetClass",
-			"pattern/decoration/SingletonDecorator",
-			"pattern/detection/AdaptorPatternDetector",
-			"pattern/detection/DecoratorPatternDetector",
-			"pattern/detection/SingletonPatternDetector",
-			"pattern/detection/IPatternDetectionStrategy",
-//				"headfirst/singleton/chocolate/ChocolateBoiler",
-//				"headfirst/singleton/chocolate/ChocolateController"
-//			"examples/simple/SingletonExample",
-//			"examples/decorator/Beverage",
-//			"examples/decorator/CondimentDecorator",
-//			"examples/decorator/Milk",
+//			"api/IClassField",
+//			"api/IClassMethod",
+//			"api/IClassDeclaration",
+//			"api/IMethodStatement",
+//			"api/IProjectModel",
+//			"api/ITargetClass",
+//			"api/ITargetClassPart",
+//			"impl/ClassField",
+//			"impl/ClassMethod",
+//			"impl/ClassDeclaration",
+//			"impl/MethodStatement",
+//			"impl/ProjectModel",
+//			"impl/TargetClass",
+//			"impl/PrintCommand",
+//			"asm/visitor/ClassDeclarationVisitor",
+//			"asm/visitor/ClassFieldVisitor",
+//			"asm/visitor/ClassMethodVisitor",
+//			"asm/visitor/MethodAssociationVisitor",
+//			"asm/visitor/DesignParser",
+//			"construction/AbstractAddStrategy",
+//			"construction/IAddStrategy",
+//			"construction/SDAddStrategy",
+//			"construction/UMLAddStrategy",
+//			"input/InputCommand",
+//			"input/SequenceInputCommand",
+//			"input/UMLInputCommand",
+//			"output/AbstractDiagramOutputStream",
+//			"output/IDiagramOutputStream",
+//			"output/SDDiagramOutputStream",
+//			"output/UMLDiagramOutputStream",
+//			"utils/AsmClassUtils",
+//			"utils/DotClassUtils",
+//			"utils/LaunchDiagramGenerator",
+//			"utils/PackageInspector",
+//			"visitor/ITraverser",
+//			"visitor/IVisitMethod",
+//			"visitor/IVisitor",
+//			"visitor/Visitor",
+//			"visitor/LookupKey",
+//			"pattern/decoration/AbstractTargetClassDecorator",
+//			"pattern/decoration/AdapterDecorator",
+//			"pattern/decoration/DecoratorTargetClass",
+//			"pattern/decoration/SingletonDecorator",
+//			"pattern/detection/AdaptorPatternDetector",
+//			"pattern/detection/DecoratorPatternDetector",
+//			"pattern/detection/SingletonPatternDetector",
+//			"pattern/detection/IPatternDetectionStrategy",
+				"headfirst/singleton/chocolate/ChocolateBoiler",
+				"headfirst/singleton/chocolate/ChocolateController",
+			"examples/singleton/SingletonExample",
+			"examples/decorator/Beverage",
+			"examples/decorator/CondimentDecorator",
+			"examples/decorator/Milk",
 //				"java/io/FilterInputStream",
 //				"java/lang/Runtime",
 //				"java/awt/Desktop",
@@ -174,10 +176,12 @@ public class TestSimpleUMLSystem {
 //				"AdapterDummieClasses/ITarget"
 		};
 		
-		List<IPatternDetectionStrategy> detectors = Arrays.asList(new SingletonPatternDetector(), new DecoratorPatternDetector(), new AdapterPatternDetector());
-		_cmd = new UMLInputCommand("input_output/testProjectSubsystem", "input_output/testProjectSubsystem", classes, detectors);
+		List<IDetectionVisitor> detectVisitor = Arrays.asList(new SingletonDetectionVisitor(new Visitor()));
+		List<IPatternDetectionStrategy> detectors = Arrays.asList(new DecoratorPatternDetector(), new AdapterPatternDetector());
+		_cmd = new UMLInputCommand("input_output/testProjectSubsystem", "input_output/testProjectSubsystem", classes, detectVisitor, detectors);
 		IProjectModel model = new ProjectModel(_cmd);
-		model.parseModel();
+		model.build();
+		model.printModel();
 	}
 	
 //	@Test

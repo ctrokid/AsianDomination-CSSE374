@@ -31,7 +31,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 	}
 
 	protected void setupVisitTargetClass() {
-		super.addVisit(VisitType.Visit, ITargetClass.class, (ITraverser t) -> {
+		_visitor.addVisit(VisitType.Visit, ITargetClass.class, (ITraverser t) -> {
 			ITargetClass c = (ITargetClass) t;
 			StringBuilder sb = new StringBuilder();
 			String className = AsmClassUtils.GetStringStrippedByCharacter(c.getClassName(), '/');
@@ -43,7 +43,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 	}
 
 	protected void setupPostVisitTargetClass() {
-		super.addVisit(VisitType.PostVisit, ITargetClass.class, (ITraverser t) -> {
+		_visitor.addVisit(VisitType.PostVisit, ITargetClass.class, (ITraverser t) -> {
 			write("}\"\n]\n\n");
 			ITargetClass c = (ITargetClass) t;
 			
@@ -76,7 +76,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 	}
 
 	protected void setupVisitClassField() {
-		super.addVisit(VisitType.Visit, IClassField.class, (ITraverser t) -> {
+		_visitor.addVisit(VisitType.Visit, IClassField.class, (ITraverser t) -> {
 			IClassField c = (IClassField) t;
 			StringBuilder sb = new StringBuilder();
 			
@@ -93,7 +93,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 	}
 
 	protected void setupVisitIClassMethod() {
-		super.addVisit(VisitType.Visit, IClassMethod.class, (ITraverser t) -> {
+		_visitor.addVisit(VisitType.Visit, IClassMethod.class, (ITraverser t) -> {
 			IClassMethod c = (IClassMethod) t;
 			StringBuilder sb = new StringBuilder();
 			if (c.getMethodName().contains("<"))
@@ -110,7 +110,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 	}
 
 	protected void setupPostVisitClassField() {
-		super.addVisit(VisitType.PostVisit, IClassField.class, (ITraverser t) -> {
+		_visitor.addVisit(VisitType.PostVisit, IClassField.class, (ITraverser t) -> {
 			write("|");
 		});
 	}
@@ -120,7 +120,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 		prepareFile();
 
 		for (ITargetClass clazz : _projectModel.getTargetClasses()) {
-			clazz.accept(this);
+			clazz.accept(_visitor);
 		}
 
 		for (String relationship : _relationships) {

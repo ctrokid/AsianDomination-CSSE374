@@ -36,7 +36,7 @@ public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 	}
 	
 	protected void setupVisitMethodStatement() {
-		super.addVisit(VisitType.Visit, IMethodStatement.class, (ITraverser t) -> {
+		_visitor.addVisit(VisitType.Visit, IMethodStatement.class, (ITraverser t) -> {
 			MethodStatement stmt = (MethodStatement) t;
 			StringBuilder sb = new StringBuilder();
 			String methodNameAndParams = stmt.getMethodName() + "(" + stmt.getParameters() + ")";
@@ -84,7 +84,7 @@ public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 		IClassMethod methods = clazz.getMethodByName(methodName, params);
 		
 		for(IMethodStatement ms: methods.getMethodStatements()){
-			ms.accept(this);
+			ms.accept(_visitor);
 			visitModelRecursively(ms.getClassToCall(), ms.getMethodName(), ms.getParameters(), level + 1);
 		}
 	}
