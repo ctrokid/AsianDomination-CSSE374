@@ -1,0 +1,25 @@
+relationship manager
+--
+- parentRelationships : HashMap<String, List<Relationship>>
+- childRelationships : HashMap<String, List<Relationship>>
+--
++ addRelationship(String className, Relationship relationship)
++ getClassRelationships(String className) : List<Relationship> // output stream
++ getClassSuperTypes(String className) : List<String>
++ getClassSubClasses(String className) : List<String>
+
+
+addRelationship() {
+	put(string, relationship);
+	Relationship r = new Relationship(string, relationship.type);
+	c.put(string, r);
+}
+
+
+
+-	start at composite by checking supertypes (getClassSuperTypes)
+-		for each supertype: if we compose it, 
+			does one of them have add / remove (Component i.e. supertype)
+				check supertype's subclasses besides this class
+					do these subclasses have subclasses?
+					   IF THEY ALL DO NOT: TAG EVERYTHING (?this subclasses?NO)

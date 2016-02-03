@@ -7,7 +7,6 @@ import api.IClassDeclaration;
 import api.IClassField;
 import api.IClassMethod;
 import api.ITargetClass;
-import impl.ClassDeclaration;
 import impl.Relationship;
 import pattern.detection.PATTERN_TYPE;
 import utils.DotClassUtils.RelationshipType;
@@ -75,8 +74,8 @@ public abstract class AbstractTargetClassDecorator implements ITargetClass {
 	}
 
 	@Override
-	public void addDeclarationVisitor(ClassDeclaration classDeclaration) {
-		_decoratedClass.addDeclarationVisitor(classDeclaration);
+	public void setClassDeclaration(IClassDeclaration classDeclaration) {
+		_decoratedClass.setClassDeclaration(classDeclaration);
 	}
 
 	@Override
@@ -101,13 +100,8 @@ public abstract class AbstractTargetClassDecorator implements ITargetClass {
 	}
 	
 	@Override
-	public String getPatternString() {
-		return _decoratedClass.getPatternString();
-	}
-	
-	@Override
-	public String getPatternStringName() {
-		return _decoratedClass.getPatternStringName();
+	public String getPatternString(boolean parseSlashes) {
+		return _decoratedClass.getPatternString(parseSlashes);
 	}
 
 	@Override
