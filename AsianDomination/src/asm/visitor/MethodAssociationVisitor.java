@@ -3,6 +3,7 @@ package asm.visitor;
 import org.objectweb.asm.MethodVisitor;
 
 import api.IClassMethod;
+import api.IRelationshipManager;
 import api.ITargetClass;
 import impl.MethodStatement;
 import impl.RelationshipManager;
@@ -12,13 +13,15 @@ public class MethodAssociationVisitor extends MethodVisitor {
 	private String _arguments;
 	private IClassMethod _classMethod;
 	private ITargetClass _targetClass;
+	private IRelationshipManager _relatinoshipManager;
 
 	public MethodAssociationVisitor(int api, MethodVisitor decorated, ITargetClass targetClass, String arguments,
-			IClassMethod classMethod, RelationshipManager _relationshipManager) {
+			IClassMethod classMethod, RelationshipManager relationshipManager) {
 		super(api, decorated);
 		_targetClass = targetClass;
 		_arguments = arguments;
 		_classMethod = classMethod;
+		_relatinoshipManager = relationshipManager;
 	}
 
 	@Override
@@ -27,10 +30,10 @@ public class MethodAssociationVisitor extends MethodVisitor {
 
 		// FIXME: collections don't get populated with internal contents
 		// FIXME: could be a bug for singletons
-		 if (!className.equals(_targetClass.getClassName())) {
-		_targetClass.addRelationship(RelationshipType.ASSOCIATION, className);
-		
-		 }
+		if (!className.equals(_targetClass.getClassName())) {
+			_relatinoshipManager.addRelationship(_targetClass.getClassName(), RelationshipType.ASSOCIATION, className);
+
+		}
 	}
 
 	@Override
@@ -46,8 +49,7 @@ public class MethodAssociationVisitor extends MethodVisitor {
 		}
 
 		if (!className.equals(_targetClass.getDeclaration().getSuperClassType()))
-			_targetClass.addRelationship(relationshipType, className);
-		
+			_relatinoshipManager.addRelationship(_targetClass.getClassName(), relationshipType, className);
 		MethodStatement stmt = new MethodStatement(_targetClass.getClassName(), className, methodName, returnType);
 		_classMethod.addMethodStatement(stmt);
 	}
@@ -59,7 +61,7 @@ public class MethodAssociationVisitor extends MethodVisitor {
 		if (var == 1) {
 			String[] args = _arguments.split(",");
 			for (String arg : args) {
-				_targetClass.addRelationship(RelationshipType.USES, arg.trim());
+				_relatinoshipManager.addRelationship(_targetClass.getClassName(), RelationshipType.USES, arg.trim());
 			}
 		}
 	}
