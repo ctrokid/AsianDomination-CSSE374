@@ -98,7 +98,7 @@ public class DecoratorPatternDetector implements IPatternDetectionStrategy {
 
 	private void tagDecoratedClass(ITargetClass clazz, String superType, RelationshipType relationshipType) {
 		clazz = new DecoratorTargetClass(PATTERN_TYPE.DECORATOR_DECORATOR, superType, clazz);
-		Relationship r = clazz.getRelationship(relationshipType, superType);
+		Relationship r = _model.getRelationshipManager().getClassRelationship(clazz.getClassName(), relationshipType, superType);
 		r.setDecoratedType("\\<\\<decorates\\>\\>");
 		_model.decorateClass(clazz);
 
@@ -118,7 +118,7 @@ public class DecoratorPatternDetector implements IPatternDetectionStrategy {
 	private void tagConcreteDecorators(String superType) {
 		for (ITargetClass c : _model.getTargetClasses()) {
 			// found concrete decorator
-			if (c.containsRelationship(RelationshipType.INHERITANCE, superType)) {
+			if (_model.getRelationshipManager().getClassRelationship(c.getClassName(), RelationshipType.INHERITANCE, superType) != null) {
 				c = new DecoratorTargetClass(PATTERN_TYPE.DECORATOR_CONCRETE, superType, c);
 				_model.decorateClass(c);
 			}

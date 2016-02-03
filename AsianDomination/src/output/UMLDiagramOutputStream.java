@@ -47,7 +47,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 			write("}\"\n]\n\n");
 			ITargetClass c = (ITargetClass) t;
 			
-			for (Relationship r : c.getRelationEdges()) {
+			for (Relationship r : _projectModel.getRelationshipManager().getClassRelationships(c.getClassName())) {
 				if (_projectModel.getTargetClassByName(r.getDependentClass()) == null)
 					continue;
 				
@@ -65,7 +65,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 					return;
 				
 				if (r.getRelationshipType().equals(RelationshipType.USES)) {
-					if (!c.containsRelationship(RelationshipType.ASSOCIATION, r.getDependentClass())) {
+					if (_projectModel.getRelationshipManager().getClassRelationship(c.getClassName(), RelationshipType.ASSOCIATION, r.getDependentClass()) == null) {
 						_relationships.add(relationship);
 					}						
 				} else {

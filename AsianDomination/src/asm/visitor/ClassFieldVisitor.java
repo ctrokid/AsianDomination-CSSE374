@@ -19,9 +19,10 @@ public class ClassFieldVisitor extends ClassVisitor {
 		_relationshipManager = relationshipManager;
 	}
 
-	public ClassFieldVisitor(int api, ClassVisitor decorated, ITargetClass targetClass) {
+	public ClassFieldVisitor(int api, ClassVisitor decorated, ITargetClass targetClass, IRelationshipManager relationshipManager) {
 		super(api, decorated);
 		_targetClass = targetClass;
+		_relationshipManager = relationshipManager;
 	}
 
 	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
