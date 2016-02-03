@@ -1,6 +1,7 @@
 package fake;
 
 import output.IDiagramOutputStream;
+import api.IProjectModel;
 import construction.IAddStrategy;
 import input.InputCommand;
 
@@ -39,7 +40,7 @@ public class FakeInputCommand extends InputCommand {
 	}
 	
 	@Override
-	public IAddStrategy getAddStrategy() {
+	public IAddStrategy getAddStrategy(IProjectModel model) {
 		calledGetAddStrategy = true;
 		return _addStrat;
 	}

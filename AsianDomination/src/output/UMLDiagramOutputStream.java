@@ -37,7 +37,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 			String className = AsmClassUtils.GetStringStrippedByCharacter(c.getClassName(), '/');
 			ClassStyle style = new ClassStyle();
 			sb.append(className + "[\n\t");
-			sb.append(style.getStyleByType(c.getPatternStringName()) +",label = \"{" + className + c.getPatternString() + "|");
+			sb.append(style.getStyleByType(c.getPatternString(true)) +", label = \"{" + className + c.getPatternString(false) + "|");
 			write(sb.toString());
 		});
 	}

@@ -14,6 +14,7 @@ import output.IDiagramOutputStream;
 import output.UMLDiagramOutputStream;
 import construction.IAddStrategy;
 import construction.UMLAddStrategy;
+import fake.FakeProjectModel;
 
 public class TestUMLInputCommand {
 	private UMLInputCommand _cmd;
@@ -32,7 +33,7 @@ public class TestUMLInputCommand {
 		String[] classes = new String[] {
 				"test/examples/Animal"
 		};
-		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes, null);
+		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes, null, null);
 		assertEquals(_diagramOutputPath, _cmd.getDiagramOutputPath());
 	}
 	
@@ -41,7 +42,7 @@ public class TestUMLInputCommand {
 		String[] classes = new String[] {
 				"test/examples/Animal"
 		};
-		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes, null);
+		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes, null, null);
 		assertEquals(_asmOutputPath, _cmd.getAsmOutputPath());
 	}
 	
@@ -50,9 +51,9 @@ public class TestUMLInputCommand {
 		String[] classes = new String[] {
 				"test/examples/Animal"
 		};
-		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes, null);
+		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes, null, null);
 		
-		IAddStrategy addStrat = _cmd.getAddStrategy();
+		IAddStrategy addStrat = _cmd.getAddStrategy(new FakeProjectModel(_cmd));
 		assertTrue(addStrat instanceof UMLAddStrategy);
 	}
 	
@@ -61,7 +62,7 @@ public class TestUMLInputCommand {
 		String[] classes = new String[] {
 				"test/examples/Animal"
 		};
-		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes, null);
+		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes, null, null);
 		
 		IDiagramOutputStream outStrat = _cmd.getOutputStream();
 		assertTrue(outStrat instanceof UMLDiagramOutputStream);
@@ -72,7 +73,7 @@ public class TestUMLInputCommand {
 		String[] classes = new String[] {
 				"test/examples/Animal"
 		};
-		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes, null);
+		_cmd = new UMLInputCommand(_diagramOutputPath, _asmOutputPath, classes, null, null);
 		
 		assertEquals(Arrays.asList(classes), Arrays.asList(_cmd.getInputParameters()));
 	}

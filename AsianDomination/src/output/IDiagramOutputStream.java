@@ -1,7 +1,6 @@
 package output;
 
 import api.IProjectModel;
-import visitor.IVisitor;
 
 public interface IDiagramOutputStream {
 	public void writeOutput();

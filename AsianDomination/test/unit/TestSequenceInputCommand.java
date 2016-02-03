@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import construction.IAddStrategy;
 import construction.SDAddStrategy;
+import fake.FakeProjectModel;
 import input.SequenceInputCommand;
 import output.IDiagramOutputStream;
 import output.SDDiagramOutputStream;
@@ -47,7 +48,7 @@ public class TestSequenceInputCommand {
 	
 	@Test
 	public void TestSequenceInputCommandAddStrategy() {
-		IAddStrategy addStrat = _cmd.getAddStrategy();
+		IAddStrategy addStrat = _cmd.getAddStrategy(new FakeProjectModel(_cmd));
 		assertTrue(addStrat instanceof SDAddStrategy);
 	}
 	

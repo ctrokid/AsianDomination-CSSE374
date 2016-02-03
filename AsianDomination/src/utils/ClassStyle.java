@@ -8,19 +8,19 @@ public class ClassStyle {
 	private String defaultStyle;
 
 	public ClassStyle() {
-		defaultStyle = "style = solid, bgcolor = black ";
+		defaultStyle = "style = solid, bgcolor = black";
 		styles = new HashMap<String, String>();
 		// Singleton
-		styles.put("Singleton", "style = solid, color = blue ");
+		styles.put("Singleton", "style = solid, color = blue");
 
 		// Adapter
-		String adapterStyle = "style = filled, fillcolor = red ";
+		String adapterStyle = "style = filled, fillcolor = red";
 		styles.put("adapter", adapterStyle);
 		styles.put("adaptee", adapterStyle);
 		styles.put("target", adapterStyle);
 
 		// Decorator
-		String decoratorStyle = "style = filled, fillcolor = green ";
+		String decoratorStyle = "style = filled, fillcolor = green";
 		styles.put("decorator", decoratorStyle);
 		styles.put("component", decoratorStyle);
 	}

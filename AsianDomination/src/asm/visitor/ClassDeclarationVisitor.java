@@ -22,7 +22,7 @@ public class ClassDeclarationVisitor extends ClassVisitor {
 			_targetClass.addRelationship(RelationshipType.IMPLEMENTATION, interfaces[i]);
 		}
 		_targetClass.addRelationship(RelationshipType.INHERITANCE, superClass);
-		_targetClass.addDeclarationVisitor(new ClassDeclaration(superClass, signature, Arrays.asList(interfaces)));
+		_targetClass.setClassDeclaration(new ClassDeclaration(superClass, signature, Arrays.asList(interfaces)));
 		
 		super.visit(version, access, name, signature, superClass, interfaces);
 	}

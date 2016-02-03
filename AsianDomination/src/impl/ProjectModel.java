@@ -63,7 +63,7 @@ public class ProjectModel implements IProjectModel {
 	}
 
 	@Override
-	public void build() {
+	public void buildModel() {
 		IAddStrategy addStrategy  = _command.getAddStrategy(this);
 		addStrategy.buildModel(_command.getInputParameters());
 		

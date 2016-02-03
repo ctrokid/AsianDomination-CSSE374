@@ -3,7 +3,6 @@ package api;
 import java.util.Collection;
 import java.util.List;
 
-import impl.ClassDeclaration;
 import impl.Relationship;
 import utils.DotClassUtils.RelationshipType;
 import visitor.ITraverser;
@@ -11,9 +10,7 @@ import visitor.ITraverser;
 public interface ITargetClass extends ITraverser {
 	public String getClassName();
 	
-	public String getPatternString();
-	
-	public String getPatternStringName();
+	public String getPatternString(boolean parseCarrots);
 	
 	public void setPatternString(String pattern);
 
@@ -33,7 +30,7 @@ public interface ITargetClass extends ITraverser {
 	
 	public Relationship getRelationship(RelationshipType type, String subjectClass);
 
-	public void addDeclarationVisitor(ClassDeclaration classDeclaration);
+	public void setClassDeclaration(IClassDeclaration classDeclaration);
 
 	public IClassDeclaration getDeclaration();
 	

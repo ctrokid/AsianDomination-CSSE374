@@ -182,7 +182,7 @@ public class TestSimpleUMLSystem {
 		List<IPatternDetectionStrategy> detectors = Arrays.asList(new DecoratorPatternDetector(), new AdapterPatternDetector());
 		_cmd = new UMLInputCommand("input_output/testProjectSubsystem", "input_output/testProjectSubsystem", classes, detectVisitor, detectors);
 		IProjectModel model = new ProjectModel(_cmd);
-		model.build();
+		model.buildModel();
 		model.printModel();
 	}
 	

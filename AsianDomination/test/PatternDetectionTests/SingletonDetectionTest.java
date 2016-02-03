@@ -3,22 +3,15 @@ package PatternDetectionTests;
 import impl.ProjectModel;
 import input.InputCommand;
 import input.UMLInputCommand;
-import output.AbstractDiagramOutputStream;
-import output.IDiagramOutputStream;
 import pattern.decoration.SingletonDecorator;
-import pattern.detection.AdapterPatternDetector;
-import pattern.detection.DecoratorPatternDetector;
-import pattern.detection.IPatternDetectionStrategy;
+import pattern.detection.SingletonDetectionVisitor;
 import pattern.detection.SingletonPatternDetector;
 import visitor.Visitor;
 
 import static org.junit.Assert.*;
 
-import java.io.ByteArrayOutputStream;
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -26,11 +19,7 @@ import org.junit.Test;
 
 import api.IProjectModel;
 import api.ITargetClass;
-import construction.UMLAddStrategy;
-import fake.FakeInputCommand;
-import fake.FakeUMLDiagramOutputStream;
 
-@SuppressWarnings("unused")
 public class SingletonDetectionTest {
 	private InputCommand _cmd;
 
@@ -107,10 +96,9 @@ public class SingletonDetectionTest {
 	}
 
 	private IProjectModel buildModel(String[] classes, String path) {
-		List<IPatternDetectionStrategy> detectors = Arrays.asList(new SingletonPatternDetector());
-		_cmd = new UMLInputCommand(path, path, classes, detectors);
+		_cmd = new UMLInputCommand(path, path, classes, Arrays.asList(new SingletonDetectionVisitor(new Visitor())), null);
 		IProjectModel model = new ProjectModel(_cmd);
-		model.build();
+		model.buildModel();
 		return model;
 	}
 }

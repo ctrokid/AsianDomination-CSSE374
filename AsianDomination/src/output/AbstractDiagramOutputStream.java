@@ -6,10 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import api.IProjectModel;
-import visitor.ITraverser;
-import visitor.IVisitMethod;
 import visitor.IVisitor;
-import visitor.VisitType;
 
 public abstract class AbstractDiagramOutputStream implements IDiagramOutputStream {
 	protected IProjectModel _projectModel;

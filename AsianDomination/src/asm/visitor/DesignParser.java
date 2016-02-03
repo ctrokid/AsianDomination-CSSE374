@@ -43,7 +43,7 @@ public class DesignParser {
 			
 			IProjectModel model = new ProjectModel(inputCommand);
 			
-			model.build();
+			model.buildModel();
 			model.printModel();
 		}
 	}

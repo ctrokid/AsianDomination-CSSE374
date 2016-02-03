@@ -106,7 +106,7 @@ public class TargetClass implements ITargetClass {
 	}
 
 	@Override
-	public void addDeclarationVisitor(ClassDeclaration classDeclaration) {
+	public void setClassDeclaration(IClassDeclaration classDeclaration) {
 		_declaration = classDeclaration;
 	}
 
@@ -151,21 +151,19 @@ public class TargetClass implements ITargetClass {
 	}
 
 	@Override
-	public String getPatternString() {
-		return _patternString;
+	public String getPatternString(boolean parseCarrots) {
+		if (!parseCarrots)
+			return _patternString;
+		else
+			if (_patternString.equals(""))
+				return "";
+			String pattern = _patternString.substring(6, _patternString.length() - 4);
+			return pattern;
 	}
 
 	@Override
 	public void setPatternString(String pattern) {
 		_patternString = pattern;
-	}
-
-	@Override
-	public String getPatternStringName() {
-		if (_patternString.equals(""))
-			return "";
-		String pattern = _patternString.substring(6, _patternString.length() - 4);
-		return pattern;
 	}
 	
 }

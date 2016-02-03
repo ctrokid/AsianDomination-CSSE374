@@ -15,13 +15,13 @@ public class UMLInputCommand extends InputCommand{
 	private String[] _classes;
 	private String[] _inputParameters;
 	private List<IPatternDetectionStrategy> _detectors;
-	private List<IDetectionVisitor> _detectVisitors;
+	private List<IDetectionVisitor> _detectionVisitors;
 	
 	public UMLInputCommand(String diagramOutputPath, String asmOutputPath, String[] inputParameters,List<IDetectionVisitor> detectionVisitor, List<IPatternDetectionStrategy> detectors) {
 		super(diagramOutputPath, asmOutputPath);
 		_inputParameters = inputParameters;
 		_detectors = detectors;
-		this._detectVisitors = detectionVisitor;
+		this._detectionVisitors = detectionVisitor;
 	}
 	
 	public String[] getClasses() {
@@ -33,7 +33,7 @@ public class UMLInputCommand extends InputCommand{
 	}
 	
 	public IAddStrategy getAddStrategy(IProjectModel model){
-		return new UMLAddStrategy(_detectors, _detectVisitors,model);
+		return new UMLAddStrategy(_detectors, _detectionVisitors, model);
 	}
 	
 	public IDiagramOutputStream getOutputStream(){

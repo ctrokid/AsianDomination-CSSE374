@@ -18,10 +18,6 @@ public class FakeProjectModel implements IProjectModel {
 		_cmd = cmd;
 		_targetClassNameToClass = new LinkedHashMap<String, ITargetClass>();
 	}
-	
-	@Override
-	public void parseModel() {
-	}
 
 	@Override
 	public void addClass(String classPath) {
@@ -33,7 +29,6 @@ public class FakeProjectModel implements IProjectModel {
 
 	@Override
 	public List<ITargetClass> getTargetClasses() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -52,11 +47,16 @@ public class FakeProjectModel implements IProjectModel {
 	}
 
 	@Override
-	public void build() {
+	public void buildModel() {
 	}
 
 	@Override
 	public void printModel() {
+	}
+
+	@Override
+	public ITargetClass forcefullyGetClassByName(String className) {
+		return null;
 	}
 
 }

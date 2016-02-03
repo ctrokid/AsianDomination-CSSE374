@@ -8,7 +8,6 @@ import pattern.detection.AdapterPatternDetector;
 import pattern.detection.IDetectionVisitor;
 import pattern.detection.IPatternDetectionStrategy;
 import pattern.detection.SingletonDetectionVisitor;
-import pattern.detection.SingletonPatternDetector;
 import visitor.Visitor;
 
 import static org.junit.Assert.*;
@@ -83,7 +82,7 @@ public class AdapterTest {
 		List<IDetectionVisitor> detectVisitors = Arrays.asList(new SingletonDetectionVisitor(new Visitor()));
 		_cmd = new UMLInputCommand(path, path, classes, detectVisitors, detectors);
 		IProjectModel model = new ProjectModel(_cmd);
-		model.build();
+		model.buildModel();
 		return model;
 	}
 }

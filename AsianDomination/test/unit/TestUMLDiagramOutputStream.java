@@ -21,29 +21,35 @@ import api.IClassMethod;
 import api.ITargetClass;
 import output.AbstractDiagramOutputStream;
 import output.UMLDiagramOutputStream;
+import visitor.IVisitor;
 import visitor.Visitor;
 
 public class TestUMLDiagramOutputStream {
-	private UMLDiagramOutputStream _outStreamVisitor;
 	private OutputStream bytesOut;
+	private IVisitor _visitor;
 	
 	@Before
 	public void setup() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		bytesOut = new ByteArrayOutputStream();
-		_outStreamVisitor = new UMLDiagramOutputStream("", new Visitor());
+		UMLDiagramOutputStream _outStreamVisitor = new UMLDiagramOutputStream("", new Visitor());
 		
 		Field f = AbstractDiagramOutputStream.class.getDeclaredField("_outputStream");
 		f.setAccessible(true);
 		
 		f.set(_outStreamVisitor, bytesOut);
+		
+		Field vis = AbstractDiagramOutputStream.class.getDeclaredField("_visitor");
+		vis.setAccessible(true);
+		
+		_visitor = (IVisitor) vis.get(_outStreamVisitor);
 	}
 	
 	@Test
-	public void TestUMLPreVisitClass() {
+	public void TestUMLVisitClass() {
 		ITargetClass clazz = new TargetClass("problem/test");
-		_outStreamVisitor.visit(clazz);
+		_visitor.visit(clazz);
 		
-		String expected = "test[\n\tstyle = solid, color = black,label = \"{test|";
+		String expected = "test[\n\tstyle = solid, bgcolor = black, label = \"{test|";
 		String actual = bytesOut.toString();
 		assertEquals(expected, actual);
 	}
@@ -51,7 +57,7 @@ public class TestUMLDiagramOutputStream {
 	@Test
 	public void TestUMLPostVisitClass() {
 		ITargetClass clazz = new TargetClass("problem/test");
-		_outStreamVisitor.postVisit(clazz);
+		_visitor.postVisit(clazz);
 		
 		String expected = "}\"\n]\n\n";
 		String actual = bytesOut.toString();
@@ -61,7 +67,7 @@ public class TestUMLDiagramOutputStream {
 	@Test
 	public void TestUMLVisitField() {
 		IClassField field = new ClassField("_name", Opcodes.ACC_PROTECTED, "\\<String\\>", "Collection");
-		_outStreamVisitor.visit(field);
+		_visitor.visit(field);
 		
 		String expected = "# _name : Collection\\<String\\>\\l";
 		String actual = bytesOut.toString();
@@ -71,7 +77,7 @@ public class TestUMLDiagramOutputStream {
 	@Test
 	public void TestUMLVisitMethod() {
 		IClassMethod method = new ClassMethod("helloWorld", "(Ljava/util/Collection;I)Ljava/lang/String;", Opcodes.ACC_PRIVATE, "double");
-		_outStreamVisitor.visit(method);
+		_visitor.visit(method);
 		
 		String expected = "- helloWorld(Collection, int) : double\\l";
 		String actual = bytesOut.toString();
@@ -81,7 +87,7 @@ public class TestUMLDiagramOutputStream {
 	@Test
 	public void TestUMLPostVisitField() {
 		IClassField field = new ClassField(null, 0, null, null);
-		_outStreamVisitor.postVisit(field);
+		_visitor.postVisit(field);
 		
 		String expected = "|";
 		String actual = bytesOut.toString();
@@ -90,6 +96,6 @@ public class TestUMLDiagramOutputStream {
 	
 	@After
 	public void tearDown() {
-		_outStreamVisitor = null;
+		_visitor = null;
 	}
 }
