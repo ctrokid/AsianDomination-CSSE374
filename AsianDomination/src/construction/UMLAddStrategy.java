@@ -16,6 +16,10 @@ public class UMLAddStrategy extends AbstractAddStrategy {
 		super(model);
 		_detectors = detectors;
 		_detectVisitor = detectionVisitor;
+		
+		if (_detectVisitor == null)
+			return;
+		
 		for(IDetectionVisitor d: _detectVisitor){
 			d.setProjectModel(model);
 		}
@@ -29,6 +33,10 @@ public class UMLAddStrategy extends AbstractAddStrategy {
 
 		for (String c : classes) {
 			_projectModel.addClass(c);
+			
+			if (_detectVisitor == null)
+				continue;
+			
 			ITargetClass clazz = _projectModel.getTargetClassByName(c);
 			for(IDetectionVisitor d: _detectVisitor){
 				clazz.accept(d.getVisitor());
