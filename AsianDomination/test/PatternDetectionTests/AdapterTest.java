@@ -48,28 +48,57 @@ public class AdapterTest {
 
 		ITargetClass ITarget = i.next();
 		assertTrue(ITarget instanceof AdapterDecorator);
-
-		// model.printModel();
 	}
-
+	
 	@Test
-	public void adapterTest() {
-		String[] classes = new String[] {}; // add classes in here, you could
-											// create bad classes
-		// you don't have to change this
-		IProjectModel model = buildModel(classes, "docs/M5/SimpleAdapterTest");
+	public void adapterTestFailure() {
+		String[] classes = new String[] { "examples/adapter/Adaptee", "examples/adapter/AbstractTarget", "examples/adapter/AdapterAbstractTarget"}; // add classes in here, you could
+
+		IProjectModel model = buildModel(classes, "docs/M5/SimpleAdapterTestTwo");
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
-		// the second person modify the code below
+
+		ITargetClass Adaptee = i.next();
+		assertFalse(Adaptee instanceof AdapterDecorator);
+
+		ITargetClass ITarget = i.next();
+		assertFalse(ITarget instanceof AdapterDecorator);
+		
+		ITargetClass Adapter = i.next();
+		assertFalse(Adapter instanceof AdapterDecorator);
+	}
+	
+	@Test
+	public void adapterTestFailureTwo() {
+		String[] classes = new String[] { "examples/adapter/Adaptee", "examples/adapter/ITarget", "examples/adapter/AdapterNoImpl"}; // add classes in here, you could
+
+		IProjectModel model = buildModel(classes, "docs/M5/SimpleAdapterTestTwo");
+		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
 		ITargetClass Adaptee = i.next();
 		assertTrue(Adaptee instanceof AdapterDecorator);
 
+		ITargetClass ITarget = i.next();
+		assertTrue(ITarget instanceof AdapterDecorator);
+		
 		ITargetClass Adapter = i.next();
 		assertTrue(Adapter instanceof AdapterDecorator);
+	}
+	
+	@Test
+	public void adapterTestFailureWeirdAdapter() {
+		String[] classes = new String[] { "examples/adapter/Adaptee", "examples/adapter/ITarget", "examples/adapter/WeirdAdapter"}; // add classes in here, you could
+
+		IProjectModel model = buildModel(classes, "docs/M5/SimpleAdapterTestTwo");
+		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
+
+		ITargetClass Adaptee = i.next();
+		assertTrue(Adaptee instanceof AdapterDecorator);
 
 		ITargetClass ITarget = i.next();
 		assertTrue(ITarget instanceof AdapterDecorator);
-		// model.printModel();
+		
+		ITargetClass Adapter = i.next();
+		assertTrue(Adapter instanceof AdapterDecorator);
 	}
 
 	@After
