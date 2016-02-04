@@ -60,8 +60,13 @@ public class DecoratorTest {
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
 		ITargetClass dec = i.next();
-
-		// TODO: add check here
+		assertFalse(dec instanceof DecoratorTargetClass);
+		
+		dec = i.next();
+		assertFalse(dec instanceof DecoratorTargetClass);
+		
+		dec = i.next();
+		assertFalse(dec instanceof DecoratorTargetClass);
 
 	}
 
@@ -77,8 +82,14 @@ public class DecoratorTest {
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
 		ITargetClass dec = i.next();
-
-		// TODO: Add check here
+		assertFalse(dec instanceof DecoratorTargetClass);
+		
+		dec = i.next();
+		assertFalse(dec instanceof DecoratorTargetClass);
+		
+		dec = i.next();
+		assertFalse(dec instanceof DecoratorTargetClass);
+		
 	}
 
 	@Test
@@ -93,8 +104,10 @@ public class DecoratorTest {
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
 		ITargetClass dec = i.next();
-
-		// TODO: add check here
+		assertFalse(dec instanceof DecoratorTargetClass);
+		
+		dec = i.next();
+		assertFalse(dec instanceof DecoratorTargetClass);
 
 	}
 
