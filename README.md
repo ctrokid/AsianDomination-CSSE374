@@ -38,6 +38,14 @@ We refactored the code so the ITarget class can recognize different patterns. Th
 Milestone 5 UML Diagram
 ![milestone5uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M5/MilestoneManual5UML.png)
 
+###Milestone 6
+For this milestone, wea added composite pattern detector class that is similar to all the other pattern detection classes. Once the pattern is detected, we called the decoration class for composite pattern and write the style to an output stream. 
+
+We also refactored the our design to so the singleton pattern is detected through visitor. This allows clients to have a more flexible control of the application.
+
+Milestone 6 UML Diagram
+![milestone6uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M6/Milestone6UML.jpg)
+
 ##Milestone Deliverables
 ---
 ###Milestone 1
@@ -80,16 +88,23 @@ Milestone 5 UML Diagram
 [Milestone 4 UML Diagram](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M4/Milestone4UML.jpg)
 
 ###Milestone 5
-######In Class Lab Detecting
-[Lab2-1](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/demo_diagrams/M5Lab2.png)
+######In Class Lab Detection
+[Lab2-1](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M5/M5Lab2.png)
 
-[Lab5-1]
-
-[Java Classes]
+[Lab5-1](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M5/M5Lab5.png)
 
 [Runzi's Simple Adatper](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M5/SimpleAdapterTest.png)
 
 [Generated Project UML](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M5/Milestone5-GeneratedUML.png)
+
+###Milestone 6
+######In Class Lab Detection
+[Lab7-2](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M6/M6Lab7.png)
+
+[java.awt]
+
+[java.swing]
+
 
 ## Tasks Log:
 ---
