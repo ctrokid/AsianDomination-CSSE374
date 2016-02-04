@@ -12,13 +12,15 @@ import org.objectweb.asm.Opcodes;
 
 import impl.ClassMethod;
 import output.AbstractDiagramOutputStream;
+import output.IDiagramOutputStream;
 import output.UMLDiagramOutputStream;
 import visitor.IVisitor;
 import visitor.Visitor;
 
 public class TestClassMethod {
-	private IVisitor outStreamVisitor;
+	private IDiagramOutputStream outStreamVisitor;
 	private OutputStream bytesOut;
+	private IVisitor _visitor;
 
 	@Before
 	public final void setUp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
@@ -29,12 +31,17 @@ public class TestClassMethod {
 		f.setAccessible(true);
 		
 		f.set(outStreamVisitor, bytesOut);
+		
+		Field vis = AbstractDiagramOutputStream.class.getDeclaredField("_visitor");
+		vis.setAccessible(true);
+		
+		_visitor = (IVisitor) vis.get(outStreamVisitor);
 	}
 
 	@Test
 	public final void testAcceptStringReturnType() {
 		ClassMethod cm = new ClassMethod("Animal", "", Opcodes.ACC_PRIVATE, "String");
-		cm.accept(outStreamVisitor);
+		cm.accept(_visitor);
 		String expected =  "- Animal() : String\\l";
 		String actual = bytesOut.toString();
 		assertEquals(expected, actual);
@@ -43,7 +50,7 @@ public class TestClassMethod {
 	@Test
 	public final void classAcceptVoidReturnType() {
 		ClassMethod cm = new ClassMethod("People", "", Opcodes.ACC_PUBLIC, "void");
-		cm.accept(outStreamVisitor);
+		cm.accept(_visitor);
 		String expected =  "+ People() : void\\l";
 		String actual = bytesOut.toString();
 		assertEquals(expected, actual);
@@ -52,7 +59,7 @@ public class TestClassMethod {
 	@Test
 	public final void classAcceptBooleanReturnType() {
 		ClassMethod cm = new ClassMethod("isStudent", "", Opcodes.ACC_PROTECTED, "boolean");
-		cm.accept(outStreamVisitor);
+		cm.accept(_visitor);
 		String expected =  "# isStudent() : boolean\\l";
 		String actual = bytesOut.toString();
 		assertEquals(expected, actual);
@@ -61,7 +68,7 @@ public class TestClassMethod {
 	@Test
 	public final void classAcceptCollectionReturnType() {
 		ClassMethod cm = new ClassMethod("getStudents", "", Opcodes.ACC_PUBLIC, "Collection");
-		cm.accept(outStreamVisitor);
+		cm.accept(_visitor);
 		String expected =  "+ getStudents() : Collection\\l";
 		String actual = bytesOut.toString();
 		assertEquals(expected, actual);
@@ -70,7 +77,7 @@ public class TestClassMethod {
 	@Test
 	public final void classAcceptParametersInMethod() {
 		ClassMethod cm = new ClassMethod("getStudents", "(Ljava/util/Collection;I)Ljava/lang/String;", Opcodes.ACC_PUBLIC, "Collection");
-		cm.accept(outStreamVisitor);
+		cm.accept(_visitor);
 		String expected =  "+ getStudents(Collection, int) : Collection\\l";
 		String actual = bytesOut.toString();
 		assertEquals(expected, actual);

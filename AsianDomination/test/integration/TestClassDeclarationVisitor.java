@@ -44,7 +44,7 @@ public class TestClassDeclarationVisitor {
 		classPath = "test/examples/Animal";
 		model.addClass(classPath);
 		
-		_visitor = new ClassDeclarationVisitor(Opcodes.ASM5, model, classPath);
+		_visitor = new ClassDeclarationVisitor(Opcodes.ASM5, model.getTargetClassByName(classPath), model.getRelationshipManager());
 	}
 	
 	@Test
@@ -62,8 +62,7 @@ public class TestClassDeclarationVisitor {
 	public void TestSimpleDeclaration() {		
 		_visitor.visit(VERSION, ACCESS, classPath, null, "java/lang/Object", new String[] {});
 		
-		ITargetClass clazz = model.getTargetClassByName(classPath);
-		List<Relationship> relationships = clazz.getRelationEdges();
+		List<Relationship> relationships = model.getRelationshipManager().getClassRelationships(classPath);
 		
 		assertEquals(relationships.size(), 1);
 	}
@@ -72,8 +71,7 @@ public class TestClassDeclarationVisitor {
 	public void TestInheritanceDeclaration() {
 		_visitor.visit(VERSION, ACCESS, classPath, null, "test/example/Cat", new String[] { });
 		
-		ITargetClass clazz = model.getTargetClassByName(classPath);
-		List<Relationship> relationships = clazz.getRelationEdges();
+		List<Relationship> relationships = model.getRelationshipManager().getClassRelationships(classPath);
 		
 		assertEquals(relationships.size(), 1);
 	}
@@ -82,8 +80,7 @@ public class TestClassDeclarationVisitor {
 	public void TestInterfacesDeclaration() {
 		_visitor.visit(VERSION, ACCESS, classPath, null, "Thread", new String[] { "test/Runnable", "test/IFaceApp" });
 		
-		ITargetClass clazz = model.getTargetClassByName(classPath);
-		List<Relationship> relationships = clazz.getRelationEdges();
+		List<Relationship> relationships = model.getRelationshipManager().getClassRelationships(classPath);
 		
 		assertEquals(relationships.size(), 3);
 	}
@@ -92,8 +89,7 @@ public class TestClassDeclarationVisitor {
 	public void TestInterfaceAndInheritanceDeclaration() {
 		_visitor.visit(VERSION, ACCESS, classPath, null, "test/example/Cat", new String[] { "test/example/IRunnable" });
 		
-		ITargetClass clazz = model.getTargetClassByName(classPath);
-		List<Relationship> relationships = clazz.getRelationEdges();
+		List<Relationship> relationships = model.getRelationshipManager().getClassRelationships(classPath);
 		
 		assertEquals(relationships.size(), 2);
 	}

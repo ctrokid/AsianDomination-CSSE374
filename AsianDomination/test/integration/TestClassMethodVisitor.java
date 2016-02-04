@@ -41,7 +41,7 @@ public class TestClassMethodVisitor {
 		String classPath = "test/examples/Animal";
 		model.addClass(classPath);
 		
-		_visitor = new ClassMethodVisitor(Opcodes.ASM5, model, classPath);
+		_visitor = new ClassMethodVisitor(Opcodes.ASM5, model.getTargetClassByName(classPath), model.getRelationshipManager());
 		_visitor.visitMethod(1, "helloWorld", "(Ljava/lang/String;I)V", null, null);
 		_visitor.visitMethod(2, "run", "()Ljava/lang/String;", null, null);
 		// should NOW add <init> methods
@@ -51,10 +51,10 @@ public class TestClassMethodVisitor {
 		assertEquals(3, clazz.getMethods().size());
 		
 		
-		boolean contains = clazz.containsRelationship(RelationshipType.USES, "void");
+		boolean contains = model.getRelationshipManager().getClassRelationship(clazz.getClassName(), RelationshipType.USES, "void") == null ? false : true;
 		assertTrue(contains);
 		
-		contains = clazz.containsRelationship(RelationshipType.USES, "java/lang/String");
+		contains = model.getRelationshipManager().getClassRelationship(clazz.getClassName(), RelationshipType.USES, "java/lang/String") == null ? false : true;;
 		assertTrue(contains);
 	}
 	

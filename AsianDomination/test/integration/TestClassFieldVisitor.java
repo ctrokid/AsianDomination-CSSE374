@@ -35,7 +35,7 @@ public class TestClassFieldVisitor {
 		classPath = "test/examples/Animal";
 		model.addClass(classPath);
 		
-		_visitor = new ClassFieldVisitor(Opcodes.ASM5, model, classPath);
+		_visitor = new ClassFieldVisitor(Opcodes.ASM5, model.getTargetClassByName(classPath), model.getRelationshipManager());
 	}
 	
 	@Test
@@ -44,7 +44,7 @@ public class TestClassFieldVisitor {
 		
 		ITargetClass clazz = model.getTargetClassByName(classPath);
 		assertEquals(1, clazz.getFields().size());
-		assertEquals(1, clazz.getRelationEdges().size());
+		assertEquals(1, model.getRelationshipManager().getClassRelationships(classPath).size());
 	}
 	
 	@Test
@@ -53,7 +53,7 @@ public class TestClassFieldVisitor {
 		
 		ITargetClass clazz = model.getTargetClassByName(classPath);
 		assertEquals(1, clazz.getFields().size());
-		assertEquals(1, clazz.getRelationEdges().size());
+		assertEquals(2, model.getRelationshipManager().getClassRelationships(classPath).size());
 	}
 	
 	@After

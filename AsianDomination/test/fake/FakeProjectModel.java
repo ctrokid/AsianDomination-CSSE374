@@ -15,10 +15,12 @@ import api.ITargetClass;
 public class FakeProjectModel implements IProjectModel {
 	private InputCommand _cmd;
 	private HashMap<String, ITargetClass> _targetClassNameToClass;
+	private IRelationshipManager _relationshipManager;
 	
 	public FakeProjectModel(InputCommand cmd) {
 		_cmd = cmd;
 		_targetClassNameToClass = new LinkedHashMap<String, ITargetClass>();
+		_relationshipManager = new RelationshipManager();
 	}
 
 	@Override
@@ -63,7 +65,7 @@ public class FakeProjectModel implements IProjectModel {
 
 	@Override
 	public IRelationshipManager getRelationshipManager() {
-		return new RelationshipManager();
+		return _relationshipManager;
 	}
 
 }

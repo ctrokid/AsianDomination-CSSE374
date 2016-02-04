@@ -9,6 +9,7 @@ import java.lang.reflect.Field;
 import impl.ClassField;
 import impl.ClassMethod;
 import impl.TargetClass;
+import input.UMLInputCommand;
 
 import org.junit.After;
 import org.junit.Before;
@@ -19,6 +20,7 @@ import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 import api.IClassField;
 import api.IClassMethod;
 import api.ITargetClass;
+import fake.FakeProjectModel;
 import output.AbstractDiagramOutputStream;
 import output.UMLDiagramOutputStream;
 import visitor.IVisitor;
@@ -32,7 +34,7 @@ public class TestUMLDiagramOutputStream {
 	public void setup() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		bytesOut = new ByteArrayOutputStream();
 		UMLDiagramOutputStream _outStreamVisitor = new UMLDiagramOutputStream("", new Visitor());
-		
+		_outStreamVisitor.setProjectModel(new FakeProjectModel(new UMLInputCommand("", "", null, null, null)));
 		Field f = AbstractDiagramOutputStream.class.getDeclaredField("_outputStream");
 		f.setAccessible(true);
 		

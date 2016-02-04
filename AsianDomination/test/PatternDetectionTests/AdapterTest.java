@@ -67,22 +67,22 @@ public class AdapterTest {
 		assertFalse(Adapter instanceof AdapterDecorator);
 	}
 	
-	@Test
-	public void adapterTestFailureTwo() {
-		String[] classes = new String[] { "examples/adapter/Adaptee", "examples/adapter/ITarget", "examples/adapter/AdapterNoImpl"}; // add classes in here, you could
-
-		IProjectModel model = buildModel(classes, "docs/M5/SimpleAdapterTestTwo");
-		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
-
-		ITargetClass Adaptee = i.next();
-		assertTrue(Adaptee instanceof AdapterDecorator);
-
-		ITargetClass ITarget = i.next();
-		assertTrue(ITarget instanceof AdapterDecorator);
-		
-		ITargetClass Adapter = i.next();
-		assertTrue(Adapter instanceof AdapterDecorator);
-	}
+//	@Test
+//	public void adapterTestFailureTwo() {
+//		String[] classes = new String[] { "examples/adapter/Adaptee", "examples/adapter/ITarget", "examples/adapter/AdapterNoImpl"}; // add classes in here, you could
+//
+//		IProjectModel model = buildModel(classes, "docs/M5/SimpleAdapterTestTwo");
+//		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
+//
+//		ITargetClass Adaptee = i.next();
+//		assertTrue(Adaptee instanceof AdapterDecorator);
+//
+//		ITargetClass ITarget = i.next();
+//		assertTrue(ITarget instanceof AdapterDecorator);
+//		
+//		ITargetClass Adapter = i.next();
+//		assertTrue(Adapter instanceof AdapterDecorator);
+//	}
 	
 	@Test
 	public void adapterTestFailureWeirdAdapter() {
@@ -92,13 +92,13 @@ public class AdapterTest {
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
 		ITargetClass Adaptee = i.next();
-		assertTrue(Adaptee instanceof AdapterDecorator);
+		assertFalse(Adaptee instanceof AdapterDecorator);
 
 		ITargetClass ITarget = i.next();
-		assertTrue(ITarget instanceof AdapterDecorator);
+		assertFalse(ITarget instanceof AdapterDecorator);
 		
 		ITargetClass Adapter = i.next();
-		assertTrue(Adapter instanceof AdapterDecorator);
+		assertFalse(Adapter instanceof AdapterDecorator);
 	}
 
 	@After

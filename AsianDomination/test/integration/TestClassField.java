@@ -14,14 +14,16 @@ import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 import api.IClassField;
 import impl.ClassField;
 import output.AbstractDiagramOutputStream;
+import output.IDiagramOutputStream;
 import output.UMLDiagramOutputStream;
 import utils.AsmClassUtils;
 import visitor.IVisitor;
 import visitor.Visitor;
 
 public class TestClassField {
-	private IVisitor outStreamVisitor;
+	private IDiagramOutputStream outStreamVisitor;
 	private OutputStream bytesOut;
+	private IVisitor _visitor;
 	
 	@Before
 	public void setUp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
@@ -32,12 +34,17 @@ public class TestClassField {
 		f.setAccessible(true);
 		
 		f.set(outStreamVisitor, bytesOut);
+		
+		Field vis = AbstractDiagramOutputStream.class.getDeclaredField("_visitor");
+		vis.setAccessible(true);
+		
+		_visitor = (IVisitor) vis.get(outStreamVisitor);
 	}
 	
 	@Test
 	public void testAcceptPrivateField() {
 		IClassField field = new ClassField("firstField", Opcodes.ACC_PRIVATE, "", "string");
-		field.accept(outStreamVisitor);
+		field.accept(_visitor);
 		
 		String expected = "- firstField : string\\l";
 		String written = bytesOut.toString();
@@ -47,7 +54,7 @@ public class TestClassField {
 	@Test
 	public void testAcceptProtectedField() {
 		IClassField field = new ClassField("age", Opcodes.ACC_PROTECTED, "", "int");
-		field.accept(outStreamVisitor);
+		field.accept(_visitor);
 		
 		String expected = "# age : int\\l";
 		String written = bytesOut.toString();
@@ -57,7 +64,7 @@ public class TestClassField {
 	@Test
 	public void testAcceptPublicField() {
 		IClassField field = new ClassField("GPA", Opcodes.ACC_PUBLIC, "", "double");
-		field.accept(outStreamVisitor);
+		field.accept(_visitor);
 		
 		String expected = "+ GPA : double\\l";
 		String written = bytesOut.toString();
@@ -67,7 +74,7 @@ public class TestClassField {
 	@Test
 	public void testAcceptClassFieldType() {
 		IClassField field = new ClassField("GPA", Opcodes.ACC_PUBLIC, "", "Object");
-		field.accept(outStreamVisitor);
+		field.accept(_visitor);
 		
 		String expected = "+ GPA : Object\\l";
 		String written = bytesOut.toString();
@@ -78,7 +85,7 @@ public class TestClassField {
 	public void testAcceptCollectionFieldType() {
 		String signature = AsmClassUtils.parseSignature("Ljava/util/Collection<Ljava/lang/String;>;", true);
 		IClassField field = new ClassField("classList", Opcodes.ACC_PUBLIC, "\\<" + signature + "\\>", "Collection");
-		field.accept(outStreamVisitor);
+		field.accept(_visitor);
 		
 		String expected = "+ classList : Collection\\<String\\>\\l";
 		String written = bytesOut.toString();
@@ -89,9 +96,9 @@ public class TestClassField {
 	public void testAcceptHashMapFieldType() {
 		String signature = AsmClassUtils.parseSignature("Ljava/util/HashMap<Ljava/lang/String;Ljava/util/lang/Integer;>;", true);
 		IClassField field = new ClassField("map", Opcodes.ACC_PUBLIC, "\\<" + signature + "\\>", "HashMap");
-		field.accept(outStreamVisitor);
+		field.accept(_visitor);
 		
-		String expected = "+ map : HashMap\\<String, Integer\\>\\l";
+		String expected = "+ map : HashMap\\<String,Integer\\>\\l";
 		String written = bytesOut.toString();
 		assertEquals(expected, written);
 	}
