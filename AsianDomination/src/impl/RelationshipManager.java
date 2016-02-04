@@ -35,13 +35,16 @@ public class RelationshipManager implements IRelationshipManager {
 		pList.add(relation);
 		parentRelationships.put(subject, pList);
 
-		// add children list
-		Relationship flippedRelation = new Relationship(object, type);
-		List<Relationship> cList = childrenRelationships.get(subject);
+		// add children list if not USES or ASSOCIATION
+		if (type.equals(RelationshipType.ASSOCIATION) || type.equals(RelationshipType.USES))
+			return;
+		
+		Relationship flippedRelation = new Relationship(subject, type);
+		List<Relationship> cList = childrenRelationships.get(object);
 		if (cList == null)
 			cList = new ArrayList<Relationship>();
 		cList.add(flippedRelation);
-		childrenRelationships.put(subject, cList);
+		childrenRelationships.put(object, cList);
 	}
 
 	@Override
