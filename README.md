@@ -105,6 +105,8 @@ Milestone 6 UML Diagram
 
 [java.swing]
 
+[Generated Project UML](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M6/ProjectGeneratedUML.png)
+
 
 ## Tasks Log:
 ---
