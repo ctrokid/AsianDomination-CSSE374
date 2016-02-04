@@ -6,7 +6,6 @@ import api.IClassMethod;
 import api.IRelationshipManager;
 import api.ITargetClass;
 import impl.MethodStatement;
-import impl.RelationshipManager;
 import utils.DotClassUtils.RelationshipType;
 
 public class MethodAssociationVisitor extends MethodVisitor {

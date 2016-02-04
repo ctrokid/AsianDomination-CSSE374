@@ -6,6 +6,7 @@ import input.InputCommand;
 import input.SequenceInputCommand;
 import input.UMLInputCommand;
 import pattern.detection.AdapterPatternDetector;
+import pattern.detection.CompositePatternDetector;
 import pattern.detection.DecoratorPatternDetector;
 import pattern.detection.SingletonDetectionVisitor;
 import visitor.Visitor;
@@ -81,7 +82,7 @@ public class CommandGenerator {
 		String outputPath = "demo_diagrams/M6Lab7";
 		
 		// TODO: fix this for milestone diagram generation
-		cmd = new UMLInputCommand(outputPath, outputPath, classes, null, null);
+		cmd = new UMLInputCommand(outputPath, outputPath, classes, null, Arrays.asList(new CompositePatternDetector()));
 		
 		return cmd;
 	}

@@ -35,16 +35,16 @@ public class DesignParser {
 //		
 //		InputCommand inputCommand = new SequenceInputCommand(outputPath, outputPath, initialClass, initialMethod, initialParams, 5);
 		
-		for (ExecuteCommand ex : ExecuteCommand.values()) {
-			InputCommand inputCommand = CommandGenerator.getInputCommand(ex);
+//		for (ExecuteCommand ex : ExecuteCommand.values()) {
+			InputCommand inputCommand = CommandGenerator.getInputCommand(ExecuteCommand.M6_Lab7_2Uml);
 			
-			if (inputCommand == null)
-				continue;
+//			if (inputCommand == null)
+//				continue;
 			
 			IProjectModel model = new ProjectModel(inputCommand);
 			
 			model.buildModel();
 			model.printModel();
-		}
+//		}
 	}
 }

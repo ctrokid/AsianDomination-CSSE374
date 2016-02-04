@@ -31,7 +31,7 @@ public class ClassFieldVisitor extends ClassVisitor {
 
 		if (signature != null) {
 			String sig = AsmClassUtils.parseSignature(signature, false);
-			signature = "\\<" + AsmClassUtils.parseSignature(signature, true) + "\\>";
+			signature = "\\<" + AsmClassUtils.parseSignature(signature, false) + "\\>";
 
 			for (String param : sig.split(",")) {
 				_relationshipManager.addRelationship(_targetClass.getClassName(), RelationshipType.ASSOCIATION,
