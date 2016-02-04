@@ -99,7 +99,7 @@ public class RelationshipManager implements IRelationshipManager {
 		List<String> subClassesNames = new ArrayList<String>();
 		for (Relationship r : subClassesRela) {
 			subClassesNames.add(r.getDependentClass());
-			subClassesNames.addAll(getClassSubClasses(subject));
+			subClassesNames.addAll(getClassSubClasses(r.getDependentClass()));
 		}
 		return subClassesNames;
 	}

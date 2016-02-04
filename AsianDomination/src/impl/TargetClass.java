@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import visitor.IVisitor;
 import api.IClassDeclaration;
@@ -12,13 +11,11 @@ import api.IClassField;
 import api.IClassMethod;
 import api.ITargetClass;
 import utils.AsmClassUtils;
-import utils.DotClassUtils.RelationshipType;
 
 public class TargetClass implements ITargetClass {
 	private String _className;
 	private IClassDeclaration _declaration;
 	private HashMap<String, IClassMethod> _methodNameToClassMethod;
-	private HashMap<RelationshipType, List<Relationship>> _edges;
 	private Collection<IClassField> _fields;
 	
 	private String _patternString;
@@ -29,11 +26,6 @@ public class TargetClass implements ITargetClass {
 		_methodNameToClassMethod = new LinkedHashMap<String, IClassMethod>();
 		_className = className;
 		_patternString = "";
-
-		_edges = new HashMap<RelationshipType, List<Relationship>>();
-		for (RelationshipType type : RelationshipType.values()) {
-			_edges.put(type, new ArrayList<Relationship>());
-		}
 	}
 
 	@Override
