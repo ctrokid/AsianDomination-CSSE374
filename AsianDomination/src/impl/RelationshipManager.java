@@ -36,7 +36,7 @@ public class RelationshipManager implements IRelationshipManager {
 		parentRelationships.put(subject, pList);
 
 		// add children list
-		Relationship flippedRelation = new Relationship(subject, type);
+		Relationship flippedRelation = new Relationship(object, type);
 		List<Relationship> cList = childrenRelationships.get(subject);
 		if (cList == null)
 			cList = new ArrayList<Relationship>();

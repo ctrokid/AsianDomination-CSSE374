@@ -111,14 +111,16 @@ public class CompositePatternDetector implements IPatternDetectionStrategy {
 
 		for (String type : matchingTypes) {
 			model.forcefullyGetClassByName(type);
-
-			for (String subClassName : manager.getClassSubClasses(type)) {
+			List<String> subClasses = manager.getClassSubClasses(type);
+			for (String subClassName : subClasses) {
+				System.out.println(subClassName);
 				if (subClassName.equals(className))
 					continue;
 
 				ITargetClass subClass = model.getTargetClassByName(subClassName);
 
 				if (manager.getClassSubClasses(subClassName).size() == 0) {
+					System.out.println("adding leaf to list: " + subClass + " name: " + subClassName);
 					classes.add(subClass);
 				}
 			}
