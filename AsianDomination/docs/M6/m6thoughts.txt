@@ -5,13 +5,14 @@ relationship manager
 --
 + addRelationship(String className, Relationship relationship)
 + getClassRelationships(String className) : List<Relationship> // output stream
++ getClassRelationship(String className, Relationship type, String otherClassName) : Relationship
 + getClassSuperTypes(String className) : List<String>
 + getClassSubClasses(String className) : List<String>
 
 
-addRelationship() {
-	put(string, relationship);
-	Relationship r = new Relationship(string, relationship.type);
+addRelationship(className, relationship) {
+	p.put(className, relationship);
+	Relationship r = new Relationship(className, relationship.type);
 	c.put(string, r);
 }
 
@@ -22,4 +23,4 @@ addRelationship() {
 			does one of them have add / remove (Component i.e. supertype)
 				check supertype's subclasses besides this class
 					do these subclasses have subclasses?
-					   IF THEY ALL DO NOT: TAG EVERYTHING (?this subclasses?NO)
+					   IF THEY DO NOT: ADD TO TAG (?this subclasses?NO)
