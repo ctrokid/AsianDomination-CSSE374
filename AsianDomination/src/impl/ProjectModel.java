@@ -11,6 +11,7 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
 import api.IProjectModel;
+import api.IRelationshipManager;
 import api.ITargetClass;
 import asm.visitor.ClassDeclarationVisitor;
 import asm.visitor.ClassFieldVisitor;
@@ -22,10 +23,12 @@ import output.IDiagramOutputStream;
 public class ProjectModel implements IProjectModel {
 	private InputCommand _command;
 	private HashMap<String, ITargetClass> _targetClasses;
+	private IRelationshipManager _relationshipManager;
 
 	public ProjectModel(InputCommand command) {
 		_command = command;
 		_targetClasses = new LinkedHashMap<String, ITargetClass>();
+		_relationshipManager = new RelationshipManager();
 	}
 
 	@Override
@@ -99,9 +102,9 @@ public class ProjectModel implements IProjectModel {
 		try {
 			ClassReader reader = new ClassReader(classPath);
 			
-			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, clazz);
-			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor, clazz);
-			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, clazz);
+			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, clazz, _relationshipManager);
+			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor, clazz, _relationshipManager);
+			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, clazz, _relationshipManager);
 			
 			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
 		} catch (IOException e) {
