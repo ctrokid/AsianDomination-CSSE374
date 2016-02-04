@@ -92,22 +92,14 @@ public class RelationshipManager implements IRelationshipManager {
 
 	@Override
 	public List<String> getClassSubClasses(String subject) {
-		return getClassSubClasses(subject, subject);
-	}
-	
-	private List<String> getClassSubClasses(String subject, String dependent) {
-		List<Relationship> subClassesRela = this.childrenRelationships.get(dependent);
+		List<Relationship> subClassesRela = this.childrenRelationships.get(subject);
 		if (subClassesRela == null)
 			return new ArrayList<String>();
 		
 		List<String> subClassesNames = new ArrayList<String>();
 		for (Relationship r : subClassesRela) {
-			if(r.getDependentClass().equals(subject)){
-				System.out.println("Here!!!!!!!!!!!!!!!");
-				continue;
-			}
 			subClassesNames.add(r.getDependentClass());
-			subClassesNames.addAll(getClassSubClasses(subject, r.getDependentClass()));
+			subClassesNames.addAll(getClassSubClasses(subject));
 		}
 		return subClassesNames;
 	}
