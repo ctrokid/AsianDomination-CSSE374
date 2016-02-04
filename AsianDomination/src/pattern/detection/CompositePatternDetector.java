@@ -67,6 +67,14 @@ public class CompositePatternDetector implements IPatternDetectionStrategy {
 	private void tagCompositeClass(ITargetClass composite, IProjectModel model) {
 		composite = new CompositeDecorator(PATTERN_TYPE.COMPOSITE_COMPOSITE, "", composite);
 		model.decorateClass(composite);
+		
+		List<String> subClasses = model.getRelationshipManager().getClassSubClasses(composite.getClassName());
+		for (String clazz : subClasses) {
+			ITargetClass subClass = model.getTargetClassByName(clazz);
+			subClass = new CompositeDecorator(PATTERN_TYPE.COMPOSITE_COMPOSITE, "", subClass);
+			
+			model.decorateClass(subClass);
+		}
 	}
 
 	private void tagComponentClass(ITargetClass component, IProjectModel model) {
