@@ -67,6 +67,9 @@ public class ProjectModel implements IProjectModel {
 
 	@Override
 	public void decorateClass(ITargetClass clazz) {
+		if (clazz.getClassName().equals("java/lang/Object"))
+			return;
+		
 		_targetClasses.put(clazz.getClassName(), clazz);
 	}
 

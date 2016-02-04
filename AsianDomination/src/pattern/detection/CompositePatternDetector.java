@@ -39,7 +39,13 @@ public class CompositePatternDetector implements IPatternDetectionStrategy {
 			if (matchingTypesHaveAddAndRemove || classHasAddAndRemoveMethods(clazz)) {
 				// get super class leaves
 				List<ITargetClass> leaves = checkSuperClassesForLeaves(clazz.getClassName(), matchingTypes, model);
+				List<String> mySubClasses = manager.getClassSubClasses(clazz.getClassName());
+				mySubClasses.add(clazz.getClassName());
+				
 				for (ITargetClass leaf : leaves) {
+					if (mySubClasses.contains(leaf.getClassName()))
+						continue;
+					
 					tagLeafClass(leaf, model);
 				}
 
@@ -113,7 +119,6 @@ public class CompositePatternDetector implements IPatternDetectionStrategy {
 			model.forcefullyGetClassByName(type);
 			List<String> subClasses = manager.getClassSubClasses(type);
 			for (String subClassName : subClasses) {
-				System.out.println(subClassName);
 				if (subClassName.equals(className))
 					continue;
 
