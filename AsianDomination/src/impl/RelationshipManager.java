@@ -16,18 +16,27 @@ public class RelationshipManager implements IRelationshipManager {
 	private HashMap<String, List<Relationship>> parentRelationships;
 	private HashMap<String, List<Relationship>> childrenRelationships;
 
+	public RelationshipManager() {
+		parentRelationships = new HashMap<String, List<Relationship>>();
+		childrenRelationships = new HashMap<String, List<Relationship>>();
+	}
+	
 	@Override
 	public void addRelationship(String subject, RelationshipType type, String object) {
+		if (type.equals(RelationshipType.USES) && subject.equals(object))
+			return;		
+		
 		Relationship relation = new Relationship(object, type);
 		// add to parent list
 		List<Relationship> pList = parentRelationships.get(subject);
+		
 		if (pList == null)
 			pList = new ArrayList<Relationship>();
 		pList.add(relation);
 		parentRelationships.put(subject, pList);
 
 		// add children list
-		Relationship flippedRelation = new Relationship(subject, relation.getRelationshipType());
+		Relationship flippedRelation = new Relationship(subject, type);
 		List<Relationship> cList = childrenRelationships.get(subject);
 		if (cList == null)
 			cList = new ArrayList<Relationship>();
@@ -37,7 +46,11 @@ public class RelationshipManager implements IRelationshipManager {
 
 	@Override
 	public List<Relationship> getClassRelationships(String subject) {
-		return this.parentRelationships.get(subject);
+		List<Relationship> relationships = this.parentRelationships.get(subject);
+		if (relationships == null)
+			relationships = new ArrayList<Relationship>();
+		
+		return relationships;
 	}
 
 	@Override
@@ -83,5 +96,4 @@ public class RelationshipManager implements IRelationshipManager {
 		}
 		return subClassesNames;
 	}
-
 }

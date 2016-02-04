@@ -32,6 +32,11 @@ public class ProjectModel implements IProjectModel {
 	}
 
 	@Override
+	public IRelationshipManager getRelationshipManager() {
+		return _relationshipManager;
+	}
+	
+	@Override
 	public ITargetClass getTargetClassByName(String className) {
 		return _targetClasses.get(className);
 	}

@@ -1,5 +1,6 @@
 package fake;
 
+import impl.RelationshipManager;
 import impl.TargetClass;
 import input.InputCommand;
 
@@ -8,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import api.IProjectModel;
+import api.IRelationshipManager;
 import api.ITargetClass;
 
 public class FakeProjectModel implements IProjectModel {
@@ -57,6 +59,11 @@ public class FakeProjectModel implements IProjectModel {
 	@Override
 	public ITargetClass forcefullyGetClassByName(String className) {
 		return null;
+	}
+
+	@Override
+	public IRelationshipManager getRelationshipManager() {
+		return new RelationshipManager();
 	}
 
 }

@@ -1,15 +1,12 @@
 package pattern.decoration;
 
 import java.util.Collection;
-import java.util.List;
 
 import api.IClassDeclaration;
 import api.IClassField;
 import api.IClassMethod;
 import api.ITargetClass;
-import impl.Relationship;
 import pattern.detection.PATTERN_TYPE;
-import utils.DotClassUtils.RelationshipType;
 import visitor.IVisitor;
 
 public abstract class AbstractTargetClassDecorator implements ITargetClass {
@@ -64,16 +61,6 @@ public abstract class AbstractTargetClassDecorator implements ITargetClass {
 	}
 
 	@Override
-	public void addRelationship(RelationshipType edgeType, String subjectClass) {
-		_decoratedClass.addRelationship(edgeType, subjectClass);
-	}
-
-	@Override
-	public List<Relationship> getRelationEdges() {
-		return _decoratedClass.getRelationEdges();
-	}
-
-	@Override
 	public void setClassDeclaration(IClassDeclaration classDeclaration) {
 		_decoratedClass.setClassDeclaration(classDeclaration);
 	}
@@ -82,18 +69,7 @@ public abstract class AbstractTargetClassDecorator implements ITargetClass {
 	public IClassDeclaration getDeclaration() {
 		return _decoratedClass.getDeclaration();
 	}
-
-	@Override
-	public boolean containsRelationship(RelationshipType edgeType, String subjectClass) {
-		return _decoratedClass.containsRelationship(edgeType, subjectClass);
-	}
 	
-	@Override
-	public Relationship getRelationship(RelationshipType type, String subjectClass) {
-		return _decoratedClass.getRelationship(type, subjectClass);
-	}
-	
-
 	@Override
 	public void setPatternString(String pattern) {
 		_decoratedClass.setPatternString(pattern);
