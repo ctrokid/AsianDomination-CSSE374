@@ -9,7 +9,6 @@ import api.IClassMethod;
 import api.IMethodStatement;
 import api.ITargetClass;
 import impl.MethodStatement;
-import utils.LaunchDiagramGenerator;
 import utils.LaunchDiagramGenerator.DiagramFileExtension;
 import visitor.ITraverser;
 import visitor.IVisitor;
@@ -23,8 +22,8 @@ public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 	private String _initialMethodParameters;
 	private int _maxCallDepth;
 	
-	public SDDiagramOutputStream(String asmOutputPath, String initialClass, String initialMethod, String initialParameters, int maxCallDepth, IVisitor visitor) {
-		super(asmOutputPath, visitor);
+	public SDDiagramOutputStream(String asmOutputPath, String diagramExecutablePath, String initialClass, String initialMethod, String initialParameters, int maxCallDepth, IVisitor visitor) {
+		super(asmOutputPath + ".sd", diagramExecutablePath, visitor);
 		_classNameToOutput = new LinkedHashMap<String, String>();
 		_methodStatements = new ArrayList<String>();
 		_initialClass = initialClass;
@@ -90,8 +89,8 @@ public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 	}
 	
 	@Override
-	public void generateDiagram(String diagramOutputPath) {
-		LaunchDiagramGenerator.RunSDEdit(_asmOutputPath, diagramOutputPath, DiagramFileExtension.PNG);
+	public void generateDiagram() {
+		_diagramGenerator.RunSDEdit(_asmOutputPath, DiagramFileExtension.PNG);
 	}
 
 }

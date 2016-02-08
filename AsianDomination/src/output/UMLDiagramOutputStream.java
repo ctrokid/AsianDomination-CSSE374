@@ -11,7 +11,6 @@ import utils.AsmClassUtils;
 import utils.ClassStyle;
 import utils.DotClassUtils;
 import utils.DotClassUtils.RelationshipType;
-import utils.LaunchDiagramGenerator;
 import utils.LaunchDiagramGenerator.DiagramFileExtension;
 import visitor.ITraverser;
 import visitor.IVisitor;
@@ -20,8 +19,8 @@ import visitor.VisitType;
 public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 	protected List<String> _relationships;
 	
-	public UMLDiagramOutputStream(String asmOutputPath, IVisitor visitor) {
-		super(asmOutputPath, visitor);
+	public UMLDiagramOutputStream(String asmOutputPath, String diagramExecutablePath, IVisitor visitor) {
+		super(asmOutputPath + ".gv", diagramExecutablePath, visitor);
 		this.setupVisitTargetClass();
 		this.setupPostVisitTargetClass();
 		this.setupVisitClassField();
@@ -142,8 +141,8 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 		write("\n}");
 	}
 
-	public void generateDiagram(String diagramOutputPath) {
-		LaunchDiagramGenerator.RunGVEdit(_asmOutputPath, diagramOutputPath, DiagramFileExtension.PNG);
+	public void generateDiagram() {
+		_diagramGenerator.RunGVEdit(_asmOutputPath, DiagramFileExtension.PNG);
 	}
 
 }

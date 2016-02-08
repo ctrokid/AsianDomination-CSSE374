@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import api.IProjectModel;
+import utils.LaunchDiagramGenerator;
 import visitor.IVisitor;
 
 public abstract class AbstractDiagramOutputStream implements IDiagramOutputStream {
@@ -13,11 +14,14 @@ public abstract class AbstractDiagramOutputStream implements IDiagramOutputStrea
 	protected OutputStream _outputStream;
 	protected String _asmOutputPath;
 	protected IVisitor _visitor;
+	protected LaunchDiagramGenerator _diagramGenerator;
 
-	public AbstractDiagramOutputStream(String asmOutputPath, IVisitor visitor) {
+	public AbstractDiagramOutputStream(String asmOutputPath, String diagramExecutablePath, IVisitor visitor) {
 		_asmOutputPath = asmOutputPath;
 		_projectModel = null;
 		_visitor = visitor;
+		_diagramGenerator = new LaunchDiagramGenerator(diagramExecutablePath);
+		
 		try {
 			_outputStream = new FileOutputStream(asmOutputPath);
 		} catch (FileNotFoundException e) {
@@ -27,7 +31,7 @@ public abstract class AbstractDiagramOutputStream implements IDiagramOutputStrea
 
 	public abstract void writeOutput();
 
-	public abstract void generateDiagram(String diagramOutputPath);
+	public abstract void generateDiagram();
 
 	protected void write(String s) {
 		try {
