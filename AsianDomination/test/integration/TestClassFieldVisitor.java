@@ -13,6 +13,9 @@ import asm.visitor.ClassFieldVisitor;
 import fake.FakeInputCommand;
 import fake.FakeProjectModel;
 import input.InputCommand;
+import output.IDiagramOutputStream;
+import output.UMLDiagramOutputStream;
+import visitor.Visitor;
 
 public class TestClassFieldVisitor {
 	private IProjectModel model;
@@ -22,14 +25,14 @@ public class TestClassFieldVisitor {
 	@Before
 	public void setup() {
 		_visitor = null;
-		String asmPath = "input_output_test/testClassMethodVisitor";
-		String diagramPath = asmPath;	
+		String diagramPath = "input_output_test/testClassMethodVisitor";	
 		String[] params = new String[] {
 				"test/examples/Animal",
 				"test/examples/Cat"
 		};
 		
-		InputCommand cmd = new FakeInputCommand(asmPath, diagramPath, params);
+		IDiagramOutputStream outStream = new UMLDiagramOutputStream(diagramPath, "", new Visitor());
+		InputCommand cmd = new FakeInputCommand(outStream, params);
 		model = new FakeProjectModel(cmd);
 		
 		classPath = "test/examples/Animal";

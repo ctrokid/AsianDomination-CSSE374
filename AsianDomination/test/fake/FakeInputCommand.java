@@ -8,20 +8,18 @@ import input.InputCommand;
 public class FakeInputCommand extends InputCommand {
 	private String[] _params;
 	private IAddStrategy _addStrat;
-	private IDiagramOutputStream _outStrat;
 	
 	public boolean calledGetInputParameters;
 	public boolean calledGetAddStrategy;
 	public boolean calledGetOutputStream;
 	
-	public FakeInputCommand(String diagramOutputPath, String asmOutputPath, String[] params) {
-		super(diagramOutputPath, asmOutputPath);
+	public FakeInputCommand(IDiagramOutputStream outStream, String[] params) {
+		super(outStream);
 		calledGetInputParameters = false;
 		calledGetAddStrategy = false;
 		calledGetOutputStream = false;
 		
 		_addStrat = null;
-		_outStrat = null;
 		_params = params;
 	}
 
@@ -44,15 +42,11 @@ public class FakeInputCommand extends InputCommand {
 		calledGetAddStrategy = true;
 		return _addStrat;
 	}
-	
-	public void setOutputStream(IDiagramOutputStream stream) {
-		_outStrat = stream;
-	}
 
 	@Override
-	public IDiagramOutputStream getOutputStream() {
+	public IDiagramOutputStream getDiagramOutputStream() {
 		calledGetOutputStream = true;
-		return _outStrat;
+		return _diagramOutputStream;
 	}
 
 }

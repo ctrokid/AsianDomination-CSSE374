@@ -1,32 +1,18 @@
 package PatternDetectionTests;
 
-import impl.ProjectModel;
-import input.InputCommand;
-import input.UMLInputCommand;
 import pattern.decoration.SingletonDecorator;
-import pattern.detection.SingletonDetectionVisitor;
 import pattern.detection.SingletonPatternDetector;
-import visitor.Visitor;
 
 import static org.junit.Assert.*;
 
-import java.util.Arrays;
 import java.util.Iterator;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import api.IProjectModel;
 import api.ITargetClass;
 
 public class SingletonDetectionTest {
-	private InputCommand _cmd;
-
-	@Before
-	public void setup() {
-		_cmd = null;
-	}
 
 	@Test
 	public void simpleSingletonTest() {
@@ -39,7 +25,7 @@ public class SingletonDetectionTest {
 										  "java/awt/Desktop",
 										  "java/util/Calendar"};
 
-		IProjectModel model = buildModel(classes, "");
+		IProjectModel model = DetectionTestUtils.buildModelWithAllDetectors(classes, "");
 		SingletonPatternDetector s = new SingletonPatternDetector();
 		s.detectPatterns(model);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
@@ -74,7 +60,7 @@ public class SingletonDetectionTest {
 				 "headfirst/singleton/chocolate/ChocolateController"
 				 
 		};
-		IProjectModel model = buildModel(classes, "docs/M4/SingletonTest");
+		IProjectModel model = DetectionTestUtils.buildModelWithAllDetectors(classes, "docs/M4/SingletonTest");
 		model.printModel();
 	}
 	
@@ -86,19 +72,7 @@ public class SingletonDetectionTest {
 				  "java/awt/Desktop",
 				  "java/util/Calendar"
 		};
-		IProjectModel model = buildModel(classes, "docs/M4/AutomatedSingletonTest");
+		IProjectModel model = DetectionTestUtils.buildModelWithAllDetectors(classes, "docs/M4/AutomatedSingletonTest");
 		model.printModel();
-	}
-
-	@After
-	public void tearDown() {
-		_cmd = null;
-	}
-
-	private IProjectModel buildModel(String[] classes, String path) {
-		_cmd = new UMLInputCommand(path, path, classes, Arrays.asList(new SingletonDetectionVisitor(new Visitor())), null);
-		IProjectModel model = new ProjectModel(_cmd);
-		model.buildModel();
-		return model;
 	}
 }

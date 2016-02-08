@@ -13,19 +13,20 @@ import fake.FakeInputCommand;
 import fake.FakeProjectModel;
 import asm.visitor.ClassMethodVisitor;
 import input.InputCommand;
+import output.IDiagramOutputStream;
+import output.UMLDiagramOutputStream;
 import utils.DotClassUtils.RelationshipType;
+import visitor.Visitor;
 
 public class TestClassMethodVisitor {
 	private String[] params;
-	private String asmPath;
 	private String diagramPath;
 	private ClassMethodVisitor _visitor;
 	
 	@Before
 	public void setup() {
 		_visitor = null;
-		asmPath = "input_output_test/testClassMethodVisitor";
-		diagramPath = asmPath;		
+		diagramPath = "input_output_test/testClassMethodVisitor";		
 	}
 	
 	@Test
@@ -35,7 +36,8 @@ public class TestClassMethodVisitor {
 				"test/examples/Cat"
 		};
 		
-		InputCommand cmd = new FakeInputCommand(asmPath, diagramPath, params);
+		IDiagramOutputStream outStream = new UMLDiagramOutputStream(diagramPath, "", new Visitor());
+		InputCommand cmd = new FakeInputCommand(outStream, params);
 		IProjectModel model = new FakeProjectModel(cmd);
 		
 		String classPath = "test/examples/Animal";
@@ -49,7 +51,6 @@ public class TestClassMethodVisitor {
 		
 		ITargetClass clazz = model.getTargetClassByName(classPath);
 		assertEquals(3, clazz.getMethods().size());
-		
 		
 		boolean contains = model.getRelationshipManager().getClassRelationship(clazz.getClassName(), RelationshipType.USES, "void") == null ? false : true;
 		assertTrue(contains);

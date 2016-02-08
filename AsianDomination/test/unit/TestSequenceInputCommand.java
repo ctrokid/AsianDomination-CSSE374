@@ -12,11 +12,11 @@ import fake.FakeProjectModel;
 import input.SequenceInputCommand;
 import output.IDiagramOutputStream;
 import output.SDDiagramOutputStream;
+import visitor.Visitor;
 
 public class TestSequenceInputCommand {
 	private SequenceInputCommand _cmd;
 	private String _diagramOutputPath;
-	private String _asmOutputPath;
 	private String clazz;
 	private String method;
 	private String parameters;
@@ -24,17 +24,12 @@ public class TestSequenceInputCommand {
 	@Before
 	public void setup() {
 		_diagramOutputPath = "input_output_test/UML";
-		_asmOutputPath = "input_output_test/UML";
 		clazz = "test/examples/Animal";
 		method = "helloWorld";
 		parameters = "(String, int)";
 		
-		_cmd = new SequenceInputCommand(_diagramOutputPath, _asmOutputPath, clazz, method, parameters, 5);
-	}
-	
-	@Test
-	public void TestSequenceInputCommandGetOutputPath() {
-		assertEquals(_diagramOutputPath, _cmd.getDiagramOutputPath());
+		IDiagramOutputStream out = new SDDiagramOutputStream(_diagramOutputPath, "", clazz, method, parameters, 5, new Visitor());
+		_cmd = new SequenceInputCommand(out, clazz, method, parameters, 5);
 	}
 	
 	@Test
@@ -54,7 +49,7 @@ public class TestSequenceInputCommand {
 	
 	@Test
 	public void TestSeuqenceInputCommandOutputStrategy() {
-		IDiagramOutputStream outStrat = _cmd.getOutputStream();
+		IDiagramOutputStream outStrat = _cmd.getDiagramOutputStream();
 		assertTrue(outStrat instanceof SDDiagramOutputStream);
 	}
 	

@@ -5,12 +5,12 @@ import visitor.IVisitor;
 
 public class FakeUMLDiagramOutputStream extends UMLDiagramOutputStream {
 
-	public FakeUMLDiagramOutputStream(String asmOutputPath, IVisitor visitor) {
-		super(asmOutputPath, visitor);
+	public FakeUMLDiagramOutputStream(String asmOutputPath, String executablePath, IVisitor visitor) {
+		super(asmOutputPath, executablePath, visitor);
 	}
 	
 	@Override
-	public void generateDiagram(String path) {
+	public void generateDiagram() {
 		
 	}
 

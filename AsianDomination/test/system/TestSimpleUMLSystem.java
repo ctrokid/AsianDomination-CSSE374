@@ -5,6 +5,7 @@ import input.InputCommand;
 import input.UMLInputCommand;
 import output.AbstractDiagramOutputStream;
 import output.IDiagramOutputStream;
+import output.UMLDiagramOutputStream;
 import pattern.detection.AdapterPatternDetector;
 import pattern.detection.DecoratorPatternDetector;
 import pattern.detection.IDetectionVisitor;
@@ -122,7 +123,6 @@ public class TestSimpleUMLSystem {
 			"impl/MethodStatement",
 			"impl/ProjectModel",
 			"impl/TargetClass",
-			"impl/PrintCommand",
 			"asm/visitor/ClassDeclarationVisitor",
 			"asm/visitor/ClassFieldVisitor",
 			"asm/visitor/ClassMethodVisitor",
@@ -147,7 +147,7 @@ public class TestSimpleUMLSystem {
 			"visitor/IVisitMethod",
 			"visitor/IVisitor",
 			"visitor/Visitor",
-			"visitor/LookupKey",
+//			"visitor/LookupKey",
 			"pattern/decoration/AbstractTargetClassDecorator",
 			"pattern/decoration/AdapterDecorator",
 			"pattern/decoration/DecoratorTargetClass",
@@ -158,29 +158,14 @@ public class TestSimpleUMLSystem {
 			"pattern/detection/IPatternDetectionStrategy",
 			"pattern/detection/IDetectionVisitor",
 			"pattern/detection/SingletonDetectionVisitor"
-//				"headfirst/singleton/chocolate/ChocolateBoiler",
-//				"headfirst/singleton/chocolate/ChocolateController",
-//			"examples/singleton/SingletonExample",
-//			"examples/decorator/Beverage",
-//			"examples/decorator/CondimentDecorator",
-//			"examples/decorator/Milk",
-//				"java/io/FilterInputStream",
-//				"java/lang/Runtime",
-//				"java/awt/Desktop",
-//				"java/util/Calendar",
-//			"problem/client/App",
-//			"problem/client/IteratorToEnumerationAdapter",
-//			"problem/lib/LinearTransformer",
-//			"java/util/Iterator",
-//			"java/util/Enumeration",
-//				"AdapterDummieClasses/Adaptee",
-//				"AdapterDummieClasses/Adapter",
-//				"AdapterDummieClasses/ITarget"
 		};
 		
 		List<IDetectionVisitor> detectVisitor = Arrays.asList(new SingletonDetectionVisitor(new Visitor()));
 		List<IPatternDetectionStrategy> detectors = Arrays.asList(new DecoratorPatternDetector(), new AdapterPatternDetector());
-		_cmd = new UMLInputCommand("input_output/testProjectSubsystem", "input_output/testProjectSubsystem", classes, detectVisitor, detectors);
+		IDiagramOutputStream out = new UMLDiagramOutputStream("input_output/testProjectSubsystem", "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe", new Visitor());
+	
+		_cmd = new UMLInputCommand(out, classes, detectVisitor, detectors);
+		
 		IProjectModel model = new ProjectModel(_cmd);
 		model.buildModel();
 		model.printModel();

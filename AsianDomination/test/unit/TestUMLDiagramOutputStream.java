@@ -33,8 +33,9 @@ public class TestUMLDiagramOutputStream {
 	@Before
 	public void setup() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		bytesOut = new ByteArrayOutputStream();
-		UMLDiagramOutputStream _outStreamVisitor = new UMLDiagramOutputStream("", new Visitor());
-		_outStreamVisitor.setProjectModel(new FakeProjectModel(new UMLInputCommand("", "", null, null, null)));
+		UMLDiagramOutputStream _outStreamVisitor = new UMLDiagramOutputStream("", "", new Visitor());
+		_outStreamVisitor.setProjectModel(new FakeProjectModel(new UMLInputCommand(_outStreamVisitor, null, null, null)));
+		
 		Field f = AbstractDiagramOutputStream.class.getDeclaredField("_outputStream");
 		f.setAccessible(true);
 		

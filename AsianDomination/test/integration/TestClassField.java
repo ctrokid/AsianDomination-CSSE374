@@ -28,7 +28,7 @@ public class TestClassField {
 	@Before
 	public void setUp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		bytesOut = new ByteArrayOutputStream();
-		outStreamVisitor = new UMLDiagramOutputStream("", new Visitor());
+		outStreamVisitor = new UMLDiagramOutputStream("", "", new Visitor());
 		
 		Field f = AbstractDiagramOutputStream.class.getDeclaredField("_outputStream");
 		f.setAccessible(true);
