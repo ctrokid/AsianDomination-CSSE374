@@ -2,42 +2,51 @@ package unit;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import utils.LaunchDiagramGenerator;
 import utils.LaunchDiagramGenerator.DiagramFileExtension;
 
 public class TestSDEditLaunchGenerator {
-	private String inputPath;
 	private String outputPath;
+	private LaunchDiagramGenerator ld;
+	
+	@Before
+	public void setup() {
+		String sdExecutable = "lib/sdedit-4.01.jar";
+		ld = new LaunchDiagramGenerator(sdExecutable);
+	}
 	
 	@Test
 	public void testSDEditLaunchSuccess() {
-		inputPath = "input_output/sdEditSuccessTest.sd";
-		outputPath = "input_output/firstSequenceTest";
+		outputPath = "input_output/sdEditSuccessTest.sd";
 		
-		int actual = LaunchDiagramGenerator.RunSDEdit(inputPath, outputPath, DiagramFileExtension.PDF);
+		int actual = ld.RunSDEdit(outputPath, DiagramFileExtension.PDF);
 		int expected = 0;
 		assertEquals(expected, actual);
 	}
 	
 	@Test
 	public void testSDEditLaunchFailureBadInputPath() {
-		inputPath = "input_output/sdThisISIntentionalFailureTest";
-		outputPath = "input_output/badPathFailureSequenceTest";
+		outputPath = "input_output/sdThisISIntentionalFailureTest";
 		
-		int actual = LaunchDiagramGenerator.RunSDEdit(inputPath, outputPath, DiagramFileExtension.PDF);
+		int actual = ld.RunSDEdit(outputPath, DiagramFileExtension.PDF);
 		int notExpected = 0;
 		assertNotEquals(notExpected, actual);
 	}
 	
 	@Test
 	public void testSDEditLaunchFailureBadSDFile() {
-		inputPath = "input_output/sdEditFailureTest";
-		outputPath = "input_output/badFileFailureSequenceTest";
+		outputPath = "input_output/sdEditFailureTest";
 		
-		int actual = LaunchDiagramGenerator.RunSDEdit(inputPath, outputPath, DiagramFileExtension.PDF);
+		int actual = ld.RunSDEdit(outputPath, DiagramFileExtension.PDF);
 		int notExpected = 0;
 		assertNotEquals(notExpected, actual);
+	}
+	
+	@Test
+	public void tearDown() {
+		ld = null;
 	}
 }

@@ -9,9 +9,14 @@ public class LaunchDiagramGenerator {
 		PS
 	}
 	
-	public static int RunGVEdit(String inputPath, String outputPath, DiagramFileExtension ext) {
-		// TODO: this should be added to path. just call 'dot - T...'
-		String cmd = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot -T " + ext.toString().toLowerCase()  + " " + inputPath + " -o "+ outputPath + "." + ext.toString().toLowerCase();
+	private String _executablePath;
+	
+	public LaunchDiagramGenerator(String executablePath) {
+		_executablePath = executablePath;
+	}
+	
+	public int RunGVEdit(String outputPath, DiagramFileExtension ext) {
+		String cmd = _executablePath + " -T " + ext.toString().toLowerCase()  + " " + outputPath + " -o "+ outputPath.substring(0, outputPath.length() - 3) + "." + ext.toString().toLowerCase();
 		System.out.println("Running Dot Command: ");
 		System.out.println(cmd);
 		
@@ -25,15 +30,15 @@ public class LaunchDiagramGenerator {
 		}
 		
 		if (exitVal == 0)
-			System.out.println("Dot diagram successfully generated.");
+			System.out.println("Dot diagram successfully generated.\n");
 		else
-			System.out.println("Dot diagram failure. Please check " + inputPath + " for the problem.");
+			System.out.println("Dot diagram failure. Please check " + outputPath + " for the problem.\n");
 		
 		return exitVal;
 	}
 	
-	public static int RunSDEdit(String inputPath, String outputPath, DiagramFileExtension ext) {
-		String cmd = "java -jar lib/sdedit-4.01.jar -o " + outputPath + "." + ext.toString() + " -t " + ext.toString() + " " + inputPath;
+	public int RunSDEdit(String outputPath, DiagramFileExtension ext) {
+		String cmd = "java -jar " + _executablePath + " -o " + outputPath.substring(0, outputPath.length() - 3) + "." + ext.toString() + " -t " + ext.toString() + " " + outputPath;
 		System.out.println("Running SDedit Command: ");
 		System.out.println(cmd);
 
@@ -47,9 +52,9 @@ public class LaunchDiagramGenerator {
 		}
 		
 		if (exitVal == 0)
-			System.out.println("Sequence diagram successfully generated.");
+			System.out.println("Sequence diagram successfully generated.\n");
 		else
-			System.out.println("Sequence diagram failure. Please check " + inputPath + " for the problem.");
+			System.out.println("Sequence diagram failure. Please check " + outputPath + " for the problem.\n");
 		
 		return exitVal;
 	}
