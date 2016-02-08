@@ -56,7 +56,7 @@ public class DecoratorPatternDetector implements IPatternDetectionStrategy {
 	}
 
 	private boolean decorateClassIfDecorator(IClassField field, ITargetClass clazz) {
-		if (clazz == null || clazz.getClassName().equals("java/lang/Object"))
+		if (field.getType().equals("java/lang/Object") | clazz == null || clazz.getClassName().equals("java/lang/Object"))
 			return false;
 
 		// check super type
