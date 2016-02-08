@@ -4,8 +4,6 @@ import api.IProjectModel;
 import construction.IAddStrategy;
 import construction.SDAddStrategy;
 import output.IDiagramOutputStream;
-import output.SDDiagramOutputStream;
-import visitor.Visitor;
 
 public class SequenceInputCommand extends InputCommand {
 	private String _initialClass;
@@ -13,9 +11,9 @@ public class SequenceInputCommand extends InputCommand {
 	private int _maxCallDepth;
 	private String _parameters;
 
-	public SequenceInputCommand(String diagramOutputPath, String asmOutputPath, String initialClass, String methodName, String parameters,
+	public SequenceInputCommand(IDiagramOutputStream outputStream, String initialClass, String methodName, String parameters,
 			int maxCallDepth) {
-		super(diagramOutputPath, asmOutputPath);
+		super(outputStream);
 		this._initialClass = initialClass;
 		this._methodName = methodName;
 		this._maxCallDepth = maxCallDepth;
@@ -44,10 +42,9 @@ public class SequenceInputCommand extends InputCommand {
 		};
 		return params;
 	}
+	
+	@Override
 	public IAddStrategy getAddStrategy(IProjectModel model){
 		return new SDAddStrategy(_maxCallDepth, model);
-	}
-	public IDiagramOutputStream getOutputStream(){
-		return new SDDiagramOutputStream(_asmOutputPath + ".sd", _initialClass, _methodName, _parameters, _maxCallDepth, new Visitor());
 	}
 }

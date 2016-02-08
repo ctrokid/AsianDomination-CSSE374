@@ -6,37 +6,28 @@ import api.IProjectModel;
 import construction.IAddStrategy;
 import construction.UMLAddStrategy;
 import output.IDiagramOutputStream;
-import output.UMLDiagramOutputStream;
 import pattern.detection.IDetectionVisitor;
 import pattern.detection.IPatternDetectionStrategy;
-import visitor.Visitor;
 
 public class UMLInputCommand extends InputCommand{
-	private String[] _classes;
 	private String[] _inputParameters;
 	private List<IPatternDetectionStrategy> _detectors;
 	private List<IDetectionVisitor> _detectionVisitors;
 	
-	public UMLInputCommand(String diagramOutputPath, String asmOutputPath, String[] inputParameters,List<IDetectionVisitor> detectionVisitor, List<IPatternDetectionStrategy> detectors) {
-		super(diagramOutputPath, asmOutputPath);
+	public UMLInputCommand(IDiagramOutputStream outputStream, String[] inputParameters, List<IDetectionVisitor> detectionVisitor, List<IPatternDetectionStrategy> detectors) {
+		super(outputStream);
 		_inputParameters = inputParameters;
 		_detectors = detectors;
 		this._detectionVisitors = detectionVisitor;
 	}
-	
-	public String[] getClasses() {
-		return _classes;
-	}
-	
+
+	@Override
 	public String[] getInputParameters(){
 		return _inputParameters;
 	}
 	
+	@Override
 	public IAddStrategy getAddStrategy(IProjectModel model){
 		return new UMLAddStrategy(_detectors, _detectionVisitors, model);
-	}
-	
-	public IDiagramOutputStream getOutputStream(){
-		return new UMLDiagramOutputStream(_asmOutputPath + ".gv", new Visitor());
 	}
 }
