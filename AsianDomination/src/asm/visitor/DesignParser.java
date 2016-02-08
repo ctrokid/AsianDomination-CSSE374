@@ -6,6 +6,7 @@ import input.InputCommand;
 import input.SequenceInputCommand;
 import utils.CommandGenerator;
 import utils.CommandGenerator.ExecuteCommand;
+import utils.UMLConfiguration;
 
 public class DesignParser {
 
@@ -46,5 +47,11 @@ public class DesignParser {
 			model.buildModel();
 			model.printModel();
 		}
+		
+//		UMLConfiguration config = new UMLConfiguration();
+//		IProjectModel model = config.getProjectModel();
+//		
+//		model.buildModel();
+//		model.printModel();
 	}
 }

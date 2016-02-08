@@ -85,10 +85,10 @@ public class ProjectModel implements IProjectModel {
 		if(_targetClasses.isEmpty()){
 			System.out.println("The model is empty!");
 		} else {
-			IDiagramOutputStream digramOutputStream = _command.getOutputStream();
+			IDiagramOutputStream digramOutputStream = _command.getDiagramOutputStream();
 			digramOutputStream.setProjectModel(this);
 			digramOutputStream.writeOutput();
-			digramOutputStream.generateDiagram(_command.getDiagramOutputPath());
+			digramOutputStream.generateDiagram();
 		}
 		
 	}
