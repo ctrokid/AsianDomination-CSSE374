@@ -162,6 +162,18 @@ All members met for 3 hours to add necessary classes for adapter and decorator.
 01/27/2016
 All members met for 7 hours to finish up milestone 5. 
 
+01/31/2016
+Collin and Coco met for 1.5 hours to talk about the design and refactoring
+
+02/01/2016
+All members met for 2.5 hours to start refactoring the design so singleton is detected through visitor
+
+02/02/2016
+All members met for 3 hours and working on the algorithem of composite pattern. Finished up with adapter and decorator pattern.
+
+02/03/2016
+All members met for 7 hours to finish composite pattern and tests for miletone 5.
+
 ##Instruction of Running Code:
 ---
 Current by running main, the project will generate all the milestone's images to input_output folder. The command line is currently not functional, will be functional later on in the project milestones.
