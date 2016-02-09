@@ -12,6 +12,7 @@ import api.IProjectModel;
 import api.IRelationshipManager;
 import api.ITargetClass;
 import pattern.decoration.CompositeDecorator;
+import utils.AsmClassUtils;
 
 public class CompositePatternDetector implements IPatternDetectionStrategy {
 
@@ -31,12 +32,13 @@ public class CompositePatternDetector implements IPatternDetectionStrategy {
 				ITargetClass matchingClass = model.forcefullyGetClassByName(type);
 				potentialComponents.add(matchingClass);
 
-				if (classHasAddAndRemoveMethods(matchingClass)) {
+				// FIXME: possible bug, superTypes or matchingClass.superTypes
+				if (classHasAddAndRemoveMethods(matchingClass, superTypes)) {
 					matchingTypesHaveAddAndRemove = true;
 				}
 			}
 
-			if (matchingTypesHaveAddAndRemove || classHasAddAndRemoveMethods(clazz)) {
+			if (matchingTypesHaveAddAndRemove || classHasAddAndRemoveMethods(clazz, superTypes)) {
 				// get super class leaves
 				List<ITargetClass> leaves = checkSuperClassesForLeaves(clazz.getClassName(), matchingTypes, model);
 				List<String> mySubClasses = manager.getClassSubClasses(clazz.getClassName());
@@ -103,19 +105,33 @@ public class CompositePatternDetector implements IPatternDetectionStrategy {
 		return matchingTypes;
 	}
 
-	private boolean classHasAddAndRemoveMethods(ITargetClass clazz) {
+	private boolean classHasAddAndRemoveMethods(ITargetClass clazz, Set<String> superTypes) {
 		boolean addMethod = false;
 		boolean removeMethod = false;
 
 		for (IClassMethod method : clazz.getMethods()) {
-			if (method.getMethodName().contains("add")) {
-				addMethod = true;
-			} else if (method.getMethodName().contains("remove")) {
-				removeMethod = true;
+			if (method.getMethodName().startsWith("add")) {
+				if (addOrRemoveContainHierarchyParameter(method, superTypes))
+					addMethod = true;
+			} else if (method.getMethodName().startsWith("remove")) {
+				if (addOrRemoveContainHierarchyParameter(method, superTypes))
+					removeMethod = true;
 			}
 		}
 
 		return addMethod && removeMethod;
+	}
+	
+	private boolean addOrRemoveContainHierarchyParameter(IClassMethod method, Set<String> superTypes) {
+		boolean isValid = false;
+		String[] params = AsmClassUtils.GetArguments(method.getSignature(), false).split(",");
+		
+		// FIXME: this can be configurable. TODO!!!!
+		if (params.length == 1 && superTypes.contains(params[0])) {
+			isValid = true;
+		}
+		
+		return isValid;
 	}
 
 	private List<ITargetClass> checkSuperClassesForLeaves(String className, Set<String> matchingTypes,
