@@ -1,15 +1,21 @@
 package construction;
 
+import java.util.Properties;
+
 import api.IProjectModel;
+import framework.AbstractPhase;
 
-public abstract class AbstractAddStrategy implements IAddStrategy {
-	protected IProjectModel _projectModel;
+public abstract class AbstractAddStrategy extends AbstractPhase {
+	protected String[] _params;
 
-	public AbstractAddStrategy(IProjectModel model) {
-		this._projectModel = model;
+	public AbstractAddStrategy(Properties config) {
+		super(config);
 	}
 
-	@Override
-	public abstract void buildModel(String[] params);
+	protected abstract void buildModel(IProjectModel model);
 
+	@Override
+	public void execute(IProjectModel model) {
+		buildModel(model);
+	}
 }

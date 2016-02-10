@@ -1,54 +1,30 @@
 package construction;
 
-import java.util.List;
+import java.util.Properties;
 
 import api.IProjectModel;
-import api.ITargetClass;
-import pattern.detection.IDetectionVisitor;
-import pattern.detection.IPatternDetectionStrategy;
 
 public class UMLAddStrategy extends AbstractAddStrategy {
-	private List<IPatternDetectionStrategy> _detectors;
-	private List<IDetectionVisitor> _detectVisitor;
-
-	public UMLAddStrategy(List<IPatternDetectionStrategy> detectors, List<IDetectionVisitor> detectionVisitor,
-			IProjectModel model) {
-		super(model);
-		_detectors = detectors;
-		_detectVisitor = detectionVisitor;
-		
-		if (_detectVisitor == null)
-			return;
-		
-		for(IDetectionVisitor d: _detectVisitor){
-			d.setProjectModel(model);
-		}
+	
+	public UMLAddStrategy(Properties props) {
+		super(props);
 	}
-
+	
 	@Override
-	public void buildModel(String[] classes) {
-		if (_projectModel == null) {
-			return;
-		}
-
-		for (String c : classes) {
-			_projectModel.addClass(c);
-			
-			if (_detectVisitor == null)
-				continue;
-			
-			ITargetClass clazz = _projectModel.getTargetClassByName(c);
-			for(IDetectionVisitor d: _detectVisitor){
-				clazz.accept(d.getVisitor());
-			}
-		}
-
-		if (_detectors == null)
-			return;
-
-		for (IPatternDetectionStrategy detector : _detectors) {
-			detector.detectPatterns(_projectModel);
+	protected void loadConfig(Properties props) {
+		String classes = props.getProperty("input-classes");
+		if (classes != null) {
+			_params = classes.substring(1, classes.length()-1).split(",");
 		}
 	}
+	
+	@Override
+	public void buildModel(IProjectModel model) {
+		for (String c : _params) {
+			model.addClass(c.trim());
+		}
+	}
+
+	
 
 }

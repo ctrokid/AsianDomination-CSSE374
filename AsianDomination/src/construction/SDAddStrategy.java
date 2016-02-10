@@ -1,5 +1,7 @@
 package construction;
 
+import java.util.Properties;
+
 import api.IClassMethod;
 import api.IMethodStatement;
 import api.IProjectModel;
@@ -7,19 +9,24 @@ import api.ITargetClass;
 
 public class SDAddStrategy extends AbstractAddStrategy {
 	private int MAX_CALLDEPTH = 5;
-
-	public SDAddStrategy(int maxCallDepth, IProjectModel model) {
-		super(model);
-		MAX_CALLDEPTH = maxCallDepth;
+	private IProjectModel _projectModel;
+	
+	public SDAddStrategy(Properties props) {
+		super(props);
 	}
 	
 	@Override
-	public void buildModel(String[] params) {
-		if (_projectModel == null)
-			return;
-		
-		super._projectModel.addClass(params[0]);
-		addClassesRecursively(params[0], params[1], params[2], 1);
+	protected void loadConfig(Properties props) {
+		/*
+		 * TODO: this needs to be configured to work again. We must have a separate properties file or something?
+		 */
+	}
+	
+	@Override
+	public void buildModel(IProjectModel model) {
+		_projectModel = model;
+		model.addClass(_params[0]);
+		addClassesRecursively(_params[0], _params[1], _params[2], 1);
 	}
 
 	private void addClassesRecursively(String className, String methodName, String params, int depth) {
@@ -27,7 +34,7 @@ public class SDAddStrategy extends AbstractAddStrategy {
 			return;
 		}
 
-		ITargetClass currentClass = super._projectModel.getTargetClassByName(className);
+		ITargetClass currentClass = _projectModel.getTargetClassByName(className);
 
 		if (currentClass.equals(null)) {
 			System.err.println("Cannot find class");
@@ -38,7 +45,7 @@ public class SDAddStrategy extends AbstractAddStrategy {
 		for (IMethodStatement currentStatement : currentMethod.getMethodStatements()) {
 			String classToCall = currentStatement.getClassToCall();
 			if (!modelContainClass(classToCall)) {
-				super._projectModel.addClass(classToCall);
+				_projectModel.addClass(classToCall);
 			}
 				addClassesRecursively(classToCall, currentStatement.getMethodName(), currentStatement.getParameters(), depth + 1);
 			
@@ -46,7 +53,7 @@ public class SDAddStrategy extends AbstractAddStrategy {
 	}
 
 	private boolean modelContainClass(String className) {
-		if (super._projectModel.getTargetClassByName(className) == null) {
+		if (_projectModel.getTargetClassByName(className) == null) {
 			return false;
 		}
 		return true;
