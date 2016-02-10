@@ -87,7 +87,6 @@ public class ProjectModel implements IProjectModel {
 			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
 		} catch (IOException e) {
 			System.err.println("Can not find " + classPath);
-			e.printStackTrace();
 		}
 		
 		return clazz;

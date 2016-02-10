@@ -80,7 +80,7 @@ public class WeirdTests {
 	}
 	
 	@Test
-	public void SUperWeirdChandanIDareYouSayThisISNotEdgeCase1() {
+	public void WeirdFalseTest() {
 		String[] classes = new String[] {
 				"examples/composite/WeirdComposite1",
 				"examples/composite/LeafA",
