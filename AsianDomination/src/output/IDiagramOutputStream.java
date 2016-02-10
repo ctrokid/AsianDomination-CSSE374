@@ -1,9 +1,8 @@
 package output;
 
-import api.IProjectModel;
+import framework.IPhase;
 
-public interface IDiagramOutputStream {
+public interface IDiagramOutputStream extends IPhase {
 	public void writeOutput();
 	public void generateDiagram();
-	public void setProjectModel(IProjectModel model);
 }

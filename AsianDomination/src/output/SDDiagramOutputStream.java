@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import api.IClassMethod;
 import api.IMethodStatement;
@@ -20,18 +21,43 @@ public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 	private String _initialClass;
 	private String _initialMethod;
 	private String _initialMethodParameters;
-	private int _maxCallDepth;
+	private int _maxCallDepth = 3;
 	
-	public SDDiagramOutputStream(String asmOutputPath, String diagramExecutablePath, String initialClass, String initialMethod, String initialParameters, int maxCallDepth, IVisitor visitor) {
-		super(asmOutputPath + ".sd", diagramExecutablePath, visitor);
+	public SDDiagramOutputStream(Properties props, IVisitor visitor) {
+		super(props, visitor);
 		_classNameToOutput = new LinkedHashMap<String, String>();
 		_methodStatements = new ArrayList<String>();
-		_initialClass = initialClass;
-		_initialMethod = initialMethod;
-		_initialMethodParameters = initialParameters;
-		_maxCallDepth = maxCallDepth;
 		
 		this.setupVisitMethodStatement();
+	}
+	
+	@Override
+	protected void loadConfig(Properties props) {
+		// load diagramGenerator and output stream
+		super.loadConfig(props);
+		
+		// load SD specific parameters
+		String initialClass = props.getProperty("initial-class");
+		if (initialClass != null) {
+			_initialClass = initialClass;
+		}
+		
+		String initialMethod = props.getProperty("initial-method");
+		if (initialMethod != null) {
+			_initialMethod = initialMethod;
+		}
+		
+		String initialParams = props.getProperty("initial-method-parameters");
+		if (initialParams != null) {
+			_initialMethodParameters = initialParams;
+		}
+		
+		String maxCallDepth = props.getProperty("max-call-depth");
+		if (maxCallDepth != null) {
+			try {
+				_maxCallDepth = Integer.parseInt(maxCallDepth);
+			} catch (NumberFormatException e) {}
+		}
 	}
 	
 	protected void setupVisitMethodStatement() {

@@ -1,7 +1,8 @@
 package output;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Properties;
+import java.util.Set;
 
 import api.IClassField;
 import api.IClassMethod;
@@ -17,16 +18,25 @@ import visitor.IVisitor;
 import visitor.VisitType;
 
 public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
-	protected List<String> _relationships;
+	protected Set<String> _relationships;
 	
-	public UMLDiagramOutputStream(String asmOutputPath, String diagramExecutablePath, IVisitor visitor) {
-		super(asmOutputPath + ".gv", diagramExecutablePath, visitor);
+	public UMLDiagramOutputStream(Properties props, IVisitor visitor) {
+		super(props, visitor);
+		initialize();
+	}
+
+	public UMLDiagramOutputStream(Properties props) {
+		super(props);
+		initialize();
+	}
+	
+	private void initialize() {
 		this.setupVisitTargetClass();
 		this.setupPostVisitTargetClass();
 		this.setupVisitClassField();
 		this.setupPostVisitClassField();
 		this.setupVisitIClassMethod();
-		_relationships = new ArrayList<String>();
+		_relationships = new HashSet<String>();
 	}
 
 	protected void setupVisitTargetClass() {
@@ -116,10 +126,17 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 
 	@Override
 	public void writeOutput() {
+		// TODO: clear relationships set?
+		_relationships = new HashSet<String>();
 		prepareFile();
 
 		for (ITargetClass clazz : _projectModel.getTargetClasses()) {
-			clazz.accept(_visitor);
+			// TODO: if class is in GUI selected class list?
+//			if (list.size() != 0) {
+//				if (list.contains(clazz.getClassName()))
+//					clazz.accept(_visitor);
+//			} else
+				clazz.accept(_visitor);
 		}
 
 		for (String relationship : _relationships) {
