@@ -1,0 +1,64 @@
+InputCommand has List of Phases
++ execute();
+	for each Phase : execute(this.model);
+
+Phases
+| Every phase object is created in the Utils.UMLConfiguration class |
+| The list of phases will be passed to the InputCommand constructor |
+| The list will be sequential in the model. |
+| Consider error handling for say: detecting patterns on an empty model? |
+
+<<interface>>
+IPhase
++ execute(IProjectModel model) : void
+
+DiagramOutputStream implements IPhase
+- writeoutput()
+	needs the model
+- generateDiagram()
+	needs diagramOutputPath
+
+AddStrategy implements IPhase
+- buildModel(String[] params)
+	needs the model
+	can get params from model.getInputParams
+	
+PatternDetection implements IPhase
+- detectPatterns(IProjectModel model)
+	needs the model
+	
+	
+GUI
+---------------
+Load Config
+--
+Instantiates a UMLConfiguration object
+Gets the InputCommand
+
+
+Analyze Project
+--
+model.execute();
+
+
+
+1	-	implement new visitor that overrides visitField method.
+2	-	new brute force detection implementation. good luck with logic Chandan.
+3	-	*****this will be hard
+4 	- 	check relationships for dependencies??
+5	-	implement new visitor that visits methods and gets list of methodStmts
+6	-	recursion????
+7	-	**not sure
+8	-	*****this would be really hard!!!!!
+9	-	not terrible
+10	-	***** hard!
+11	-	Easy money
+12	-	we could do this!
+13	-	Easy money
+14	-	Might be a little difficult
+15	-	okay... might be hard to color though
+16	-	harder...
+17	-	not bad
+18	-	no thanks. But we could do it
+19	-	we could do this
+20	-	uhhh maybe

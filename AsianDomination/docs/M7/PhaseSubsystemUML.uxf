@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.3">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1220</x>
+      <y>400</y>
+      <w>270</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+IPhase
+--
++ execute(IProjectModel) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>800</x>
+      <y>540</y>
+      <w>280</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>output.AbstractDiagramOutputStream
+--
++ execute(IProjectModel) : void
+/# writeOutput() : void/
+/# generateDiagram(String) : void/
++ setFilteredClasses(List&lt;String&gt;) : void
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>920</x>
+      <y>440</y>
+      <w>320</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>300.0;10.0;10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1090</x>
+      <y>540</y>
+      <w>270</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>AbstractDetectionVisitor
+--
++ execute(IProjectModel) : void
+bg=cyan</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1240</x>
+      <y>480</y>
+      <w>30</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1370</x>
+      <y>540</y>
+      <w>220</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>construction.AbstractAddStrategy
+--
++ execute(IProjectModel) : void
+/# buildModel() : void/
+bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1380</x>
+      <y>480</y>
+      <w>30</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1600</x>
+      <y>540</y>
+      <w>250</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>AbstractPatternDetectionStrategy
+--
++ execute(IProjectModel) : void
+/# detectPatterns(IProjectModel) : void/
+bg=green</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1480</x>
+      <y>440</y>
+      <w>260</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;240.0;10.0;240.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>840</x>
+      <y>230</y>
+      <w>280</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>/input.InputCommand/
+--
+- _model : IProjectModel
+# _phases : List&lt;IPhase&gt;
+--
++ InputCommand(List&lt;IPhase&gt;) : &lt;init&gt;
++ getPhases() : List&lt;IPhase&gt;
++ execute() : void
++ execute(IPhase) : void
+/+ getInputParameters : String[]/
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1110</x>
+      <y>290</y>
+      <w>270</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>250.0;110.0;250.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>230</y>
+      <w>430</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>impl.ProjectModel
+--
+- _targetClasses : LinkedHashMap&lt;String, ITargetClass&gt;
+- _relationshipManager : IRelationshipManager
+--
++ ProjectModel() : &lt;init&gt;
++ getTargetClasses() : Collection&lt;ITargetClass&gt;
++ getTargetClassByName(String) : ITargetClass
++ forcefullyGetClassByName(String) : ITargetClass
++ getInputCommand() : InputCommand
++ getRelationshipManager() : IRelationshipManager
++ addClass(String) : void
++ decorateClass(ITargetClass) : void
+- dynamicallyReadClass(String) : ITargetClass</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>0</x>
+      <y>290</y>
+      <w>230</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>public void execute() {
+   for (IPhase phase : _inputCommand.getPhases()) {
+     phase.execute(this);
+   }
+}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>220</x>
+      <y>320</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>720</x>
+      <y>290</y>
+      <w>140</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;120.0;10.0</additional_attributes>
+  </element>
+</diagram>
