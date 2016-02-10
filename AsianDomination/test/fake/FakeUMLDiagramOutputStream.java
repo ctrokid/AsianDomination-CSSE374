@@ -1,12 +1,14 @@
 package fake;
 
+import java.util.Properties;
+
 import output.UMLDiagramOutputStream;
 import visitor.IVisitor;
 
 public class FakeUMLDiagramOutputStream extends UMLDiagramOutputStream {
 
-	public FakeUMLDiagramOutputStream(String asmOutputPath, String executablePath, IVisitor visitor) {
-		super(asmOutputPath, executablePath, visitor);
+	public FakeUMLDiagramOutputStream(Properties props, IVisitor visitor) {
+		super(props, visitor);
 	}
 	
 	@Override

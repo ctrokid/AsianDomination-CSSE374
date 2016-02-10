@@ -1,13 +1,14 @@
 package fake;
 
+import java.util.Properties;
+
 import output.SDDiagramOutputStream;
-import visitor.Visitor;
+import visitor.IVisitor;
 
 public class FakeSDDiagramOutputStream extends SDDiagramOutputStream {
 
-	public FakeSDDiagramOutputStream(String asmOutputPath, String executablePath, String initialClass, String initialMethod,
-			String initialParameters, int maxCallDepth) {
-		super(asmOutputPath, executablePath, initialClass, initialMethod, initialParameters, maxCallDepth, new Visitor());
+	public FakeSDDiagramOutputStream(Properties props, IVisitor visitor) {
+		super(props, visitor);
 	}
 	
 	@Override

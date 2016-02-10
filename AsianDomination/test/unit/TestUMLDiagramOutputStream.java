@@ -5,11 +5,12 @@ import static org.junit.Assert.*;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
+import java.util.Properties;
 
 import impl.ClassField;
 import impl.ClassMethod;
+import impl.ProjectModel;
 import impl.TargetClass;
-import input.UMLInputCommand;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,7 +21,6 @@ import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 import api.IClassField;
 import api.IClassMethod;
 import api.ITargetClass;
-import fake.FakeProjectModel;
 import output.AbstractDiagramOutputStream;
 import output.UMLDiagramOutputStream;
 import visitor.IVisitor;
@@ -33,10 +33,15 @@ public class TestUMLDiagramOutputStream {
 	@Before
 	public void setup() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		bytesOut = new ByteArrayOutputStream();
-		UMLDiagramOutputStream _outStreamVisitor = new UMLDiagramOutputStream("", "", new Visitor());
-		_outStreamVisitor.setProjectModel(new FakeProjectModel(new UMLInputCommand(_outStreamVisitor, null, null, null)));
+		Properties props = new Properties();
+		UMLDiagramOutputStream _outStreamVisitor = new UMLDiagramOutputStream(props, new Visitor());
 		
-		Field f = AbstractDiagramOutputStream.class.getDeclaredField("_outputStream");
+		Field f = AbstractDiagramOutputStream.class.getDeclaredField("_projectModel");
+		f.setAccessible(true);
+		
+		f.set(_outStreamVisitor, new ProjectModel());
+		
+		f = AbstractDiagramOutputStream.class.getDeclaredField("_outputStream");
 		f.setAccessible(true);
 		
 		f.set(_outStreamVisitor, bytesOut);
