@@ -20,4 +20,8 @@ public class InputCommand {
 			phase.execute(_model);
 		}
 	}
+	
+	public IProjectModel getProjectModel() {
+		return _model;
+	}
 }
