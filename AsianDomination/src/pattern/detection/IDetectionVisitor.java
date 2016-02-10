@@ -1,9 +1,6 @@
 package pattern.detection;
 
-import api.IProjectModel;
-import visitor.IVisitor;
+import framework.IPhase;
 
-public interface IDetectionVisitor {
-	public IVisitor getVisitor();
-	public void setProjectModel(IProjectModel model);
+public interface IDetectionVisitor extends IPhase{
 }

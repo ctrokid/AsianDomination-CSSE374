@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import api.IClassField;
@@ -14,7 +15,21 @@ import api.ITargetClass;
 import pattern.decoration.CompositeDecorator;
 import utils.AsmClassUtils;
 
-public class CompositePatternDetector implements IPatternDetectionStrategy {
+public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
+	boolean addAndRemoveMethodsRequireOneParameter = false;
+	
+	public CompositePatternDetector(Properties props) {
+		super(props);
+	}
+	
+	@Override
+	protected void loadConfig(Properties props) {
+		String bool = props.getProperty("composite-require-addAndRemoveMethodsOneParameter");
+		
+		if (bool != null && bool.toLowerCase().equals("true")) {
+			addAndRemoveMethodsRequireOneParameter = true;
+		}
+	}
 
 	@Override
 	public void detectPatterns(IProjectModel model) {
@@ -32,7 +47,6 @@ public class CompositePatternDetector implements IPatternDetectionStrategy {
 				ITargetClass matchingClass = model.forcefullyGetClassByName(type);
 				potentialComponents.add(matchingClass);
 
-				// FIXME: possible bug, superTypes or matchingClass.superTypes
 				if (classHasAddAndRemoveMethods(matchingClass, superTypes)) {
 					matchingTypesHaveAddAndRemove = true;
 				}
@@ -126,9 +140,11 @@ public class CompositePatternDetector implements IPatternDetectionStrategy {
 		boolean isValid = false;
 		String[] params = AsmClassUtils.GetArguments(method.getSignature(), false).split(",");
 		
-		// FIXME: this can be configurable. TODO!!!!
-		if (params.length == 1 && superTypes.contains(params[0])) {
-			isValid = true;
+		if (superTypes.contains(params[0])) {
+			if (!addAndRemoveMethodsRequireOneParameter) {
+				isValid = true;
+			} else if (params.length == 1)
+				isValid = true;
 		}
 		
 		return isValid;

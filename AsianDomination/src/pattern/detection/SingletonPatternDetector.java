@@ -1,6 +1,7 @@
 package pattern.detection;
 
 import java.util.Collection;
+import java.util.Properties;
 
 import org.objectweb.asm.Opcodes;
 
@@ -10,8 +11,20 @@ import api.IProjectModel;
 import api.ITargetClass;
 import pattern.decoration.SingletonDecorator;
 
-public class SingletonPatternDetector implements IPatternDetectionStrategy {	
+public class SingletonPatternDetector extends AbstractPatternDetectionStrategy {	
+	private boolean REQUIRE_GET_INSTANCE = false;
 	
+	public SingletonPatternDetector(Properties props) {
+		super(props);
+	}
+	
+	@Override
+	protected void loadConfig(Properties props) {
+		String require = props.getProperty("singleton-require-getInstance");
+		if (require != null && require.toLowerCase().equals("true"))
+			REQUIRE_GET_INSTANCE = true;
+	}
+
 	@Override
 	public void detectPatterns(IProjectModel model) {
 		for (ITargetClass clazz : model.getTargetClasses()) {

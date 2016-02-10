@@ -3,6 +3,7 @@ package pattern.detection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 
 import api.IClassField;
 import api.IClassMethod;
@@ -13,9 +14,25 @@ import pattern.decoration.DecoratorTargetClass;
 import utils.AsmClassUtils;
 import utils.DotClassUtils.RelationshipType;
 
-public class DecoratorPatternDetector implements IPatternDetectionStrategy {
+public class DecoratorPatternDetector extends AbstractPatternDetectionStrategy {
 	private IProjectModel _model = null;
+	private int METHOD_DELEGATION_THRESHOLD = 1;
+	
+	public DecoratorPatternDetector(Properties props) {
+		super(props);
+	}
 
+	@Override
+	protected void loadConfig(Properties props) {
+		String md = props.getProperty("decorator-method-delegation");
+		
+		if (md != null) {
+			try {
+				METHOD_DELEGATION_THRESHOLD = Integer.parseInt(md);
+			} catch (NumberFormatException e) {}
+		}
+	}
+	
 	@Override
 	public void detectPatterns(IProjectModel model) {
 		_model = model;

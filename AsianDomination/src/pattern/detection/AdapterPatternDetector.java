@@ -2,6 +2,7 @@ package pattern.detection;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 
 import api.IClassDeclaration;
 import api.IClassField;
@@ -13,7 +14,22 @@ import impl.Relationship;
 import pattern.decoration.AdapterDecorator;
 import utils.DotClassUtils.RelationshipType;
 
-public class AdapterPatternDetector implements IPatternDetectionStrategy {
+public class AdapterPatternDetector extends AbstractPatternDetectionStrategy {
+	private int METHOD_DELEGATION_THRESHOLD = 2;
+	
+	public AdapterPatternDetector(Properties props) {
+		super(props);
+	}
+	
+	@Override
+	protected void loadConfig(Properties props) {
+		String md = props.getProperty("adapter-method-delegation");
+		if (md != null) {
+			try {
+				METHOD_DELEGATION_THRESHOLD = Integer.parseInt(md);
+			} catch (NumberFormatException e) {}
+		}
+	}
 
 	@Override
 	public void detectPatterns(IProjectModel model) {

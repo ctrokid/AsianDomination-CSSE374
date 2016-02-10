@@ -1,6 +1,7 @@
 package pattern.detection;
 
 import java.util.Collection;
+import java.util.Properties;
 
 import org.objectweb.asm.Opcodes;
 
@@ -12,24 +13,30 @@ import pattern.decoration.SingletonDecorator;
 import visitor.ITraverser;
 import visitor.IVisitor;
 import visitor.VisitType;
+import visitor.Visitor;
 
-public class SingletonDetectionVisitor implements IDetectionVisitor {
+public class SingletonDetectionVisitor extends AbstractDetectionVisitor {
 	private IProjectModel _projectModel;
 	private IVisitor _visitor;
+	private boolean REQUIRE_GET_INSTANCE = false;
 
-	public SingletonDetectionVisitor(IVisitor visitor) {
-		this._visitor = visitor;
+	public SingletonDetectionVisitor(Properties config, IVisitor visitor) {
+		super(config);
+		_visitor = visitor;
 		this.setupVisitTargetClass();
 	}
-
-	@Override
-	public IVisitor getVisitor() {
-		return this._visitor;
+	
+	public SingletonDetectionVisitor(Properties config) {
+		super(config);
+		_visitor = new Visitor();
+		this.setupVisitTargetClass();
 	}
 	
 	@Override
-	public void setProjectModel(IProjectModel model) {
-		this._projectModel = model;
+	protected void loadConfig(Properties props) {
+		String require = props.getProperty("singleton-require-getInstance");
+		if (require != null && require.toLowerCase().equals("true"))
+			REQUIRE_GET_INSTANCE = true;
 	}
 
 	private void setupVisitTargetClass() {
@@ -85,6 +92,13 @@ public class SingletonDetectionVisitor implements IDetectionVisitor {
 		return false;
 	}
 
-	
+	@Override
+	public void execute(IProjectModel model) {
+		_projectModel = model;
+		
+		for (ITargetClass clazz : model.getTargetClasses()) {
+			clazz.accept(_visitor);
+		}
+	}
 
 }
