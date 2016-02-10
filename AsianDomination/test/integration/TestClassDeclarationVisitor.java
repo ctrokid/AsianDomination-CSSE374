@@ -15,13 +15,8 @@ import api.IClassDeclaration;
 import api.IProjectModel;
 import api.ITargetClass;
 import asm.visitor.ClassDeclarationVisitor;
-import fake.FakeInputCommand;
 import fake.FakeProjectModel;
 import impl.Relationship;
-import input.InputCommand;
-import output.IDiagramOutputStream;
-import output.UMLDiagramOutputStream;
-import visitor.Visitor;
 
 public class TestClassDeclarationVisitor {
 	private static final int VERSION = 51;
@@ -32,17 +27,8 @@ public class TestClassDeclarationVisitor {
 	private ClassDeclarationVisitor _visitor;
 	
 	@Before
-	public void setup() {
-		_visitor = null;
-		String diagramPath = "input_output_test/testClassMethodVisitor";	
-		String[] params = new String[] {
-				"test/examples/Animal",
-				"test/examples/Cat"
-		};
-		
-		IDiagramOutputStream outStream = new UMLDiagramOutputStream(diagramPath, "", new Visitor());
-		InputCommand cmd = new FakeInputCommand(outStream, params);
-		model = new FakeProjectModel(cmd);
+	public void setup() {		
+		model = new FakeProjectModel();
 		
 		classPath = "test/examples/Animal";
 		model.addClass(classPath);

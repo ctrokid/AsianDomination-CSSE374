@@ -10,12 +10,10 @@ import org.junit.Test;
 
 import api.IProjectModel;
 import construction.SDAddStrategy;
-import fake.FakeInputCommand;
 import fake.FakeSDDiagramOutputStream;
 import impl.ProjectModel;
 import input.InputCommand;
 import output.AbstractDiagramOutputStream;
-import output.IDiagramOutputStream;
 import utils.LaunchDiagramGenerator;
 import utils.LaunchDiagramGenerator.DiagramFileExtension;
 

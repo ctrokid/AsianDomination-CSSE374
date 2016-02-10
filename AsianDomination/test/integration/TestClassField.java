@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
+import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,21 +15,19 @@ import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 import api.IClassField;
 import impl.ClassField;
 import output.AbstractDiagramOutputStream;
-import output.IDiagramOutputStream;
 import output.UMLDiagramOutputStream;
 import utils.AsmClassUtils;
 import visitor.IVisitor;
-import visitor.Visitor;
 
 public class TestClassField {
-	private IDiagramOutputStream outStreamVisitor;
+	private AbstractDiagramOutputStream outStreamVisitor;
 	private OutputStream bytesOut;
 	private IVisitor _visitor;
 	
 	@Before
 	public void setUp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		bytesOut = new ByteArrayOutputStream();
-		outStreamVisitor = new UMLDiagramOutputStream("", "", new Visitor());
+		outStreamVisitor = new UMLDiagramOutputStream(new Properties());
 		
 		Field f = AbstractDiagramOutputStream.class.getDeclaredField("_outputStream");
 		f.setAccessible(true);

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
+import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,20 +13,18 @@ import org.objectweb.asm.Opcodes;
 
 import impl.ClassMethod;
 import output.AbstractDiagramOutputStream;
-import output.IDiagramOutputStream;
 import output.UMLDiagramOutputStream;
 import visitor.IVisitor;
-import visitor.Visitor;
 
 public class TestClassMethod {
-	private IDiagramOutputStream outStreamVisitor;
+	private AbstractDiagramOutputStream outStreamVisitor;
 	private OutputStream bytesOut;
 	private IVisitor _visitor;
 
 	@Before
 	public final void setUp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		bytesOut = new ByteArrayOutputStream();
-		outStreamVisitor = new UMLDiagramOutputStream("", "", new Visitor());
+		outStreamVisitor = new UMLDiagramOutputStream(new Properties());
 		
 		Field f = AbstractDiagramOutputStream.class.getDeclaredField("_outputStream");
 		f.setAccessible(true);

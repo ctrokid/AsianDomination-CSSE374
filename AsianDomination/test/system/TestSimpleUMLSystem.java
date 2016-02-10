@@ -2,9 +2,7 @@ package system;
 
 import impl.ProjectModel;
 import input.InputCommand;
-import input.UMLInputCommand;
 import output.AbstractDiagramOutputStream;
-import output.IDiagramOutputStream;
 import output.UMLDiagramOutputStream;
 import pattern.detection.AdapterPatternDetector;
 import pattern.detection.DecoratorPatternDetector;
@@ -27,7 +25,6 @@ import org.junit.Test;
 
 import api.IProjectModel;
 import construction.UMLAddStrategy;
-import fake.FakeInputCommand;
 import fake.FakeUMLDiagramOutputStream;
 
 @SuppressWarnings("unused")
@@ -106,70 +103,6 @@ public class TestSimpleUMLSystem {
 //		assertFalse(actual.contains(catDoesNotAssociateFur));
 //		assertFalse(actual.contains(catDoesNotAssociateAnimal));
 //	}
-	
-	@Test
-	public void TestUMLForProjectSubsystem() {
-		String[] classes = new String[] {
-			"api/IClassField",
-			"api/IClassMethod",
-			"api/IClassDeclaration",
-			"api/IMethodStatement",
-			"api/IProjectModel",
-			"api/ITargetClass",
-			"api/ITargetClassPart",
-			"impl/ClassField",
-			"impl/ClassMethod",
-			"impl/ClassDeclaration",
-			"impl/MethodStatement",
-			"impl/ProjectModel",
-			"impl/TargetClass",
-			"asm/visitor/ClassDeclarationVisitor",
-			"asm/visitor/ClassFieldVisitor",
-			"asm/visitor/ClassMethodVisitor",
-			"asm/visitor/MethodAssociationVisitor",
-			"asm/visitor/DesignParser",
-			"construction/AbstractAddStrategy",
-			"construction/IAddStrategy",
-			"construction/SDAddStrategy",
-			"construction/UMLAddStrategy",
-			"input/InputCommand",
-			"input/SequenceInputCommand",
-			"input/UMLInputCommand",
-			"output/AbstractDiagramOutputStream",
-			"output/IDiagramOutputStream",
-			"output/SDDiagramOutputStream",
-			"output/UMLDiagramOutputStream",
-			"utils/AsmClassUtils",
-			"utils/DotClassUtils",
-			"utils/LaunchDiagramGenerator",
-			"utils/PackageInspector",
-			"visitor/ITraverser",
-			"visitor/IVisitMethod",
-			"visitor/IVisitor",
-			"visitor/Visitor",
-//			"visitor/LookupKey",
-			"pattern/decoration/AbstractTargetClassDecorator",
-			"pattern/decoration/AdapterDecorator",
-			"pattern/decoration/DecoratorTargetClass",
-			"pattern/decoration/SingletonDecorator",
-			"pattern/detection/AdapterPatternDetector",
-			"pattern/detection/DecoratorPatternDetector",
-			"pattern/detection/SingletonPatternDetector",
-			"pattern/detection/IPatternDetectionStrategy",
-			"pattern/detection/IDetectionVisitor",
-			"pattern/detection/SingletonDetectionVisitor"
-		};
-		
-		List<IDetectionVisitor> detectVisitor = Arrays.asList(new SingletonDetectionVisitor(new Visitor()));
-		List<IPatternDetectionStrategy> detectors = Arrays.asList(new DecoratorPatternDetector(), new AdapterPatternDetector());
-		IDiagramOutputStream out = new UMLDiagramOutputStream("input_output/testProjectSubsystem", "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe", new Visitor());
-	
-		_cmd = new UMLInputCommand(out, classes, detectVisitor, detectors);
-		
-		IProjectModel model = new ProjectModel(_cmd);
-		model.buildModel();
-		model.printModel();
-	}
 	
 //	@Test
 //	public void TestUMLForAnimalCatExample() {

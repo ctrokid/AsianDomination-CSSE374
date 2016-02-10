@@ -9,36 +9,21 @@ import org.objectweb.asm.Opcodes;
 
 import api.IProjectModel;
 import api.ITargetClass;
-import fake.FakeInputCommand;
 import fake.FakeProjectModel;
-import asm.visitor.ClassMethodVisitor;
-import input.InputCommand;
-import output.IDiagramOutputStream;
-import output.UMLDiagramOutputStream;
 import utils.DotClassUtils.RelationshipType;
-import visitor.Visitor;
+import asm.visitor.ClassMethodVisitor;
 
 public class TestClassMethodVisitor {
-	private String[] params;
-	private String diagramPath;
 	private ClassMethodVisitor _visitor;
 	
 	@Before
 	public void setup() {
 		_visitor = null;
-		diagramPath = "input_output_test/testClassMethodVisitor";		
 	}
 	
 	@Test
 	public void TestMethodVisitorVisitMethod() {
-		params = new String[] {
-				"test/examples/Animal",
-				"test/examples/Cat"
-		};
-		
-		IDiagramOutputStream outStream = new UMLDiagramOutputStream(diagramPath, "", new Visitor());
-		InputCommand cmd = new FakeInputCommand(outStream, params);
-		IProjectModel model = new FakeProjectModel(cmd);
+		IProjectModel model = new FakeProjectModel();
 		
 		String classPath = "test/examples/Animal";
 		model.addClass(classPath);
