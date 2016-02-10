@@ -16,7 +16,8 @@ import pattern.decoration.CompositeDecorator;
 import utils.AsmClassUtils;
 
 public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
-	boolean addAndRemoveMethodsRequireOneParameter = false;
+	private boolean addAndRemoveMethodsRequireOneParameter = false;
+	private IProjectModel model = null;
 	
 	public CompositePatternDetector(Properties props) {
 		super(props);
@@ -32,7 +33,8 @@ public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 	}
 
 	@Override
-	public void detectPatterns(IProjectModel model) {
+	public void detectPatterns(IProjectModel _model) {
+		model = _model;
 		IRelationshipManager manager = model.getRelationshipManager();
 
 		for (ITargetClass clazz : model.getTargetClasses()) {
@@ -62,49 +64,53 @@ public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 					if (mySubClasses.contains(leaf.getClassName()))
 						continue;
 					
-					tagLeafClass(leaf, model);
+					tagLeafClass(leaf);
 				}
 
-				if (leaves.size() > 0) {
-					tagCompositeClass(clazz, model);
+				if (leaves.size() >= 0) {					
+					tagCompositeClass(clazz);
+					
 					for (ITargetClass component : potentialComponents) {
-						tagComponentClass(component, model);
+						tagComponentClass(component);
 					}
 				}
 			}
 		}
 	}
 
-	private void tagLeafClass(ITargetClass leaf, IProjectModel model) {
+	private void tagLeafClass(ITargetClass leaf) {
 		leaf = new CompositeDecorator(PATTERN_TYPE.COMPOSITE_LEAF, "", leaf);
 		model.decorateClass(leaf);
 	}
 
-	private void tagCompositeClass(ITargetClass composite, IProjectModel model) {
+	private void tagCompositeClass(ITargetClass composite) {
 		composite = new CompositeDecorator(PATTERN_TYPE.COMPOSITE_COMPOSITE, "", composite);
 		model.decorateClass(composite);
 		
 		List<String> subClasses = model.getRelationshipManager().getClassSubClasses(composite.getClassName());
 		for (String clazz : subClasses) {
-			ITargetClass subClass = model.getTargetClassByName(clazz);
+			ITargetClass subClass = model.forcefullyGetClassByName(clazz);
 			subClass = new CompositeDecorator(PATTERN_TYPE.COMPOSITE_COMPOSITE, "", subClass);
 			
 			model.decorateClass(subClass);
 		}
 	}
 
-	private void tagComponentClass(ITargetClass component, IProjectModel model) {
+	private void tagComponentClass(ITargetClass component) {
 		component = new CompositeDecorator(PATTERN_TYPE.COMPOSITE_COMPONENT, "", component);
 		model.decorateClass(component);
 	}
 
 	private Set<String> getComposedSuperTypes(Set<String> superTypes, Collection<IClassField> fields) {
 		Set<String> matchingTypes = new HashSet<String>();
+		
+		if (superTypes.size() < 1 || (superTypes.size() == 1 && superTypes.iterator().next().equals("java/lang/Object")))
+			return matchingTypes;
 
 		for (IClassField field : fields) {
 			if (superTypes.contains(field.getType())) {
 				matchingTypes.add(field.getType());
-			} else if (field.getSignature() != null/* "" */) {
+			} else if (field.getSignature() != null) {
 				String sig = field.getSignature().substring(2, field.getSignature().length() - 2);
 				String[] params = sig.split(",");
 
@@ -114,6 +120,13 @@ public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 					}
 				}
 			}
+		}
+		
+		// Get the fields for each the super types
+		for (String superType : superTypes) {
+			ITargetClass clazz = model.forcefullyGetClassByName(superType);
+			Set<String> supers = model.getRelationshipManager().getClassSuperTypes(clazz.getClassName(), model);
+			matchingTypes.addAll(getComposedSuperTypes(supers, clazz.getFields()));
 		}
 		// for the fields, check inside the collections
 		return matchingTypes;
@@ -162,7 +175,7 @@ public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 				if (subClassName.equals(className))
 					continue;
 
-				ITargetClass subClass = model.getTargetClassByName(subClassName);
+				ITargetClass subClass = model.forcefullyGetClassByName(subClassName);
 
 				if (manager.getClassSubClasses(subClassName).size() == 0) {
 					classes.add(subClass);
