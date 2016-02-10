@@ -50,6 +50,8 @@ public class GUIDesignParser {
 		JButton configButton = new JButton("Load Config");
 		configButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				GUIResult window = new GUIResult();
+				window.setVisible(true);
 				System.out.println("clicking config");
 			}
 		});
@@ -61,6 +63,7 @@ public class GUIDesignParser {
 		anaylyzeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicking anaylyze");
+				
 			}
 		});
 		frame.getContentPane().add(anaylyzeButton);
@@ -68,8 +71,6 @@ public class GUIDesignParser {
 		JLabel guiMessage = new JLabel("Analyzing");
 		guiMessage.setBounds(173, 147, 84, 25);
 		frame.getContentPane().add(guiMessage);
-		
-		
 		
 	}
 }
