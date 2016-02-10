@@ -1,20 +1,23 @@
 package input;
 
+import java.util.List;
+
 import api.IProjectModel;
-import construction.IAddStrategy;
-import output.IDiagramOutputStream;
+import framework.IPhase;
+import impl.ProjectModel;
 
-public abstract class InputCommand {
-	protected IDiagramOutputStream _diagramOutputStream;
-
-	public InputCommand(IDiagramOutputStream outputStream) {
-		_diagramOutputStream = outputStream;
+public class InputCommand {
+	protected List<IPhase> _phases;
+	protected IProjectModel _model;
+	
+	public InputCommand(List<IPhase> phases) {
+		_phases = phases;
+		_model = new ProjectModel();
 	}
 	
-	public abstract String[] getInputParameters();
-	public abstract IAddStrategy getAddStrategy(IProjectModel model);
-	
-	public IDiagramOutputStream getDiagramOutputStream() {
-		return _diagramOutputStream;
+	public void execute() {
+		for (IPhase phase : _phases) {
+			phase.execute(_model);
+		}
 	}
 }

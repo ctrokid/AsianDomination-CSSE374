@@ -1,11 +1,6 @@
 package asm.visitor;
 
-import api.IProjectModel;
-import impl.ProjectModel;
 import input.InputCommand;
-import input.SequenceInputCommand;
-import utils.CommandGenerator;
-import utils.CommandGenerator.ExecuteCommand;
 import utils.UMLConfiguration;
 
 public class DesignParser {
@@ -36,22 +31,21 @@ public class DesignParser {
 //		
 //		InputCommand inputCommand = new SequenceInputCommand(outputPath, outputPath, initialClass, initialMethod, initialParams, 5);
 		
-		for (ExecuteCommand ex : ExecuteCommand.values()) {
-			InputCommand inputCommand = CommandGenerator.getInputCommand(ex);
-			
-			if (inputCommand == null)
-				continue;
-			
-			IProjectModel model = new ProjectModel(inputCommand);
-			
-			model.buildModel();
-			model.printModel();
-		}
+//		for (ExecuteCommand ex : ExecuteCommand.values()) {
+//			InputCommand inputCommand = CommandGenerator.getInputCommand(ExecuteCommand.M6_Lab7_2Uml);
+//			
+//			if (inputCommand == null)
+//				continue;
+//			
+//			IProjectModel model = new ProjectModel(inputCommand);
+//			
+//			model.buildModel();
+//			model.printModel();
+//		}
 		
-//		UMLConfiguration config = new UMLConfiguration();
-//		IProjectModel model = config.getProjectModel();
-//		
-//		model.buildModel();
-//		model.printModel();
+		UMLConfiguration config = new UMLConfiguration();
+		InputCommand cmd = config.getInputCommand();
+
+		cmd.execute();
 	}
 }

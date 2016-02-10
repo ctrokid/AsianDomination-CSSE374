@@ -16,7 +16,7 @@ public class LaunchDiagramGenerator {
 	}
 	
 	public int RunGVEdit(String outputPath, DiagramFileExtension ext) {
-		String cmd = _executablePath + " -T " + ext.toString().toLowerCase()  + " " + outputPath + " -o "+ outputPath.substring(0, outputPath.length() - 3) + "." + ext.toString().toLowerCase();
+		String cmd = _executablePath + " -T " + ext.toString().toLowerCase()  + " " + outputPath + " -o "+ outputPath + "." + ext.toString().toLowerCase();
 		System.out.println("Running Dot Command: ");
 		System.out.println(cmd);
 		
@@ -38,7 +38,7 @@ public class LaunchDiagramGenerator {
 	}
 	
 	public int RunSDEdit(String outputPath, DiagramFileExtension ext) {
-		String cmd = "java -jar " + _executablePath + " -o " + outputPath.substring(0, outputPath.length() - 3) + "." + ext.toString() + " -t " + ext.toString() + " " + outputPath;
+		String cmd = "java -jar " + _executablePath + " -o " + outputPath + "." + ext.toString() + " -t " + ext.toString() + " " + outputPath;
 		System.out.println("Running SDedit Command: ");
 		System.out.println(cmd);
 
