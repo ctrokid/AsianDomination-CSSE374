@@ -1,22 +1,21 @@
 package utils;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
+import fake.FakeUMLAddStrategy;
+import framework.IPhase;
 import input.InputCommand;
-import input.SequenceInputCommand;
-import input.UMLInputCommand;
-import output.SDDiagramOutputStream;
 import output.UMLDiagramOutputStream;
 import pattern.detection.AdapterPatternDetector;
 import pattern.detection.CompositePatternDetector;
 import pattern.detection.DecoratorPatternDetector;
 import pattern.detection.SingletonDetectionVisitor;
-import visitor.Visitor;
 
 public class CommandGenerator {
 	public static final int SEQUENCE_DIAGRAM_MAX_DEPTH = 5;
-	private static final String DOT_PATH = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
-	
+
 	public static enum ExecuteCommand {
 		M1_Lab1_3Uml,
 		M2_AbstractPizzaStoreFactoryUml,
@@ -82,10 +81,16 @@ public class CommandGenerator {
 			"problem/sprites/RectangleTower",
 			"problem/sprites/SpriteFactory"
 		};
-		String outputPath = "demo_diagrams/M6Lab7";
 		
-		cmd = new UMLInputCommand(new UMLDiagramOutputStream(outputPath, DOT_PATH, new Visitor()), classes, null, Arrays.asList(new CompositePatternDetector()));
+		Properties props = new Properties();
+		props.setProperty("output-dir", "demo_diagrams/M6Lab7");
 		
+		List<IPhase> phases = new ArrayList<IPhase>();
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new CompositePatternDetector(props));
+		phases.add(new UMLDiagramOutputStream(props));
+		
+		cmd = new InputCommand(phases);
 		return cmd;
 	}
 	
@@ -96,9 +101,16 @@ public class CommandGenerator {
 			"problem/client/IteratorToEnumerationAdapter",
 			"problem/lib/LinearTransformer"
 		};
-		String outputPath = "demo_diagrams/M5Lab5";
 		
-		cmd = new UMLInputCommand(new UMLDiagramOutputStream(outputPath, DOT_PATH, new Visitor()), classes, null, Arrays.asList(new AdapterPatternDetector()));
+		Properties props = new Properties();
+		props.setProperty("output-dir", "demo_diagrams/M5Lab5");
+		
+		List<IPhase> phases = new ArrayList<IPhase>();
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new AdapterPatternDetector(props));
+		phases.add(new UMLDiagramOutputStream(props));
+		
+		cmd = new InputCommand(phases);
 		
 		return cmd;
 	}
@@ -118,9 +130,16 @@ public class CommandGenerator {
 			"examples/decorator/StarbuzzCoffee",
 			"examples/decorator/Whip"
 		};
-		String outputPath = "demo_diagrams/M5Lab2";
 		
-		cmd = new UMLInputCommand(new UMLDiagramOutputStream(outputPath, DOT_PATH, new Visitor()), classes, null, Arrays.asList(new DecoratorPatternDetector()));
+		Properties props = new Properties();
+		props.setProperty("output-dir", "demo_diagrams/M5Lab2");
+		
+		List<IPhase> phases = new ArrayList<IPhase>();
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new DecoratorPatternDetector(props));
+		phases.add(new UMLDiagramOutputStream(props));
+		
+		cmd = new InputCommand(phases);
 		
 		return cmd;
 	}
@@ -139,9 +158,15 @@ public class CommandGenerator {
 			"problem/NotepadLauncher",
 			"problem/PDFLauncher"
 		};
-		String outputPath = "demo_diagrams/M1Lab1-3";
 		
-		cmd = new UMLInputCommand(new UMLDiagramOutputStream(outputPath, DOT_PATH, new Visitor()), classes, null, null);
+		Properties props = new Properties();
+		props.setProperty("output-dir", "demo_diagrams/M1Lab1-3");
+		
+		List<IPhase> phases = new ArrayList<IPhase>();
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new UMLDiagramOutputStream(props));
+		
+		cmd = new InputCommand(phases);
 		
 		return cmd;
 	}
@@ -165,9 +190,15 @@ public class CommandGenerator {
 			"headfirst/factory/pizzaaf/ThickCrustDough",
 			"headfirst/factory/pizzaaf/PlumTomatoSauce"
 		};
-		String outputPath = "demo_diagrams/M2PizzaFactory";
 		
-		cmd = new UMLInputCommand(new UMLDiagramOutputStream(outputPath, DOT_PATH, new Visitor()), classes, null, null);
+		Properties props = new Properties();
+		props.setProperty("output-dir", "demo_diagrams/M2PizzaFactory");
+		
+		List<IPhase> phases = new ArrayList<IPhase>();
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new UMLDiagramOutputStream(props));
+		
+		cmd = new InputCommand(phases);
 		
 		return cmd;
 	}
@@ -179,7 +210,8 @@ public class CommandGenerator {
 		String initialParams = "List";
 		String outputPath = "demo_diagrams/M3CollectionsSD";
 		
-		cmd = new SequenceInputCommand(new SDDiagramOutputStream(outputPath, "lib/sdedit-4.01.jar", initialClass, initialMethod, initialParams, SEQUENCE_DIAGRAM_MAX_DEPTH, new Visitor()), initialClass, initialMethod, initialParams, SEQUENCE_DIAGRAM_MAX_DEPTH);
+		// TODO: Get this to work!!!
+//		cmd = new SequenceInputCommand(new SDDiagramOutputStream(outputPath, "lib/sdedit-4.01.jar", initialClass, initialMethod, initialParams, SEQUENCE_DIAGRAM_MAX_DEPTH, new Visitor()), initialClass, initialMethod, initialParams, SEQUENCE_DIAGRAM_MAX_DEPTH);
 		return cmd;
 	}
 
@@ -189,9 +221,16 @@ public class CommandGenerator {
 			"headfirst/singleton/chocolate/ChocolateBoiler",
 			"headfirst/singleton/chocolate/ChocolateController"
 		};
-		String outputPath = "demo_diagrams/M4ChocolateBoiler";
 		
-		cmd = new UMLInputCommand(new UMLDiagramOutputStream(outputPath, DOT_PATH, new Visitor()), classes, Arrays.asList(new SingletonDetectionVisitor(new Visitor())), null);
+		Properties props = new Properties();
+		props.setProperty("output-dir", "demo_diagrams/M4ChocolateBoiler");
+		
+		List<IPhase> phases = new ArrayList<IPhase>();
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new SingletonDetectionVisitor(props));
+		phases.add(new UMLDiagramOutputStream(props));
+		
+		cmd = new InputCommand(phases);
 		
 		return cmd;
 	}
@@ -223,14 +262,10 @@ public class CommandGenerator {
 			"asm/visitor/MethodAssociationVisitor",
 			"asm/visitor/DesignParser",
 			"construction/AbstractAddStrategy",
-			"construction/IAddStrategy",
 			"construction/SDAddStrategy",
 			"construction/UMLAddStrategy",
 			"input/InputCommand",
-			"input/SequenceInputCommand",
-			"input/UMLInputCommand",
 			"output/AbstractDiagramOutputStream",
-			"output/IDiagramOutputStream",
 			"output/SDDiagramOutputStream",
 			"output/UMLDiagramOutputStream",
 			"utils/AsmClassUtils",
@@ -254,7 +289,18 @@ public class CommandGenerator {
 		};
 		String outputPath = "demo_diagrams/ProjectUML";
 		
-		cmd = new UMLInputCommand(new UMLDiagramOutputStream(outputPath, DOT_PATH, new Visitor()), classes, Arrays.asList(new SingletonDetectionVisitor(new Visitor())), Arrays.asList(new AdapterPatternDetector(), new DecoratorPatternDetector()));
+		Properties props = new Properties();
+		props.setProperty("output-dir", "demo_diagrams/ProjectUML");
+		
+		List<IPhase> phases = new ArrayList<IPhase>();
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new SingletonDetectionVisitor(props));
+		phases.add(new DecoratorPatternDetector(props));
+		phases.add(new CompositePatternDetector(props));
+		phases.add(new AdapterPatternDetector(props));
+		phases.add(new UMLDiagramOutputStream(props));
+		
+		cmd = new InputCommand(phases);
 		
 		return cmd;
 	}
@@ -267,7 +313,8 @@ public class CommandGenerator {
 		String initialParams = "String[]";
 		String outputPath = "demo_diagrams/ProjectSD";
 		
-		cmd = new SequenceInputCommand(new UMLDiagramOutputStream(outputPath, DOT_PATH, new Visitor()), initialClass, initialMethod, initialParams, 3);
+		// TODO: Get this to work!!!
+//		cmd = new SequenceInputCommand(new UMLDiagramOutputStream(outputPath, DOT_PATH, new Visitor()), initialClass, initialMethod, initialParams, 3);
 		return cmd;
 	}
 }
