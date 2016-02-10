@@ -38,44 +38,55 @@ public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 		IRelationshipManager manager = model.getRelationshipManager();
 
 		for (ITargetClass clazz : model.getTargetClasses()) {
-			Set<String> superTypes = manager.getClassSuperTypes(clazz.getClassName(), model);
-			Set<String> matchingTypes = getComposedSuperTypes(superTypes, clazz.getFields());
+				detectComposite(clazz, manager );
+		}
+	}
+	
+	private void detectComposite(ITargetClass clazz, IRelationshipManager manager){
+		Set<String> superTypes = manager.getClassSuperTypes(clazz.getClassName(), model);
+		Set<String> matchingTypes = getComposedSuperTypes(superTypes, clazz.getFields());
 
-			// check if inherited and composed types have add and remove methods
-			boolean matchingTypesHaveAddAndRemove = false;
-			List<ITargetClass> potentialComponents = new ArrayList<ITargetClass>();
+		// check if inherited and composed types have add and remove methods
+		boolean matchingTypesHaveAddAndRemove = false;
+		List<ITargetClass> potentialComponents = new ArrayList<ITargetClass>();
 
-			for (String type : matchingTypes) {
-				ITargetClass matchingClass = model.forcefullyGetClassByName(type);
-				potentialComponents.add(matchingClass);
+		for (String type : matchingTypes) {
+			ITargetClass matchingClass = model.forcefullyGetClassByName(type);
+			potentialComponents.add(matchingClass);
 
-				if (classHasAddAndRemoveMethods(matchingClass, superTypes)) {
-					matchingTypesHaveAddAndRemove = true;
-				}
-			}
-
-			if (matchingTypesHaveAddAndRemove || classHasAddAndRemoveMethods(clazz, superTypes)) {
-				// get super class leaves
-				List<ITargetClass> leaves = checkSuperClassesForLeaves(clazz.getClassName(), matchingTypes, model);
-				List<String> mySubClasses = manager.getClassSubClasses(clazz.getClassName());
-				mySubClasses.add(clazz.getClassName());
-				
-				for (ITargetClass leaf : leaves) {
-					if (mySubClasses.contains(leaf.getClassName()))
-						continue;
-					
-					tagLeafClass(leaf);
-				}
-
-				if (leaves.size() >= 0) {					
-					tagCompositeClass(clazz);
-					
-					for (ITargetClass component : potentialComponents) {
-						tagComponentClass(component);
-					}
-				}
+			if (classHasAddAndRemoveMethods(matchingClass, superTypes)) {
+				matchingTypesHaveAddAndRemove = true;
 			}
 		}
+
+		if (matchingTypesHaveAddAndRemove || classHasAddAndRemoveMethods(clazz, superTypes)) {
+			// get super class leaves
+			List<ITargetClass> leaves = checkSuperClassesForLeaves(clazz.getClassName(), matchingTypes);
+			List<String> mySubClasses = manager.getClassSubClasses(clazz.getClassName());
+			mySubClasses.add(clazz.getClassName());
+			
+			for (ITargetClass leaf : leaves) {
+				if (mySubClasses.contains(leaf.getClassName()))
+					continue;
+				
+				tagLeafClass(leaf);
+			}
+							
+				tagCompositeClass(clazz);
+
+				for(String supertype: superTypes) {
+					detectCompositeHelper(supertype, manager);
+				}
+				for (ITargetClass component : potentialComponents) {
+					tagComponentClass(component);
+				}
+			
+		}
+	}
+	
+	private void detectCompositeHelper(String clazz, IRelationshipManager manager){
+		ITargetClass c = model.forcefullyGetClassByName(clazz);
+		detectComposite(c, manager);
 	}
 
 	private void tagLeafClass(ITargetClass leaf) {
@@ -163,8 +174,7 @@ public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 		return isValid;
 	}
 
-	private List<ITargetClass> checkSuperClassesForLeaves(String className, Set<String> matchingTypes,
-			IProjectModel model) {
+	private List<ITargetClass> checkSuperClassesForLeaves(String className, Set<String> matchingTypes) {
 		List<ITargetClass> classes = new ArrayList<ITargetClass>();
 		IRelationshipManager manager = model.getRelationshipManager();
 

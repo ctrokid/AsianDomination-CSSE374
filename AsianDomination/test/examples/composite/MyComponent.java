@@ -2,7 +2,7 @@ package examples.composite;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-public abstract class MyComponent {
+public abstract class MyComponent implements WeirdComponent1 {
 	public abstract void method1();
 	public abstract void method2();
 	
