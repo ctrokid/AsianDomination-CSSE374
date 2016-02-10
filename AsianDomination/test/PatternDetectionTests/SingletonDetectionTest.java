@@ -5,15 +5,29 @@ import pattern.detection.SingletonPatternDetector;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import api.IProjectModel;
 import api.ITargetClass;
+import fake.FakeUMLAddStrategy;
+import framework.IPhase;
 
 public class SingletonDetectionTest {
-
+	private List<IPhase> phases;
+	private Properties props;
+	
+	@Before
+	public void setup() {
+		phases = new ArrayList<IPhase>();
+		props = new Properties();
+	}
+	
 	@Test
 	public void simpleSingletonTest() {
 
@@ -25,8 +39,11 @@ public class SingletonDetectionTest {
 										  "java/awt/Desktop",
 										  "java/util/Calendar"};
 
-		IProjectModel model = DetectionTestUtils.buildModelWithAllDetectors(classes, "");
-		SingletonPatternDetector s = new SingletonPatternDetector();
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		
+		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
+		
+		SingletonPatternDetector s = new SingletonPatternDetector(props);
 		s.detectPatterns(model);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 		
@@ -50,29 +67,5 @@ public class SingletonDetectionTest {
 		
 		//Calendar
 		assertFalse(i.next() instanceof SingletonDecorator);
-	}
-	
-
-	@Test
-	public void IntegrationTest() {
-		String[] classes = new String[] {
-				 "headfirst/singleton/chocolate/ChocolateBoiler",
-				 "headfirst/singleton/chocolate/ChocolateController"
-				 
-		};
-		IProjectModel model = DetectionTestUtils.buildModelWithAllDetectors(classes, "docs/M4/SingletonTest");
-		model.printModel();
-	}
-	
-	@Test
-	public void IntegrationTest2() {
-		String[] classes = new String[] {
-				  "java/io/FilterInputStream",
-				  "java/lang/Runtime",
-				  "java/awt/Desktop",
-				  "java/util/Calendar"
-		};
-		IProjectModel model = DetectionTestUtils.buildModelWithAllDetectors(classes, "docs/M4/AutomatedSingletonTest");
-		model.printModel();
 	}
 }

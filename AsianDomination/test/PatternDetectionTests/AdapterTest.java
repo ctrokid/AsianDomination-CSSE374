@@ -1,24 +1,43 @@
 package PatternDetectionTests;
 
 import pattern.decoration.AdapterDecorator;
+import pattern.detection.AdapterPatternDetector;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import api.IProjectModel;
 import api.ITargetClass;
+import fake.FakeUMLAddStrategy;
+import framework.IPhase;
 
 public class AdapterTest {
-
+	private Properties props;
+	private List<IPhase> phases;
+	
+	@Before
+	public void setup() {
+		props = new Properties();
+		phases = new ArrayList<IPhase>();
+	}
+	
 	@Test
 	public void simpleAdapterTest() {
-
 		String[] classes = new String[] { "examples/adapter/Adaptee", "examples/adapter/Adapter",
 				"examples/adapter/ITarget" };
-		IProjectModel model = DetectionTestUtils.buildModelWithAllDetectors(classes, "docs/M5/SimpleAdapterTest");
+		
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new AdapterPatternDetector(props));
+		
+		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
 		ITargetClass Adaptee = i.next();
@@ -36,7 +55,10 @@ public class AdapterTest {
 	public void adapterTestFailure() {
 		String[] classes = new String[] { "examples/adapter/Adaptee", "examples/adapter/AbstractTarget", "examples/adapter/AdapterAbstractTarget"}; // add classes in here, you could
 
-		IProjectModel model = DetectionTestUtils.buildModelWithAllDetectors(classes, "docs/M5/SimpleAdapterTestTwo");
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new AdapterPatternDetector(props));
+		
+		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
 		ITargetClass Adaptee = i.next();
@@ -68,9 +90,12 @@ public class AdapterTest {
 	
 	@Test
 	public void adapterTestFailureWeirdAdapter() {
-		String[] classes = new String[] { "examples/adapter/Adaptee", "examples/adapter/ITarget", "examples/adapter/WeirdAdapter"}; // add classes in here, you could
+		String[] classes = new String[] { "examples/adapter/Adaptee", "examples/adapter/ITarget", "examples/adapter/WeirdAdapter"};
 
-		IProjectModel model = DetectionTestUtils.buildModelWithAllDetectors(classes, "docs/M5/SimpleAdapterTestTwo");
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new AdapterPatternDetector(props));
+		
+		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
 		ITargetClass Adaptee = i.next();
@@ -83,4 +108,9 @@ public class AdapterTest {
 		assertFalse(Adapter instanceof AdapterDecorator);
 	}
 
+	@After
+	public void tearDown() {
+		props = null;
+		phases = null;
+	}
 }
