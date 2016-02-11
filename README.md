@@ -186,4 +186,4 @@ All members met up for final touch for milestone 6.
 
 ##Instruction of Running Code:
 ---
-Under resource, by edting the config file, user can choose the specific file, packages, classes, output path, and phases. 
+Under resource, by edting the config file, user can choose the specific file, packages, classes, output path, and phases. The application can be ran in DesignParser.
