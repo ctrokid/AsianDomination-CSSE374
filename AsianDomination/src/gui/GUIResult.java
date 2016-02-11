@@ -2,6 +2,11 @@ package gui;
 
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.rmi.activation.ActivationMonitor;
+import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,7 +21,11 @@ import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 
 import javax.swing.SpringLayout;
+
+import com.sun.prism.image.ViewPort;
+
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 
 public class GUIResult extends JFrame {
 
@@ -24,6 +33,7 @@ public class GUIResult extends JFrame {
 	private Dimension boxSize;
 	private Dimension borderSize;
 	private Dimension diagramSize;
+	private JLabel populatedDiagram;
 
 	/**
 	 * Launch the application.
@@ -56,7 +66,7 @@ public class GUIResult extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void setupFrame() {
-		GUIPopulateDate populatedData = new GUIPopulateDate();
+		GUIPopulateData populatedData = new GUIPopulateData();
 		setBounds(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
 
 		setMinimumSize(borderSize);
@@ -76,7 +86,7 @@ public class GUIResult extends JFrame {
 
 		JPanel diagramPic = new JPanel();
 
-		JLabel populatedDiagram = populatedData.getDigram();
+		populatedDiagram = populatedData.getDigram();
 		populatedDiagram.setSize(this.diagramSize);
 		diagramPic.add(populatedDiagram);
 
@@ -103,11 +113,25 @@ public class GUIResult extends JFrame {
 		SpringLayout sl_checkboxPane = new SpringLayout();
 		checkboxPane.setLayout(sl_checkboxPane);
 		populatedData.setupCheckbox(sl_checkboxPane, checkboxPane);
-		
-		JButton btnNewButton = new JButton("New button");
-		sl_checkboxPane.putConstraint(SpringLayout.NORTH, btnNewButton, 937, SpringLayout.NORTH, menuBar);
-		sl_checkboxPane.putConstraint(SpringLayout.WEST, btnNewButton, -184, SpringLayout.EAST, checkboxPane);
-		checkboxPane.add(btnNewButton);
+
+		JButton generateButton = new JButton("Generate");
+
+		sl_checkboxPane.putConstraint(SpringLayout.NORTH, generateButton, populatedData.getLastBoxNorthPosition() + 40,
+				SpringLayout.NORTH, menuBar);
+		sl_checkboxPane.putConstraint(SpringLayout.WEST, generateButton, populatedData.getWestPosition(),
+				SpringLayout.WEST, checkboxPane);
+		checkboxPane.add(generateButton);
+		generateButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				populatedData.setNewImage();
+				populatedDiagram = populatedData.getDigram();
+				diagramPane.setViewportView(populatedDiagram);
+			}
+
+		});
 
 	}
+
 }

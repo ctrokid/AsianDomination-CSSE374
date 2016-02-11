@@ -17,7 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
-public class GUIPopulateDate {
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+
+public class GUIPopulateData {
 
 	private int northIndex = 10;
 	private final int detectedPatternWestIndex = 10;
@@ -25,14 +27,19 @@ public class GUIPopulateDate {
 	private SpringLayout sl_checkboxPane;
 	private JPanel checkboxPane;
 	private Map<String, ArrayList<JCheckBox>> testmap;
+	private String path;
+
+	public GUIPopulateData() {
+		testmap = new HashMap<String, ArrayList<JCheckBox>>();
+		path = getInitialDiagram();
+
+	}
 
 	public void setupCheckbox(SpringLayout sl_checkboxPane, JPanel checkboxPane) {
 		this.sl_checkboxPane = sl_checkboxPane;
 		this.checkboxPane = checkboxPane;
-
 		// go through model, populate all the classes, if is instance of
 		// decorator, put in map<String, List<String>>
-		testmap = new HashMap<String, ArrayList<JCheckBox>>();
 		ArrayList<JCheckBox> decoratorList = new ArrayList<>();
 		decoratorList.add(new JCheckBox("hi"));
 		decoratorList.add(new JCheckBox("there"));
@@ -48,11 +55,16 @@ public class GUIPopulateDate {
 			JCheckBox mainbox = new JCheckBox(k);
 			positionCheckbox(mainbox, detectedPatternWestIndex);
 			mainbox.addItemListener(new detectedPatternCheckListener());
-			for (JCheckBox b : testmap.get(k) ) {
+			for (JCheckBox b : testmap.get(k)) {
 				positionCheckbox(b, subclassWestIndex);
-				b.addItemListener(new subclassCheckListener());
+				// b.addItemListener(new subclassCheckListener());
 			}
 		}
+	}
+
+	public void setNewImage() {
+		path = "docs/M6/funny-panda-wallpaper.jpg";
+
 	}
 
 	private void positionCheckbox(JCheckBox box, int indent) {
@@ -63,16 +75,31 @@ public class GUIPopulateDate {
 		northIndex += 20;
 	}
 
+	public int getLastBoxNorthPosition() {
+		return northIndex;
+	}
+	public int getWestPosition(){
+		return this.detectedPatternWestIndex;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
 	public JLabel getDigram() {
 
 		BufferedImage myPicture = null;
 		try {
-			myPicture = ImageIO.read(new File("docs/M6/funny-panda-wallpaper.jpg"));
+			myPicture = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
 		return picLabel;
+	}
+
+	public String getInitialDiagram() {
+		return "docs/M6/ProjectGeneratedUML.png";
 	}
 
 	private class detectedPatternCheckListener implements ItemListener {
@@ -81,18 +108,23 @@ public class GUIPopulateDate {
 		public void itemStateChanged(ItemEvent e) {
 			if (e.getStateChange() == ItemEvent.SELECTED) {
 				JCheckBox boxChecked = (JCheckBox) e.getSource();
-				for(JCheckBox b: testmap.get(boxChecked.getText())){
+				for (JCheckBox b : testmap.get(boxChecked.getText())) {
 					b.setSelected(true);
 				}
-			}else if(e.getStateChange() == ItemEvent.DESELECTED){
+			} else if (e.getStateChange() == ItemEvent.DESELECTED) {
 				JCheckBox boxChecked = (JCheckBox) e.getSource();
-				for(JCheckBox b: testmap.get(boxChecked.getText())){
+				for (JCheckBox b : testmap.get(boxChecked.getText())) {
 					b.setSelected(false);
 				}
 			}
 		}
 	}
 
+	public Map<String, ArrayList<JCheckBox>> getCheckBoxStates() {
+		return testmap;
+	}
+
+	// might need this later? should delete when done
 	private class subclassCheckListener implements ItemListener {
 
 		@Override
