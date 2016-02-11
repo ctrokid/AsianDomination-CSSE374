@@ -7,8 +7,8 @@ import framework.IPhase;
 import impl.ProjectModel;
 
 public class InputCommand {
-	protected List<IPhase> _phases;
-	protected IProjectModel _model;
+	private List<IPhase> _phases;
+	private IProjectModel _model;
 	
 	public InputCommand(List<IPhase> phases) {
 		_phases = phases;

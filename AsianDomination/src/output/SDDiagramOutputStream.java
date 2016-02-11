@@ -88,7 +88,7 @@ public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 	}
 
 	@Override
-	public void writeOutput() {
+	protected void writeOutput() {
 		_classNameToOutput.put(_initialClass, _initialClass + ":" + _initialClass + "[a]\n");
 		visitModelRecursively(_initialClass, _initialMethod, _initialMethodParameters, 1);
 	
@@ -115,7 +115,7 @@ public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 	}
 	
 	@Override
-	public void generateDiagram() {
+	protected void generateDiagram() {
 		_diagramGenerator.RunSDEdit(_asmOutputPath, DiagramFileExtension.PNG);
 	}
 

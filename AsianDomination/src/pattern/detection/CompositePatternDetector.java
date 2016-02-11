@@ -16,7 +16,7 @@ import pattern.decoration.CompositeDecorator;
 import utils.AsmClassUtils;
 
 public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
-	private boolean addAndRemoveMethodsRequireOneParameter = false;
+	private boolean requireAddRemoveOneParameter = false;
 	private IProjectModel model = null;
 	
 	public CompositePatternDetector(Properties props) {
@@ -28,12 +28,12 @@ public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 		String bool = props.getProperty("composite-require-addAndRemoveMethodsOneParameter");
 		
 		if (bool != null && bool.toLowerCase().equals("true")) {
-			addAndRemoveMethodsRequireOneParameter = true;
+			requireAddRemoveOneParameter = true;
 		}
 	}
 
 	@Override
-	public void detectPatterns(IProjectModel _model) {
+	protected void detectPatterns(IProjectModel _model) {
 		model = _model;
 		IRelationshipManager manager = model.getRelationshipManager();
 
@@ -165,7 +165,7 @@ public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 		String[] params = AsmClassUtils.GetArguments(method.getSignature(), false).split(",");
 		
 		if (superTypes.contains(params[0])) {
-			if (!addAndRemoveMethodsRequireOneParameter) {
+			if (!requireAddRemoveOneParameter) {
 				isValid = true;
 			} else if (params.length == 1)
 				isValid = true;

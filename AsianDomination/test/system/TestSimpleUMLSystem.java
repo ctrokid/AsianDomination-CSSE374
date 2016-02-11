@@ -6,8 +6,6 @@ import output.AbstractDiagramOutputStream;
 import output.UMLDiagramOutputStream;
 import pattern.detection.AdapterPatternDetector;
 import pattern.detection.DecoratorPatternDetector;
-import pattern.detection.IDetectionVisitor;
-import pattern.detection.IPatternDetectionStrategy;
 import pattern.detection.SingletonDetectionVisitor;
 import pattern.detection.SingletonPatternDetector;
 import visitor.Visitor;

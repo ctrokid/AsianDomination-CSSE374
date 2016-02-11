@@ -34,7 +34,7 @@ public class DecoratorPatternDetector extends AbstractPatternDetectionStrategy {
 	}
 	
 	@Override
-	public void detectPatterns(IProjectModel model) {
+	protected void detectPatterns(IProjectModel model) {
 		_model = model;
 
 		for (ITargetClass clazz : _model.getTargetClasses()) {

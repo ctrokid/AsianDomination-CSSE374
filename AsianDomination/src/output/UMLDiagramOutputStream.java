@@ -19,7 +19,7 @@ import visitor.IVisitor;
 import visitor.VisitType;
 
 public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
-	protected Set<String> _relationships;
+	private Set<String> _relationships;
 	
 	public UMLDiagramOutputStream(Properties props, IVisitor visitor) {
 		super(props, visitor);
@@ -128,7 +128,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 	}
 
 	@Override
-	public void writeOutput() {
+	protected void writeOutput() {
 		// TODO: clear relationships set?
 		_relationships = new HashSet<String>();
 		prepareFile();
@@ -161,7 +161,8 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 		write("\n}");
 	}
 
-	public void generateDiagram() {
+	@Override
+	protected void generateDiagram() {
 		_diagramGenerator.RunGVEdit(_asmOutputPath, DiagramFileExtension.PNG);
 	}
 

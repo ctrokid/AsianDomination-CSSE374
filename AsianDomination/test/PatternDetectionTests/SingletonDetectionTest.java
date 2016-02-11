@@ -40,11 +40,9 @@ public class SingletonDetectionTest {
 										  "java/util/Calendar"};
 
 		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new SingletonPatternDetector(props));
 		
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
-		
-		SingletonPatternDetector s = new SingletonPatternDetector(props);
-		s.detectPatterns(model);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 		
 		ITargetClass singelton = i.next();

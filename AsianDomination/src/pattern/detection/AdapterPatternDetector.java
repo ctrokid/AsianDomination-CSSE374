@@ -32,7 +32,7 @@ public class AdapterPatternDetector extends AbstractPatternDetectionStrategy {
 	}
 
 	@Override
-	public void detectPatterns(IProjectModel model) {
+	protected void detectPatterns(IProjectModel model) {
 		for (ITargetClass clazz : model.getTargetClasses()) {
 			detectAdapter(clazz, model);
 		}
