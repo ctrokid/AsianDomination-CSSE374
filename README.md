@@ -186,4 +186,4 @@ All members met up for final touch for milestone 6.
 
 ##Instruction of Running Code:
 ---
-Current by running main, the project will generate all the milestone's images to input_output folder. The command line is currently not functional, will be functional later on in the project milestones.
+Under resource, by edting the config file, user can choose the specific file, packages, classes, output path, and phases. 
