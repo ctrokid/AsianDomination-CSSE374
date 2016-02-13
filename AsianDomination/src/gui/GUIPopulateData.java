@@ -106,16 +106,9 @@ public class GUIPopulateData {
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
-			if (e.getStateChange() == ItemEvent.SELECTED) {
-				JCheckBox boxChecked = (JCheckBox) e.getSource();
-				for (JCheckBox b : testmap.get(boxChecked.getText())) {
-					b.setSelected(true);
-				}
-			} else if (e.getStateChange() == ItemEvent.DESELECTED) {
-				JCheckBox boxChecked = (JCheckBox) e.getSource();
-				for (JCheckBox b : testmap.get(boxChecked.getText())) {
-					b.setSelected(false);
-				}
+			JCheckBox boxChecked = (JCheckBox) e.getSource();
+			for (JCheckBox b : testmap.get(boxChecked.getText())) {
+				b.setSelected(e.getStateChange() == ItemEvent.SELECTED);
 			}
 		}
 	}
