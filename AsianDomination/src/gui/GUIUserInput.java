@@ -11,6 +11,9 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 
 public class GUIUserInput extends JFrame {
@@ -22,6 +25,8 @@ public class GUIUserInput extends JFrame {
 	private JCheckBox loadClassBox;
 	private JCheckBox dotGeneration;
 	private JButton btnGenerate;
+	private Map<String, String> propertiesDataMap;
+	private ArrayList<JCheckBox> checkBoxes;
 
 	/**
 	 * Launch the application.
@@ -43,6 +48,11 @@ public class GUIUserInput extends JFrame {
 	 * Create the application.
 	 */
 	public GUIUserInput() {
+		propertiesDataMap = new HashMap<>();
+		checkBoxes = new ArrayList<>();
+		GUIReadConfigFile configFileData = new GUIReadConfigFile();
+		configFileData.readFromFile();
+		propertiesDataMap = configFileData.getPropertiesDataMap();
 		initialize();
 	}
 
@@ -51,7 +61,7 @@ public class GUIUserInput extends JFrame {
 	 */
 	private void initialize() {
 
-		setBounds(100, 100, 550, 400);
+		setBounds(100, 100, 550, 450);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("User Input");
 		SpringLayout springLayout = new SpringLayout();
@@ -66,6 +76,7 @@ public class GUIUserInput extends JFrame {
 		springLayout.putConstraint(SpringLayout.NORTH, pathInputTextField, -3, SpringLayout.NORTH, folderPathLabel);
 		springLayout.putConstraint(SpringLayout.WEST, pathInputTextField, 6, SpringLayout.EAST, folderPathLabel);
 		springLayout.putConstraint(SpringLayout.EAST, pathInputTextField, 421, SpringLayout.EAST, folderPathLabel);
+		pathInputTextField.setText(propertiesDataMap.get("input-folder"));
 		getContentPane().add(pathInputTextField);
 		pathInputTextField.setColumns(10);
 
@@ -78,6 +89,7 @@ public class GUIUserInput extends JFrame {
 		springLayout.putConstraint(SpringLayout.NORTH, packageTextField, 27, SpringLayout.SOUTH, pathInputTextField);
 		springLayout.putConstraint(SpringLayout.WEST, packageTextField, 0, SpringLayout.WEST, pathInputTextField);
 		springLayout.putConstraint(SpringLayout.EAST, packageTextField, 0, SpringLayout.EAST, pathInputTextField);
+		packageTextField.setText(propertiesDataMap.get("input-packages"));
 		packageTextField.setColumns(10);
 		getContentPane().add(packageTextField);
 
@@ -90,81 +102,107 @@ public class GUIUserInput extends JFrame {
 		springLayout.putConstraint(SpringLayout.NORTH, classesTextField, 0, SpringLayout.NORTH, classLabel);
 		springLayout.putConstraint(SpringLayout.WEST, classesTextField, 0, SpringLayout.WEST, pathInputTextField);
 		springLayout.putConstraint(SpringLayout.EAST, classesTextField, 0, SpringLayout.EAST, pathInputTextField);
+		classesTextField.setText(propertiesDataMap.get("input-classes"));
 		classesTextField.setColumns(10);
 		getContentPane().add(classesTextField);
 
-		JLabel lblChoosePhases = new JLabel("Choose Phases");
-		springLayout.putConstraint(SpringLayout.WEST, lblChoosePhases, 0, SpringLayout.WEST, folderPathLabel);
-		getContentPane().add(lblChoosePhases);
-
-		loadClassBox = new JCheckBox("Load Classes");
-		springLayout.putConstraint(SpringLayout.SOUTH, lblChoosePhases, -6, SpringLayout.NORTH, loadClassBox);
-		springLayout.putConstraint(SpringLayout.WEST, loadClassBox, 0, SpringLayout.WEST, folderPathLabel);
-		getContentPane().add(loadClassBox);
-
-		JCheckBox decoratorBox = new JCheckBox("Detect Decorator");
-		springLayout.putConstraint(SpringLayout.NORTH, decoratorBox, 0, SpringLayout.NORTH, loadClassBox);
-		getContentPane().add(decoratorBox);
-
-		JCheckBox singletonBox = new JCheckBox("Detect Singleton");
-		springLayout.putConstraint(SpringLayout.NORTH, singletonBox, 0, SpringLayout.NORTH, loadClassBox);
-		springLayout.putConstraint(SpringLayout.WEST, singletonBox, 31, SpringLayout.EAST, decoratorBox);
-		getContentPane().add(singletonBox);
-
-		JCheckBox adapterBox = new JCheckBox("Detect Adapter");
-		springLayout.putConstraint(SpringLayout.SOUTH, loadClassBox, -6, SpringLayout.NORTH, adapterBox);
-		springLayout.putConstraint(SpringLayout.WEST, adapterBox, 0, SpringLayout.WEST, folderPathLabel);
-		springLayout.putConstraint(SpringLayout.SOUTH, adapterBox, -28, SpringLayout.SOUTH, getContentPane());
-		getContentPane().add(adapterBox);
-
-		JCheckBox compositeBox = new JCheckBox("Detect Composite");
-		springLayout.putConstraint(SpringLayout.WEST, compositeBox, 16, SpringLayout.EAST, adapterBox);
-		springLayout.putConstraint(SpringLayout.WEST, decoratorBox, 0, SpringLayout.WEST, compositeBox);
-		springLayout.putConstraint(SpringLayout.NORTH, compositeBox, 0, SpringLayout.NORTH, adapterBox);
-		getContentPane().add(compositeBox);
-
-		dotGeneration = new JCheckBox("Dot Generation");
-		springLayout.putConstraint(SpringLayout.NORTH, dotGeneration, 0, SpringLayout.NORTH, adapterBox);
-		springLayout.putConstraint(SpringLayout.WEST, dotGeneration, 0, SpringLayout.WEST, singletonBox);
-		getContentPane().add(dotGeneration);
-		dotGeneration.addItemListener(new enableButtonListener());
-
 		JLabel outputPathLabel = new JLabel("Output Path");
 		springLayout.putConstraint(SpringLayout.WEST, outputPathLabel, 0, SpringLayout.WEST, folderPathLabel);
-		springLayout.putConstraint(SpringLayout.SOUTH, outputPathLabel, -66, SpringLayout.NORTH, lblChoosePhases);
+		springLayout.putConstraint(SpringLayout.NORTH, outputPathLabel, 40, SpringLayout.NORTH, classesTextField);
 		getContentPane().add(outputPathLabel);
 
 		outputPathTextField = new JTextField();
+		springLayout.putConstraint(SpringLayout.NORTH, outputPathTextField, -3, SpringLayout.NORTH, outputPathLabel);
 		springLayout.putConstraint(SpringLayout.WEST, outputPathTextField, 0, SpringLayout.WEST, pathInputTextField);
-		springLayout.putConstraint(SpringLayout.SOUTH, outputPathTextField, -66, SpringLayout.NORTH, lblChoosePhases);
 		springLayout.putConstraint(SpringLayout.EAST, outputPathTextField, 0, SpringLayout.EAST, pathInputTextField);
+		outputPathTextField.setText(propertiesDataMap.get("output-dir"));
 		outputPathTextField.setColumns(10);
 		getContentPane().add(outputPathTextField);
 
 		JLabel dotPathLabel = new JLabel("Dot Path");
-		springLayout.putConstraint(SpringLayout.NORTH, dotPathLabel, 23, SpringLayout.SOUTH, outputPathLabel);
-		springLayout.putConstraint(SpringLayout.EAST, dotPathLabel, 0, SpringLayout.EAST, folderPathLabel);
+		springLayout.putConstraint(SpringLayout.WEST, dotPathLabel, 0, SpringLayout.WEST, folderPathLabel);
 		getContentPane().add(dotPathLabel);
 
 		dotPathTextField = new JTextField();
-		springLayout.putConstraint(SpringLayout.NORTH, dotPathTextField, 0, SpringLayout.NORTH, dotPathLabel);
+		springLayout.putConstraint(SpringLayout.NORTH, dotPathTextField, 20, SpringLayout.SOUTH, outputPathTextField);
+		springLayout.putConstraint(SpringLayout.NORTH, dotPathLabel, 3, SpringLayout.NORTH, dotPathTextField);
 		springLayout.putConstraint(SpringLayout.WEST, dotPathTextField, 0, SpringLayout.WEST, pathInputTextField);
 		springLayout.putConstraint(SpringLayout.EAST, dotPathTextField, 0, SpringLayout.EAST, pathInputTextField);
+		dotPathTextField.setText(propertiesDataMap.get("dot-path"));
 		dotPathTextField.setColumns(10);
 		getContentPane().add(dotPathTextField);
-		btnGenerate = new JButton("Generate");
+		
+		
+		JLabel lblChoosePhases = new JLabel("Choose Phases");
+		springLayout.putConstraint(SpringLayout.WEST, lblChoosePhases, 0, SpringLayout.WEST, folderPathLabel);
+		springLayout.putConstraint(SpringLayout.SOUTH, lblChoosePhases, 260, SpringLayout.NORTH, getContentPane());
+		getContentPane().add(lblChoosePhases);
 
-		btnGenerate.setEnabled(false);
+		loadClassBox = new JCheckBox("Class-Loading");
+		springLayout.putConstraint(SpringLayout.WEST, loadClassBox, 0, SpringLayout.WEST, folderPathLabel);
+		springLayout.putConstraint(SpringLayout.SOUTH, loadClassBox, 50, SpringLayout.NORTH, lblChoosePhases);
+		getContentPane().add(loadClassBox);
+		checkBoxes.add(loadClassBox);
+
+		JCheckBox decoratorBox = new JCheckBox("Decorator-Detection");
+		springLayout.putConstraint(SpringLayout.NORTH, decoratorBox, 0, SpringLayout.NORTH, loadClassBox);
+		getContentPane().add(decoratorBox);
+		checkBoxes.add(decoratorBox);
+
+		JCheckBox singletonBox = new JCheckBox("Singleton-Detection-Visitor");
+		springLayout.putConstraint(SpringLayout.NORTH, singletonBox, 0, SpringLayout.NORTH, loadClassBox);
+		springLayout.putConstraint(SpringLayout.WEST, singletonBox, 31, SpringLayout.EAST, decoratorBox);
+		getContentPane().add(singletonBox);
+		checkBoxes.add(singletonBox);
+
+		JCheckBox adapterBox = new JCheckBox("Adapter-Detection");
+		springLayout.putConstraint(SpringLayout.WEST, adapterBox, 0, SpringLayout.WEST, folderPathLabel);
+		springLayout.putConstraint(SpringLayout.SOUTH, adapterBox, 70, SpringLayout.SOUTH, lblChoosePhases);
+		getContentPane().add(adapterBox);
+		checkBoxes.add(adapterBox);
+
+		JCheckBox compositeBox = new JCheckBox("Composite-Detection");
+		springLayout.putConstraint(SpringLayout.WEST, compositeBox, 16, SpringLayout.EAST, adapterBox);
+		springLayout.putConstraint(SpringLayout.WEST, decoratorBox, 0, SpringLayout.WEST, compositeBox);
+		springLayout.putConstraint(SpringLayout.NORTH, compositeBox, 0, SpringLayout.NORTH, adapterBox);
+		getContentPane().add(compositeBox);
+		checkBoxes.add(compositeBox);
+
+		dotGeneration = new JCheckBox("DOT-Generation");
+		springLayout.putConstraint(SpringLayout.NORTH, dotGeneration, 0, SpringLayout.NORTH, adapterBox);
+		springLayout.putConstraint(SpringLayout.WEST, dotGeneration, 0, SpringLayout.WEST, singletonBox);
+		getContentPane().add(dotGeneration);
+		checkBoxes.add(dotGeneration);
+		dotGeneration.addItemListener(new enableButtonListener());
+		
+		
+		
+		btnGenerate = new JButton("Generate");
+		springLayout.putConstraint(SpringLayout.NORTH, btnGenerate, 30, SpringLayout.SOUTH, dotGeneration);
+		springLayout.putConstraint(SpringLayout.EAST, btnGenerate, 0, SpringLayout.EAST, singletonBox);
+
+		String[] patterns = propertiesDataMap.get("phases").trim().split(",");
+		for (String p : patterns) {
+			for (JCheckBox b : checkBoxes) {
+				if (b.getText().toLowerCase().equals(p.toLowerCase())) {
+
+					b.setSelected(true);
+				}
+			}
+		}
+
+		if (loadClassBox.isSelected() && dotGeneration.isSelected()) {
+			btnGenerate.setEnabled(true);
+		} else {
+			btnGenerate.setEnabled(false);
+		}
 		loadClassBox.addItemListener(new enableButtonListener());
 
 		btnGenerate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				// TODO:
 			}
 		});
-
-		springLayout.putConstraint(SpringLayout.WEST, btnGenerate, 6, SpringLayout.EAST, dotGeneration);
-		springLayout.putConstraint(SpringLayout.SOUTH, btnGenerate, -10, SpringLayout.SOUTH, getContentPane());
 		getContentPane().add(btnGenerate);
 
 	}
