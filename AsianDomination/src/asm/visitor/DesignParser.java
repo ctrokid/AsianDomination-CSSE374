@@ -2,9 +2,11 @@ package asm.visitor;
 
 import input.InputCommand;
 import utils.CommandGenerator;
+import utils.LaunchDiagramGenerator;
 import utils.CommandGenerator.ExecuteCommand;
-import utils.UMLConfiguration;
+import utils.ProjectConfiguration;
 
+@SuppressWarnings("unused")
 public class DesignParser {
 
 	/**
@@ -16,35 +18,19 @@ public class DesignParser {
 	 *            edu.rosehulman.csse374.ClassFieldVisitor java.lang.Math
 	 * @throws Exception
 	 */
-	public static void main(String[] args) throws Exception {
-//		FIXME : when command line integration is working, uncomment this and remove below.
-//		String diagramOutputPath = "input_output/sequenceDiagramTest";
-//		String asmOutputPath = "input_output/sequenceTest";	
-//		
-//		PrintCommand print = new PrintCommand(diagramOutputPath, asmOutputPath);
-//		InputCommand inputCommand = print.run();
+	public static void main(String[] args) throws Exception {		
+//		for (ExecuteCommand ex : ExecuteCommand.values()) {
+//			InputCommand inputCommand = CommandGenerator.getInputCommand(ex);
+//			
+//			if (inputCommand == null)
+//				continue;
+//			
+//			inputCommand.execute();
+//		}
 		
-//		------------------------------------
-//		CODE TO RUN PROJECT SEQUENCE DIAGRAM
-//		String initialClass = "asm/visitor/DesignParser";
-//		String initialMethod = "main";
-//		String initialParams = "String[]";
-//		String outputPath = "demo_diagrams/ProjectSD";
-//		
-//		InputCommand inputCommand = new SequenceInputCommand(outputPath, outputPath, initialClass, initialMethod, initialParams, 5);
-		
-		for (ExecuteCommand ex : ExecuteCommand.values()) {
-			InputCommand inputCommand = CommandGenerator.getInputCommand(ex);
-			
-			if (inputCommand == null)
-				continue;
-			
-			inputCommand.execute();
-		}
-		
-//		UMLConfiguration config = new UMLConfiguration();
-//		InputCommand cmd = config.getInputCommand();
-//
-//		cmd.execute();
+		ProjectConfiguration config = new ProjectConfiguration("resources/config.properties");
+		InputCommand cmd = config.getInputCommand();
+
+		cmd.execute();
 	}
 }

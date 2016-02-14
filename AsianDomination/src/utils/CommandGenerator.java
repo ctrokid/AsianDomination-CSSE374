@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import construction.SDAddStrategy;
 import fake.FakeUMLAddStrategy;
 import framework.IPhase;
 import input.InputCommand;
+import output.SDDiagramOutputStream;
 import output.UMLDiagramOutputStream;
 import pattern.detection.AdapterPatternDetector;
 import pattern.detection.CompositePatternDetector;
@@ -208,10 +210,20 @@ public class CommandGenerator {
 		String initialClass = "java/util/Collections";
 		String initialMethod = "shuffle";
 		String initialParams = "List";
-		String outputPath = "demo_diagrams/M3CollectionsSD";
+		String outputPath = "demo_diagrams\\M3CollectionsSD";
 		
-		// TODO: Get this to work!!!
-//		cmd = new SequenceInputCommand(new SDDiagramOutputStream(outputPath, "lib/sdedit-4.01.jar", initialClass, initialMethod, initialParams, SEQUENCE_DIAGRAM_MAX_DEPTH, new Visitor()), initialClass, initialMethod, initialParams, SEQUENCE_DIAGRAM_MAX_DEPTH);
+		Properties props = new Properties();
+		props.setProperty("output-dir", outputPath);
+		props.setProperty("initial-class", initialClass);
+		props.setProperty("initial-method", initialMethod);
+		props.setProperty("initial-method-parameters", initialParams);
+		
+		List<IPhase> phases = new ArrayList<IPhase>();
+		phases.add(new SDAddStrategy(props));
+		phases.add(new SDDiagramOutputStream(props));
+		
+		cmd = new InputCommand(phases);
+		
 		return cmd;
 	}
 
@@ -287,7 +299,6 @@ public class CommandGenerator {
 			"pattern/detection/IPatternDetectionStrategy",
 			"pattern/detection/CompositePatternDetector"
 		};
-		String outputPath = "demo_diagrams/ProjectUML";
 		
 		Properties props = new Properties();
 		props.setProperty("output-dir", "demo_diagrams/ProjectUML");
