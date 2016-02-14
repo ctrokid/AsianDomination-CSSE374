@@ -44,7 +44,7 @@ For this milestone, wea added composite pattern detector class that is similar t
 We also refactored the our design to so the singleton pattern is detected through visitor. This allows clients to have a more flexible control of the application.
 
 Milestone 6 UML Diagram
-![milestone6uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M6/Milestone6UML.jpg)
+![milestone6uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M7/Milestone7UML.jpg)
 
 ##Milestone Deliverables
 ---
@@ -101,9 +101,7 @@ Milestone 6 UML Diagram
 ######In Class Lab Detection
 [Lab7-2](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M6/M6Lab7.png)
 
-[java.awt]
-
-[java.swing]
+[java.awt/ java.swing](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M7/Milestone6SwingAwtComposite.png)
 
 [Generated Project UML](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M6/ProjectGeneratedUML.png)
 
@@ -174,6 +172,18 @@ All members met for 3 hours and working on the algorithem of composite pattern. 
 02/03/2016
 All members met for 7 hours to finish composite pattern and tests for miletone 5.
 
+02/08/2016
+All members met for 3 hours to fix composite pattern and GUI design.
+
+02/09/2016
+Collin worked on composite pattern and refactoring, Coco worked on GUI. Totoal about 2.5 hours.
+
+02/10/2016
+Collin and Runzi continue fixing composite pattern and adding test. Coco worked on GUI. Total about 4 hours
+
+02/11/2016
+All members met up for final touch for milestone 6.
+
 ##Instruction of Running Code:
 ---
-Current by running main, the project will generate all the milestone's images to input_output folder. The command line is currently not functional, will be functional later on in the project milestones.
+Under resource, by edting the config file, user can choose the specific file, packages, classes, output path, and phases. The application can be ran in DesignParser.
