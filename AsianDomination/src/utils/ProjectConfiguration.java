@@ -9,23 +9,27 @@ import framework.IPhase;
 import framework.StaticPhaseFactory;
 import input.InputCommand;
 
-public class UMLConfiguration {
+public class ProjectConfiguration {
 	private Properties props;
 	
-	public UMLConfiguration() {
-		readConfig();
+	public ProjectConfiguration(String configPath) {
+		readConfig(configPath);
 	}
 	
-	private void readConfig() {
+	private void readConfig(String configPath) {
 		props = new Properties();
 		
 		try {
-			FileInputStream in = new FileInputStream("resources/config.properties");
+			FileInputStream in = new FileInputStream(configPath);
 			props.load(in);
 			in.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		// FIXME : The ugly code below needs to go into UMLAddStrategy.loadConfig();
+		if (props.getProperty("input-folder") == null)
+			return;
 		
 		// combine input-folder classes and input-classes into one String[]
 		String inputDir = props.getProperty("input-folder");
