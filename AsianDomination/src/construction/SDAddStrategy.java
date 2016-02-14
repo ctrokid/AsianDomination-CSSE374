@@ -8,7 +8,7 @@ import api.IProjectModel;
 import api.ITargetClass;
 
 public class SDAddStrategy extends AbstractAddStrategy {
-	private int MAX_CALLDEPTH = 5;
+	private int MAX_CALL_DEPTH = 5;
 	private IProjectModel _projectModel;
 	
 	public SDAddStrategy(Properties props) {
@@ -17,9 +17,38 @@ public class SDAddStrategy extends AbstractAddStrategy {
 	
 	@Override
 	protected void loadConfig(Properties props) {
-		/*
-		 * TODO: this needs to be configured to work again. We must have a separate properties file or something?
-		 */
+		_params = new String[3];
+		// load SD specific parameters
+		String initialClass = props.getProperty("initial-class");
+		if (initialClass != null) {
+			_params[0] = initialClass;
+		} else {
+			System.err.println("Must provide initial-class config value.");
+			System.exit(-1);
+		}
+		
+		String initialMethod = props.getProperty("initial-method");
+		if (initialMethod != null) {
+			_params[1] = initialMethod;
+		} else {
+			System.err.println("Must provide initial-method config value.");
+			System.exit(-1);
+		}
+		
+		String initialParams = props.getProperty("initial-method-parameters");
+		if (initialParams != null) {
+			_params[2] = initialParams;
+		} else {
+			System.err.println("Must provide initial-method-parameters config value.");
+			System.exit(-1);
+		}
+		
+		String maxCallDepth = props.getProperty("max-call-depth");
+		if (maxCallDepth != null) {
+			try {
+				MAX_CALL_DEPTH = Integer.parseInt(maxCallDepth);
+			} catch (NumberFormatException e) {}
+		}
 	}
 	
 	@Override
@@ -30,7 +59,7 @@ public class SDAddStrategy extends AbstractAddStrategy {
 	}
 
 	private void addClassesRecursively(String className, String methodName, String params, int depth) {
-		if (depth > MAX_CALLDEPTH) {
+		if (depth > MAX_CALL_DEPTH) {
 			return;
 		}
 

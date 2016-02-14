@@ -25,6 +25,14 @@ public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 	
 	public SDDiagramOutputStream(Properties props, IVisitor visitor) {
 		super(props, visitor);
+	}
+	
+	public SDDiagramOutputStream(Properties props) {
+		super(props);
+		initialize();
+	}
+	
+	private void initialize() {
 		_classNameToOutput = new LinkedHashMap<String, String>();
 		_methodStatements = new ArrayList<String>();
 		
@@ -40,16 +48,25 @@ public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 		String initialClass = props.getProperty("initial-class");
 		if (initialClass != null) {
 			_initialClass = initialClass;
+		} else {
+			System.err.println("Must provide initial-class config value.");
+			System.exit(-1);
 		}
 		
 		String initialMethod = props.getProperty("initial-method");
 		if (initialMethod != null) {
 			_initialMethod = initialMethod;
+		} else {
+			System.err.println("Must provide initial-method config value.");
+			System.exit(-1);
 		}
 		
 		String initialParams = props.getProperty("initial-method-parameters");
 		if (initialParams != null) {
 			_initialMethodParameters = initialParams;
+		} else {
+			System.err.println("Must provide initial-method-parameters config value.");
+			System.exit(-1);
 		}
 		
 		String maxCallDepth = props.getProperty("max-call-depth");
