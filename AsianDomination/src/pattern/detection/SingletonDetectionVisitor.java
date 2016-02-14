@@ -37,6 +37,8 @@ public class SingletonDetectionVisitor extends AbstractDetectionVisitor {
 		String require = props.getProperty("singleton-require-getInstance");
 		if (require != null && require.toLowerCase().equals("true"))
 			REQUIRE_GET_INSTANCE = true;
+		else
+			REQUIRE_GET_INSTANCE = false;
 	}
 
 	private void setupVisitTargetClass() {
@@ -84,9 +86,14 @@ public class SingletonDetectionVisitor extends AbstractDetectionVisitor {
 
 	private boolean returnsSelfInstance(ITargetClass t, String classType) {
 		Collection<IClassMethod> methods = t.getMethods();
-		for (IClassMethod current : methods) {
-			if (current.getReturnType().equals(classType) && (current.getAccessLevel() & Opcodes.ACC_STATIC) != 0) {
-				return true;
+		for(IClassMethod current : methods){
+			if(current.getReturnType().equals(classType) && (current.getAccessLevel() & Opcodes.ACC_STATIC) != 0){
+				if (REQUIRE_GET_INSTANCE) {
+					if (current.getMethodName().equals("getInstance"))
+						return true;
+				} else {
+					return true;
+				}
 			}
 		}
 		return false;

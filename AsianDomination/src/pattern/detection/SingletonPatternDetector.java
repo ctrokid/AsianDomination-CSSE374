@@ -12,7 +12,7 @@ import api.ITargetClass;
 import pattern.decoration.SingletonDecorator;
 
 public class SingletonPatternDetector extends AbstractPatternDetectionStrategy {	
-	private boolean REQUIRE_GET_INSTANCE = false;
+	private boolean REQUIRE_GET_INSTANCE;
 	
 	public SingletonPatternDetector(Properties props) {
 		super(props);
@@ -23,6 +23,8 @@ public class SingletonPatternDetector extends AbstractPatternDetectionStrategy {
 		String require = props.getProperty("singleton-require-getInstance");
 		if (require != null && require.toLowerCase().equals("true"))
 			REQUIRE_GET_INSTANCE = true;
+		else
+			REQUIRE_GET_INSTANCE = false;
 	}
 
 	@Override
@@ -73,7 +75,12 @@ public class SingletonPatternDetector extends AbstractPatternDetectionStrategy {
 		Collection<IClassMethod> methods = t.getMethods();
 		for(IClassMethod current : methods){
 			if(current.getReturnType().equals(classType) && (current.getAccessLevel() & Opcodes.ACC_STATIC) != 0){
-				return true;
+				if (REQUIRE_GET_INSTANCE) {
+					if (current.getMethodName().equals("getInstance"))
+						return true;
+				} else {
+					return true;
+				}
 			}
 		}
 		return false;
