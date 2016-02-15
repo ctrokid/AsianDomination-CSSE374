@@ -9,6 +9,7 @@ import api.IClassMethod;
 import api.IRelationshipManager;
 import api.ITargetClass;
 import impl.Relationship;
+import pattern.decoration.GraphVizStyleTargetClass;
 import utils.AsmClassUtils;
 import utils.ClassStyle;
 import utils.DotClassUtils;
@@ -41,13 +42,13 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 	}
 
 	protected void setupVisitTargetClass() {
-		_visitor.addVisit(VisitType.Visit, ITargetClass.class, (ITraverser t) -> {
-			ITargetClass c = (ITargetClass) t;
+		_visitor.addVisit(VisitType.Visit, GraphVizStyleTargetClass.class, (ITraverser t) -> {
+			GraphVizStyleTargetClass c = (GraphVizStyleTargetClass) t;
 			StringBuilder sb = new StringBuilder();
 			String className = AsmClassUtils.GetStringStrippedByCharacter(c.getClassName(), '/');
-			ClassStyle style = new ClassStyle();
+//			ClassStyle style = new ClassStyle();
 			sb.append(className + "[\n\t");
-			sb.append(style.getStyleByType(c.getPatternString(true)) +", label = \"{" + className + c.getPatternString(false) + "|");
+			sb.append(c.getAssociatedClassName()+", label = \"{" + className + c.getClassTypeWithCarrots() + "|");
 			write(sb.toString());
 		});
 	}

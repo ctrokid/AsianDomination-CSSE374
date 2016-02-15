@@ -3,19 +3,19 @@ package pattern.decoration;
 import api.ITargetClass;
 import pattern.detection.PATTERN_TYPE;
 
-public class DecoratorTargetClass extends AbstractTargetClassDecorator {
+public class DecoratorTargetClass extends GraphVizStyleTargetClass {
 
 	public DecoratorTargetClass(PATTERN_TYPE pattern, String _associatedClassName, ITargetClass _decoratedClass) {
 		super(pattern, _associatedClassName, _decoratedClass);
 		switch (pattern) {
 			case DECORATOR_COMPONENT: 
-				setPatternString("\\n\\<\\<component\\>\\>");
+				this.graphVizStyle.addConfig("type", "component");
 				break;
 			case DECORATOR_DECORATOR:
-				setPatternString("\\n\\<\\<decorator\\>\\>");
+				this.graphVizStyle.addConfig("type", "decorator");
 				break;
 			case DECORATOR_CONCRETE:
-				setPatternString("\\n\\<\\<decorator\\>\\>");
+				this.graphVizStyle.addConfig("type", "concrete");
 				break;
 			default:
 				break;

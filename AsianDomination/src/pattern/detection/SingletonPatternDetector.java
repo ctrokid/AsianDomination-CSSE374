@@ -30,7 +30,8 @@ public class SingletonPatternDetector extends AbstractPatternDetectionStrategy {
 		for (ITargetClass clazz : model.getTargetClasses()) {
 			if (isSingleton(clazz)) {
 				clazz = new SingletonDecorator(PATTERN_TYPE.SINGLETON, "", clazz);
-				clazz.setPatternString("\\n\\<\\<Singleton\\>\\>");
+//				clazz.setPatternString("\\n\\<\\<Singleton\\>\\>");
+//				clazz.
 				
 				model.decorateClass(clazz);
 			}
