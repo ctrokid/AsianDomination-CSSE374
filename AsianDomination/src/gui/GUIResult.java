@@ -34,31 +34,17 @@ public class GUIResult extends JFrame {
 	private Dimension borderSize;
 	private Dimension diagramSize;
 	private JLabel populatedDiagram;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUIResult window = new GUIResult();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private String imagePath;
 
 	/**
 	 * Create the application.
 	 */
-	public GUIResult() {
+	public GUIResult(String imagePath) {
 		this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		borderSize = new Dimension((int) screenSize.getWidth() - 50, (int) screenSize.getHeight() - 50);
 		boxSize = new Dimension((int) borderSize.getWidth() * 1 / 3, 1000);
 		diagramSize = new Dimension((int) borderSize.getWidth() * 2 / 3, 1000);
+		this.imagePath = imagePath;
 		setupFrame();
 	}
 
@@ -67,6 +53,7 @@ public class GUIResult extends JFrame {
 	 */
 	private void setupFrame() {
 		GUIPopulateData populatedData = new GUIPopulateData();
+		populatedData.setNewImage(imagePath);
 		setBounds(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
 
 		setMinimumSize(borderSize);
@@ -125,7 +112,7 @@ public class GUIResult extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				populatedData.setNewImage();
+				populatedData.setNewImage(imagePath);
 				populatedDiagram = populatedData.getDigram();
 				diagramPane.setViewportView(populatedDiagram);
 			}

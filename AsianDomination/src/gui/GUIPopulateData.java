@@ -31,7 +31,7 @@ public class GUIPopulateData {
 
 	public GUIPopulateData() {
 		testmap = new HashMap<String, ArrayList<JCheckBox>>();
-		path = getInitialDiagram();
+		path = "";
 
 	}
 
@@ -62,8 +62,8 @@ public class GUIPopulateData {
 		}
 	}
 
-	public void setNewImage() {
-		path = "docs/M6/funny-panda-wallpaper.jpg";
+	public void setNewImage(String imagePath) {
+		path = imagePath;
 
 	}
 
@@ -78,7 +78,8 @@ public class GUIPopulateData {
 	public int getLastBoxNorthPosition() {
 		return northIndex;
 	}
-	public int getWestPosition(){
+
+	public int getWestPosition() {
 		return this.detectedPatternWestIndex;
 	}
 
@@ -90,6 +91,8 @@ public class GUIPopulateData {
 
 		BufferedImage myPicture = null;
 		try {
+			path.replace('\\', '/');
+			path+=".png";
 			myPicture = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			e.printStackTrace();
