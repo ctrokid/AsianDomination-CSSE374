@@ -107,7 +107,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 			sb.append(acessLevel + " " + c.getFieldName() + " : ");
 			sb.append(AsmClassUtils.GetStringStrippedByCharacter(c.getType(), '/'));
 
-			if (c.getSignature() != null && !c.getSignature().equals(""))
+			if (c.getSignature() != null && !c.getSignature().equals("") && !c.getSignature().contains("*"))
 				sb.append(c.getSignature());
 
 			sb.append("\\l");

@@ -70,7 +70,7 @@ public class PatternConfig {
 
 		map = new HashMap<>();
 		map.put("style", "solid");
-		map.put("fillcolor", "blue");
+		map.put("color", "blue");
 		map.put("type", "Singleton");
 		patternTypes.put(PATTERN_TYPE.SINGLETON, map);
 	}
