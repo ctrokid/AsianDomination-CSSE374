@@ -107,19 +107,18 @@ public abstract class GraphVizStyleTargetClass implements ITargetClass {
 
 	@Override
 	public void accept(IVisitor v) {
-			v.visit(this);
-			for (IClassField field : _decoratedClass.getFields()) {
-				field.accept(v);
-			}
+		v.visit(this);
+		for (IClassField field : getFields()) {
+			field.accept(v);
+		}
 
-			v.postVisit(new ClassField(null, 0, null, null));
+		v.postVisit(new ClassField(null, 0, null, null));
 
-			for (IClassMethod method : getMethods()) {
-				method.accept(v);
-			}
+		for (IClassMethod method : getMethods()) {
+			method.accept(v);
+		}
 
-			v.postVisit(this);
-
+		v.postVisit(this);
 	}
 
 }

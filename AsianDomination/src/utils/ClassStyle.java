@@ -51,7 +51,7 @@ public class ClassStyle {
 			if (config.equals("type")) {
 				continue;
 			}
-			str.append(str + "=" + styles.get(config)+",");
+			str.append(config + "=" + styles.get(config)+",");
 		}
 		return str.toString().trim();
 

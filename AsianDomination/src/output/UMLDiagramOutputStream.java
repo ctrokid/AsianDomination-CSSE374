@@ -42,15 +42,12 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 
 	protected void setupVisitTargetClass() {
 
-		_visitor.addVisit(VisitType.Visit, ITargetClass.class, (ITraverser t) -> {
-//			ITargetClass b = (ITargetClass) t;
+		_visitor.addVisit(VisitType.Visit, GraphVizStyleTargetClass.class, (ITraverser t) -> {
 			GraphVizStyleTargetClass c =  (GraphVizStyleTargetClass) t;
 			StringBuilder sb = new StringBuilder();
 			String className = AsmClassUtils.GetStringStrippedByCharacter(c.getClassName(), '/');
-//			ClassStyle style = new ClassStyle();
 			sb.append(className + "[\n\t");
-			sb.append(c.getAssociatedClassName()+", label = \"{" + className + c.getClassTypeWithCarrots() + "|");
-//			sb.append("hererrer"+", label = \"{" + className + "haerear" + "|");
+			sb.append(c.getStyle()+"label = \"{" + className + c.getClassTypeWithCarrots() + "|");
 			write(sb.toString());
 		});
 	}
