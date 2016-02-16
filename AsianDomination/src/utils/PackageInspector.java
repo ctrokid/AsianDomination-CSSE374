@@ -38,11 +38,9 @@ public class PackageInspector {
 	}
 	
 	public static List<String> getClasses(String sourceDir, String[] packageNames){
-		File f = null;
-		try {
-			f = new File(sourceDir);
-		} catch(Exception e) {
-			System.err.println("Cannot load src directory from: " + sourceDir);
+		File f = new File(sourceDir);
+		if (!f.exists()) {
+			System.err.println("Source directory does not exist: " + sourceDir);
 			return new ArrayList<String>();
 		}
 
