@@ -1,6 +1,6 @@
 package PatternDetectionTests;
 
-import pattern.decoration.SingletonDecorator;
+import pattern.decoration.GraphVizStyleTargetClass;
 import pattern.detection.SingletonPatternDetector;
 
 import static org.junit.Assert.*;
@@ -45,26 +45,30 @@ public class SingletonDetectionTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 		
-		ITargetClass singelton = i.next();
-		assertTrue(singelton instanceof SingletonDecorator);
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		assertTrue(c.getColor().equals("blue"));		
+
+		c = (GraphVizStyleTargetClass)i.next();
+		assertFalse(c.getColor().equals("blue"));
 		
-		ITargetClass badS1 = i.next();
-		assertFalse(badS1 instanceof SingletonDecorator);
-		
-		ITargetClass badS2 = i.next();
-		assertFalse(badS2 instanceof SingletonDecorator);
+		c = (GraphVizStyleTargetClass)i.next();
+		assertFalse(c.getColor().equals("blue"));
 		
 		//FilterInputStream
-		assertFalse(i.next() instanceof SingletonDecorator);
+		c = (GraphVizStyleTargetClass)i.next();
+		assertFalse(c.getColor().equals("blue"));
 		
 		//Runtime
-		assertTrue(i.next() instanceof SingletonDecorator);
+		c = (GraphVizStyleTargetClass)i.next();
+		assertTrue(c.getColor().equals("blue"));
 		
 		//Desktop
-		assertFalse(i.next() instanceof SingletonDecorator);
+		c = (GraphVizStyleTargetClass)i.next();
+		assertFalse(c.getColor().equals("blue"));
 		
 		//Calendar
-		assertFalse(i.next() instanceof SingletonDecorator);
+		c = (GraphVizStyleTargetClass)i.next();
+		assertFalse(c.getColor().equals("blue"));
 	}
 	
 	@Test
@@ -77,7 +81,8 @@ public class SingletonDetectionTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 		
-		assertTrue(i.next() instanceof SingletonDecorator);
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		assertTrue(c.getColor().equals("blue"));
 	}
 	
 	@Test
@@ -91,7 +96,8 @@ public class SingletonDetectionTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 		
-		assertFalse(i.next() instanceof SingletonDecorator);
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		assertFalse(c.getColor().equals("blue"));
 	}
 	
 	@Test
@@ -105,6 +111,7 @@ public class SingletonDetectionTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 		
-		assertTrue(i.next() instanceof SingletonDecorator);
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		assertTrue(c.getColor().equals("blue"));
 	}
 }

@@ -15,7 +15,6 @@ import api.IProjectModel;
 import api.ITargetClass;
 import fake.FakeUMLAddStrategy;
 import framework.IPhase;
-import pattern.decoration.CompositeDecorator;
 import pattern.decoration.GraphVizStyleTargetClass;
 import pattern.detection.CompositePatternDetector;
 
@@ -41,16 +40,17 @@ public class CompositeTest {
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
 		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
-		assertTrue(c instanceof CompositeDecorator);
+		assertTrue((c).getColor().equals("yellow"));
 
 		c = (GraphVizStyleTargetClass)i.next();
-		assertTrue(c instanceof CompositeDecorator);
+		assertTrue((c).getColor().equals("yellow"));
 
 		c = (GraphVizStyleTargetClass)i.next();
-		assertTrue(c instanceof CompositeDecorator);
+		assertTrue((c).getColor().equals("yellow"));
 
 		c = (GraphVizStyleTargetClass)i.next();
-		assertTrue(c instanceof CompositeDecorator);
+		assertTrue((c).getColor().equals("yellow"));
+
 	}
 
 	@Test
@@ -68,19 +68,19 @@ public class CompositeTest {
 		// iterator
 		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("Component", c.getClassType());
-		assertTrue(c instanceof CompositeDecorator);
+		assertTrue((c).getColor().equals("yellow"));
 
 		c = (GraphVizStyleTargetClass)i.next();
 		assertNotEquals("Composite", c.getClassType());
-		assertFalse(c instanceof CompositeDecorator);
+		assertFalse((c).getColor().equals("yellow"));
 
 		c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("Composite", c.getClassType());
-		assertTrue(c instanceof CompositeDecorator);
+		assertTrue((c).getColor().equals("yellow"));
 
 		c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("Leaf", c.getClassType());
-		assertTrue(c instanceof CompositeDecorator);
+		assertTrue((c).getColor().equals("yellow"));
 
 		// c = (GraphVizStyleTargetClass)i.next();
 		// assert/*True False*/(c instanceof CompositeDecorator);
@@ -98,17 +98,17 @@ public class CompositeTest {
 
 		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("Composite", c.getClassType());
-		assertTrue(c instanceof CompositeDecorator);
+		assertTrue((c).getColor().equals("yellow"));
 
 		c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("Leaf", c.getClassType());
-		assertTrue(c instanceof CompositeDecorator);
+		assertTrue((c).getColor().equals("yellow"));
 
 		// third class added as a component
 		c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("examples/composite/CollinComponent", c.getClassName());
 		assertEquals("Component", c.getClassType());
-		assertTrue(c instanceof CompositeDecorator);
+		assertTrue((c).getColor().equals("yellow"));
 
 		// fourth class added as a component
 		// c = (GraphVizStyleTargetClass)i.next();
@@ -130,15 +130,15 @@ public class CompositeTest {
 
 		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("Composite", c.getClassType());
-		assertTrue(c instanceof CompositeDecorator);
+		assertTrue((c).getColor().equals("yellow"));
 
 		c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("Leaf", c.getClassType());
-		assertTrue(c instanceof CompositeDecorator);
+		assertTrue((c).getColor().equals("yellow"));
 
 		c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("Leaf", c.getClassType());
-		assertTrue(c instanceof CompositeDecorator);
+		assertTrue((c).getColor().equals("yellow"));
 	}
 
 	@Test
@@ -154,15 +154,15 @@ public class CompositeTest {
 
 		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("Composite", c.getClassType());
-		assertTrue(c instanceof CompositeDecorator);
+		assertTrue((c).getColor().equals("yellow"));
 
 		c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("Leaf", c.getClassType());
-		assertTrue(c instanceof CompositeDecorator);
+		assertTrue((c).getColor().equals("yellow"));
 
 		c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("Leaf", c.getClassType());
-		assertTrue(c instanceof CompositeDecorator);
+		assertTrue((c).getColor().equals("yellow"));
 	}
 
 	@Test
@@ -177,11 +177,11 @@ public class CompositeTest {
 
 		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
 		assertNotEquals("Component", c.getClassType());
-		assertFalse(c instanceof CompositeDecorator);
+		assertFalse((c).getColor().equals("yellow"));
 
 		c = (GraphVizStyleTargetClass)i.next();
 		assertNotEquals("Composite", c.getClassType());
-		assertFalse(c instanceof CompositeDecorator);
+		assertFalse((c).getColor().equals("yellow"));
 	}
 
 	@Test
@@ -195,14 +195,14 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		ITargetClass c = (GraphVizStyleTargetClass)i.next();
-		assertFalse(c instanceof CompositeDecorator);
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		assertFalse((c).getColor().equals("yellow"));
 
 		c = (GraphVizStyleTargetClass)i.next();
-		assertFalse(c instanceof CompositeDecorator);
+		assertFalse((c).getColor().equals("yellow"));
 
 		c = (GraphVizStyleTargetClass)i.next();
-		assertFalse(c instanceof CompositeDecorator);
+		assertFalse((c).getColor().equals("yellow"));
 	}
 
 	@Test
@@ -218,11 +218,11 @@ public class CompositeTest {
 
 		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("", c.getClassType());
-		assertFalse(c instanceof CompositeDecorator);
+		assertFalse((c).getColor().equals("yellow"));
 
 		c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("", c.getClassType());
-		assertFalse(c instanceof CompositeDecorator);
+		assertFalse((c).getColor().equals("yellow"));
 
 	}
 	
@@ -239,12 +239,11 @@ public class CompositeTest {
 
 		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("", c.getClassType());
-		assertFalse(c instanceof CompositeDecorator);
+		assertFalse((c).getColor().equals("yellow"));
 
 		c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("", c.getClassType());
-		assertFalse(c instanceof CompositeDecorator);
-
+		assertFalse((c).getColor().equals("yellow"));
 	}
 	
 	
