@@ -92,7 +92,7 @@ public class PatternConfig {
 			local = new GraphVizDefaultStyleDecorator(clazz);
 			model.decorateClass(local);
 		}
-		
+		local.setPattern(type);
 		HashMap<String, String> pattern = patternTypes.get(type);
 		for (String str : pattern.keySet()) {
 			local.addConfig(str, pattern.get(str));

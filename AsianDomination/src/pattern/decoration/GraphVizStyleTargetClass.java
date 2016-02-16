@@ -53,6 +53,10 @@ public abstract class GraphVizStyleTargetClass implements ITargetClass {
 	public void addConfig(String config, String setting) {
 		graphVizStyle.addConfig(config, setting);
 	}
+	
+	public void setPattern(PATTERN_TYPE pattern){
+		this.pattern = pattern;
+	}
 
 	@Override
 	public String getClassName() {
