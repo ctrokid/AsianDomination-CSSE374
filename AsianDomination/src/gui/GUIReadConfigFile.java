@@ -18,17 +18,16 @@ public class GUIReadConfigFile {
 //		GUIPopulateConfigFile.writeToFile();
 //	}
 
-	public void writeToFile() {
+	public void writeToFile(Map<String, String> propertiesDataMap) {
 		Properties prop = new Properties();
 		OutputStream output = null;
 
 		try {
 
 			output = new FileOutputStream("config.properties");
-
 			// set the properties value
 			for(String k: properties.keySet()){
-				prop.setProperty(k, "test");
+				prop.setProperty(k, propertiesDataMap.get(k));
 			}
 			// save properties to project root folder
 			prop.store(output, null);
