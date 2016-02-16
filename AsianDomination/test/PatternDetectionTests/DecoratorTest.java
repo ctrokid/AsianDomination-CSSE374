@@ -15,7 +15,7 @@ import api.IProjectModel;
 import api.ITargetClass;
 import fake.FakeUMLAddStrategy;
 import framework.IPhase;
-import pattern.decoration.DecoratorTargetClass;
+import pattern.decoration.GraphVizStyleTargetClass;
 import pattern.detection.DecoratorPatternDetector;
 
 public class DecoratorTest {
@@ -40,16 +40,14 @@ public class DecoratorTest {
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
 		// Example for checking
-		ITargetClass dec = i.next();
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		assertTrue((c).getColor().equals("green"));
 
-		assertTrue(dec instanceof DecoratorTargetClass);
+		c = (GraphVizStyleTargetClass)i.next();
+		assertTrue((c).getColor().equals("green"));
 
-		ITargetClass Adapter = i.next();
-		assertTrue(Adapter instanceof DecoratorTargetClass);
-
-		ITargetClass ITarget = i.next();
-		assertTrue(ITarget instanceof DecoratorTargetClass);
-
+		c = (GraphVizStyleTargetClass)i.next();
+		assertTrue((c).getColor().equals("green"));
 	}
 
 	@Test
@@ -63,15 +61,14 @@ public class DecoratorTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		ITargetClass dec = i.next();
-		assertFalse(dec instanceof DecoratorTargetClass);
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		assertFalse((c).getColor().equals("green"));
 		
-		dec = i.next();
-		assertFalse(dec instanceof DecoratorTargetClass);
+		c = (GraphVizStyleTargetClass)i.next();
+		assertFalse((c).getColor().equals("green"));
 		
-		dec = i.next();
-		assertFalse(dec instanceof DecoratorTargetClass);
-
+		c = (GraphVizStyleTargetClass)i.next();
+		assertFalse((c).getColor().equals("green"));
 	}
 
 	@Test
@@ -87,15 +84,14 @@ public class DecoratorTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		ITargetClass dec = i.next();
-		assertFalse(dec instanceof DecoratorTargetClass);
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		assertFalse((c).getColor().equals("green"));
 		
-		dec = i.next();
-		assertFalse(dec instanceof DecoratorTargetClass);
+		c = (GraphVizStyleTargetClass)i.next();
+		assertFalse((c).getColor().equals("green"));
 		
-		dec = i.next();
-		assertFalse(dec instanceof DecoratorTargetClass);
-		
+		c = (GraphVizStyleTargetClass)i.next();
+		assertFalse((c).getColor().equals("green"));
 	}
 
 	@Test
@@ -108,11 +104,11 @@ public class DecoratorTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		ITargetClass dec = i.next();
-		assertFalse(dec instanceof DecoratorTargetClass);
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		assertFalse((c).getColor().equals("green"));
 		
-		dec = i.next();
-		assertFalse(dec instanceof DecoratorTargetClass);
+		c = (GraphVizStyleTargetClass)i.next();
+		assertFalse((c).getColor().equals("green"));
 	}
 	
 	@After

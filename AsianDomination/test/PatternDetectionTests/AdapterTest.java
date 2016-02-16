@@ -1,6 +1,6 @@
 package PatternDetectionTests;
 
-import pattern.decoration.AdapterDecorator;
+import pattern.decoration.GraphVizStyleTargetClass;
 import pattern.detection.AdapterPatternDetector;
 
 import static org.junit.Assert.*;
@@ -41,14 +41,13 @@ public class AdapterTest {
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
 		ITargetClass Adaptee = i.next();
-
-		assertTrue(Adaptee instanceof AdapterDecorator);
-
+		assertTrue(((GraphVizStyleTargetClass) Adaptee).getColor().equals("red"));
+		
 		ITargetClass Adapter = i.next();
-		assertTrue(Adapter instanceof AdapterDecorator);
+		assertTrue(((GraphVizStyleTargetClass) Adapter).getColor().equals("red"));
 
 		ITargetClass ITarget = i.next();
-		assertTrue(ITarget instanceof AdapterDecorator);
+		assertTrue(((GraphVizStyleTargetClass) ITarget).getColor().equals("red"));
 	}
 	
 	@Test
@@ -62,13 +61,13 @@ public class AdapterTest {
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
 		ITargetClass Adaptee = i.next();
-		assertFalse(Adaptee instanceof AdapterDecorator);
+		assertFalse(((GraphVizStyleTargetClass) Adaptee).getColor().equals("red"));
 
 		ITargetClass ITarget = i.next();
-		assertFalse(ITarget instanceof AdapterDecorator);
+		assertFalse(((GraphVizStyleTargetClass) ITarget).getColor().equals("red"));
 		
 		ITargetClass Adapter = i.next();
-		assertFalse(Adapter instanceof AdapterDecorator);
+		assertFalse(((GraphVizStyleTargetClass) Adapter).getColor().equals("red"));
 	}
 	
 //	@Test
@@ -99,13 +98,13 @@ public class AdapterTest {
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
 		ITargetClass Adaptee = i.next();
-		assertFalse(Adaptee instanceof AdapterDecorator);
+		assertFalse(((GraphVizStyleTargetClass) Adaptee).getColor().equals("red"));
 
 		ITargetClass ITarget = i.next();
-		assertFalse(ITarget instanceof AdapterDecorator);
+		assertFalse(((GraphVizStyleTargetClass) ITarget).getColor().equals("red"));
 		
 		ITargetClass Adapter = i.next();
-		assertFalse(Adapter instanceof AdapterDecorator);
+		assertFalse(((GraphVizStyleTargetClass) Adapter).getColor().equals("red"));
 	}
 	
 	@Test
@@ -120,13 +119,13 @@ public class AdapterTest {
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
 		ITargetClass Adaptee = i.next();
-		assertFalse(Adaptee instanceof AdapterDecorator);
+		assertFalse(((GraphVizStyleTargetClass) Adaptee).getColor().equals("red"));
 
 		ITargetClass ITarget = i.next();
-		assertFalse(ITarget instanceof AdapterDecorator);
+		assertFalse(((GraphVizStyleTargetClass) ITarget).getColor().equals("red"));
 		
 		ITargetClass Adapter = i.next();
-		assertFalse(Adapter instanceof AdapterDecorator);
+		assertFalse(((GraphVizStyleTargetClass) Adapter).getColor().equals("red"));
 	}
 	
 	@Test
@@ -142,13 +141,13 @@ public class AdapterTest {
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
 		ITargetClass Adaptee = i.next();
-		assertTrue(Adaptee instanceof AdapterDecorator);
+		assertTrue(((GraphVizStyleTargetClass) Adaptee).getColor().equals("red"));
 
 		ITargetClass ITarget = i.next();
-		assertTrue(ITarget instanceof AdapterDecorator);
+		assertTrue(((GraphVizStyleTargetClass) ITarget).getColor().equals("red"));
 		
 		ITargetClass Adapter = i.next();
-		assertTrue(Adapter instanceof AdapterDecorator);
+		assertTrue(((GraphVizStyleTargetClass) Adapter).getColor().equals("red"));
 	}
 
 	@After

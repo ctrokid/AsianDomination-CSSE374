@@ -11,20 +11,12 @@ import java.util.Properties;
 
 public class GUIReadConfigFile {
 	private Map<String, String> properties = new HashMap<>();
-	
-//	public static void main(String[] args) {
-//		GUIReadConfigFile GUIPopulateConfigFile = new GUIReadConfigFile();
-//		GUIPopulateConfigFile.printThemAll();
-//		GUIPopulateConfigFile.writeToFile();
-//	}
-
+	private Properties prop;
 	public void writeToFile(Map<String, String> propertiesDataMap) {
-		Properties prop = new Properties();
 		OutputStream output = null;
 
 		try {
-
-			output = new FileOutputStream("config.properties");
+			output = new FileOutputStream("resources/config.properties");
 			// set the properties value
 			for(String k: properties.keySet()){
 				prop.setProperty(k, propertiesDataMap.get(k));
@@ -51,7 +43,7 @@ public class GUIReadConfigFile {
 	}
 	public void readFromFile() {
 
-		Properties prop = new Properties();
+		prop = new Properties();
 		InputStream input = null;
 		try {
 
