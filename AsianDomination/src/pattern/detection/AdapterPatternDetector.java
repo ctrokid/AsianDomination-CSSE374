@@ -15,7 +15,7 @@ import pattern.decoration.AdapterDecorator;
 import utils.DotClassUtils.RelationshipType;
 
 public class AdapterPatternDetector extends AbstractPatternDetectionStrategy {
-	private int METHOD_DELEGATION_THRESHOLD = 2;
+	private double METHOD_DELEGATION_PERCENTAGE_THRESHOLD;
 	
 	public AdapterPatternDetector(Properties props) {
 		super(props);
@@ -26,8 +26,12 @@ public class AdapterPatternDetector extends AbstractPatternDetectionStrategy {
 		String md = props.getProperty("adapter-method-delegation");
 		if (md != null) {
 			try {
-				METHOD_DELEGATION_THRESHOLD = Integer.parseInt(md);
-			} catch (NumberFormatException e) {}
+				METHOD_DELEGATION_PERCENTAGE_THRESHOLD = Double.parseDouble(md);
+			} catch (NumberFormatException e) {
+				METHOD_DELEGATION_PERCENTAGE_THRESHOLD = 0.80;
+			}
+		} else {
+			METHOD_DELEGATION_PERCENTAGE_THRESHOLD = 0.80;
 		}
 	}
 
@@ -80,25 +84,32 @@ public class AdapterPatternDetector extends AbstractPatternDetectionStrategy {
 	}
 
 	private boolean isValidMethodCall(Collection<IClassMethod> methods, String adaptee) {
+		int methodAmount = methods.size();
+		int methodDelegations = 0;
+		
 		for (IClassMethod m : methods) {
 			// don't check constructor
-			if (m.getMethodName().contains("<"))
+			if (m.getMethodName().contains("<")) {
+				// remove this method from the total amount
+				methodAmount--;
 				continue;
+			}
 			
 			// check each statement
 			Collection<IMethodStatement> statms = m.getMethodStatements();
-			boolean isValid = false;
 			for (IMethodStatement statm : statms) {
 				if (statm.getClassToCall().equals(adaptee)) {
-					isValid = true;
+					methodDelegations++;
 					break;
 				}
 			}
-			if (!isValid) {
-				return false;
-			}
 		}
-		return true;
+		
+		if (((double) methodDelegations / methodAmount) >= METHOD_DELEGATION_PERCENTAGE_THRESHOLD) {
+			return true;
+		}
+		
+		return false;
 	}
 
 }

@@ -66,4 +66,45 @@ public class SingletonDetectionTest {
 		//Calendar
 		assertFalse(i.next() instanceof SingletonDecorator);
 	}
+	
+	@Test
+	public void testSingletonWithoutRequireGetInstance() {
+		String[] classes = new String[] { "examples/singleton/SingletonExampleWithoutGetInstance" };
+
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new SingletonPatternDetector(props));
+		
+		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
+		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
+		
+		assertTrue(i.next() instanceof SingletonDecorator);
+	}
+	
+	@Test
+	public void testConfiguredSingletonWithoutRequireGetInstance() {
+		String[] classes = new String[] { "examples/singleton/SingletonExampleWithoutGetInstance" };
+		props.setProperty("singleton-require-getInstance", "true");
+		
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new SingletonPatternDetector(props));
+		
+		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
+		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
+		
+		assertFalse(i.next() instanceof SingletonDecorator);
+	}
+	
+	@Test
+	public void testConfiguredSingletonWithRequireGetInstance() {
+		String[] classes = new String[] { "examples/singleton/SingletonExample" };
+		props.setProperty("singleton-require-getInstance", "true");
+		
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new SingletonPatternDetector(props));
+		
+		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
+		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
+		
+		assertTrue(i.next() instanceof SingletonDecorator);
+	}
 }

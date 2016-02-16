@@ -16,7 +16,7 @@ import utils.DotClassUtils.RelationshipType;
 
 public class DecoratorPatternDetector extends AbstractPatternDetectionStrategy {
 	private IProjectModel _model = null;
-	private int METHOD_DELEGATION_THRESHOLD = 1;
+//	private double METHOD_DELEGATION_PERCENTAGE_THRESHOLD = 1;
 	
 	public DecoratorPatternDetector(Properties props) {
 		super(props);
@@ -24,13 +24,16 @@ public class DecoratorPatternDetector extends AbstractPatternDetectionStrategy {
 
 	@Override
 	protected void loadConfig(Properties props) {
-		String md = props.getProperty("decorator-method-delegation");
-		
-		if (md != null) {
-			try {
-				METHOD_DELEGATION_THRESHOLD = Integer.parseInt(md);
-			} catch (NumberFormatException e) {}
-		}
+//		String md = props.getProperty("decorator-method-delegation");
+//		if (md != null) {
+//			try {
+//				METHOD_DELEGATION_PERCENTAGE_THRESHOLD = Double.parseDouble(md);
+//			} catch (NumberFormatException e) {
+//				METHOD_DELEGATION_PERCENTAGE_THRESHOLD = 0.80;
+//			}
+//		} else {
+//			METHOD_DELEGATION_PERCENTAGE_THRESHOLD = 0.80;
+//		}
 	}
 	
 	@Override
@@ -73,7 +76,7 @@ public class DecoratorPatternDetector extends AbstractPatternDetectionStrategy {
 	}
 
 	private boolean decorateClassIfDecorator(IClassField field, ITargetClass clazz) {
-		if (field.getType().equals("java/lang/Object") | clazz == null || clazz.getClassName().equals("java/lang/Object"))
+		if (field.getType().equals("java/lang/Object") || clazz == null || clazz.getClassName().equals("java/lang/Object"))
 			return false;
 
 		// check super type

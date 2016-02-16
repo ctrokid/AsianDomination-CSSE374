@@ -107,6 +107,49 @@ public class AdapterTest {
 		ITargetClass Adapter = i.next();
 		assertFalse(Adapter instanceof AdapterDecorator);
 	}
+	
+	@Test
+	public void adapterTestFailMethodDelegationAdapter() {
+		// this test runs with 80% delegation to pass
+		String[] classes = new String[] { "examples/adapter/Adaptee", "examples/adapter/IDelegationTarget", "examples/adapter/DelegationAdapter"};
+
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new AdapterPatternDetector(props));
+		
+		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
+		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
+
+		ITargetClass Adaptee = i.next();
+		assertFalse(Adaptee instanceof AdapterDecorator);
+
+		ITargetClass ITarget = i.next();
+		assertFalse(ITarget instanceof AdapterDecorator);
+		
+		ITargetClass Adapter = i.next();
+		assertFalse(Adapter instanceof AdapterDecorator);
+	}
+	
+	@Test
+	public void adapterTestSuccessfulMethodDelegationAdapter() {
+		// this test runs with 75% delegation to pass
+		props.setProperty("adapter-method-delegation", "0.75");
+		String[] classes = new String[] { "examples/adapter/Adaptee", "examples/adapter/IDelegationTarget", "examples/adapter/DelegationAdapter"};
+
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new AdapterPatternDetector(props));
+		
+		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
+		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
+
+		ITargetClass Adaptee = i.next();
+		assertTrue(Adaptee instanceof AdapterDecorator);
+
+		ITargetClass ITarget = i.next();
+		assertTrue(ITarget instanceof AdapterDecorator);
+		
+		ITargetClass Adapter = i.next();
+		assertTrue(Adapter instanceof AdapterDecorator);
+	}
 
 	@After
 	public void tearDown() {
