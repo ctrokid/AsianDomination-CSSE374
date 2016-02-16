@@ -3,13 +3,15 @@ package pattern.decoration;
 import java.util.HashMap;
 import java.util.Map;
 
+import api.IProjectModel;
+import api.ITargetClass;
 import pattern.detection.PATTERN_TYPE;
 
-public class PATTERN_CONFIG {
+public class PatternConfig {
 	private static Map<PATTERN_TYPE, HashMap<String, String>> patternTypes;
-	private static PATTERN_CONFIG uniqueInstance;
+	private static PatternConfig uniqueInstance;
 
-	private PATTERN_CONFIG() {
+	private PatternConfig() {
 		patternTypes = new HashMap<PATTERN_TYPE, HashMap<String, String>>();
 
 		HashMap<String, String> map = new HashMap<>();
@@ -73,17 +75,27 @@ public class PATTERN_CONFIG {
 		patternTypes.put(PATTERN_TYPE.SINGLETON, map);
 	}
 
-	public static synchronized PATTERN_CONFIG getInstance() {
+	public static synchronized PatternConfig getInstance() {
 		if (uniqueInstance == null) {
-			uniqueInstance = new PATTERN_CONFIG();
+			uniqueInstance = new PatternConfig();
 		}
 		return uniqueInstance;
 	}
 
-	public void setConfig(PATTERN_TYPE type, GraphVizStyleTargetClass clazz) {
+	public void decorate(PATTERN_TYPE type, ITargetClass clazz, IProjectModel model) {
+		GraphVizStyleTargetClass local;
+		
+		if(GraphVizStyleTargetClass.class.isAssignableFrom(clazz.getClass())){
+			local = (GraphVizStyleTargetClass)clazz;
+		} else {
+			System.out.println(clazz.getClassName());
+			local = new GraphVizDefaultSytleDecorator(clazz);
+			model.decorateClass(local);
+		}
+		
 		HashMap<String, String> pattern = patternTypes.get(type);
 		for (String str : pattern.keySet()) {
-			clazz.addConfig(str, pattern.get(str));
+			local.addConfig(str, pattern.get(str));
 		}
 	}
 }
