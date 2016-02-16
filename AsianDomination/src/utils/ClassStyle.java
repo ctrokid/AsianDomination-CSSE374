@@ -40,7 +40,6 @@ public class ClassStyle {
 	public String getClassTypeWithCarrots() {
 		if (styles.get("type").equals(""))
 			return "";
-		
 		return " \\n\\<\\<" + styles.get("type") + "\\>\\>";
 	}
 
