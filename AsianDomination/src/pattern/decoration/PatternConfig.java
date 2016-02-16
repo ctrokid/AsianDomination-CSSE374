@@ -88,7 +88,6 @@ public class PatternConfig {
 		if(GraphVizStyleTargetClass.class.isAssignableFrom(clazz.getClass())){
 			local = (GraphVizStyleTargetClass)clazz;
 		} else {
-			System.out.println(clazz.getClassName());
 			local = new GraphVizDefaultStyleDecorator(clazz);
 			model.decorateClass(local);
 		}
