@@ -7,6 +7,11 @@ import java.util.List;
 public class PackageInspector {
 	
 	private static ArrayList<String> toArrayHelper(String sourceDir, File dir, String[] validPackages) {
+		boolean checkPackages = true;
+		if (validPackages[0].equals("")) {
+			checkPackages = false;
+		}
+
 		ArrayList<String> classList = new ArrayList<String>();
 		for (String name : dir.list()) {
 			if (isJavaClass(name)) {
@@ -15,7 +20,9 @@ public class PackageInspector {
 				int index = dir.getPath().lastIndexOf(sourceDir)+sourceDir.length();
 				String className = dir.getPath().substring(index).replace("\\", "/").substring(1)+"/"+name.replaceAll(".java", "");
 				
-				if(isValidPackageName(className, validPackages)){
+				if (!checkPackages) {
+					classList.add(className);
+				} else if(isValidPackageName(className, validPackages)) {
 					classList.add(className);
 				}
 				
@@ -29,8 +36,17 @@ public class PackageInspector {
 		
 		return classList;
 	}
+	
 	public static List<String> getClasses(String sourceDir, String[] packageNames){
-		ArrayList<String> classList = toArrayHelper(sourceDir, new File(sourceDir), packageNames);
+		File f = null;
+		try {
+			f = new File(sourceDir);
+		} catch(Exception e) {
+			System.err.println("Cannot load src directory from: " + sourceDir);
+			return new ArrayList<String>();
+		}
+
+		ArrayList<String> classList = toArrayHelper(sourceDir, f, packageNames);
 		return classList;
 	}
 	
