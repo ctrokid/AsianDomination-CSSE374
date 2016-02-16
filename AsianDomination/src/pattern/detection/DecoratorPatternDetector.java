@@ -90,9 +90,7 @@ public class DecoratorPatternDetector extends AbstractPatternDetectionStrategy {
 
 		// recurse on super type
 		if (decorateClassIfDecorator(field, _model.getTargetClassByName(superType))) {
-			clazz = new DecoratorTargetClass(PATTERN_TYPE.DECORATOR_CONCRETE, superType, clazz);
-			_model.decorateClass(clazz);
-
+			pc.decorate(PATTERN_TYPE.DECORATOR_COMPONENT, clazz, _model);
 			return true;
 		}
 
@@ -106,8 +104,7 @@ public class DecoratorPatternDetector extends AbstractPatternDetectionStrategy {
 
 			// recurse on interface
 			if (decorateClassIfDecorator(field, _model.getTargetClassByName(iface))) {
-				clazz = new DecoratorTargetClass(PATTERN_TYPE.DECORATOR_CONCRETE, iface, clazz);
-				_model.decorateClass(clazz);
+				pc.decorate(PATTERN_TYPE.DECORATOR_CONCRETE, clazz, _model);
 
 				return true;
 			}
@@ -129,8 +126,7 @@ public class DecoratorPatternDetector extends AbstractPatternDetectionStrategy {
 		}
 		
 		superClazz = _model.getTargetClassByName(superType);
-		superClazz = new DecoratorTargetClass(PATTERN_TYPE.DECORATOR_COMPONENT, "", superClazz);
-		_model.decorateClass(superClazz);
+		pc.decorate(PATTERN_TYPE.DECORATOR_COMPONENT, superClazz, _model);
 		
 		tagConcreteDecorators(clazz.getClassName());
 	}
@@ -139,8 +135,7 @@ public class DecoratorPatternDetector extends AbstractPatternDetectionStrategy {
 		for (ITargetClass c : _model.getTargetClasses()) {
 			// found concrete decorator
 			if (_model.getRelationshipManager().getClassRelationship(c.getClassName(), RelationshipType.INHERITANCE, superType) != null) {
-				c = new DecoratorTargetClass(PATTERN_TYPE.DECORATOR_CONCRETE, superType, c);
-				_model.decorateClass(c);
+				pc.decorate(PATTERN_TYPE.DECORATOR_CONCRETE, c, _model);
 			}
 		}
 	}
