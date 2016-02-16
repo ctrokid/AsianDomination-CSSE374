@@ -10,7 +10,7 @@ import api.IClassMethod;
 import api.IProjectModel;
 import api.ITargetClass;
 import pattern.decoration.GraphVizStyleTargetClass;
-import pattern.decoration.SingletonDecorator;
+import pattern.decoration.PatternConfig;
 import visitor.ITraverser;
 import visitor.IVisitor;
 import visitor.VisitType;
@@ -46,11 +46,8 @@ public class SingletonDetectionVisitor extends AbstractDetectionVisitor {
 		_visitor.addVisit(VisitType.Visit, ITargetClass.class, (ITraverser t) -> {
 			GraphVizStyleTargetClass c = (GraphVizStyleTargetClass) t;
 			if (isSingleton(c)) {
-				c = new SingletonDecorator(PATTERN_TYPE.SINGLETON, "", c);
-//				c.setPatternString("", \\n\\<\\<Singleton\\>\\>");
-				c.addConfig("type", "Singleton");
-				
-				this._projectModel.decorateClass(c);
+				PatternConfig pc = PatternConfig.getInstance();
+				pc.decorate(PATTERN_TYPE.SINGLETON, c, _projectModel);
 			}
 		});
 	}

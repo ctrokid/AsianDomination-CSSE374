@@ -12,21 +12,20 @@ import api.IClassMethod;
 import api.IProjectModel;
 import api.IRelationshipManager;
 import api.ITargetClass;
-import pattern.decoration.CompositeDecorator;
 import utils.AsmClassUtils;
 
 public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 	private boolean requireAddRemoveOneParameter = false;
 	private IProjectModel model = null;
-	
+
 	public CompositePatternDetector(Properties props) {
 		super(props);
 	}
-	
+
 	@Override
 	protected void loadConfig(Properties props) {
 		String bool = props.getProperty("composite-require-addAndRemoveMethodsOneParameter");
-		
+
 		if (bool != null && bool.toLowerCase().equals("true")) {
 			requireAddRemoveOneParameter = true;
 		}
@@ -38,11 +37,11 @@ public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 		IRelationshipManager manager = model.getRelationshipManager();
 
 		for (ITargetClass clazz : model.getTargetClasses()) {
-				detectComposite(clazz, manager );
+			detectComposite(clazz, manager);
 		}
 	}
-	
-	private void detectComposite(ITargetClass clazz, IRelationshipManager manager){
+
+	private void detectComposite(ITargetClass clazz, IRelationshipManager manager) {
 		Set<String> superTypes = manager.getClassSuperTypes(clazz.getClassName(), model);
 		Set<String> matchingTypes = getComposedSuperTypes(superTypes, clazz.getFields());
 
@@ -64,58 +63,54 @@ public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 			List<ITargetClass> leaves = checkSuperClassesForLeaves(clazz.getClassName(), matchingTypes);
 			List<String> mySubClasses = manager.getClassSubClasses(clazz.getClassName());
 			mySubClasses.add(clazz.getClassName());
-			
+
 			for (ITargetClass leaf : leaves) {
 				if (mySubClasses.contains(leaf.getClassName()))
 					continue;
-				
+
 				tagLeafClass(leaf);
 			}
-							
-				tagCompositeClass(clazz);
 
-				for(String supertype: superTypes) {
-					detectCompositeHelper(supertype, manager);
-				}
-				for (ITargetClass component : potentialComponents) {
-					tagComponentClass(component);
-				}
-			
+			tagCompositeClass(clazz);
+
+			for (String supertype : superTypes) {
+				detectCompositeHelper(supertype, manager);
+			}
+			for (ITargetClass component : potentialComponents) {
+				tagComponentClass(component);
+			}
+
 		}
 	}
-	
-	private void detectCompositeHelper(String clazz, IRelationshipManager manager){
+
+	private void detectCompositeHelper(String clazz, IRelationshipManager manager) {
 		ITargetClass c = model.forcefullyGetClassByName(clazz);
 		detectComposite(c, manager);
 	}
 
 	private void tagLeafClass(ITargetClass leaf) {
-		leaf = new CompositeDecorator(PATTERN_TYPE.COMPOSITE_LEAF, "", leaf);
-		model.decorateClass(leaf);
+		pc.decorate(PATTERN_TYPE.COMPOSITE_LEAF, leaf, model);
 	}
 
 	private void tagCompositeClass(ITargetClass composite) {
-		composite = new CompositeDecorator(PATTERN_TYPE.COMPOSITE_COMPOSITE, "", composite);
-		model.decorateClass(composite);
-		
+		pc.decorate(PATTERN_TYPE.COMPOSITE_COMPOSITE, composite, model);
+
 		List<String> subClasses = model.getRelationshipManager().getClassSubClasses(composite.getClassName());
 		for (String clazz : subClasses) {
 			ITargetClass subClass = model.forcefullyGetClassByName(clazz);
-			subClass = new CompositeDecorator(PATTERN_TYPE.COMPOSITE_COMPOSITE, "", subClass);
-			
-			model.decorateClass(subClass);
+			pc.decorate(PATTERN_TYPE.COMPOSITE_COMPOSITE, subClass, model);
 		}
 	}
 
 	private void tagComponentClass(ITargetClass component) {
-		component = new CompositeDecorator(PATTERN_TYPE.COMPOSITE_COMPONENT, "", component);
-		model.decorateClass(component);
+		pc.decorate(PATTERN_TYPE.COMPOSITE_COMPONENT, component, model);
 	}
 
 	private Set<String> getComposedSuperTypes(Set<String> superTypes, Collection<IClassField> fields) {
 		Set<String> matchingTypes = new HashSet<String>();
-		
-		if (superTypes.size() < 1 || (superTypes.size() == 1 && superTypes.iterator().next().equals("java/lang/Object")))
+
+		if (superTypes.size() < 1
+				|| (superTypes.size() == 1 && superTypes.iterator().next().equals("java/lang/Object")))
 			return matchingTypes;
 
 		for (IClassField field : fields) {
@@ -132,7 +127,7 @@ public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 				}
 			}
 		}
-		
+
 		// Get the fields for each the super types
 		for (String superType : superTypes) {
 			ITargetClass clazz = model.forcefullyGetClassByName(superType);
@@ -159,18 +154,18 @@ public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 
 		return addMethod && removeMethod;
 	}
-	
+
 	private boolean addOrRemoveContainHierarchyParameter(IClassMethod method, Set<String> superTypes) {
 		boolean isValid = false;
 		String[] params = AsmClassUtils.GetArguments(method.getSignature(), false).split(",");
-		
+
 		if (superTypes.contains(params[0])) {
 			if (!requireAddRemoveOneParameter) {
 				isValid = true;
 			} else if (params.length == 1)
 				isValid = true;
 		}
-		
+
 		return isValid;
 	}
 
