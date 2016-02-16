@@ -9,7 +9,6 @@ import api.IClassField;
 import api.IClassMethod;
 import api.IProjectModel;
 import api.ITargetClass;
-import pattern.decoration.PatternConfig;
 
 public class SingletonPatternDetector extends AbstractPatternDetectionStrategy {	
 	private boolean REQUIRE_GET_INSTANCE;

@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import api.IProjectModel;
 import framework.AbstractPhase;
-import pattern.decoration.PatternConfig;
+import utils.PatternConfig;
 
 public abstract class AbstractPatternDetectionStrategy extends AbstractPhase {
 	protected PatternConfig pc;

@@ -1,33 +1,45 @@
 package impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import api.IRelationship;
 import utils.DotClassUtils.RelationshipType;
 
-public class Relationship implements IRelationship{
-	private String _superClass;
+public class Relationship implements IRelationship {
 	private RelationshipType _relationshipType;
-	private String _decoratedType;
+	private String _superClass;
+	private Map<String, String> description;
 
 	public Relationship(String superClass, RelationshipType type) {
-		this._superClass = superClass;
 		this._relationshipType = type;
-		_decoratedType = "";
+		this._superClass = superClass;
+		this.description = new HashMap<>();
 	}
 
+	@Override
 	public String getDependentClass() {
-		return this._superClass;
+		return _superClass;
 	}
 
+	@Override
 	public RelationshipType getRelationshipType() {
 		return this._relationshipType;
 	}
 
-	public String getDecoratedType() {
-		return this._decoratedType;
+	@Override
+	public void addDescription(String type, String description) {
+		this.description.put(type, description);
 	}
 
-	public void setDecoratedType(String type) {
-		this._decoratedType = type;
+	@Override
+	public String getDecoration() {
+		StringBuilder str = new StringBuilder();
+		for (String key : description.keySet()) {
+			str.append(key + " = " + description.get(key) + " ,");
+		}
+		return str.toString();
+
 	}
 
 }

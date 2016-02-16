@@ -8,7 +8,7 @@ public interface IRelationship {
 
 	public RelationshipType getRelationshipType();
 
-	public String getDecoratedType();
+	public String getDecoration();
 
-	public void setDecoratedType(String type);
+	public void addDescription(String type, String setting);
 }

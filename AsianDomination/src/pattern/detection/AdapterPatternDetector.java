@@ -11,9 +11,6 @@ import api.IMethodStatement;
 import api.IProjectModel;
 import api.ITargetClass;
 import impl.Relationship;
-import pattern.decoration.AdapterDecorator;
-import pattern.decoration.GraphVizStyleTargetClass;
-import pattern.decoration.PatternConfig;
 import utils.DotClassUtils.RelationshipType;
 
 public class AdapterPatternDetector extends AbstractPatternDetectionStrategy {
@@ -79,7 +76,7 @@ public class AdapterPatternDetector extends AbstractPatternDetectionStrategy {
 
 		Relationship adaptorRelation = model.getRelationshipManager().getClassRelationship(clazz.getClassName(),
 				RelationshipType.ASSOCIATION, adapteeClass.getClassName());
-		adaptorRelation.setDecoratedType("\\<\\<adapts\\>\\>");
+		adaptorRelation.addDescription("label", "\"\\<\\<adapts\\>\\>\"");
 
 		return;
 	}

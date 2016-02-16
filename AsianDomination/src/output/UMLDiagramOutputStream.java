@@ -20,7 +20,7 @@ import visitor.VisitType;
 
 public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 	private Set<String> _relationships;
-	
+
 	public UMLDiagramOutputStream(Properties props, IVisitor visitor) {
 		super(props, visitor);
 		initialize();
@@ -30,7 +30,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 		super(props);
 		initialize();
 	}
-	
+
 	private void initialize() {
 		this.setupVisitTargetClass();
 		this.setupPostVisitTargetClass();
@@ -43,11 +43,11 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 	protected void setupVisitTargetClass() {
 
 		_visitor.addVisit(VisitType.Visit, GraphVizStyleTargetClass.class, (ITraverser t) -> {
-			GraphVizStyleTargetClass c =  (GraphVizStyleTargetClass) t;
+			GraphVizStyleTargetClass c = (GraphVizStyleTargetClass) t;
 			StringBuilder sb = new StringBuilder();
 			String className = AsmClassUtils.GetStringStrippedByCharacter(c.getClassName(), '/');
 			sb.append(className + "[\n\t");
-			sb.append(c.getStyle()+"label = \"{" + className + c.getClassTypeWithCarrots() + "|");
+			sb.append(c.getStyle() + "label = \"{" + className + c.getClassTypeWithCarrots() + "|");
 			write(sb.toString());
 		});
 	}
@@ -56,30 +56,31 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 		_visitor.addVisit(VisitType.PostVisit, ITargetClass.class, (ITraverser t) -> {
 			write("}\"\n]\n\n");
 			ITargetClass c = (ITargetClass) t;
-			
+
 			IRelationshipManager manager = _projectModel.getRelationshipManager();
-			
+
 			for (Relationship r : manager.getClassRelationships(c.getClassName())) {
 				if (_projectModel.getTargetClassByName(r.getDependentClass()) == null)
 					continue;
-				
+
 				String thisClass = AsmClassUtils.GetStringStrippedByCharacter(c.getClassName(), '/');
 				String subjectClass = AsmClassUtils.GetStringStrippedByCharacter(r.getDependentClass(), '/');
-				
-				String relationship = thisClass + " -> " + subjectClass + "[" + DotClassUtils.CreateRelationshipEdge(r.getRelationshipType());
-				
-				if (!r.getDecoratedType().equals(""))
-					relationship += ", label = \"" + r.getDecoratedType() + "\"";
-				
+
+				String relationship = thisClass + " -> " + subjectClass + "["
+						+ DotClassUtils.CreateRelationshipEdge(r.getRelationshipType());
+
+				relationship += "," + r.getDecoration();
+
 				relationship += "];\n";
-				
+
 				if (_relationships.contains(relationship))
 					return;
-				
+
 				if (r.getRelationshipType().equals(RelationshipType.USES)) {
-					if (manager.getClassRelationship(c.getClassName(), RelationshipType.ASSOCIATION, r.getDependentClass()) == null) {
+					if (manager.getClassRelationship(c.getClassName(), RelationshipType.ASSOCIATION,
+							r.getDependentClass()) == null) {
 						_relationships.add(relationship);
-					}						
+					}
 				} else {
 					_relationships.add(relationship);
 				}
@@ -91,7 +92,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 		_visitor.addVisit(VisitType.Visit, IClassField.class, (ITraverser t) -> {
 			IClassField c = (IClassField) t;
 			StringBuilder sb = new StringBuilder();
-			
+
 			String acessLevel = AsmClassUtils.GetAccessLevel(c.getAccessLevel());
 			sb.append(acessLevel + " " + c.getFieldName() + " : ");
 			sb.append(AsmClassUtils.GetStringStrippedByCharacter(c.getType(), '/'));
@@ -135,12 +136,12 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 
 		for (ITargetClass clazz : _projectModel.getTargetClasses()) {
 			// TODO: if class is in GUI selected class list?
-//			if (list.size() != 0) {
-//				if (list.contains(clazz.getClassName()))
-//					clazz.accept(_visitor);
-//			} else
-			
-				((GraphVizStyleTargetClass)clazz).accept(_visitor);
+			// if (list.size() != 0) {
+			// if (list.contains(clazz.getClassName()))
+			// clazz.accept(_visitor);
+			// } else
+
+			((GraphVizStyleTargetClass) clazz).accept(_visitor);
 		}
 
 		for (String relationship : _relationships) {
