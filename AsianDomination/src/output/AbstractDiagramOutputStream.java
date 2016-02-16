@@ -37,14 +37,7 @@ public abstract class AbstractDiagramOutputStream extends AbstractPhase {
 	
 	@Override
 	protected void loadConfig(Properties props) {
-		// instantiate output stream
-		try {
-			_asmOutputPath = props.getProperty("output-dir");
-			if (_asmOutputPath != null)
-				_outputStream = new FileOutputStream(_asmOutputPath);
-		} catch (FileNotFoundException e) {
-			// TODO: don't swallow for now
-		}
+		_asmOutputPath = props.getProperty("output-dir");
 		
 		// instantiate the diagram generator with dotPath
 		String DEFAULT_DOT_PATH = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
@@ -58,6 +51,15 @@ public abstract class AbstractDiagramOutputStream extends AbstractPhase {
 	
 	@Override
 	public void execute(IProjectModel model) {
+		// instantiate outputStream each time we write execute this phase
+		// this is so subset diagrams get newly generated
+		try {
+			_outputStream = new FileOutputStream(_asmOutputPath, false);
+		} catch (FileNotFoundException e) {
+			System.err.println("Cannot write diagram. Output path: " + _asmOutputPath + " not found.");
+			return;
+		}
+		
 		setProjectModel(model);
 		writeOutput();
 		generateDiagram();

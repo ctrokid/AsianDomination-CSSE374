@@ -1,6 +1,8 @@
 package output;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -20,6 +22,7 @@ import visitor.VisitType;
 
 public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 	private Set<String> _relationships;
+	private List<String> _classFilterList;
 	
 	public UMLDiagramOutputStream(Properties props, IVisitor visitor) {
 		super(props, visitor);
@@ -38,6 +41,11 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 		this.setupPostVisitClassField();
 		this.setupVisitIClassMethod();
 		_relationships = new HashSet<String>();
+		_classFilterList = new ArrayList<String>();
+	}
+	
+	public void setClassFilter(List<String> classes) {
+		_classFilterList = classes;
 	}
 
 	protected void setupVisitTargetClass() {
@@ -61,6 +69,9 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 			
 			for (Relationship r : manager.getClassRelationships(c.getClassName())) {
 				if (_projectModel.getTargetClassByName(r.getDependentClass()) == null)
+					continue;
+				
+				if (_classFilterList.size() != 0 && !_classFilterList.contains(r.getDependentClass()))
 					continue;
 				
 				String thisClass = AsmClassUtils.GetStringStrippedByCharacter(c.getClassName(), '/');
@@ -129,17 +140,14 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 
 	@Override
 	protected void writeOutput() {
-		// TODO: clear relationships set?
 		_relationships = new HashSet<String>();
 		prepareFile();
 
 		for (ITargetClass clazz : _projectModel.getTargetClasses()) {
-			// TODO: if class is in GUI selected class list?
-//			if (list.size() != 0) {
-//				if (list.contains(clazz.getClassName()))
-//					clazz.accept(_visitor);
-//			} else
+			if (_classFilterList.size() == 0)
+				((GraphVizStyleTargetClass)clazz).accept(_visitor);
 			
+			else if (_classFilterList.contains(clazz.getClassName()))
 				((GraphVizStyleTargetClass)clazz).accept(_visitor);
 		}
 

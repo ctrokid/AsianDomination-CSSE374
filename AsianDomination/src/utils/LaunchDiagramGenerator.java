@@ -1,6 +1,8 @@
 package utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class LaunchDiagramGenerator {
 	public static enum DiagramFileExtension {
@@ -20,14 +22,7 @@ public class LaunchDiagramGenerator {
 		System.out.println("Running Dot Command: ");
 		System.out.println(cmd);
 		
-		int exitVal = -1;
-		try {
-			Process proc = Runtime.getRuntime().exec(cmd);
-			proc.waitFor();
-			exitVal = proc.exitValue();
-		} catch (InterruptedException | IOException e) {
-			e.printStackTrace();
-		}
+		int exitVal = executeAndGetReturnValue(cmd);
 		
 		if (exitVal == 0)
 			System.out.println("Dot diagram successfully generated.\n");
@@ -42,19 +37,27 @@ public class LaunchDiagramGenerator {
 		System.out.println("Running SDedit Command: ");
 		System.out.println(cmd);
 
-		int exitVal = -1;
-		try {
-			Process proc = Runtime.getRuntime().exec(cmd);
-			proc.waitFor();
-			exitVal = proc.exitValue();
-		} catch (InterruptedException | IOException e) {
-			e.printStackTrace();
-		}
+		int exitVal = executeAndGetReturnValue(cmd);
 		
 		if (exitVal == 0)
 			System.out.println("Sequence diagram successfully generated.\n");
 		else
 			System.out.println("Sequence diagram failure. Please check " + outputPath + " for the problem.\n");
+		
+		return exitVal;
+	}
+	
+	private int executeAndGetReturnValue(String cmd) {
+		int exitVal = -1;
+		
+		try {
+			Process proc = Runtime.getRuntime().exec(cmd);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+			while ((reader.readLine()) != null) {}
+			exitVal = proc.exitValue();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		return exitVal;
 	}
