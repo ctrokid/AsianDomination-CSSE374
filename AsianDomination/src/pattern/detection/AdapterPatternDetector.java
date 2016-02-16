@@ -11,8 +11,6 @@ import api.IMethodStatement;
 import api.IProjectModel;
 import api.ITargetClass;
 import impl.Relationship;
-import pattern.decoration.GraphVizStyleTargetClass;
-import pattern.decoration.PatternConfig;
 import utils.DotClassUtils.RelationshipType;
 
 public class AdapterPatternDetector extends AbstractPatternDetectionStrategy {

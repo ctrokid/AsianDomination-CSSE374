@@ -5,7 +5,7 @@ import java.util.Properties;
 import api.IProjectModel;
 import api.ITargetClass;
 import pattern.decoration.GraphVizStyleTargetClass;
-import pattern.decoration.GraphVizDefaultSytleDecorator;
+import pattern.decoration.GraphVizDefaultStyleDecorator;
 
 public class UMLAddStrategy extends AbstractAddStrategy {
 	
@@ -26,7 +26,7 @@ public class UMLAddStrategy extends AbstractAddStrategy {
 		for (String c : _params) {
 			model.addClass(c.trim());
 			ITargetClass t = model.getTargetClassByName(c.trim());
-			GraphVizStyleTargetClass graphViz = new GraphVizDefaultSytleDecorator(t);
+			GraphVizStyleTargetClass graphViz = new GraphVizDefaultStyleDecorator(t);
 			model.decorateClass(graphViz);
 		}
 	}

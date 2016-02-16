@@ -89,7 +89,7 @@ public class PatternConfig {
 			local = (GraphVizStyleTargetClass)clazz;
 		} else {
 			System.out.println(clazz.getClassName());
-			local = new GraphVizDefaultSytleDecorator(clazz);
+			local = new GraphVizDefaultStyleDecorator(clazz);
 			model.decorateClass(local);
 		}
 		
