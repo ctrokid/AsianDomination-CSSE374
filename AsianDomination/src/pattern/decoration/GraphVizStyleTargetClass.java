@@ -43,25 +43,16 @@ public abstract class GraphVizStyleTargetClass implements ITargetClass {
 		return graphVizStyle.getClassType();
 	}
 	
-//	public String getStyle(boolean parseCarrots) {
-//		if (!parseCarrots)
-//			return _patternString;
-//		else
-//			if (_patternString.equals(""))
-//				return "";
-//			String pattern = _patternString.substring(6, _patternString.length() - 4);
-//			return pattern;
-//	}
-	
 	public String getStyle(){
 		return graphVizStyle.toString();
 	}
 
-//	public void setPatternString(String pattern) {
-//		_patternString = pattern;s
-//	}
 	public void addConfig(String config, String setting) {
 		graphVizStyle.addConfig(config, setting);
+	}
+	
+	public void setPatternType(PATTERN_TYPE type){
+		this.pattern = type;
 	}
 
 	@Override

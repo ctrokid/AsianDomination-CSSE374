@@ -1,10 +1,12 @@
-package pattern.decoration;
+package utils;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import api.IProjectModel;
 import api.ITargetClass;
+import pattern.decoration.GraphVizDefaultSytleDecorator;
+import pattern.decoration.GraphVizStyleTargetClass;
 import pattern.detection.PATTERN_TYPE;
 
 public class PatternConfig {
@@ -88,11 +90,10 @@ public class PatternConfig {
 		if(GraphVizStyleTargetClass.class.isAssignableFrom(clazz.getClass())){
 			local = (GraphVizStyleTargetClass)clazz;
 		} else {
-			System.out.println(clazz.getClassName());
 			local = new GraphVizDefaultSytleDecorator(clazz);
 			model.decorateClass(local);
 		}
-		
+		local.setPatternType(type);
 		HashMap<String, String> pattern = patternTypes.get(type);
 		for (String str : pattern.keySet()) {
 			local.addConfig(str, pattern.get(str));
