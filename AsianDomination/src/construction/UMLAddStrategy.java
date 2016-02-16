@@ -3,6 +3,9 @@ package construction;
 import java.util.Properties;
 
 import api.IProjectModel;
+import api.ITargetClass;
+import pattern.decoration.GraphVizStyleTargetClass;
+import pattern.decoration.GraphVizDefaultStyleDecorator;
 
 public class UMLAddStrategy extends AbstractAddStrategy {
 	
@@ -22,6 +25,9 @@ public class UMLAddStrategy extends AbstractAddStrategy {
 	public void buildModel(IProjectModel model) {
 		for (String c : _params) {
 			model.addClass(c.trim());
+			ITargetClass t = model.getTargetClassByName(c.trim());
+			GraphVizStyleTargetClass graphViz = new GraphVizDefaultStyleDecorator(t);
+			model.decorateClass(graphViz);
 		}
 	}
 

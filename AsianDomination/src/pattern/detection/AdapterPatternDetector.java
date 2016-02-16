@@ -11,16 +11,15 @@ import api.IMethodStatement;
 import api.IProjectModel;
 import api.ITargetClass;
 import impl.Relationship;
-import pattern.decoration.AdapterDecorator;
 import utils.DotClassUtils.RelationshipType;
 
 public class AdapterPatternDetector extends AbstractPatternDetectionStrategy {
 	private double METHOD_DELEGATION_PERCENTAGE_THRESHOLD;
-	
+
 	public AdapterPatternDetector(Properties props) {
 		super(props);
 	}
-	
+
 	@Override
 	protected void loadConfig(Properties props) {
 		String md = props.getProperty("adapter-method-delegation");
@@ -54,7 +53,7 @@ public class AdapterPatternDetector extends AbstractPatternDetectionStrategy {
 		if (fields.size() != 1) {
 			return;
 		}
-		
+
 		IClassField f = fields.iterator().next();
 		String adaptee = f.getType();
 
@@ -66,27 +65,26 @@ public class AdapterPatternDetector extends AbstractPatternDetectionStrategy {
 
 		// grab the adapter, adaptee, and target
 		// TODO:FIXME This code is really ugly, maybe you can fix it later
-		clazz = new AdapterDecorator(PATTERN_TYPE.ADAPTER_ADAPTER, "", clazz);
-		
-		ITargetClass adapteeClass = model.forcefullyGetClassByName(adaptee);
-		
-		ITargetClass targ = model.forcefullyGetClassByName(target.get(0));
-		adapteeClass = new AdapterDecorator(PATTERN_TYPE.ADAPTER_ADAPTEE, "", adapteeClass);
-		targ = new AdapterDecorator(PATTERN_TYPE.ADAPTER_TARGET, "", targ);
+		pc.decorate(PATTERN_TYPE.ADAPTER_ADAPTER, clazz, model);
 
-		Relationship adaptorRelation = model.getRelationshipManager().getClassRelationship(clazz.getClassName(), RelationshipType.ASSOCIATION, adapteeClass.getClassName());
+		ITargetClass adapteeClass = model.forcefullyGetClassByName(adaptee);
+
+		ITargetClass targ = model.forcefullyGetClassByName(target.get(0));
+		
+		pc.decorate(PATTERN_TYPE.ADAPTER_ADAPTEE, adapteeClass, model);
+		pc.decorate(PATTERN_TYPE.ADAPTER_TARGET, targ, model);
+
+		Relationship adaptorRelation = model.getRelationshipManager().getClassRelationship(clazz.getClassName(),
+				RelationshipType.ASSOCIATION, adapteeClass.getClassName());
 		adaptorRelation.setDecoratedType("\\<\\<adapts\\>\\>");
 
-		model.decorateClass(clazz);
-		model.decorateClass(adapteeClass);
-		model.decorateClass(targ);
 		return;
 	}
 
 	private boolean isValidMethodCall(Collection<IClassMethod> methods, String adaptee) {
 		int methodAmount = methods.size();
 		int methodDelegations = 0;
-		
+
 		for (IClassMethod m : methods) {
 			// don't check constructor
 			if (m.getMethodName().contains("<")) {
@@ -94,7 +92,7 @@ public class AdapterPatternDetector extends AbstractPatternDetectionStrategy {
 				methodAmount--;
 				continue;
 			}
-			
+
 			// check each statement
 			Collection<IMethodStatement> statms = m.getMethodStatements();
 			for (IMethodStatement statm : statms) {
@@ -104,11 +102,11 @@ public class AdapterPatternDetector extends AbstractPatternDetectionStrategy {
 				}
 			}
 		}
-		
+
 		if (((double) methodDelegations / methodAmount) >= METHOD_DELEGATION_PERCENTAGE_THRESHOLD) {
 			return true;
 		}
-		
+
 		return false;
 	}
 

@@ -9,7 +9,6 @@ import api.IClassField;
 import api.IClassMethod;
 import api.IProjectModel;
 import api.ITargetClass;
-import pattern.decoration.SingletonDecorator;
 
 public class SingletonPatternDetector extends AbstractPatternDetectionStrategy {	
 	private boolean REQUIRE_GET_INSTANCE;
@@ -31,10 +30,12 @@ public class SingletonPatternDetector extends AbstractPatternDetectionStrategy {
 	protected void detectPatterns(IProjectModel model) {
 		for (ITargetClass clazz : model.getTargetClasses()) {
 			if (isSingleton(clazz)) {
-				clazz = new SingletonDecorator(PATTERN_TYPE.SINGLETON, "", clazz);
-				clazz.setPatternString("\\n\\<\\<Singleton\\>\\>");
+				pc.decorate(PATTERN_TYPE.SINGLETON, clazz, model);
+//				clazz = new SingletonDecorator(PATTERN_TYPE.SINGLETON, "", clazz);
+//				clazz.setPatternString("\\n\\<\\<Singleton\\>\\>");
+//				clazz.
 				
-				model.decorateClass(clazz);
+//				model.decorateClass(clazz);
 			}
 		}
 	}

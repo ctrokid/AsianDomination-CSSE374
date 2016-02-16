@@ -1,6 +1,8 @@
 package output;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -9,8 +11,8 @@ import api.IClassMethod;
 import api.IRelationshipManager;
 import api.ITargetClass;
 import impl.Relationship;
+import pattern.decoration.GraphVizStyleTargetClass;
 import utils.AsmClassUtils;
-import utils.ClassStyle;
 import utils.DotClassUtils;
 import utils.DotClassUtils.RelationshipType;
 import utils.LaunchDiagramGenerator.DiagramFileExtension;
@@ -20,6 +22,7 @@ import visitor.VisitType;
 
 public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 	private Set<String> _relationships;
+	private List<String> _classFilterList;
 	
 	public UMLDiagramOutputStream(Properties props, IVisitor visitor) {
 		super(props, visitor);
@@ -38,16 +41,21 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 		this.setupPostVisitClassField();
 		this.setupVisitIClassMethod();
 		_relationships = new HashSet<String>();
+		_classFilterList = new ArrayList<String>();
+	}
+	
+	public void setClassFilter(List<String> classes) {
+		_classFilterList = classes;
 	}
 
 	protected void setupVisitTargetClass() {
-		_visitor.addVisit(VisitType.Visit, ITargetClass.class, (ITraverser t) -> {
-			ITargetClass c = (ITargetClass) t;
+
+		_visitor.addVisit(VisitType.Visit, GraphVizStyleTargetClass.class, (ITraverser t) -> {
+			GraphVizStyleTargetClass c =  (GraphVizStyleTargetClass) t;
 			StringBuilder sb = new StringBuilder();
 			String className = AsmClassUtils.GetStringStrippedByCharacter(c.getClassName(), '/');
-			ClassStyle style = new ClassStyle();
 			sb.append(className + "[\n\t");
-			sb.append(style.getStyleByType(c.getPatternString(true)) +", label = \"{" + className + c.getPatternString(false) + "|");
+			sb.append(c.getStyle()+"label = \"{" + className + c.getClassTypeWithCarrots() + "|");
 			write(sb.toString());
 		});
 	}
@@ -61,6 +69,9 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 			
 			for (Relationship r : manager.getClassRelationships(c.getClassName())) {
 				if (_projectModel.getTargetClassByName(r.getDependentClass()) == null)
+					continue;
+				
+				if (_classFilterList.size() != 0 && !_classFilterList.contains(r.getDependentClass()))
 					continue;
 				
 				String thisClass = AsmClassUtils.GetStringStrippedByCharacter(c.getClassName(), '/');
@@ -96,7 +107,7 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 			sb.append(acessLevel + " " + c.getFieldName() + " : ");
 			sb.append(AsmClassUtils.GetStringStrippedByCharacter(c.getType(), '/'));
 
-			if (c.getSignature() != null && !c.getSignature().equals(""))
+			if (c.getSignature() != null && !c.getSignature().equals("") && !c.getSignature().contains("*"))
 				sb.append(c.getSignature());
 
 			sb.append("\\l");
@@ -129,17 +140,15 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 
 	@Override
 	protected void writeOutput() {
-		// TODO: clear relationships set?
 		_relationships = new HashSet<String>();
 		prepareFile();
 
 		for (ITargetClass clazz : _projectModel.getTargetClasses()) {
-			// TODO: if class is in GUI selected class list?
-//			if (list.size() != 0) {
-//				if (list.contains(clazz.getClassName()))
-//					clazz.accept(_visitor);
-//			} else
-				clazz.accept(_visitor);
+			if (_classFilterList.size() == 0)
+				((GraphVizStyleTargetClass)clazz).accept(_visitor);
+			
+			else if (_classFilterList.contains(clazz.getClassName()))
+				((GraphVizStyleTargetClass)clazz).accept(_visitor);
 		}
 
 		for (String relationship : _relationships) {

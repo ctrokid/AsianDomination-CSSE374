@@ -5,10 +5,6 @@ import visitor.ITraverser;
 
 public interface ITargetClass extends ITraverser {
 	public String getClassName();
-	
-	public String getPatternString(boolean parseCarrots);
-	
-	public void setPatternString(String pattern);
 
 	public Collection<IClassMethod> getMethods();
 

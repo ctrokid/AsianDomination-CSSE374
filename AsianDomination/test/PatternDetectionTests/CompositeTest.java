@@ -16,6 +16,7 @@ import api.ITargetClass;
 import fake.FakeUMLAddStrategy;
 import framework.IPhase;
 import pattern.decoration.CompositeDecorator;
+import pattern.decoration.GraphVizStyleTargetClass;
 import pattern.detection.CompositePatternDetector;
 
 public class CompositeTest {
@@ -39,16 +40,16 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		ITargetClass c = i.next();
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
 		assertTrue(c instanceof CompositeDecorator);
 
-		c = i.next();
+		c = (GraphVizStyleTargetClass)i.next();
 		assertTrue(c instanceof CompositeDecorator);
 
-		c = i.next();
+		c = (GraphVizStyleTargetClass)i.next();
 		assertTrue(c instanceof CompositeDecorator);
 
-		c = i.next();
+		c = (GraphVizStyleTargetClass)i.next();
 		assertTrue(c instanceof CompositeDecorator);
 	}
 
@@ -65,23 +66,23 @@ public class CompositeTest {
 
 		// this should eventually have 5 classes and include MyComposite in the
 		// iterator
-		ITargetClass c = i.next();
-		assertEquals("Component", c.getPatternString(true));
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		assertEquals("Component", c.getClassType());
 		assertTrue(c instanceof CompositeDecorator);
 
-		c = i.next();
-		assertNotEquals("Composite", c.getPatternString(true));
+		c = (GraphVizStyleTargetClass)i.next();
+		assertNotEquals("Composite", c.getClassType());
 		assertFalse(c instanceof CompositeDecorator);
 
-		c = i.next();
-		assertEquals("Composite", c.getPatternString(true));
+		c = (GraphVizStyleTargetClass)i.next();
+		assertEquals("Composite", c.getClassType());
 		assertTrue(c instanceof CompositeDecorator);
 
-		c = i.next();
-		assertEquals("Leaf", c.getPatternString(true));
+		c = (GraphVizStyleTargetClass)i.next();
+		assertEquals("Leaf", c.getClassType());
 		assertTrue(c instanceof CompositeDecorator);
 
-		// c = i.next();
+		// c = (GraphVizStyleTargetClass)i.next();
 		// assert/*True False*/(c instanceof CompositeDecorator);
 	}
 
@@ -95,24 +96,24 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		ITargetClass c = i.next();
-		assertEquals("Composite", c.getPatternString(true));
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		assertEquals("Composite", c.getClassType());
 		assertTrue(c instanceof CompositeDecorator);
 
-		c = i.next();
-		assertEquals("Leaf", c.getPatternString(true));
+		c = (GraphVizStyleTargetClass)i.next();
+		assertEquals("Leaf", c.getClassType());
 		assertTrue(c instanceof CompositeDecorator);
 
 		// third class added as a component
-		c = i.next();
+		c = (GraphVizStyleTargetClass)i.next();
 		assertEquals("examples/composite/CollinComponent", c.getClassName());
-		assertEquals("Component", c.getPatternString(true));
+		assertEquals("Component", c.getClassType());
 		assertTrue(c instanceof CompositeDecorator);
 
 		// fourth class added as a component
-		// c = i.next();
+		// c = (GraphVizStyleTargetClass)i.next();
 		// assertEquals("examples/composite/Component", c.getClassName());
-		// assertEquals("Component", c.getPatternString(true));
+		// assertEquals("Component", c.getClassType());
 		// assertTrue(c instanceof CompositeDecorator);
 	}
 
@@ -127,16 +128,16 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		ITargetClass c = i.next();
-		assertEquals("Composite", c.getPatternString(true));
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		assertEquals("Composite", c.getClassType());
 		assertTrue(c instanceof CompositeDecorator);
 
-		c = i.next();
-		assertEquals("Leaf", c.getPatternString(true));
+		c = (GraphVizStyleTargetClass)i.next();
+		assertEquals("Leaf", c.getClassType());
 		assertTrue(c instanceof CompositeDecorator);
 
-		c = i.next();
-		assertEquals("Leaf", c.getPatternString(true));
+		c = (GraphVizStyleTargetClass)i.next();
+		assertEquals("Leaf", c.getClassType());
 		assertTrue(c instanceof CompositeDecorator);
 	}
 
@@ -151,16 +152,16 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		ITargetClass c = i.next();
-		assertEquals("Composite", c.getPatternString(true));
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		assertEquals("Composite", c.getClassType());
 		assertTrue(c instanceof CompositeDecorator);
 
-		c = i.next();
-		assertEquals("Leaf", c.getPatternString(true));
+		c = (GraphVizStyleTargetClass)i.next();
+		assertEquals("Leaf", c.getClassType());
 		assertTrue(c instanceof CompositeDecorator);
 
-		c = i.next();
-		assertEquals("Leaf", c.getPatternString(true));
+		c = (GraphVizStyleTargetClass)i.next();
+		assertEquals("Leaf", c.getClassType());
 		assertTrue(c instanceof CompositeDecorator);
 	}
 
@@ -174,12 +175,12 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		ITargetClass c = i.next();
-		assertNotEquals("Component", c.getPatternString(true));
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		assertNotEquals("Component", c.getClassType());
 		assertFalse(c instanceof CompositeDecorator);
 
-		c = i.next();
-		assertNotEquals("Composite", c.getPatternString(true));
+		c = (GraphVizStyleTargetClass)i.next();
+		assertNotEquals("Composite", c.getClassType());
 		assertFalse(c instanceof CompositeDecorator);
 	}
 
@@ -194,13 +195,13 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		ITargetClass c = i.next();
+		ITargetClass c = (GraphVizStyleTargetClass)i.next();
 		assertFalse(c instanceof CompositeDecorator);
 
-		c = i.next();
+		c = (GraphVizStyleTargetClass)i.next();
 		assertFalse(c instanceof CompositeDecorator);
 
-		c = i.next();
+		c = (GraphVizStyleTargetClass)i.next();
 		assertFalse(c instanceof CompositeDecorator);
 	}
 
@@ -215,12 +216,12 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		ITargetClass c = i.next();
-		assertEquals("", c.getPatternString(true));
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		assertEquals("", c.getClassType());
 		assertFalse(c instanceof CompositeDecorator);
 
-		c = i.next();
-		assertEquals("", c.getPatternString(true));
+		c = (GraphVizStyleTargetClass)i.next();
+		assertEquals("", c.getClassType());
 		assertFalse(c instanceof CompositeDecorator);
 
 	}
@@ -236,12 +237,12 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		ITargetClass c = i.next();
-		assertEquals("", c.getPatternString(true));
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		assertEquals("", c.getClassType());
 		assertFalse(c instanceof CompositeDecorator);
 
-		c = i.next();
-		assertEquals("", c.getPatternString(true));
+		c = (GraphVizStyleTargetClass)i.next();
+		assertEquals("", c.getClassType());
 		assertFalse(c instanceof CompositeDecorator);
 
 	}

@@ -5,35 +5,45 @@ import java.util.Map;
 
 public class ClassStyle {
 	private Map<String, String> styles;
-	private String defaultStyle;
+	private String color;
 
 	public ClassStyle() {
-		defaultStyle = "style = solid, bgcolor = black";
 		styles = new HashMap<String, String>();
-		// Singleton
-		styles.put("Singleton", "style = solid, color = blue");
-
-		// Adapter
-		String adapterStyle = "style = filled, fillcolor = red";
-		styles.put("adapter", adapterStyle);
-		styles.put("adaptee", adapterStyle);
-		styles.put("target", adapterStyle);
-
-		// Decorator
-		String decoratorStyle = "style = filled, fillcolor = green";
-		styles.put("decorator", decoratorStyle);
-		styles.put("component", decoratorStyle);
-		
-		// Composite
-		String compositeStyle = "style = filled, fillcolor = yellow";
-		styles.put("Composite", compositeStyle);
-		styles.put("Component", compositeStyle);
-		styles.put("Leaf", compositeStyle);
+		styles.put("type", "");
+		styles.put("style", "solid");
+		styles.put("color", "black");
+		color = "black";
 	}
 
-	public String getStyleByType(String type) {
-		if (!styles.containsKey(type))
-			return defaultStyle;
-		return styles.get(type);
+	public void addConfig(String config, String setting) {
+		if (config.contains("color"))
+			color = setting;
+		styles.put(config, setting);
+	}
+	
+	public String getColor() {
+		return color;
+	}
+
+	public String getClassTypeWithCarrots() {
+		if (styles.get("type").equals(""))
+			return "";
+		return " \\n\\<\\<" + styles.get("type") + "\\>\\>";
+	}
+
+	public String getClassType() {
+		return styles.get("type");
+	}
+
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		for (String config : styles.keySet()) {
+			if (config.equals("type")) {
+				continue;
+			}
+			str.append(config + "=" + styles.get(config) + ",");
+		}
+		return str.toString().trim();
+
 	}
 }

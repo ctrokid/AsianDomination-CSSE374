@@ -21,6 +21,16 @@ public class InputCommand {
 		}
 	}
 	
+	public IPhase getPhase(Class<? extends IPhase> clazz) {
+		for (IPhase phase : _phases) {
+			if (clazz.isInstance(phase)) {
+				return phase;
+			}
+		}
+		
+		return null;
+	}
+	
 	public IProjectModel getProjectModel() {
 		return _model;
 	}

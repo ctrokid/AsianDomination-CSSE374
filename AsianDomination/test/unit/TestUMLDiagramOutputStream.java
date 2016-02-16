@@ -23,6 +23,8 @@ import api.IClassMethod;
 import api.ITargetClass;
 import output.AbstractDiagramOutputStream;
 import output.UMLDiagramOutputStream;
+import pattern.decoration.GraphVizDefaultSytleDecorator;
+import pattern.decoration.GraphVizStyleTargetClass;
 import visitor.IVisitor;
 import visitor.Visitor;
 
@@ -55,9 +57,10 @@ public class TestUMLDiagramOutputStream {
 	@Test
 	public void TestUMLVisitClass() {
 		ITargetClass clazz = new TargetClass("problem/test");
-		_visitor.visit(clazz);
+		clazz = new GraphVizDefaultSytleDecorator(clazz);
+		_visitor.visit((GraphVizStyleTargetClass)clazz);
 		
-		String expected = "test[\n\tstyle = solid, bgcolor = black, label = \"{test|";
+		String expected = "test[\n\tcolor=black,style=solid,label = \"{test|";
 		String actual = bytesOut.toString();
 		assertEquals(expected, actual);
 	}

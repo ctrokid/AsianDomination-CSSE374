@@ -10,32 +10,31 @@ import api.IClassMethod;
 import api.IProjectModel;
 import api.ITargetClass;
 import impl.Relationship;
-import pattern.decoration.DecoratorTargetClass;
 import utils.AsmClassUtils;
 import utils.DotClassUtils.RelationshipType;
 
 public class DecoratorPatternDetector extends AbstractPatternDetectionStrategy {
 	private IProjectModel _model = null;
-//	private double METHOD_DELEGATION_PERCENTAGE_THRESHOLD = 1;
-	
+	// private double METHOD_DELEGATION_PERCENTAGE_THRESHOLD = 1;
+
 	public DecoratorPatternDetector(Properties props) {
 		super(props);
 	}
 
 	@Override
 	protected void loadConfig(Properties props) {
-//		String md = props.getProperty("decorator-method-delegation");
-//		if (md != null) {
-//			try {
-//				METHOD_DELEGATION_PERCENTAGE_THRESHOLD = Double.parseDouble(md);
-//			} catch (NumberFormatException e) {
-//				METHOD_DELEGATION_PERCENTAGE_THRESHOLD = 0.80;
-//			}
-//		} else {
-//			METHOD_DELEGATION_PERCENTAGE_THRESHOLD = 0.80;
-//		}
+		// String md = props.getProperty("decorator-method-delegation");
+		// if (md != null) {
+		// try {
+		// METHOD_DELEGATION_PERCENTAGE_THRESHOLD = Double.parseDouble(md);
+		// } catch (NumberFormatException e) {
+		// METHOD_DELEGATION_PERCENTAGE_THRESHOLD = 0.80;
+		// }
+		// } else {
+		// METHOD_DELEGATION_PERCENTAGE_THRESHOLD = 0.80;
+		// }
 	}
-	
+
 	@Override
 	protected void detectPatterns(IProjectModel model) {
 		_model = model;
@@ -76,7 +75,8 @@ public class DecoratorPatternDetector extends AbstractPatternDetectionStrategy {
 	}
 
 	private boolean decorateClassIfDecorator(IClassField field, ITargetClass clazz) {
-		if (field.getType().equals("java/lang/Object") || clazz == null || clazz.getClassName().equals("java/lang/Object"))
+		if (field.getType().equals("java/lang/Object") || clazz == null
+				|| clazz.getClassName().equals("java/lang/Object"))
 			return false;
 
 		// check super type
@@ -90,9 +90,7 @@ public class DecoratorPatternDetector extends AbstractPatternDetectionStrategy {
 
 		// recurse on super type
 		if (decorateClassIfDecorator(field, _model.getTargetClassByName(superType))) {
-			clazz = new DecoratorTargetClass(PATTERN_TYPE.DECORATOR_CONCRETE, superType, clazz);
-			_model.decorateClass(clazz);
-
+			pc.decorate(PATTERN_TYPE.DECORATOR_COMPONENT, clazz, _model);
 			return true;
 		}
 
@@ -106,8 +104,7 @@ public class DecoratorPatternDetector extends AbstractPatternDetectionStrategy {
 
 			// recurse on interface
 			if (decorateClassIfDecorator(field, _model.getTargetClassByName(iface))) {
-				clazz = new DecoratorTargetClass(PATTERN_TYPE.DECORATOR_CONCRETE, iface, clazz);
-				_model.decorateClass(clazz);
+				pc.decorate(PATTERN_TYPE.DECORATOR_CONCRETE, clazz, _model);
 
 				return true;
 			}
@@ -117,30 +114,29 @@ public class DecoratorPatternDetector extends AbstractPatternDetectionStrategy {
 	}
 
 	private void tagDecoratedClass(ITargetClass clazz, String superType, RelationshipType relationshipType) {
-		clazz = new DecoratorTargetClass(PATTERN_TYPE.DECORATOR_DECORATOR, superType, clazz);
-		Relationship r = _model.getRelationshipManager().getClassRelationship(clazz.getClassName(), relationshipType, superType);
+		pc.decorate(PATTERN_TYPE.DECORATOR_DECORATOR, clazz, _model);
+		Relationship r = _model.getRelationshipManager().getClassRelationship(clazz.getClassName(), relationshipType,
+				superType);
 		r.setDecoratedType("\\<\\<decorates\\>\\>");
-		_model.decorateClass(clazz);
 
 		// add the component
 		ITargetClass superClazz = _model.getTargetClassByName(superType);
 		if (superClazz == null) {
 			_model.addClass(superType);
 		}
-		
+
 		superClazz = _model.getTargetClassByName(superType);
-		superClazz = new DecoratorTargetClass(PATTERN_TYPE.DECORATOR_COMPONENT, "", superClazz);
-		_model.decorateClass(superClazz);
-		
+		pc.decorate(PATTERN_TYPE.DECORATOR_COMPONENT, superClazz, _model);
+
 		tagConcreteDecorators(clazz.getClassName());
 	}
-	
+
 	private void tagConcreteDecorators(String superType) {
 		for (ITargetClass c : _model.getTargetClasses()) {
 			// found concrete decorator
-			if (_model.getRelationshipManager().getClassRelationship(c.getClassName(), RelationshipType.INHERITANCE, superType) != null) {
-				c = new DecoratorTargetClass(PATTERN_TYPE.DECORATOR_CONCRETE, superType, c);
-				_model.decorateClass(c);
+			if (_model.getRelationshipManager().getClassRelationship(c.getClassName(), RelationshipType.INHERITANCE,
+					superType) != null) {
+				pc.decorate(PATTERN_TYPE.DECORATOR_CONCRETE, c, _model);
 			}
 		}
 	}
