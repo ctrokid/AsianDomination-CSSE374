@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +20,12 @@ import javax.swing.SpringLayout;
 
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
+import api.IProjectModel;
+import api.ITargetClass;
+import impl.ProjectModel;
+import pattern.decoration.GraphVizStyleTargetClass;
+import pattern.detection.PATTERN_TYPE;
+
 public class GUIPopulateData {
 
 	private int northIndex = 10;
@@ -28,28 +35,17 @@ public class GUIPopulateData {
 	private JPanel checkboxPane;
 	private Map<String, ArrayList<JCheckBox>> testmap;
 	private String path;
+	private IProjectModel projectModel;
 
 	public GUIPopulateData() {
 		testmap = new HashMap<String, ArrayList<JCheckBox>>();
 		path = "";
-
+		projectModel = new ProjectModel();
 	}
 
 	public void setupCheckbox(SpringLayout sl_checkboxPane, JPanel checkboxPane) {
 		this.sl_checkboxPane = sl_checkboxPane;
 		this.checkboxPane = checkboxPane;
-		// go through model, populate all the classes, if is instance of
-		// decorator, put in map<String, List<String>>
-		ArrayList<JCheckBox> decoratorList = new ArrayList<>();
-		decoratorList.add(new JCheckBox("hi"));
-		decoratorList.add(new JCheckBox("there"));
-		decoratorList.add(new JCheckBox("my"));
-
-		ArrayList<JCheckBox> adapterList = new ArrayList<>();
-		decoratorList.add(new JCheckBox("hi"));
-		adapterList.add(new JCheckBox("hohohoho"));
-		testmap.put("Decorator", decoratorList);
-		testmap.put("Adapter", adapterList);
 
 		for (String k : testmap.keySet()) {
 			JCheckBox mainbox = new JCheckBox(k);
@@ -70,7 +66,17 @@ public class GUIPopulateData {
 	private void positionCheckbox(JCheckBox box, int indent) {
 		sl_checkboxPane.putConstraint(SpringLayout.NORTH, box, northIndex, SpringLayout.NORTH, checkboxPane);
 		sl_checkboxPane.putConstraint(SpringLayout.WEST, box, indent, SpringLayout.WEST, checkboxPane);
-		box.setForeground(Color.GREEN);
+		
+		Color color;
+		try {
+		    color = (Color)Color.class.getField(box.getName()).get(null);
+		} catch (Exception e) {
+		    color = null; // Not defined
+		}
+		
+		if (color != null) {
+			box.setForeground(color);
+		}
 		checkboxPane.add(box);
 		northIndex += 20;
 	}
@@ -92,7 +98,7 @@ public class GUIPopulateData {
 		BufferedImage myPicture = null;
 		try {
 			path.replace('\\', '/');
-			path+=".png";
+			path += ".png";
 			myPicture = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -125,6 +131,31 @@ public class GUIPopulateData {
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
+		}
+	}
+
+	public void accessTargetClasses(IProjectModel projectModel) {
+		this.projectModel = projectModel;
+		populateToCheckBox();
+	}
+
+	private void populateToCheckBox() {
+		Collection<ITargetClass> clazz = projectModel.getTargetClasses();
+		// this.testmap =
+		for (ITargetClass current : clazz) {
+			GraphVizStyleTargetClass decorated = (GraphVizStyleTargetClass) current;
+			// System.out.println("class name is: " + decorated.getClassName() +
+			// " --- " + decorated.getColor() + " --- "
+			// + decorated.getPatternType());
+			if (!decorated.getPatternType().equals(PATTERN_TYPE.GRAPHVIZ_DEFAULT)) {
+				JCheckBox checkBox = new JCheckBox(decorated.getClassName());
+				checkBox.setName(decorated.getColor());
+				String patternType = decorated.getPatternType().name().split("_")[0];
+				if (!testmap.containsKey(patternType)) {
+					testmap.put(patternType, new ArrayList<JCheckBox>());
+				}
+				testmap.get(patternType).add(checkBox);
+			}
 		}
 	}
 

@@ -35,11 +35,13 @@ public class GUIResult extends JFrame {
 	private Dimension diagramSize;
 	private JLabel populatedDiagram;
 	private String imagePath;
+	private GUIPopulateData populatedData;
 
 	/**
 	 * Create the application.
 	 */
-	public GUIResult(String imagePath) {
+	public GUIResult(String imagePath, GUIPopulateData populatedData ) {
+		this.populatedData = populatedData;
 		this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		borderSize = new Dimension((int) screenSize.getWidth() - 50, (int) screenSize.getHeight() - 50);
 		boxSize = new Dimension((int) borderSize.getWidth() * 1 / 3, 1000);
@@ -52,7 +54,7 @@ public class GUIResult extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void setupFrame() {
-		GUIPopulateData populatedData = new GUIPopulateData();
+		
 		populatedData.setNewImage(imagePath);
 		setBounds(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
 
@@ -112,6 +114,19 @@ public class GUIResult extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				/// this is for generation second time
+//				List<String> filters = new ArrayList<String>();
+//	            filters.add("pattern/decoration/GraphVizDefaultSytleDecorator");
+//	            filters.add("api/ITargetClass");
+//	            filters.add("impl/TargetClass");
+//	            filters.add("pattern/decoration/GraphVizStyleTargetClass");
+////	          filters.add("problem/sprites/AbstractSprite");
+//	            
+//	            IPhase phase = cmd.getPhase(UMLDiagramOutputStream.class);
+//	            ((UMLDiagramOutputStream) phase).setClassFilter(filters);
+//	            phase.execute(cmd.getProjectModel());
+
 				populatedData.setNewImage(imagePath);
 				populatedDiagram = populatedData.getDigram();
 				diagramPane.setViewportView(populatedDiagram);

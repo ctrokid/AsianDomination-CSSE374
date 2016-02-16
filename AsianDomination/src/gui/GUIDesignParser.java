@@ -7,12 +7,16 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Properties;
 import java.awt.event.ActionEvent;
 import javax.swing.Timer;
 
+import framework.IPhase;
 import input.InputCommand;
+import output.UMLDiagramOutputStream;
 import utils.ProjectConfiguration;
 
 import javax.swing.JLabel;
@@ -23,6 +27,7 @@ public class GUIDesignParser {
 	private Timer timer;
 	private JFrame frame;
 	private Integer i;
+	private GUIPopulateData populatedData;
 
 	/**
 	 * Launch the application.
@@ -44,6 +49,7 @@ public class GUIDesignParser {
 	 * Create the application.
 	 */
 	public GUIDesignParser() {
+		this.populatedData = new GUIPopulateData();
 		initialize();
 	}
 
@@ -79,7 +85,7 @@ public class GUIDesignParser {
 		configButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String imagePath = getGeneratedDiagram();
-				GUIResult window = new GUIResult(imagePath);
+				GUIResult window = new GUIResult(imagePath, populatedData);
 				window.setVisible(true);
 			}
 		});
@@ -138,6 +144,7 @@ public class GUIDesignParser {
 			ProjectConfiguration config = new ProjectConfiguration("resources/config.properties");
 			InputCommand cmd = config.getInputCommand();
 			cmd.execute();
+			populatedData.accessTargetClasses(cmd.getProjectModel());
 		}
 	}
 }
