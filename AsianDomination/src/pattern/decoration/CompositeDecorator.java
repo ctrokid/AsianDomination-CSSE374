@@ -7,7 +7,8 @@ public class CompositeDecorator extends GraphVizStyleTargetClass {
 
 	public CompositeDecorator(PATTERN_TYPE pattern, String _associatedClassName, ITargetClass _decoratedClass) {
 		super(pattern, _associatedClassName, _decoratedClass);
-		
+		this.graphVizStyle.addConfig("style", "filled");
+		this.graphVizStyle.addConfig("fillcolor", "yellow");
 		switch (pattern) {
 			case COMPOSITE_COMPONENT:
 //				setPatternString("\\n\\<\\<Component\\>\\>");

@@ -9,7 +9,7 @@ public class ClassStyle {
 	public ClassStyle() {
 		styles = new HashMap<String, String>();
 		styles.put("type", "");
-		styles.put("style", "solid");
+		styles.put("styleRunzhi", "solid");
 		styles.put("color", "black");
 
 		// // Singleton
@@ -38,19 +38,11 @@ public class ClassStyle {
 	}
 
 	public String getClassTypeWithCarrots() {
-		if (!styles.containsKey("type")) {
-			return "";
-		} else {
 			return " \\n\\<\\<" + styles.get("type") + "\\>\\>";
-		}
 	}
 
 	public String getClassType() {
-		if (!styles.containsKey("type")) {
-			return "";
-		} else {
 			return styles.get("type");
-		}
 	}
 
 	public String toString() {
@@ -59,9 +51,9 @@ public class ClassStyle {
 			if (config.equals("type")) {
 				continue;
 			}
-			str.append(str + ":" + styles.get(config));
+			str.append(str + "=" + styles.get(config)+",");
 		}
-		return str.toString();
+		return str.toString().trim();
 
 	}
 }

@@ -6,6 +6,7 @@ import api.IClassDeclaration;
 import api.IClassField;
 import api.IClassMethod;
 import api.ITargetClass;
+import impl.ClassField;
 import pattern.detection.PATTERN_TYPE;
 import utils.ClassStyle;
 import visitor.IVisitor;
@@ -106,7 +107,19 @@ public abstract class GraphVizStyleTargetClass implements ITargetClass {
 
 	@Override
 	public void accept(IVisitor v) {
-		_decoratedClass.accept(v);
+			v.visit(this);
+			for (IClassField field : _decoratedClass.getFields()) {
+				field.accept(v);
+			}
+
+			v.postVisit(new ClassField(null, 0, null, null));
+
+			for (IClassMethod method : getMethods()) {
+				method.accept(v);
+			}
+
+			v.postVisit(this);
+
 	}
 
 }
