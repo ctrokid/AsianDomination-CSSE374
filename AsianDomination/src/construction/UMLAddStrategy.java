@@ -31,6 +31,9 @@ public class UMLAddStrategy extends AbstractAddStrategy {
 		}
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Loading Classes - UML Diagram";
+	}
 
 }

@@ -107,5 +107,10 @@ public class SingletonDetectionVisitor extends AbstractDetectionVisitor {
 			clazz.accept(_visitor);
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return "Detecting Singletons - Visitor...";
+	}
 
 }

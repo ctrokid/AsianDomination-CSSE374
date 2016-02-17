@@ -135,5 +135,10 @@ public class SDDiagramOutputStream extends AbstractDiagramOutputStream {
 	protected void generateDiagram() {
 		_diagramGenerator.RunSDEdit(_asmOutputPath, DiagramFileExtension.PNG);
 	}
+	
+	@Override
+	public String toString() {
+		return "Generating Sequence Diagram...";
+	}
 
 }

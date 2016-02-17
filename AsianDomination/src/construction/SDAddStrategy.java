@@ -87,5 +87,9 @@ public class SDAddStrategy extends AbstractAddStrategy {
 		}
 		return true;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Loading Classes - Sequence Diagram";
+	}
 }

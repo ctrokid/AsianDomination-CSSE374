@@ -173,5 +173,10 @@ public class UMLDiagramOutputStream extends AbstractDiagramOutputStream {
 	protected void generateDiagram() {
 		_diagramGenerator.RunGVEdit(_asmOutputPath, DiagramFileExtension.PNG);
 	}
+	
+	@Override
+	public String toString() {
+		return "Generating UML Diagram...";
+	}
 
 }
