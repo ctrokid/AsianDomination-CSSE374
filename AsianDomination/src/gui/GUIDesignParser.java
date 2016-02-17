@@ -28,6 +28,7 @@ public class GUIDesignParser {
 	private JFrame frame;
 	private Integer i;
 	private GUIPopulateData populatedData;
+	private InputCommand cmd;
 
 	/**
 	 * Launch the application.
@@ -50,6 +51,7 @@ public class GUIDesignParser {
 	 */
 	public GUIDesignParser() {
 		this.populatedData = new GUIPopulateData();
+		cmd = null;
 		initialize();
 	}
 
@@ -75,17 +77,17 @@ public class GUIDesignParser {
 				if (i == 100) {
 					timer.stop();
 				} else {
-				i+=1;
-				progressBar.setValue(i);
+					i += 1;
+					progressBar.setValue(i);
 				}
 			}
 		});
-		
+
 		JButton configButton = new JButton("Load Config");
 		configButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String imagePath = getGeneratedDiagram();
-				GUIResult window = new GUIResult(imagePath, populatedData);
+				GUIResult window = new GUIResult(imagePath, populatedData, cmd);
 				window.setVisible(true);
 			}
 		});
@@ -101,7 +103,6 @@ public class GUIDesignParser {
 		guiMessage.setBounds(173, 147, 84, 25);
 		frame.getContentPane().add(guiMessage);
 
-		
 	}
 
 	private String getGeneratedDiagram() {
@@ -142,9 +143,10 @@ public class GUIDesignParser {
 			i = 0;
 			timer.start();
 			ProjectConfiguration config = new ProjectConfiguration("resources/config.properties");
-			InputCommand cmd = config.getInputCommand();
-			cmd.execute();
-			populatedData.accessTargetClasses(cmd.getProjectModel());
+			InputCommand _cmd = config.getInputCommand();
+			cmd = _cmd;
+			_cmd.execute();
+			populatedData.accessTargetClasses(_cmd.getProjectModel());
 		}
 	}
 }

@@ -141,22 +141,23 @@ public class GUIPopulateData {
 
 	private void populateToCheckBox() {
 		Collection<ITargetClass> clazz = projectModel.getTargetClasses();
-		// this.testmap =
 		for (ITargetClass current : clazz) {
 			GraphVizStyleTargetClass decorated = (GraphVizStyleTargetClass) current;
-			// System.out.println("class name is: " + decorated.getClassName() +
-			// " --- " + decorated.getColor() + " --- "
-			// + decorated.getPatternType());
-			if (!decorated.getPatternType().equals(PATTERN_TYPE.GRAPHVIZ_DEFAULT)) {
+//			if (!decorated.getPatternType().equals(PATTERN_TYPE.GRAPHVIZ_DEFAULT)) {
 				JCheckBox checkBox = new JCheckBox(decorated.getClassName());
 				checkBox.setName(decorated.getColor());
 				String patternType = decorated.getPatternType().name().split("_")[0];
 				if (!testmap.containsKey(patternType)) {
 					testmap.put(patternType, new ArrayList<JCheckBox>());
 				}
+				System.out.println(decorated.getClassName());
 				testmap.get(patternType).add(checkBox);
-			}
+//			}
 		}
+	}
+	
+	public Map<String, ArrayList<JCheckBox>> getAllCheckBoxes(){
+		return this.testmap;
 	}
 
 }
