@@ -15,6 +15,7 @@ import javax.swing.JMenuBar;
 import java.awt.Dimension;
 
 import javax.swing.JSplitPane;
+import javax.swing.JTree;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JPanel;
@@ -24,6 +25,7 @@ import javax.swing.SpringLayout;
 
 import com.sun.prism.image.ViewPort;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 
@@ -87,7 +89,7 @@ public class GUIResult extends JFrame {
 		splitPane.setRightComponent(diagramPane);
 
 		JPanel checkboxPane = new JPanel();
-
+		
 		checkboxPane.setMinimumSize(boxSize);
 		checkboxPane.setPreferredSize(boxSize);
 
@@ -129,7 +131,11 @@ public class GUIResult extends JFrame {
 
 				populatedData.setNewImage(imagePath);
 				populatedDiagram = populatedData.getDigram();
-				diagramPane.setViewportView(populatedDiagram);
+				JScrollPane imagePanel = new JScrollPane(populatedDiagram);
+				diagramPane.setViewportView(imagePanel);
+				diagramPane.revalidate();
+				diagramPane.repaint();
+				
 			}
 
 		});

@@ -3,22 +3,18 @@ package gui;
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+import javax.swing.Icon;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import api.IProjectModel;
 import api.ITargetClass;
@@ -66,14 +62,14 @@ public class GUIPopulateData {
 	private void positionCheckbox(JCheckBox box, int indent) {
 		sl_checkboxPane.putConstraint(SpringLayout.NORTH, box, northIndex, SpringLayout.NORTH, checkboxPane);
 		sl_checkboxPane.putConstraint(SpringLayout.WEST, box, indent, SpringLayout.WEST, checkboxPane);
-		
+
 		Color color;
 		try {
-		    color = (Color)Color.class.getField(box.getName()).get(null);
+			color = (Color) Color.class.getField(box.getName()).get(null);
 		} catch (Exception e) {
-		    color = null; // Not defined
+			color = null; // Not defined
 		}
-		
+
 		if (color != null) {
 			box.setForeground(color);
 		}
@@ -94,16 +90,20 @@ public class GUIPopulateData {
 	}
 
 	public JLabel getDigram() {
+		JLabel picLabel = null;
+		path.replace('\\', '/');
+		path += ".png";
 
-		BufferedImage myPicture = null;
-		try {
-			path.replace('\\', '/');
-			path += ".png";
-			myPicture = ImageIO.read(new File(path));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+		Icon myPicture = new ImageProxy(path);
+		picLabel = new JLabel(myPicture);
+		
+
+		// scrollPane = new JScrollPane(new JLabel(roseIcon));
+		// this.contentPane.add(scrollPane, BorderLayout.CENTER);
+		//
+		// this.contentPane.revalidate();
+		// this.contentPane.repaint();
+
 		return picLabel;
 	}
 
