@@ -117,7 +117,7 @@ public class DecoratorPatternDetector extends AbstractPatternDetectionStrategy {
 		pc.decorate(PATTERN_TYPE.DECORATOR_DECORATOR, clazz, _model);
 		Relationship r = _model.getRelationshipManager().getClassRelationship(clazz.getClassName(), relationshipType,
 				superType);
-		r.setDecoratedType("\\<\\<decorates\\>\\>");
+		r.addDescription("label", "\"\\<\\<decorates\\>\\>\"");
 
 		// add the component
 		ITargetClass superClazz = _model.getTargetClassByName(superType);

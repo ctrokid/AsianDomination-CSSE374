@@ -76,7 +76,7 @@ public class AdapterPatternDetector extends AbstractPatternDetectionStrategy {
 
 		Relationship adaptorRelation = model.getRelationshipManager().getClassRelationship(clazz.getClassName(),
 				RelationshipType.ASSOCIATION, adapteeClass.getClassName());
-		adaptorRelation.setDecoratedType("\\<\\<adapts\\>\\>");
+		adaptorRelation.addDescription("label", "\"\\<\\<adapts\\>\\>\"");
 
 		return;
 	}
