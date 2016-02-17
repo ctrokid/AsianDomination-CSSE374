@@ -93,17 +93,8 @@ public class GUIPopulateData {
 		JLabel picLabel = null;
 		path.replace('\\', '/');
 		path += ".png";
-
 		Icon myPicture = new ImageProxy(path);
 		picLabel = new JLabel(myPicture);
-		
-
-		// scrollPane = new JScrollPane(new JLabel(roseIcon));
-		// this.contentPane.add(scrollPane, BorderLayout.CENTER);
-		//
-		// this.contentPane.revalidate();
-		// this.contentPane.repaint();
-
 		return picLabel;
 	}
 
