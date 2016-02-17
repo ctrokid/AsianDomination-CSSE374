@@ -190,5 +190,10 @@ public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 
 		return classes;
 	}
+	
+	@Override
+	public String toString() {
+		return "Detecting Composite Patterns...";
+	}
 
 }

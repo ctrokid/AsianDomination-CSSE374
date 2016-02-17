@@ -110,4 +110,8 @@ public class AdapterPatternDetector extends AbstractPatternDetectionStrategy {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return "Detecting Adapter Patterns...";
+	}
 }

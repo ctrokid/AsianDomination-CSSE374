@@ -86,4 +86,9 @@ public class SingletonPatternDetector extends AbstractPatternDetectionStrategy {
 		}
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		return "Detecting Singletons - Brute Force...";
+	}
 }

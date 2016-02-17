@@ -140,5 +140,10 @@ public class DecoratorPatternDetector extends AbstractPatternDetectionStrategy {
 			}
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return "Detecting Decorator Patterns...";
+	}
 
 }
