@@ -7,27 +7,24 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Properties;
 import java.awt.event.ActionEvent;
-import javax.swing.Timer;
 
-import framework.IPhase;
 import input.InputCommand;
-import output.UMLDiagramOutputStream;
+import input.PhaseProgress;
 import utils.ProjectConfiguration;
 
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
-public class GUIDesignParser {
-	private final static int interval = 10;
-	private Timer timer;
+public class GUIDesignParser implements Observer {
 	private JFrame frame;
-	private Integer i;
 	private GUIPopulateData populatedData;
+	private JProgressBar progressBar;
+	private JLabel progressLabel;
+	private InputCommand cmd;
 
 	/**
 	 * Launch the application.
@@ -57,29 +54,18 @@ public class GUIDesignParser {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		cmd = null;
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setBounds(132, 174, 146, 14);
+		progressBar = new JProgressBar();
+		progressBar.setBounds(132, 174, 175, 14);
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
 		frame.getContentPane().add(progressBar);
-
-		timer = new Timer(interval, new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (i == 100) {
-					timer.stop();
-				} else {
-				i+=1;
-				progressBar.setValue(i);
-				}
-			}
-		});
 		
 		JButton configButton = new JButton("Load Config");
 		configButton.addActionListener(new ActionListener() {
@@ -94,14 +80,25 @@ public class GUIDesignParser {
 
 		JButton anaylyzeButton = new JButton("Analyze");
 		anaylyzeButton.setBounds(253, 88, 102, 25);
-		anaylyzeButton.addActionListener(new analyzeActionListener());
+		anaylyzeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Thread(() ->{
+					ProjectConfiguration config = new ProjectConfiguration("resources/config.properties");
+					cmd = config.getInputCommand();
+					cmd.addObserver(GUIDesignParser.this);
+					
+					cmd.execute();
+					populatedData.accessTargetClasses(cmd.getProjectModel());
+				}){{start();}};
+			}
+			
+		});
 		frame.getContentPane().add(anaylyzeButton);
 
-		JLabel guiMessage = new JLabel("Analyzing");
-		guiMessage.setBounds(173, 147, 84, 25);
-		frame.getContentPane().add(guiMessage);
-
-		
+		progressLabel = new JLabel("Waiting for you to hit 'Analyze'...");
+		progressLabel.setBounds(130, 147, 184, 25);
+		frame.getContentPane().add(progressLabel);
 	}
 
 	private String getGeneratedDiagram() {
@@ -135,16 +132,13 @@ public class GUIDesignParser {
 		return output;
 	}
 
-	private class analyzeActionListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			i = 0;
-			timer.start();
-			ProjectConfiguration config = new ProjectConfiguration("resources/config.properties");
-			InputCommand cmd = config.getInputCommand();
-			cmd.execute();
-			populatedData.accessTargetClasses(cmd.getProjectModel());
-		}
+	@Override
+	public void update(Observable o, Object arg) {
+		if (arg instanceof PhaseProgress == false)
+			return;
+		PhaseProgress p = (PhaseProgress) arg;
+		
+		progressBar.setValue(p.getPercentage());
+		progressLabel.setText(p.getCurrentPhase());
 	}
 }
