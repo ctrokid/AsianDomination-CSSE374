@@ -133,18 +133,6 @@ public class GUIDesignParser implements Observer{
 		return output;
 	}
 
-	private class analyzeActionListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			ProjectConfiguration config = new ProjectConfiguration("resources/config.properties");
-			InputCommand _cmd = config.getInputCommand();
-			cmd = _cmd;
-			_cmd.execute();
-			populatedData.accessTargetClasses(_cmd.getProjectModel());
-		}
-	}
-
 	@Override
 	public void update(Observable o, Object arg) {
 		if(arg instanceof PhaseProgress==false)
