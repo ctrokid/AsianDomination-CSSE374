@@ -19,12 +19,12 @@ import utils.ProjectConfiguration;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
-public class GUIDesignParser implements Observer {
+public class GUIDesignParser implements Observer{
 	private JFrame frame;
 	private GUIPopulateData populatedData;
 	private JProgressBar progressBar;
-	private JLabel progressLabel;
 	private InputCommand cmd;
+	private JLabel progressLabel;
 
 	/**
 	 * Launch the application.
@@ -47,6 +47,7 @@ public class GUIDesignParser implements Observer {
 	 */
 	public GUIDesignParser() {
 		this.populatedData = new GUIPopulateData();
+		cmd = null;
 		initialize();
 	}
 
@@ -54,8 +55,6 @@ public class GUIDesignParser implements Observer {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		cmd = null;
-		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,12 +65,12 @@ public class GUIDesignParser implements Observer {
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
 		frame.getContentPane().add(progressBar);
-		
+
 		JButton configButton = new JButton("Load Config");
 		configButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String imagePath = getGeneratedDiagram();
-				GUIResult window = new GUIResult(imagePath, populatedData);
+				GUIResult window = new GUIResult(imagePath, populatedData, cmd);
 				window.setVisible(true);
 			}
 		});
@@ -81,24 +80,26 @@ public class GUIDesignParser implements Observer {
 		JButton anaylyzeButton = new JButton("Analyze");
 		anaylyzeButton.setBounds(253, 88, 102, 25);
 		anaylyzeButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new Thread(() ->{
-					ProjectConfiguration config = new ProjectConfiguration("resources/config.properties");
-					cmd = config.getInputCommand();
-					cmd.addObserver(GUIDesignParser.this);
-					
-					cmd.execute();
-					populatedData.accessTargetClasses(cmd.getProjectModel());
-				}){{start();}};
-			}
-			
-		});
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               new Thread(() ->{
+                     ProjectConfiguration config = new ProjectConfiguration("resources/config.properties");
+                     cmd = config.getInputCommand();
+                     cmd.addObserver(GUIDesignParser.this);
+                     
+                     cmd.execute();
+                      populatedData.accessTargetClasses(cmd.getProjectModel());
+               }){{start();}};
+            }
+            
+     });
+		
 		frame.getContentPane().add(anaylyzeButton);
 
 		progressLabel = new JLabel("Waiting for you to hit 'Analyze'...");
 		progressLabel.setBounds(130, 147, 184, 25);
 		frame.getContentPane().add(progressLabel);
+
 	}
 
 	private String getGeneratedDiagram() {
@@ -134,10 +135,9 @@ public class GUIDesignParser implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (arg instanceof PhaseProgress == false)
+		if(arg instanceof PhaseProgress==false)
 			return;
 		PhaseProgress p = (PhaseProgress) arg;
-		
 		progressBar.setValue(p.getPercentage());
 		progressLabel.setText(p.getCurrentPhase());
 	}

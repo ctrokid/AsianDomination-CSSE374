@@ -1,11 +1,10 @@
 package gui;
 
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.activation.ActivationMonitor;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFrame;
@@ -23,7 +22,9 @@ import java.awt.GridBagLayout;
 
 import javax.swing.SpringLayout;
 
-import com.sun.prism.image.ViewPort;
+import framework.IPhase;
+import input.InputCommand;
+import output.UMLDiagramOutputStream;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -38,12 +39,16 @@ public class GUIResult extends JFrame {
 	private JLabel populatedDiagram;
 	private String imagePath;
 	private GUIPopulateData populatedData;
+	private List<String> filters;
+	private InputCommand cmd;
 
 	/**
 	 * Create the application.
 	 */
-	public GUIResult(String imagePath, GUIPopulateData populatedData ) {
+	public GUIResult(String imagePath, GUIPopulateData populatedData, InputCommand cmd) {
 		this.populatedData = populatedData;
+		this.cmd = cmd;
+		filters = new ArrayList<String>();
 		this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		borderSize = new Dimension((int) screenSize.getWidth() - 50, (int) screenSize.getHeight() - 50);
 		boxSize = new Dimension((int) borderSize.getWidth() * 1 / 3, 1000);
@@ -56,7 +61,7 @@ public class GUIResult extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void setupFrame() {
-		
+
 		populatedData.setNewImage(imagePath);
 		setBounds(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
 
@@ -108,7 +113,7 @@ public class GUIResult extends JFrame {
 		JButton generateButton = new JButton("Generate");
 
 		sl_checkboxPane.putConstraint(SpringLayout.NORTH, generateButton, populatedData.getLastBoxNorthPosition() + 40,
-				SpringLayout.NORTH, menuBar);
+				SpringLayout.SOUTH, menuBar);
 		sl_checkboxPane.putConstraint(SpringLayout.WEST, generateButton, populatedData.getWestPosition(),
 				SpringLayout.WEST, checkboxPane);
 		checkboxPane.add(generateButton);
@@ -116,19 +121,25 @@ public class GUIResult extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				/// this is for generation second time
-//				List<String> filters = new ArrayList<String>();
-//	            filters.add("pattern/decoration/GraphVizDefaultSytleDecorator");
-//	            filters.add("api/ITargetClass");
-//	            filters.add("impl/TargetClass");
-//	            filters.add("pattern/decoration/GraphVizStyleTargetClass");
-////	          filters.add("problem/sprites/AbstractSprite");
-//	            
-//	            IPhase phase = cmd.getPhase(UMLDiagramOutputStream.class);
-//	            ((UMLDiagramOutputStream) phase).setClassFilter(filters);
-//	            phase.execute(cmd.getProjectModel());
+				// add the checked pattern.
+				Map<String, ArrayList<JCheckBox>> map = populatedData.getAllCheckBoxes();
+				filters= new ArrayList<String>();
+				for (String k : map.keySet()) {
+					for(JCheckBox box: map.get(k)){
+						if(box.isSelected()){
+							filters.add(box.getText());
+						}
+					}
+				}
 
+				IPhase phase = cmd.getPhase(UMLDiagramOutputStream.class);
+				((UMLDiagramOutputStream) phase).setClassFilter(filters);
+				phase.execute(cmd.getProjectModel());
+
+				// proxy will go here as well
+
+				/// need to change, the new image will be from the same path
 				populatedData.setNewImage(imagePath);
 				populatedDiagram = populatedData.getDigram();
 				JScrollPane imagePanel = new JScrollPane(populatedDiagram);
