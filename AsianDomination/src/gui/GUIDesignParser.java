@@ -79,19 +79,31 @@ public class GUIDesignParser extends JFrame implements Observer {
 
 		JButton anaylyzeButton = new JButton("Analyze");
 		anaylyzeButton.setBounds(253, 88, 102, 25);
+
+		progressLabel = new JLabel("Waiting for you to hit 'Analyze'...");
+		progressLabel.setBounds(130, 147, 184, 25);
+		this.getContentPane().add(progressLabel);
+		
 		anaylyzeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new Thread(() -> {
-					ProjectConfiguration config = new ProjectConfiguration("resources/config.properties");
-					cmd = config.getInputCommand();
-					cmd.addObserver(GUIDesignParser.this);
-					cmd.execute();
-					populatedData.accessTargetClasses(cmd.getProjectModel());
-					String imagePath = getGeneratedDiagram();
-					GUIResult window = new GUIResult(imagePath, populatedData, cmd);
-					window.setVisible(true);
-					dispose();
+					try {
+						ProjectConfiguration config = new ProjectConfiguration("resources/config.properties");
+						cmd = config.getInputCommand();
+						cmd.addObserver(GUIDesignParser.this);
+						cmd.execute();
+						populatedData.accessTargetClasses(cmd.getProjectModel());
+						String imagePath = getGeneratedDiagram();
+						GUIResult window = new GUIResult(imagePath, populatedData, cmd);
+						window.setVisible(true);
+						dispose();
+					} catch (Exception e2) {
+						progressBar.setValue(0);
+						progressLabel.setText("Error in Config File");
+						return;
+					}
+					
 				}) {
 					{
 						start();
@@ -102,10 +114,6 @@ public class GUIDesignParser extends JFrame implements Observer {
 		});
 
 		this.getContentPane().add(anaylyzeButton);
-
-		progressLabel = new JLabel("Waiting for you to hit 'Analyze'...");
-		progressLabel.setBounds(130, 147, 184, 25);
-		this.getContentPane().add(progressLabel);
 
 	}
 

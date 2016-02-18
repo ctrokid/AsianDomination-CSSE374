@@ -32,38 +32,20 @@ public class GUIUserInput extends JFrame {
 	private JButton btnGenerate;
 	private Map<String, String> propertiesDataMap;
 	private ArrayList<JCheckBox> checkBoxes;
-	private ArrayList<JSpinner> spinners;
 	private JComboBox singletonComboBox;
 	private GUIReadConfigFile configFileData;
 	private JSpinner adapterSpinner;
+	private JComboBox compositeComboBox;
 
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					GUIUserInput window = new GUIUserInput();
-//					window.setVisible(true);
-//					window.setResizable(false);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
-	/**
-	 * Create the application.
-	 */
 	public GUIUserInput() {
 		propertiesDataMap = new HashMap<>();
 		checkBoxes = new ArrayList<>();
-		spinners = new ArrayList<>();
 		allFields = new HashMap<>();
 		singletonComboBox = new JComboBox();
+		compositeComboBox = new JComboBox();
+		adapterSpinner = new JSpinner();
 		singletonComboBox.setName("Singleton-Detection");
+		compositeComboBox.setName("Composite-Detection");
 		configFileData = new GUIReadConfigFile();
 		configFileData.readFromFile();
 		propertiesDataMap = configFileData.getPropertiesDataMap();
@@ -74,7 +56,6 @@ public class GUIUserInput extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-
 		setBounds(100, 100, 550, 450);
 		setTitle("User Input");
 		SpringLayout springLayout = new SpringLayout();
@@ -167,6 +148,7 @@ public class GUIUserInput extends JFrame {
 		checkBoxes.add(loadClassBox);
 
 		JCheckBox decoratorBox = new JCheckBox("Decorator-Detection");
+		springLayout.putConstraint(SpringLayout.WEST, compositeComboBox, 0, SpringLayout.WEST, decoratorBox);
 		springLayout.putConstraint(SpringLayout.NORTH, decoratorBox, 0, SpringLayout.NORTH, loadClassBox);
 		springLayout.putConstraint(SpringLayout.WEST, decoratorBox, 10, SpringLayout.EAST, loadClassBox);
 		getContentPane().add(decoratorBox);
@@ -183,10 +165,21 @@ public class GUIUserInput extends JFrame {
 		springLayout.putConstraint(SpringLayout.WEST, adapterBox, 0, SpringLayout.WEST, folderPathLabel);
 		springLayout.putConstraint(SpringLayout.SOUTH, adapterBox, 85, SpringLayout.NORTH, loadClassBox);
 		getContentPane().add(adapterBox);
+
+		springLayout.putConstraint(SpringLayout.NORTH, adapterSpinner, 6, SpringLayout.SOUTH, adapterBox);
+		springLayout.putConstraint(SpringLayout.WEST, adapterSpinner, 30, SpringLayout.WEST, getContentPane());
+		adapterSpinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		adapterSpinner.setName("Adapter-Detection");
+		adapterSpinner.setVisible(adapterBox.isSelected());
+		if (propertiesDataMap.containsKey("adapter-method-delegation"))
+			adapterSpinner.setValue(Integer.parseInt(propertiesDataMap.get("adapter-method-delegation")));
+		getContentPane().add(adapterSpinner);
+
 		adapterBox.addItemListener(new enableChoiceListener());
 		checkBoxes.add(adapterBox);
 
 		JCheckBox compositeBox = new JCheckBox("Composite-Detection");
+		springLayout.putConstraint(SpringLayout.NORTH, compositeComboBox, 6, SpringLayout.SOUTH, compositeBox);
 		springLayout.putConstraint(SpringLayout.NORTH, compositeBox, 0, SpringLayout.NORTH, adapterBox);
 		springLayout.putConstraint(SpringLayout.EAST, compositeBox, 0, SpringLayout.EAST, decoratorBox);
 		getContentPane().add(compositeBox);
@@ -244,10 +237,18 @@ public class GUIUserInput extends JFrame {
 						}
 						propertiesDataMap.put(key, statement);
 					}
+					if (key.equals("composite-require-addAndRemoveMethodsOneParameter")) {
+						String statement = "true";
+						if (compositeComboBox.getSelectedIndex() == 1) {
+							statement = "false";
+						}
+						propertiesDataMap.put(key, statement);
+					}
+
 					if (key.equals("adapter-method-delegation")) {
 						String percent = "0";
-						if(adapterBox.isSelected()){
-							percent =  adapterSpinner.getValue().toString();
+						if (adapterBox.isSelected()) {
+							percent = adapterSpinner.getValue().toString();
 						}
 						propertiesDataMap.put(key, percent);
 					}
@@ -259,29 +260,9 @@ public class GUIUserInput extends JFrame {
 		});
 		getContentPane().add(btnGenerate);
 
-		adapterSpinner = new JSpinner();
-		springLayout.putConstraint(SpringLayout.NORTH, adapterSpinner, 6, SpringLayout.SOUTH, adapterBox);
-		springLayout.putConstraint(SpringLayout.WEST, adapterSpinner, 30, SpringLayout.WEST, getContentPane());
-		adapterSpinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
-		adapterSpinner.setName("Adapter-Detection");
-		adapterSpinner.setVisible(adapterBox.isSelected());
-		adapterSpinner.setValue(Integer.parseInt(propertiesDataMap.get("adapter-method-delegation")));
-		spinners.add(adapterSpinner);
-		getContentPane().add(adapterSpinner);
-
-		JSpinner compositeSpinner = new JSpinner();
-		springLayout.putConstraint(SpringLayout.NORTH, compositeSpinner, 6, SpringLayout.SOUTH, compositeBox);
-		springLayout.putConstraint(SpringLayout.WEST, compositeSpinner, 87, SpringLayout.EAST, adapterSpinner);
-		compositeSpinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
-		compositeSpinner.setName("Composite-Detection");
-		compositeSpinner.setVisible(compositeBox.isSelected());
-		spinners.add(compositeSpinner);
-
-		getContentPane().add(compositeSpinner);
-
 		int selectedIndex = 0;
 		singletonComboBox.setModel(new DefaultComboBoxModel(new String[] { "True\t", "False" }));
-		if (propertiesDataMap.get("singleton-require-getInstance").equals("false")) {
+		if (propertiesDataMap.containsKey("singleton-require-getInstance") && propertiesDataMap.get("singleton-require-getInstance").equals("false")) {
 			selectedIndex = 1;
 		}
 		singletonComboBox.setVisible(singletonBox.isSelected());
@@ -290,6 +271,15 @@ public class GUIUserInput extends JFrame {
 		springLayout.putConstraint(SpringLayout.EAST, singletonComboBox, -146, SpringLayout.EAST, getContentPane());
 		getContentPane().add(singletonComboBox);
 
+		int compositeIndex = 0;
+		compositeComboBox.setModel(new DefaultComboBoxModel(new String[] { "True\t", "False" }));
+		if (propertiesDataMap.containsKey("composite-require-addAndRemoveMethodsOneParameter") && propertiesDataMap.get("composite-require-addAndRemoveMethodsOneParameter").equals("false")) {
+			compositeIndex = 1;
+		}
+		compositeComboBox.setVisible(compositeBox.isSelected());
+		compositeComboBox.setSelectedIndex(compositeIndex);
+		getContentPane().add(compositeComboBox);
+
 	}
 
 	private class enableChoiceListener implements ItemListener {
@@ -297,13 +287,15 @@ public class GUIUserInput extends JFrame {
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			JCheckBox currentBox = (JCheckBox) e.getSource();
-			for (JSpinner s : spinners) {
-				if (s.getName().equals(currentBox.getText())) {
-					s.setVisible(currentBox.isSelected());
-				}
+
+			if (adapterSpinner.getName().equals(currentBox.getText())) {
+				adapterSpinner.setVisible(currentBox.isSelected());
 			}
 			if (singletonComboBox.getName().equals(currentBox.getText())) {
 				singletonComboBox.setVisible(currentBox.isSelected());
+			}
+			if (compositeComboBox.getName().equals(currentBox.getText())) {
+				compositeComboBox.setVisible(currentBox.isSelected());
 			}
 		}
 
