@@ -18,14 +18,11 @@ public class TargetClass implements ITargetClass {
 	private HashMap<String, IClassMethod> _methodNameToClassMethod;
 	private Collection<IClassField> _fields;
 	
-//	private String _patternString;
-
 	public TargetClass(String className) {
 		_fields = new ArrayList<IClassField>();
 		_declaration = null;
 		_methodNameToClassMethod = new LinkedHashMap<String, IClassMethod>();
 		_className = className;
-//		_patternString = "";
 	}
 
 	@Override
@@ -90,20 +87,4 @@ public class TargetClass implements ITargetClass {
 		return _declaration;
 	}
 
-//	@Override
-//	public String getPatternString(boolean parseCarrots) {
-//		if (!parseCarrots)
-//			return _patternString;
-//		else
-//			if (_patternString.equals(""))
-//				return "";
-//			String pattern = _patternString.substring(6, _patternString.length() - 4);
-//			return pattern;
-//	}
-//
-//	@Override
-//	public void setPatternString(String pattern) {
-//		_patternString = pattern;
-//	}
-	
 }
