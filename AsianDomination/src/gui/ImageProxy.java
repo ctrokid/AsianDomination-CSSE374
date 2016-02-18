@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 class ImageProxy implements Icon {
-	ImageIcon imageIcon;
+	volatile ImageIcon imageIcon;
 	String pathToImage;
 	Thread retrievalThread;
 	boolean retrieving = false;
@@ -30,6 +30,7 @@ class ImageProxy implements Icon {
 	public void paintIcon(final Component c, Graphics  g, int x,  int y) {
 		if (imageIcon != null) {
 			imageIcon.paintIcon(c, g, x, y);
+			imageIcon.getImage().flush();
 		} else {
 			g.drawString("Generating image, please wait...", x+300, y+190);
 			if (!retrieving) {
@@ -37,7 +38,7 @@ class ImageProxy implements Icon {
 
 				retrievalThread = new Thread(new Runnable() {
 					public void run() {
-						try {							
+						try {
 							imageIcon = new ImageIcon(pathToImage, "imageIcon");
 
 							//NOTE: Do both revalidate() and repaint() on the parent component
