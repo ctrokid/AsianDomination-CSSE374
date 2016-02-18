@@ -76,7 +76,6 @@ public class GUIUserInput extends JFrame {
 	private void initialize() {
 
 		setBounds(100, 100, 550, 450);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("User Input");
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);

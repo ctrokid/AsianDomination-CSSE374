@@ -16,7 +16,6 @@ import javax.swing.JMenuItem;
 import java.awt.Dimension;
 
 import javax.swing.JSplitPane;
-import javax.swing.JTree;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JPanel;
@@ -24,13 +23,11 @@ import java.awt.GridBagLayout;
 
 import javax.swing.SpringLayout;
 
-import com.sun.accessibility.internal.resources.accessibility;
 
 import framework.IPhase;
 import input.InputCommand;
 import output.UMLDiagramOutputStream;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 
@@ -70,7 +67,6 @@ public class GUIResult extends JFrame {
 		setBounds(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
 
 		setMinimumSize(borderSize);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JMenuBar menuBar = new JMenuBar();
 		JMenu fileMenu = new JMenu("File");
@@ -173,7 +169,6 @@ public class GUIResult extends JFrame {
 				diagramPane.setViewportView(imagePanel);
 				diagramPane.revalidate();
 				diagramPane.repaint();
-
 			}
 
 		});
