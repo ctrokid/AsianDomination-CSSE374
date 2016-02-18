@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import org.objectweb.asm.Type;
+
 import api.IClassField;
 import api.IClassMethod;
 import api.IProjectModel;
@@ -20,14 +22,14 @@ public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 
 	public CompositePatternDetector(Properties props) {
 		super(props);
+		loadConfig(props);
 	}
 
 	@Override
 	protected void loadConfig(Properties props) {
 		String bool = props.getProperty("composite-require-addAndRemoveMethodsOneParameter");
-
 		if (bool != null && bool.toLowerCase().equals("true")) {
-			requireAddRemoveOneParameter = true;
+			this.requireAddRemoveOneParameter = true;
 		}
 	}
 
@@ -141,18 +143,26 @@ public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 	private boolean classHasAddAndRemoveMethods(ITargetClass clazz, Set<String> superTypes) {
 		boolean addMethod = false;
 		boolean removeMethod = false;
-
 		for (IClassMethod method : clazz.getMethods()) {
-			if (method.getMethodName().startsWith("add")) {
+			if (method.getMethodName().startsWith("add") && oneParamEnforced(method)) {
 				if (addOrRemoveContainHierarchyParameter(method, superTypes))
 					addMethod = true;
-			} else if (method.getMethodName().startsWith("remove")) {
+			} else if (method.getMethodName().startsWith("remove") && oneParamEnforced(method)) {
 				if (addOrRemoveContainHierarchyParameter(method, superTypes))
 					removeMethod = true;
 			}
 		}
 
 		return addMethod && removeMethod;
+	}
+
+	private boolean oneParamEnforced(IClassMethod method) {
+		// System.out.println(requireAddRemoveOneParameter);
+		if (!requireAddRemoveOneParameter) {
+			return true;
+		}
+		// System.out.println(Type.getArgumentTypes(method.getSignature()).length);
+		return Type.getArgumentTypes(method.getSignature()).length == 1;
 	}
 
 	private boolean addOrRemoveContainHierarchyParameter(IClassMethod method, Set<String> superTypes) {
@@ -190,7 +200,7 @@ public class CompositePatternDetector extends AbstractPatternDetectionStrategy {
 
 		return classes;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Detecting Composite Patterns...";

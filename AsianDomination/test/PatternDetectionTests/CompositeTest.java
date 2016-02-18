@@ -13,6 +13,9 @@ import org.junit.Test;
 
 import api.IProjectModel;
 import api.ITargetClass;
+import examples.composite.MutiParamComposite;
+import examples.composite.MutiParamLeaf;
+import examples.composite.MutiparamComponent;
 import fake.FakeUMLAddStrategy;
 import framework.IPhase;
 import pattern.decoration.GraphVizStyleTargetClass;
@@ -39,16 +42,16 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass) i.next();
 		assertTrue((c).getColor().equals("yellow"));
 
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertTrue((c).getColor().equals("yellow"));
 
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertTrue((c).getColor().equals("yellow"));
 
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertTrue((c).getColor().equals("yellow"));
 
 	}
@@ -66,19 +69,19 @@ public class CompositeTest {
 
 		// this should eventually have 5 classes and include MyComposite in the
 		// iterator
-		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass) i.next();
 		assertEquals("Component", c.getClassType());
 		assertTrue((c).getColor().equals("yellow"));
 
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertNotEquals("Composite", c.getClassType());
 		assertFalse((c).getColor().equals("yellow"));
 
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertEquals("Composite", c.getClassType());
 		assertTrue((c).getColor().equals("yellow"));
 
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertEquals("Leaf", c.getClassType());
 		assertTrue((c).getColor().equals("yellow"));
 
@@ -96,16 +99,16 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass) i.next();
 		assertEquals("Composite", c.getClassType());
 		assertTrue((c).getColor().equals("yellow"));
 
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertEquals("Leaf", c.getClassType());
 		assertTrue((c).getColor().equals("yellow"));
 
 		// third class added as a component
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertEquals("examples/composite/CollinComponent", c.getClassName());
 		assertEquals("Component", c.getClassType());
 		assertTrue((c).getColor().equals("yellow"));
@@ -128,15 +131,15 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass) i.next();
 		assertEquals("Composite", c.getClassType());
 		assertTrue((c).getColor().equals("yellow"));
 
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertEquals("Leaf", c.getClassType());
 		assertTrue((c).getColor().equals("yellow"));
 
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertEquals("Leaf", c.getClassType());
 		assertTrue((c).getColor().equals("yellow"));
 	}
@@ -152,15 +155,15 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass) i.next();
 		assertEquals("Composite", c.getClassType());
 		assertTrue((c).getColor().equals("yellow"));
 
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertEquals("Leaf", c.getClassType());
 		assertTrue((c).getColor().equals("yellow"));
 
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertEquals("Leaf", c.getClassType());
 		assertTrue((c).getColor().equals("yellow"));
 	}
@@ -175,11 +178,11 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass) i.next();
 		assertNotEquals("Component", c.getClassType());
 		assertFalse((c).getColor().equals("yellow"));
 
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertNotEquals("Composite", c.getClassType());
 		assertFalse((c).getColor().equals("yellow"));
 	}
@@ -195,13 +198,13 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass) i.next();
 		assertFalse((c).getColor().equals("yellow"));
 
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertFalse((c).getColor().equals("yellow"));
 
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertFalse((c).getColor().equals("yellow"));
 	}
 
@@ -216,16 +219,16 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass) i.next();
 		assertEquals("", c.getClassType());
 		assertFalse((c).getColor().equals("yellow"));
 
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertEquals("", c.getClassType());
 		assertFalse((c).getColor().equals("yellow"));
 
 	}
-	
+
 	@Test
 	public void testNoComponentInComposite() {
 		String[] classes = new String[] { "examples/composite/ComponentWithAddRemove",
@@ -237,16 +240,60 @@ public class CompositeTest {
 		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
 		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
 
-		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass)i.next();
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass) i.next();
 		assertEquals("", c.getClassType());
 		assertFalse((c).getColor().equals("yellow"));
 
-		c = (GraphVizStyleTargetClass)i.next();
+		c = (GraphVizStyleTargetClass) i.next();
 		assertEquals("", c.getClassType());
 		assertFalse((c).getColor().equals("yellow"));
 	}
-	
-	
+
+	@Test
+	public void allowMutiParamComposite() {
+		String[] classes = new String[] { "examples/composite/MutiParamComposite", "examples/composite/MutiParamLeaf",
+				"examples/composite/MutiparamComponent" };
+
+		props.setProperty("composite-require-addAndRemoveMethodsOneParameter", "false");
+
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new CompositePatternDetector(props));
+
+		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
+		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
+
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass) i.next();
+		assertEquals("Composite", c.getClassType());
+		assertTrue((c).getColor().equals("yellow"));
+
+		c = (GraphVizStyleTargetClass) i.next();
+		assertEquals("Leaf", c.getClassType());
+		assertTrue((c).getColor().equals("yellow"));
+
+	}
+
+	@Test
+	public void disallowMutiParamComposite() {
+		String[] classes = new String[] { "examples/composite/MutiParamComposite", "examples/composite/MutiParamLeaf",
+				"examples/composite/MutiparamComponent" };
+
+		props.setProperty("composite-require-addAndRemoveMethodsOneParameter", "true");
+
+		phases.add(new FakeUMLAddStrategy(props, classes));
+		phases.add(new CompositePatternDetector(props));
+
+		IProjectModel model = DetectionTestUtils.getPatternDetectedModel(phases);
+		Iterator<ITargetClass> i = model.getTargetClasses().iterator();
+
+		GraphVizStyleTargetClass c = (GraphVizStyleTargetClass) i.next();
+		assertEquals("", c.getClassType());
+		assertTrue((c).getColor().equals("black"));
+
+		c = (GraphVizStyleTargetClass) i.next();
+		assertEquals("", c.getClassType());
+		assertTrue((c).getColor().equals("black"));
+
+	}
 
 	@After
 	public void tearDown() {
