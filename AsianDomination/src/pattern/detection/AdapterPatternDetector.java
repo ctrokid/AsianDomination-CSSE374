@@ -18,6 +18,7 @@ public class AdapterPatternDetector extends AbstractPatternDetectionStrategy {
 
 	public AdapterPatternDetector(Properties props) {
 		super(props);
+//		loadConfig(props);
 	}
 
 	@Override

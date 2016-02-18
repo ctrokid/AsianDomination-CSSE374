@@ -15,6 +15,7 @@ public class SingletonPatternDetector extends AbstractPatternDetectionStrategy {
 	
 	public SingletonPatternDetector(Properties props) {
 		super(props);
+		loadConfig(props);
 	}
 	
 	@Override
