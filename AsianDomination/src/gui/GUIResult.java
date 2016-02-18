@@ -94,15 +94,13 @@ public class GUIResult extends JFrame {
 		splitPane.setRightComponent(diagramPane);
 
 		JPanel checkboxPane = new JPanel();
-		
+
 		checkboxPane.setMinimumSize(boxSize);
-		checkboxPane.setPreferredSize(boxSize);
 
 		JScrollPane checkboxScrollPane = new JScrollPane(checkboxPane);
 
 		checkboxScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		checkboxScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		checkboxScrollPane.setPreferredSize(boxSize);
 		checkboxScrollPane.setPreferredSize(boxSize);
 
 		splitPane.setLeftComponent(checkboxScrollPane);
@@ -112,7 +110,7 @@ public class GUIResult extends JFrame {
 
 		JButton generateButton = new JButton("Generate");
 
-		sl_checkboxPane.putConstraint(SpringLayout.NORTH, generateButton, populatedData.getLastBoxNorthPosition() + 40,
+		sl_checkboxPane.putConstraint(SpringLayout.NORTH, generateButton, populatedData.getLastBoxNorthPosition() + 10,
 				SpringLayout.SOUTH, menuBar);
 		sl_checkboxPane.putConstraint(SpringLayout.WEST, generateButton, populatedData.getWestPosition(),
 				SpringLayout.WEST, checkboxPane);
@@ -124,10 +122,10 @@ public class GUIResult extends JFrame {
 				/// this is for generation second time
 				// add the checked pattern.
 				Map<String, ArrayList<JCheckBox>> map = populatedData.getAllCheckBoxes();
-				filters= new ArrayList<String>();
+				filters = new ArrayList<String>();
 				for (String k : map.keySet()) {
-					for(JCheckBox box: map.get(k)){
-						if(box.isSelected()){
+					for (JCheckBox box : map.get(k)) {
+						if (box.isSelected()) {
 							filters.add(box.getText());
 						}
 					}
@@ -137,16 +135,13 @@ public class GUIResult extends JFrame {
 				((UMLDiagramOutputStream) phase).setClassFilter(filters);
 				phase.execute(cmd.getProjectModel());
 
-				// proxy will go here as well
-
-				/// need to change, the new image will be from the same path
 				populatedData.setNewImage(imagePath);
 				populatedDiagram = populatedData.getDigram();
 				JScrollPane imagePanel = new JScrollPane(populatedDiagram);
 				diagramPane.setViewportView(imagePanel);
 				diagramPane.revalidate();
 				diagramPane.repaint();
-				
+
 			}
 
 		});

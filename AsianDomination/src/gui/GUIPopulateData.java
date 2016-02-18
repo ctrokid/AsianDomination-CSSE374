@@ -1,9 +1,10 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -20,7 +21,6 @@ import api.IProjectModel;
 import api.ITargetClass;
 import impl.ProjectModel;
 import pattern.decoration.GraphVizStyleTargetClass;
-import pattern.detection.PATTERN_TYPE;
 
 public class GUIPopulateData {
 
@@ -74,6 +74,7 @@ public class GUIPopulateData {
 			box.setForeground(color);
 		}
 		checkboxPane.add(box);
+		checkboxPane.setPreferredSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth()*1/3, northIndex+100));
 		northIndex += 20;
 	}
 
@@ -141,7 +142,6 @@ public class GUIPopulateData {
 				if (!testmap.containsKey(patternType)) {
 					testmap.put(patternType, new ArrayList<JCheckBox>());
 				}
-				System.out.println(decorated.getClassName());
 				testmap.get(patternType).add(checkBox);
 //			}
 		}

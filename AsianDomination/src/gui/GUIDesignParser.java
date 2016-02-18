@@ -19,7 +19,7 @@ import utils.ProjectConfiguration;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
-public class GUIDesignParser implements Observer{
+public class GUIDesignParser implements Observer {
 	private JFrame frame;
 	private GUIPopulateData populatedData;
 	private JProgressBar progressBar;
@@ -69,9 +69,9 @@ public class GUIDesignParser implements Observer{
 		JButton configButton = new JButton("Load Config");
 		configButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String imagePath = getGeneratedDiagram();
-				GUIResult window = new GUIResult(imagePath, populatedData, cmd);
+				GUIUserInput window = new GUIUserInput();
 				window.setVisible(true);
+				window.setResizable(false);
 			}
 		});
 		configButton.setBounds(58, 88, 119, 25);
@@ -80,20 +80,26 @@ public class GUIDesignParser implements Observer{
 		JButton anaylyzeButton = new JButton("Analyze");
 		anaylyzeButton.setBounds(253, 88, 102, 25);
 		anaylyzeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               new Thread(() ->{
-                     ProjectConfiguration config = new ProjectConfiguration("resources/config.properties");
-                     cmd = config.getInputCommand();
-                     cmd.addObserver(GUIDesignParser.this);
-                     
-                     cmd.execute();
-                      populatedData.accessTargetClasses(cmd.getProjectModel());
-               }){{start();}};
-            }
-            
-     });
-		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Thread(() -> {
+					ProjectConfiguration config = new ProjectConfiguration("resources/config.properties");
+					cmd = config.getInputCommand();
+					cmd.addObserver(GUIDesignParser.this);
+					cmd.execute();
+					populatedData.accessTargetClasses(cmd.getProjectModel());
+					String imagePath = getGeneratedDiagram();
+					GUIResult window = new GUIResult(imagePath, populatedData, cmd);
+					window.setVisible(true);
+				}) {
+					{
+						start();
+					}
+				};
+			}
+
+		});
+
 		frame.getContentPane().add(anaylyzeButton);
 
 		progressLabel = new JLabel("Waiting for you to hit 'Analyze'...");
@@ -135,7 +141,7 @@ public class GUIDesignParser implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if(arg instanceof PhaseProgress==false)
+		if (arg instanceof PhaseProgress == false)
 			return;
 		PhaseProgress p = (PhaseProgress) arg;
 		progressBar.setValue(p.getPercentage());
