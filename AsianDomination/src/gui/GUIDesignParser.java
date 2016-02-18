@@ -1,11 +1,16 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Observable;
@@ -55,12 +60,26 @@ public class GUIDesignParser extends JFrame implements Observer {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		this.setBounds(100, 100, 450, 300);
+		this.setBounds(20, 30, 500, 500);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
+		this.setBackground(Color.white);
+		String path = "docs/M7/panda.png";
+		File file = new File(path);
+		BufferedImage image = null;
+		try {
+			image = ImageIO.read(file);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		JLabel label = new JLabel(new ImageIcon(image));
+		
+		label.setLocation(125, 10);
+		label.setSize(new Dimension(image.getHeight(), image.getWidth()));
+		getContentPane().add(label);
 
 		progressBar = new JProgressBar();
-		progressBar.setBounds(132, 174, 175, 14);
+		progressBar.setBounds(150, 426, 175, 14);
 		progressBar.setValue(0);
 		progressBar.setForeground(Color.green);
 		progressBar.setStringPainted(true);
@@ -74,16 +93,16 @@ public class GUIDesignParser extends JFrame implements Observer {
 				window.setResizable(false);
 			}
 		});
-		configButton.setBounds(58, 88, 119, 25);
+		configButton.setBounds(90, 340, 102, 25);
 		this.getContentPane().add(configButton);
 
 		JButton anaylyzeButton = new JButton("Analyze");
-		anaylyzeButton.setBounds(253, 88, 102, 25);
+		anaylyzeButton.setBounds(285, 340, 102, 25);
 
 		progressLabel = new JLabel("Waiting for you to hit 'Analyze'...");
-		progressLabel.setBounds(130, 147, 184, 25);
+		progressLabel.setBounds(148, 399, 184, 25);
 		this.getContentPane().add(progressLabel);
-		
+
 		anaylyzeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -103,7 +122,7 @@ public class GUIDesignParser extends JFrame implements Observer {
 						progressLabel.setText("Error in Config File");
 						return;
 					}
-					
+
 				}) {
 					{
 						start();
