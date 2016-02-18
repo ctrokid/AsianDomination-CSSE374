@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,12 +48,8 @@ public class GUIReadConfigFile {
 		InputStream input = null;
 		try {
 
-			String filename = "config.properties";
-			input = getClass().getClassLoader().getResourceAsStream(filename);
-			if (input == null) {
-				System.out.println("Sorry, unable to find " + filename);
-				return;
-			}
+			String filename = "resources/config.properties";
+			input = new FileInputStream(filename);
 
 			prop.load(input);
 

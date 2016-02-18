@@ -9,7 +9,7 @@ class ImageProxy implements Icon {
 	Thread retrievalThread;
 	boolean retrieving = false;
      
-	public ImageProxy(String path) { pathToImage = path; }
+	public ImageProxy(String path) { pathToImage = path; new ImageIcon(pathToImage, "imageIcon").getImage().flush(); }
      
 	public int getIconWidth() {
 		if (imageIcon != null) {
@@ -30,7 +30,6 @@ class ImageProxy implements Icon {
 	public void paintIcon(final Component c, Graphics  g, int x,  int y) {
 		if (imageIcon != null) {
 			imageIcon.paintIcon(c, g, x, y);
-			imageIcon.getImage().flush();
 		} else {
 			g.drawString("Generating image, please wait...", x+300, y+190);
 			if (!retrieving) {
@@ -40,7 +39,6 @@ class ImageProxy implements Icon {
 					public void run() {
 						try {
 							imageIcon = new ImageIcon(pathToImage, "imageIcon");
-
 							//NOTE: Do both revalidate() and repaint() on the parent component
 							c.revalidate();
 							c.repaint();
