@@ -62,7 +62,7 @@ public class GUIUserInput extends JFrame {
 		spinners = new ArrayList<>();
 		allFields = new HashMap<>();
 		singletonComboBox = new JComboBox();
-		singletonComboBox.setName("Singleton-Detection-Visitor");
+		singletonComboBox.setName("Singleton-Detection");
 		configFileData = new GUIReadConfigFile();
 		configFileData.readFromFile();
 		propertiesDataMap = configFileData.getPropertiesDataMap();
@@ -172,7 +172,7 @@ public class GUIUserInput extends JFrame {
 		getContentPane().add(decoratorBox);
 		checkBoxes.add(decoratorBox);
 
-		JCheckBox singletonBox = new JCheckBox("Singleton-Detection-Visitor");
+		JCheckBox singletonBox = new JCheckBox("Singleton-Detection");
 		springLayout.putConstraint(SpringLayout.NORTH, singletonBox, 0, SpringLayout.NORTH, loadClassBox);
 		springLayout.putConstraint(SpringLayout.WEST, singletonBox, 31, SpringLayout.EAST, decoratorBox);
 		getContentPane().add(singletonBox);
@@ -207,7 +207,7 @@ public class GUIUserInput extends JFrame {
 		String[] patterns = propertiesDataMap.get("phases").trim().split(",");
 		for (String p : patterns) {
 			for (JCheckBox b : checkBoxes) {
-				if (b.getText().toLowerCase().equals(p.toLowerCase())) {
+				if (b.getText().toLowerCase().equals(p.trim().toLowerCase())) {
 					b.setSelected(true);
 				}
 			}
@@ -222,25 +222,32 @@ public class GUIUserInput extends JFrame {
 
 		btnGenerate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO:
 				for (String key : propertiesDataMap.keySet()) {
 					for (String name : allFields.keySet()) {
 						if (key.equals(name)) {
 							propertiesDataMap.put(key, allFields.get(name).getText());
 						}
 					}
-					if(key.equals("phases")){
+					if (key.equals("phases")) {
 						ArrayList<String> selectedPhases = new ArrayList<>();
-						for(JCheckBox b: checkBoxes){
-							if(b.isSelected())
+						for (JCheckBox b : checkBoxes) {
+							if (b.isSelected())
 								selectedPhases.add(b.getText());
 						}
-						propertiesDataMap.put(key, selectedPhases.toString().substring(1, selectedPhases.toString().length()-1));
+						propertiesDataMap.put(key,
+								selectedPhases.toString().substring(1, selectedPhases.toString().length() - 1));
+					}
+					if(key.equals("singleton-require-getInstance")){
+						String statement = "true";
+						if(singletonComboBox.getSelectedIndex()==1){
+							statement = "false";
+						}
+						propertiesDataMap.put(key,statement);
 					}
 				}
 				configFileData.writeToFile(propertiesDataMap);
 			}
-			
+
 		});
 		getContentPane().add(btnGenerate);
 
@@ -249,6 +256,7 @@ public class GUIUserInput extends JFrame {
 		springLayout.putConstraint(SpringLayout.WEST, adapterSpinner, 30, SpringLayout.WEST, getContentPane());
 		adapterSpinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
 		adapterSpinner.setName("Adapter-Detection");
+		adapterSpinner.setVisible(adapterBox.isSelected());
 		spinners.add(adapterSpinner);
 		getContentPane().add(adapterSpinner);
 
@@ -257,11 +265,18 @@ public class GUIUserInput extends JFrame {
 		springLayout.putConstraint(SpringLayout.WEST, compositeSpinner, 87, SpringLayout.EAST, adapterSpinner);
 		compositeSpinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
 		compositeSpinner.setName("Composite-Detection");
+		compositeSpinner.setVisible(compositeBox.isSelected());
 		spinners.add(compositeSpinner);
 
 		getContentPane().add(compositeSpinner);
 
+		int selectedIndex = 0;
 		singletonComboBox.setModel(new DefaultComboBoxModel(new String[] { "True\t", "False" }));
+		if(propertiesDataMap.get("singleton-require-getInstance").equals("false")){
+			selectedIndex = 1;
+		}
+		singletonComboBox.setVisible(singletonBox.isSelected());
+		singletonComboBox.setSelectedIndex(selectedIndex);
 		springLayout.putConstraint(SpringLayout.NORTH, singletonComboBox, 6, SpringLayout.SOUTH, singletonBox);
 		springLayout.putConstraint(SpringLayout.EAST, singletonComboBox, -146, SpringLayout.EAST, getContentPane());
 		getContentPane().add(singletonComboBox);
@@ -278,9 +293,9 @@ public class GUIUserInput extends JFrame {
 					s.setVisible(currentBox.isSelected());
 				}
 			}
-			if (singletonComboBox.getName().equals(currentBox.getText()))
+			if (singletonComboBox.getName().equals(currentBox.getText())) {
 				singletonComboBox.setVisible(currentBox.isSelected());
-
+			}
 		}
 
 	}
