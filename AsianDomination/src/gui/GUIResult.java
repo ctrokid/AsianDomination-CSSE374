@@ -130,7 +130,7 @@ public class GUIResult extends JFrame {
 						}
 					}
 				}
-
+				
 				IPhase phase = cmd.getPhase(UMLDiagramOutputStream.class);
 				((UMLDiagramOutputStream) phase).setClassFilter(filters);
 				phase.execute(cmd.getProjectModel());
