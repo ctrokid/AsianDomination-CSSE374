@@ -35,23 +35,24 @@ public class GUIUserInput extends JFrame {
 	private ArrayList<JSpinner> spinners;
 	private JComboBox singletonComboBox;
 	private GUIReadConfigFile configFileData;
+	private JSpinner adapterSpinner;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUIUserInput window = new GUIUserInput();
-					window.setVisible(true);
-					window.setResizable(false);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					GUIUserInput window = new GUIUserInput();
+//					window.setVisible(true);
+//					window.setResizable(false);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the application.
@@ -75,7 +76,6 @@ public class GUIUserInput extends JFrame {
 	private void initialize() {
 
 		setBounds(100, 100, 550, 450);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("User Input");
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);
@@ -237,26 +237,35 @@ public class GUIUserInput extends JFrame {
 						propertiesDataMap.put(key,
 								selectedPhases.toString().substring(1, selectedPhases.toString().length() - 1));
 					}
-					if(key.equals("singleton-require-getInstance")){
+					if (key.equals("singleton-require-getInstance")) {
 						String statement = "true";
-						if(singletonComboBox.getSelectedIndex()==1){
+						if (singletonComboBox.getSelectedIndex() == 1) {
 							statement = "false";
 						}
-						propertiesDataMap.put(key,statement);
+						propertiesDataMap.put(key, statement);
+					}
+					if (key.equals("adapter-method-delegation")) {
+						String percent = "0";
+						if(adapterBox.isSelected()){
+							percent =  adapterSpinner.getValue().toString();
+						}
+						propertiesDataMap.put(key, percent);
 					}
 				}
 				configFileData.writeToFile(propertiesDataMap);
+				dispose();
 			}
 
 		});
 		getContentPane().add(btnGenerate);
 
-		JSpinner adapterSpinner = new JSpinner();
+		adapterSpinner = new JSpinner();
 		springLayout.putConstraint(SpringLayout.NORTH, adapterSpinner, 6, SpringLayout.SOUTH, adapterBox);
 		springLayout.putConstraint(SpringLayout.WEST, adapterSpinner, 30, SpringLayout.WEST, getContentPane());
 		adapterSpinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
 		adapterSpinner.setName("Adapter-Detection");
 		adapterSpinner.setVisible(adapterBox.isSelected());
+		adapterSpinner.setValue(Integer.parseInt(propertiesDataMap.get("adapter-method-delegation")));
 		spinners.add(adapterSpinner);
 		getContentPane().add(adapterSpinner);
 
@@ -272,7 +281,7 @@ public class GUIUserInput extends JFrame {
 
 		int selectedIndex = 0;
 		singletonComboBox.setModel(new DefaultComboBoxModel(new String[] { "True\t", "False" }));
-		if(propertiesDataMap.get("singleton-require-getInstance").equals("false")){
+		if (propertiesDataMap.get("singleton-require-getInstance").equals("false")) {
 			selectedIndex = 1;
 		}
 		singletonComboBox.setVisible(singletonBox.isSelected());

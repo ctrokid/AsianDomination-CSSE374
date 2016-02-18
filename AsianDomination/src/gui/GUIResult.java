@@ -11,10 +11,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
 import java.awt.Dimension;
 
 import javax.swing.JSplitPane;
-import javax.swing.JTree;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JPanel;
@@ -22,11 +23,11 @@ import java.awt.GridBagLayout;
 
 import javax.swing.SpringLayout;
 
+
 import framework.IPhase;
 import input.InputCommand;
 import output.UMLDiagramOutputStream;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 
@@ -66,11 +67,38 @@ public class GUIResult extends JFrame {
 		setBounds(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
 
 		setMinimumSize(borderSize);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JMenuBar menuBar = new JMenuBar();
 		JMenu fileMenu = new JMenu("File");
-		JMenu helpMenu = new JMenu("help");
+		JMenuItem newConfig = new JMenuItem("New Config");
+		fileMenu.add(newConfig);
+		newConfig.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIDesignParser window = new GUIDesignParser();
+				window.setVisible(true);
+				dispose();
+			}
+		});
+		
+		
+		
+		
+		JMenu helpMenu = new JMenu("Help");
+		JMenuItem showHelp = new JMenuItem("Show Help");
+		helpMenu.add(showHelp);
+		showHelp.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		
+		
 		menuBar.add(fileMenu);
 		menuBar.add(helpMenu);
 		setJMenuBar(menuBar);
@@ -141,7 +169,6 @@ public class GUIResult extends JFrame {
 				diagramPane.setViewportView(imagePanel);
 				diagramPane.revalidate();
 				diagramPane.repaint();
-
 			}
 
 		});

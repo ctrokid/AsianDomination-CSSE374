@@ -37,9 +37,9 @@ public class StaticPhaseFactory {
 		String[] phaseString = props.getProperty("phases").split(",");
 		
 		for(String s : phaseString){
-			Class<? extends IPhase> clazz = phases.get(s);
+			Class<? extends IPhase> clazz = phases.get(s.trim());
 			if (clazz == null) {
-				System.err.println("Configuration phase: " + phaseString + " is not recognized by the StaticPhaseFactory");
+				System.err.println("Configuration phase: " + s + " is not recognized by the StaticPhaseFactory");
 				return new ArrayList<IPhase>();
 			}
 			

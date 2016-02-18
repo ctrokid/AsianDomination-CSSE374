@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -19,8 +20,7 @@ import utils.ProjectConfiguration;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
-public class GUIDesignParser implements Observer {
-	private JFrame frame;
+public class GUIDesignParser extends JFrame implements Observer {
 	private GUIPopulateData populatedData;
 	private JProgressBar progressBar;
 	private InputCommand cmd;
@@ -34,7 +34,7 @@ public class GUIDesignParser implements Observer {
 			public void run() {
 				try {
 					GUIDesignParser window = new GUIDesignParser();
-					window.frame.setVisible(true);
+					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -55,16 +55,16 @@ public class GUIDesignParser implements Observer {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		this.setBounds(100, 100, 450, 300);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.getContentPane().setLayout(null);
 
 		progressBar = new JProgressBar();
 		progressBar.setBounds(132, 174, 175, 14);
 		progressBar.setValue(0);
+		progressBar.setForeground(Color.green);
 		progressBar.setStringPainted(true);
-		frame.getContentPane().add(progressBar);
+		this.getContentPane().add(progressBar);
 
 		JButton configButton = new JButton("Load Config");
 		configButton.addActionListener(new ActionListener() {
@@ -75,7 +75,7 @@ public class GUIDesignParser implements Observer {
 			}
 		});
 		configButton.setBounds(58, 88, 119, 25);
-		frame.getContentPane().add(configButton);
+		this.getContentPane().add(configButton);
 
 		JButton anaylyzeButton = new JButton("Analyze");
 		anaylyzeButton.setBounds(253, 88, 102, 25);
@@ -91,6 +91,7 @@ public class GUIDesignParser implements Observer {
 					String imagePath = getGeneratedDiagram();
 					GUIResult window = new GUIResult(imagePath, populatedData, cmd);
 					window.setVisible(true);
+					dispose();
 				}) {
 					{
 						start();
@@ -100,11 +101,11 @@ public class GUIDesignParser implements Observer {
 
 		});
 
-		frame.getContentPane().add(anaylyzeButton);
+		this.getContentPane().add(anaylyzeButton);
 
 		progressLabel = new JLabel("Waiting for you to hit 'Analyze'...");
 		progressLabel.setBounds(130, 147, 184, 25);
-		frame.getContentPane().add(progressLabel);
+		this.getContentPane().add(progressLabel);
 
 	}
 
