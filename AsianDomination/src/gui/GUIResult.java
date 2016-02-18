@@ -25,6 +25,7 @@ import javax.swing.SpringLayout;
 
 
 import framework.IPhase;
+import gui.HelpAndAbout.barTypes;
 import input.InputCommand;
 import output.UMLDiagramOutputStream;
 
@@ -85,15 +86,25 @@ public class GUIResult extends JFrame {
 		
 		
 		
-		JMenu helpMenu = new JMenu("Help");
+		JMenu helpMenu = new JMenu("About");
 		JMenuItem showHelp = new JMenuItem("Show Help");
 		helpMenu.add(showHelp);
 		showHelp.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				HelpAndAbout show  = new HelpAndAbout(barTypes.HELP);
+				show.setVisible(true);
+			}
+		});
+		JMenuItem showAbout = new JMenuItem("About");
+		helpMenu.add(showAbout);
+		showAbout.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				HelpAndAbout show  = new HelpAndAbout(barTypes.ABOUT);
+				show.setVisible(true);
 			}
 		});
 		

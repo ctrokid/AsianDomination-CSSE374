@@ -246,7 +246,7 @@ public class GUIUserInput extends JFrame {
 					}
 
 					if (key.equals("adapter-method-delegation")) {
-						String percent = "0";
+						String percent = "100";
 						if (adapterBox.isSelected()) {
 							percent = adapterSpinner.getValue().toString();
 						}
