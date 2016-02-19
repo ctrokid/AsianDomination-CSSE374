@@ -39,12 +39,18 @@ Milestone 5 UML Diagram
 ![milestone5uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M5/MilestoneManual5UML.png)
 
 ###Milestone 6
-For this milestone, wea added composite pattern detector class that is similar to all the other pattern detection classes. Once the pattern is detected, we called the decoration class for composite pattern and write the style to an output stream. 
+For this milestone, we added composite pattern detector class that is similar to all the other pattern detection classes. Once the pattern is detected, we called the decoration class for composite pattern and write the style to an output stream. 
 
 We also refactored the our design to so the singleton pattern is detected through visitor. This allows clients to have a more flexible control of the application.
 
 Milestone 6 UML Diagram
-![milestone6uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M7/Milestone7UML.jpg)
+![milestone6uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M6/Milestone6UML.jpg)
+
+###Milestone 7 GUI
+First, we added GUI for our project. Now we are able to determine what pattern, classes we want to detect in the GUI instead of code. We changed all the pattern detector. Therefore, user is able to setup his/her own preference, and store in our system. Each processing phase are now observable, therefore, we will have an real time update on our GUI. A proxy is used when generating diagram. All the class style are refactored, so user is able to add color or other configuration to the class and relation graph by using correct dot syntax.
+
+![milestone7uml](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M7/Milestone7UML.jpg)
+
 
 ##Milestone Deliverables
 ---
@@ -104,6 +110,12 @@ Milestone 6 UML Diagram
 [java.awt/ java.swing](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M7/Milestone6SwingAwtComposite.png)
 
 [Generated Project UML](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M6/ProjectGeneratedUML.png)
+
+###Milestone 7
+######GUI
+[GUI screenshot](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M7/PhaseSubsystemUML.uxf)
+
+[Generated Project UML](https://github.com/ctrokid/AsianDomination-CSSE374/blob/master/AsianDomination/docs/M7/FullProjectGeneration.png)
 
 
 ## Tasks Log:
@@ -183,6 +195,17 @@ Collin and Runzi continue fixing composite pattern and adding test. Coco worked 
 
 02/11/2016
 All members met up for final touch for milestone 6.
+
+02/15/2016
+All memebers met up and talked about the design of the milestone
+
+02/16/2016
+All memebers met for 3 hours worked on refactoring of the class style and Coco worked on the GUI.
+
+02/17/2016
+All memebers met for 3.5 hours. Runzhi worked on the Graphviz dot style decoration and refactoring for relationship arrow color, Collin worked on pattern detection configuration and the observer pattern for phases. Coco continued worked on the GUI and outperformed all other members in every activity possible.
+
+
 
 ##Instruction of Running Code:
 ---
