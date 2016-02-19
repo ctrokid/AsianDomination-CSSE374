@@ -49,7 +49,7 @@ public class HelpAndAbout extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		setBounds(100, 100, 800, 260);
+		setBounds(100, 100, 800, 270);
 		if(this.type.equals(barTypes.ABOUT)){
 			setBounds(100, 100, 500, 150);
 		}
@@ -74,7 +74,9 @@ public class HelpAndAbout extends JFrame {
 				+ "Adapter Detection: User could decide how many percent of the classes <bt>"
 				+ "an adapter needs to use its adaptee function. <br>"
 				+ "Composite detection: User is able to enforce add-remove is used in the composite pattern or not. <br>"
-				+ "Generate: it will write to the current configuration file, and remember user’s preference. <html>";
+				+ "Generate: it will write to the current configuration file, and remember user’s preference. <br>"
+				+ "New Config: The File bar includes a New Config, this leads to the landing page of the application. <br>"
+				+ "Save Image: User will be able to save the current displaying image to a chosen path. <html>";
 		JLabel helpLabel = new JLabel(helpString);
 		String aboutString = "<html> <div style='text-align: center;'> About <br> The copyright of this project belongs to Haolin (Coco) Liu, <br> Collin Trowbridge, and Runzhi Yang, which is designed for a  <br> seven-week long project forCSSE374, Software Design, with <br> Chandan Raj Rupakheti at Rose-Hulman Institute of Technology.<html>";
 		JLabel aboutLabel = new JLabel(aboutString);
